@@ -45,7 +45,7 @@ public class DragDrop1 {
 		display.dispose();
 	}
 	public static void setDragDrop (final Text text) {
-		Transfer[] types = new Transfer[] {TextTransfer.getInstance()};
+		Transfer[] types = new Transfer[] {FileTransfer.getInstance()};
 		int operations = DND.DROP_MOVE | DND.DROP_COPY | DND.DROP_LINK;
 
 		final DragSource source = new DragSource (text, operations);

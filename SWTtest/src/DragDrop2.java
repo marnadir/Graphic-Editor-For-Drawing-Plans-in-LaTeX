@@ -1,84 +1,168 @@
+import java.io.File;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.dnd.DND;
 import org.eclipse.swt.dnd.DragSource;
+import org.eclipse.swt.dnd.DragSourceAdapter;
 import org.eclipse.swt.dnd.DragSourceEvent;
-import org.eclipse.swt.dnd.DragSourceListener;
 import org.eclipse.swt.dnd.DropTarget;
+import org.eclipse.swt.dnd.DropTargetAdapter;
 import org.eclipse.swt.dnd.DropTargetEvent;
-import org.eclipse.swt.dnd.DropTargetListener;
 import org.eclipse.swt.dnd.TextTransfer;
 import org.eclipse.swt.dnd.Transfer;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Text;
+import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Shell;
 
-public class DragDrop2 extends Composite {
+public class DragDrop2 {
 
-  public DragDrop2(Composite parent) {
-    super(parent, SWT.NONE);
+    public static void main(String[] args) {
+        // setup the SWT window
+        Display display = new Display();
+        final Shell shell = new Shell(display);
+        shell.setLayout(new FillLayout());
+        shell.setText("Photo Shuffler");
 
-    FillLayout layout = new FillLayout();
-    setLayout(layout);
+        // initialize a parent composite with a grid layout manager
+        Composite parent = new Composite(shell, SWT.NONE);
+        GridLayout gridLayout = new GridLayout();
+        gridLayout.numColumns = 2;
+        gridLayout.marginWidth=20;
+        parent.setLayout(gridLayout);
 
-    Text leftText = new Text(this, SWT.MULTI);
-    Text rightText = new Text(this, SWT.MULTI);
+        // determine the path where the pictures are stored
+        String path = System.getProperty("user.dir") + "/images/";
+        // initialize an array with the photograph names
 
-    createDragSource(leftText);
-    createDragSource(rightText);
+        File imageDir= new File(path);
 
-    createDropTarget(leftText);
-    createDropTarget(rightText);
-  }
+        // loop over the photo array and establish all listeners
+        List<File> files = Arrays.stream(imageDir.listFiles())
+                        .filter(f -> f.isFile() && f.getName().endsWith(".png"))
+                        .collect(Collectors.toList());
 
-  private void createDropTarget(final Text targetText) {
-    Transfer[] types = new Transfer[] { TextTransfer.getInstance() };
-    DropTarget dropTarget = new DropTarget(targetText, DND.DROP_COPY);
-    dropTarget.setTransfer(types);
+        for (File file : files) {
+            // labels serve as containers for the images
+            Label label = new Label(parent, SWT.NONE);
+            Image img = new Image(display,file.getAbsolutePath());
+            label.setImage(img);
 
-    dropTarget.addDropListener(new DropTargetListener() {
+            // enable each label to be draggable
+            DragSource source = new DragSource(label, DND.DROP_NONE);
+            source.setTransfer(TextTransfer.getInstance()); // varargs are supported as of 4.7
+            // add a drag listener
+            source.addDragListener(new MyDragSourceListener(parent, source));
 
-      public void dragEnter(DropTargetEvent event) {
-      }
-
-      public void dragLeave(DropTargetEvent event) {
-      }
-
-      public void dragOperationChanged(DropTargetEvent event) {
-      }
-
-      public void dragOver(DropTargetEvent event) {
-      }
-
-      public void drop(DropTargetEvent event) {
-        String data = (String) event.data;
-        targetText.append(data);
-      }
-
-      public void dropAccept(DropTargetEvent event) {
-      }
-    });
-  }
-
-  private void createDragSource(final Text sourceText) {
-    Transfer[] types = new Transfer[] { TextTransfer.getInstance() };
-    DragSource dragSource = new DragSource(sourceText, DND.DROP_COPY);
-    dragSource.setTransfer(types);
-    dragSource.addDragListener(new DragSourceListener() {
-
-      public void dragStart(DragSourceEvent event) {
-        if (sourceText.getSelectionText().length() > 0) {
-          event.doit = true;
+            // enable each label to be a drop target
+            DropTarget target = new DropTarget(label, DND.DROP_NONE);
+            target.setTransfer(new Transfer[] { TextTransfer.getInstance() }); // varargs are not yet supported see https://git.eclipse.org/r/#/c/92236         // add a drop listener
+            target.addDropListener(new MyDropTargetListener(parent, target));
         }
-      }
 
-      public void dragSetData(DragSourceEvent event) {
-        event.data = sourceText.getSelection();
-      }
+        // show the SWT window
+        shell.pack();
+        shell.open();
+        while (!shell.isDisposed()) {
+            if (!display.readAndDispatch())
+                display.sleep();
+        }
+        // tear down the SWT window
+        display.dispose();
+    }
 
-      public void dragFinished(DragSourceEvent event) {
-        //do nothing
-      }
-    });
-  }
+    private static class MyDragSourceListener extends DragSourceAdapter {
+
+        private Composite parentComposite;
+        private DragSource source;
+
+        /**
+         * @param parentComposite - the composite that holds all pictures
+         * @param source - the drag source
+         *
+         */
+        public MyDragSourceListener(Composite parentComposite, DragSource source) {
+            this.parentComposite = parentComposite;
+            this.source = source;
+        }
+
+        /**
+         * The method computes the position / index of the source control
+         * (label) in the children array of the parent composite. This index is
+         * passed to the drop target using the data field of the drag source
+         * event.
+         */
+        public void dragSetData(DragSourceEvent event) {
+            for (int i = 0; i < parentComposite.getChildren().length; i++) {
+                if (parentComposite.getChildren()[i].equals(source.getControl())) {
+                    event.data = new Integer(i).toString();
+                    break;
+                }
+            }
+        }
+
+    }
+
+
+public static class MyDropTargetListener extends DropTargetAdapter {
+
+    private Composite parentComposite;
+    private DropTarget target;
+
+    /**
+     * @param parentComposite - the composite that holds all pictures
+     * @param target - the drop target
+     */
+    public MyDropTargetListener(Composite parentComposite, DropTarget target) {
+        this.parentComposite = parentComposite;
+        this.target = target;
+    }
+
+    /**
+     * This method moves the dragged picture to the new position and shifts the
+     * old picture to the right or left.
+     */
+    public void drop(DropTargetEvent event) {
+
+        // retrieve the stored index
+        int sourceIndex = Integer.valueOf(event.data.toString());
+
+        // compute the index of target control
+        Control targetControl = target.getControl();
+        int targetIndex = -1;
+        for (int i = 0; i < parentComposite.getChildren().length; i++) {
+            if (parentComposite.getChildren()[i].equals(targetControl)) {
+                targetIndex = i;
+                break;
+            }
+        }
+
+        Control sourceControl = parentComposite.getChildren()[sourceIndex];
+        // do not do anything if the dragged photo is dropped at the same
+        // position
+        if (targetIndex == sourceIndex)
+            return;
+
+        // if dragged from left to right
+        // shift the old picture to the left
+        if (targetIndex > sourceIndex)
+            sourceControl.moveBelow(targetControl);
+        // if dragged from right to left
+        // shift the old picture to the right
+        else
+            sourceControl.moveAbove(targetControl);
+
+        // repaint the parent composite
+        parentComposite.requestLayout();
+    }
+
+}
+
 }

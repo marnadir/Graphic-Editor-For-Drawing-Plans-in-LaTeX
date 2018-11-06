@@ -62,7 +62,7 @@ public class CTabForPlan{
 		ToolBar t = new ToolBar( folder, SWT.FLAT ); 
 		ToolItem i = new ToolItem( t, SWT.PUSH ); 
 		i.setToolTipText("add a new Plan");
-	    Image icon = new Image(shell.getDisplay(), "add-documents.png");
+	    Image icon = new Image(shell.getDisplay(), "images/add-documents.png");
 		i.setImage(icon); 
 		i.addSelectionListener(new SelectionListener() {
 			
@@ -78,7 +78,8 @@ public class CTabForPlan{
 				FigureCanvas canvas = new FigureCanvas(folder, SWT.NONE);
 				
 				Composite comp=new Composite(canvas, SWT.BORDER);
-
+				
+				
 				
 				RoundedRectangle fig=new RoundedRectangle();
 				
@@ -119,10 +120,18 @@ public class CTabForPlan{
 				pol.setEnd(end);
 				canvas.getViewport().add(pol);
 			    
+				
+				
 				fig.add(label);
 				
 				
-				setDragDrop(canvas);
+				DragSource source = new DragSource(comp, DND.DROP_NONE);
+				
+				
+				
+				
+				
+				
 				
 				canvas.getViewport().add(fig);
 				item2.setControl(canvas);
@@ -180,63 +189,7 @@ public class CTabForPlan{
 		}
 		display.dispose();
 	}
-	
-	public static void setDragDrop (final Composite comp) {
-		Transfer[] types = new Transfer[] {LocalSelectionTransfer.getTransfer()};
-		int operations = DND.DROP_MOVE | DND.DROP_COPY | DND.DROP_LINK;
-
-		final DragSource source = new DragSource (comp, operations);
-		source.setTransfer(types);
-		source.addDragListener (new DragSourceListener () {
-			Point selection;
-			@Override
-			public void dragStart(DragSourceEvent e) {
-				if(comp instanceof FigureCanvas) {
-					FigureCanvas canvas=(FigureCanvas)comp;
-					selection = canvas.getViewport().getViewLocation();
-					e.doit = selection.x != selection.y;
-				}
-				
-			}
-
-			@Override
-			public void dragSetData(DragSourceEvent e) {
-				if (comp instanceof FigureCanvas) {
-					FigureCanvas canvas = (FigureCanvas) comp;
-					selection = canvas.getViewport().getViewLocation();
-					e.data = canvas.getViewport();
-				}
-
-			}
-			@Override
-			public void dragFinished(DragSourceEvent e) {
-				if (e.detail == DND.DROP_MOVE) {
-					if (comp instanceof FigureCanvas) {
-						FigureCanvas canvas = (FigureCanvas) comp;
-						canvas.getViewport().setViewLocation(selection);
-					}
-					
-				}
-				selection = null;
-			}
-		});
-
-		DropTarget target = new DropTarget(comp, operations);
-		target.setTransfer(types);
-		target.addDropListener (new DropTargetAdapter() {
-			@Override
-			public void drop(DropTargetEvent event) {
-				if (event.data == null) {
-					event.detail = DND.DROP_NONE;
-					return;
-				}
-				
-				//text.append((String) event.data);
-			}
-		});
-	}
-	
-	
+		
 }
 
 
