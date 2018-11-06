@@ -34,7 +34,7 @@ public class Ctab1 {
 
 		ToolBar t = new ToolBar( tabFolder, SWT.FLAT ); 
 		ToolItem i = new ToolItem( t, SWT.PUSH ); 
-		i.setText( "toolitems" ); 
+		i.setText( "toolitems3" ); 
 		tabFolder.setTopRight( t, SWT.RIGHT ); 
 
 		// !!!! 
