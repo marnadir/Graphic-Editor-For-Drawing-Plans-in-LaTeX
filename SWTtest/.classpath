@@ -7,5 +7,6 @@
 	</classpathentry>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/org.eclipse.swt"/>
+	<classpathentry kind="lib" path="/GEF3-Update-4.0.0/features/org.eclipse.draw2d.sdk_3.10.100.201606061308.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
