@@ -9,7 +9,7 @@ public class Snippet188 {
 public static void main(String[] args) {
 	Display display=new Display();
 	Shell shell1=new Shell(display);
-	shell1.setText("wlkfjpqewòh");
+	shell1.setText("wlqewòh");
 	Shell shell2=new  Shell(display);
 	
 	shell1.open();
