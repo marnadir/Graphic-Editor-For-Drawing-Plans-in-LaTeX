@@ -1,3 +1,14 @@
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.CTabFolder;
+import org.eclipse.swt.custom.CTabItem;
+import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.ToolBar;
+import org.eclipse.swt.widgets.ToolItem;
+
+
+
 /*
  * CoolBar example snippet: create a coolbar (relayout when resized)
  *
@@ -6,15 +17,9 @@
  *
  * @since 3.0
  */
-import org.eclipse.swt.*;
-import org.eclipse.swt.custom.CTabFolder;
-import org.eclipse.swt.custom.CTabItem;
-import org.eclipse.swt.graphics.*;
-import org.eclipse.swt.layout.*;
-import org.eclipse.swt.widgets.*;
 
-import javafx.scene.control.ToolBar;
-import jdk.nashorn.tools.Shell;
+
+
 
 public class Ctab1 {
 
