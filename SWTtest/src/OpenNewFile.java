@@ -32,7 +32,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Label;
 
-public class Snippet361 {
+public class OpenNewFile {
 	static Composite composite; // SWT
 	static Canvas canvas; // AWT
 	static Image image = null; // AWT
