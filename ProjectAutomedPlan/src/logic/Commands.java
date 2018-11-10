@@ -12,7 +12,7 @@ import command.SaveCommand;
  * @author nadir
  *
  */
-public class Commands {
+public class Commands  {
 	
 	/**
 	 * 

@@ -17,7 +17,7 @@
 	import org.eclipse.swt.widgets.*;
 
 
-public class Test {
+public class TestUsed {
 
 
 

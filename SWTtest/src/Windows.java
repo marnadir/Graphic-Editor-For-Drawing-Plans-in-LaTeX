@@ -89,6 +89,7 @@ public class Windows {
 		fileItem.setText("&File");
 		Menu fileMenu = new Menu(shell, SWT.DROP_DOWN);
 		fileItem.setMenu(fileMenu);
+		
 		MenuItem exitItem = new MenuItem(fileMenu, SWT.PUSH);
 		exitItem.setText("&Exit\tCtrl+X");
 		exitItem.setAccelerator(SWT.CONTROL + 'X');
