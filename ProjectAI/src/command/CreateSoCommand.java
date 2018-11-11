@@ -21,7 +21,7 @@ public class CreateSoCommand implements ICommand{
 		if (var1 instanceof Shell) {
 			Shell shell = (Shell) var1;
 
-		ss
+		sss
 		}
 	}
 
