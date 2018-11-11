@@ -20,8 +20,8 @@ public class CreateSoCommand implements ICommand{
 	public void execute(Object var1, Object var2) {
 		if (var1 instanceof Shell) {
 			Shell shell = (Shell) var1;
-			Dialog nShell=new Dialog(shell, SWT.ALL);
-			
+
+		ss
 		}
 	}
 
