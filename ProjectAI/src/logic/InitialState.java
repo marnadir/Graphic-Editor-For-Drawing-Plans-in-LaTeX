@@ -15,6 +15,7 @@ public class InitialState {
 	//TODO pay attention for contraction, example we have A, can't be added notA
 	public ArrayList<String> getPrec() {
 		return precPos;
+		
 	}
 	 
 	//TODO method allow to draw the initial state
