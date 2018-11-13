@@ -1,27 +1,35 @@
 package command;
 
 
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Dialog;
-import org.eclipse.swt.widgets.FileDialog;
-import org.eclipse.swt.widgets.Shell;
 
-public class CreateSoCommand implements ICommand{
+import org.eclipse.swt.widgets.Combo;
+import GUI.CreateSoDialog;
 
-	
-	//check if create as option
+public class CreateSoCommand implements ICommand {
+
+	// check if create as option
 	@Override
 	public boolean canExecute(Object var1, Object var2) {
-		// TODO Auto-generated method stub
+		if (var1 instanceof Combo) {
+			Combo combo = (Combo) var1;
+			if(combo.getText().equals("Create")) {
+				return true;
+			}
+		}
 		return false;
 	}
 
 	@Override
 	public void execute(Object var1, Object var2) {
-		if (var1 instanceof Shell) {
-			Shell shell = (Shell) var1;
 
-	
+		if (canExecute(var1, var2)) {
+			if (var1 instanceof Combo) {
+
+				Combo combo = (Combo) var1;
+				CreateSoDialog dialog = new CreateSoDialog(combo.getShell());
+				dialog.createContent();
+
+			}
 		}
 	}
 

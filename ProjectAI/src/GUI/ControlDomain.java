@@ -72,16 +72,18 @@ import logic.InitialState;
 		Image img=new Image(shell.getDisplay(), "img/ok.png") ;
 		bInitState.setImage(img);
 		
+		
+		
 		Listener buttonLister=new Listener() {
 			
 			@Override
 			public void handleEvent(Event event) {
 				CreateSoCommand so=new CreateSoCommand();
-				so.execute(shell, event);
+				so.execute(comboOptionInSt, event);
 				
 			}
 		};
-		bInitState.addListener(SWT.PUSH, buttonLister);
+		bInitState.addListener(SWT.Selection, buttonLister);
 		
 		GridData gridData = new GridData(GridData.CENTER, GridData.CENTER, false, false);
 		gridData.horizontalSpan = 2;

@@ -8,5 +8,6 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="lib" path="lib/org.eclipse.draw2d_3.5.0.jar" sourcepath="D:/Downloads/GEF3-Update-4.0.0/plugins/org.eclipse.draw2d.source_3.10.100.201606061308.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/org.eclipse.swt"/>
+	<classpathentry kind="lib" path="/org.eclipse.jface-3.6.0.jar.zip_expanded/org.eclipse.jface-3.6.0.jar" sourcepath="/home/nadir/Downloads/org.eclipse.jface-3.6.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
