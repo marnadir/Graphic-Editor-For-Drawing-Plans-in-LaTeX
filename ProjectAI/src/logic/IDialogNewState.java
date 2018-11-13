@@ -18,7 +18,7 @@ public class IDialogNewState extends IDialog{
 	ArrayList<String>  listPCond;
 	List list;
 	Text newPrec;
-	
+	Button buttonNeg;
 
 	public IDialogNewState(Shell shell) {
 		super(shell);
@@ -34,7 +34,7 @@ public class IDialogNewState extends IDialog{
 		composite.setLayout(new GridLayout(3, false));
 
 		newPrec = new Text(composite, SWT.SINGLE | SWT.BORDER);
-		Button buttonNeg = new Button(composite, SWT.CHECK);
+		buttonNeg = new Button(composite, SWT.CHECK);
 		buttonNeg.setText("neg");
 
 		Button btnAddPrec = new Button(composite, SWT.PUSH);
@@ -61,7 +61,11 @@ public class IDialogNewState extends IDialog{
 			@Override
 			public void handleEvent(Event event) {
 				String cond=newPrec.getText();
+				boolean isChecked=buttonNeg.getSelection();
 				if(!(listPCond.contains(cond)) && !cond.equals("")) {
+					if(isChecked) {
+						cond="¬"+cond;
+					} 
 					listPCond.add(cond);
 					list.add(cond);
 				}
