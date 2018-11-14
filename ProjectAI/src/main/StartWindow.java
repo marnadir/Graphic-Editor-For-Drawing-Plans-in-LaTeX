@@ -1,5 +1,6 @@
 package main;
 
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
@@ -11,6 +12,7 @@ public class StartWindow {
 	public void start() {
 		Display display=new Display();
 		Shell shell=new Shell(display);
+		shell.setSize(display.getClientArea().width, display.getClientArea().height);
 		shell.setText("Tool Drawing Plan");
 		
 		DrawWindow drawWindow=new DrawWindow(shell);

@@ -95,9 +95,7 @@ public class IDialogNewState extends IDialog{
 	}
 	
 
-	public Listener getOkbtnListener() {
-		return null;
-	}
+
 	
 	public ArrayList<String> getCond(){
 		return listPCond;

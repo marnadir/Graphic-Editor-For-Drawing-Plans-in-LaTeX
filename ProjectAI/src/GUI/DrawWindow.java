@@ -26,22 +26,30 @@ import org.eclipse.swt.widgets.Text;
 import command.ExitCommand;
 import logic.IMenu;
 
-public class DrawWindow {
+public class DrawWindow  {
 	
-	Shell shell;
-	
+	private Shell shell;
+	private IMenu menuBar;
+	private SashForm sashForm;
+	private Group domainGroup; 
+	private SashForm sashForm2;
+	private CTabFolder PlanView;
+	private Group console;
+	private CreateDomainView createDomainView;
 	
 	public DrawWindow(Shell shell) {
 		this.shell=shell;
 	}
+	
 	
 	public void draw() {
 		createMenuWindow();
 		createContent();
 	}
 	
+	
 	public void createMenuWindow() {
-		IMenu menuBar=new IMenu(shell,SWT.BAR);
+		menuBar=new IMenu(shell,SWT.BAR);
 		MenuItem fileItem=menuBar.createItem("&File",SWT.CASCADE); 
 		IMenu menuFile=new IMenu(shell, SWT.DROP_DOWN);
 		fileItem.setMenu(menuFile);
@@ -92,47 +100,35 @@ public class DrawWindow {
 		});
 	}
 	
+	
 	public void createContent() {
 		shell.setLayout(new FillLayout());
 	    
-	    SashForm sashForm = new SashForm(shell, SWT.HORIZONTAL);
+		
+	    sashForm = new SashForm(shell, SWT.HORIZONTAL);
 	
-		ControlDomain controlDomain=new ControlDomain(sashForm);
-		controlDomain.createOptionGruop();
+		createDomainView=new CreateDomainView(sashForm);
+		createDomainView.createContent();
 		
 		
-//		Canvas canvas=new Canvas(domain, SWT.ALL);
-//		canvas.addPaintListener(new PaintListener() {
-//			
-//			@Override
-//			public void paintControl(PaintEvent e) {
-//				// TODO Auto-generated method stub
-//
-//				//e.gc.drawLine(20, 20, 500, 500);
-//				//e.gc.drawRectangle(0, 0, 50, 60);
-//				Rectangle rect=new Rectangle(0, 0, 60, 30);
-//				
-//				e.gc.drawRectangle(rect);
-//			}
-//		});
-//		
-	    
-		SashForm sashForm2 = new SashForm(sashForm, SWT.VERTICAL);
-	    CTabFolder folder = new CTabFolder (sashForm2, SWT.PUSH);
-		folder.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-		folder.setSimple(false);
-		folder.setUnselectedImageVisible(false);
-		folder.setUnselectedCloseVisible(false);
+		
+	  
+		sashForm2 = new SashForm(sashForm, SWT.VERTICAL);
+	    PlanView = new CTabFolder (sashForm2, SWT.PUSH);
+		PlanView.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		PlanView.setSimple(false);
+		PlanView.setUnselectedImageVisible(false);
+		PlanView.setUnselectedCloseVisible(false);
 		
 
-		CTabItem item = new CTabItem(folder, SWT.CLOSE);
+		CTabItem item = new CTabItem(PlanView, SWT.CLOSE);
 		item.setText("Item ");
-		Text text = new Text(folder, SWT.MULTI | SWT.V_SCROLL | SWT.H_SCROLL);
+		Text text = new Text(PlanView, SWT.MULTI | SWT.V_SCROLL | SWT.H_SCROLL);
 		text.setText("vaffanculo!!!");
 		item.setControl(text);
 		
 
-		Group console=new Group(sashForm2, SWT.SCROLL_LINE);
+		console=new Group(sashForm2, SWT.SCROLL_LINE);
 		console.setText("Console");
 		//console.setFont(boldFont);
 		FormLayout Layout = new FormLayout();
@@ -145,4 +141,40 @@ public class DrawWindow {
 	    shell.setMaximized(false);
 	}
 
+	
+	
+	
+	
+
+	public Shell getShell() {
+		return shell;
+	}
+
+	public IMenu getMenuBar() {
+		return menuBar;
+	}
+
+	public SashForm getSashForm() {
+		return sashForm;
+	}
+
+	public Group getDomainGroup() {
+		return domainGroup;
+	}
+
+	public SashForm getSashForm2() {
+		return sashForm2;
+	}
+
+	public CTabFolder getPlanView() {
+		return PlanView;
+	}
+
+	public Group getConsole() {
+		return console;
+	}
+	
+	
+	
+	
 }

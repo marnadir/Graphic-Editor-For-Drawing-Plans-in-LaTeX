@@ -2,6 +2,8 @@ package GUI;
 
 import java.util.ArrayList;
 
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
@@ -12,30 +14,34 @@ public class CreateSoDialog extends IDialogNewState{
 	
 //	ArrayList<String> listPrec=this.getCond();
 
+	Composite compCanvas;
+	ArrayList<String> listPrec;
+	Shell dialog=this.getDialog();
 	
-	public CreateSoDialog(Shell shell) {
-		super(shell);
-		// TODO Auto-generated constructor stub
+	public CreateSoDialog(Composite compCanvas) {
+		super(compCanvas.getShell());
+		this.compCanvas=compCanvas;
+		listPrec=this.getCond();
+		
 	}
 
 	@Override
 	public void createContent() {
 		super.createContent();
 		this.getLabel().setText("Create a new initial state");
+		
 	}
 	
 	@Override
 	public Listener getOkbtnListener() {
-		
-		ArrayList<String> listPrec=this.getCond();
-
-		
 		Listener btn=new Listener() {
 			
 			@Override
 			public void handleEvent(Event event) {
-				InitialState initialstate=new InitialState(listPrec);
+				InitialState initialState=new InitialState(listPrec);
+				initialState.draw(compCanvas);
 				
+				dialog.close();
 			}
 		};
 		

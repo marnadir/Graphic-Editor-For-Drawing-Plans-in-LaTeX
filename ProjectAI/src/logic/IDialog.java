@@ -43,6 +43,8 @@ public abstract class IDialog {
 
 		Button okButton = new Button(dialog, SWT.PUSH);
 		okButton.setText("&OK");
+		okButton.addListener(SWT.Selection, getOkbtnListener());
+		
 		Button cancelButton = new Button(dialog, SWT.PUSH);
 		cancelButton.setText("&Cancel");
 		cancelButton.addListener(SWT.Selection, getCancListener());
@@ -82,6 +84,8 @@ public abstract class IDialog {
 		return this.dialog;
 	}
 	
+	
+	
 	public Composite getComposite() {
 		return this.composite;
 	}
@@ -97,5 +101,9 @@ public abstract class IDialog {
 
 		return buttonListener;
 
+	}
+	
+	public Listener getOkbtnListener() {
+		return null;
 	}
 }

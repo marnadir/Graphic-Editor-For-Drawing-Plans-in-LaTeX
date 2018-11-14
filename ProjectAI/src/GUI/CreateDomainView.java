@@ -4,14 +4,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.PaintEvent;
+import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Rectangle;
+import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.layout.FormAttachment;
+import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.layout.FormLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
@@ -20,20 +26,22 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 
-import command.CreateSoCommand;
+import command.CreateStateDialogCommand;
 import logic.InitialState;
- class ControlDomain {
+
+
+ class CreateDomainView{
 
 	Group domainGroup;
-	Group toolbar;
 	Shell shell;
+	Group stateGroup;
 	
 	InitialState initialState=null;
 	
 
-	public ControlDomain(Composite sashForm) {
+	public CreateDomainView(Composite sashForm) {
 		this.shell=sashForm.getShell();
-		this.domainGroup = new Group(sashForm, SWT.SCROLL_LINE);
+		this.domainGroup = new Group(sashForm, SWT.SCROLL_LINE);		
 		setLayout();
 		
 	}
@@ -48,8 +56,10 @@ import logic.InitialState;
 		this.domainGroup.setLayout(ownerLayout);
 	}
 
-	public void createOptionGruop() {
+	public void createContent() {
 
+		//first group option
+		
 		Group subOption = new Group(this.domainGroup, SWT.ALL);
 		subOption.setText("Option");
 		subOption.setLayout(new GridLayout(4, false));
@@ -78,8 +88,8 @@ import logic.InitialState;
 			
 			@Override
 			public void handleEvent(Event event) {
-				CreateSoCommand so=new CreateSoCommand();
-				so.execute(comboOptionInSt, event);
+				CreateStateDialogCommand so=new CreateStateDialogCommand();
+				so.execute(comboOptionInSt, stateGroup);
 				
 			}
 		};
@@ -115,15 +125,42 @@ import logic.InitialState;
 		bAction.setImage(img);
 		
 		
+		stateGroup=new Group(this.domainGroup, SWT.RESIZE);
+		stateGroup.setText("Items for the plan");
+	
+		
+		
+		FormData data = new FormData();
+		data.top = new FormAttachment(subOption, 5);
+		data.bottom=new FormAttachment(100,0);
+     	data.width=100;
+     	
+     	
+     	
+     	stateGroup.setLayoutData(data);
+		
+     	Composite comp=new Composite(stateGroup, SWT.ALL);
+     	comp.pack();
+     	
+     	
+     	
+     	Canvas canvans=new Canvas(comp, SWT.ALL);
+     	canvans.setSize(500, 500);
+     	
+     	canvans.addPaintListener(new PaintListener() {
+			
+			@Override
+			public void paintControl(PaintEvent e) {
+				e.gc.drawText("ciao come stai", 500, 500);
+			}
+		});
+		System.out.print(canvans.getClientArea());
+		System.out.print(comp.getClientArea());
 
-		
-
-		
-		
-		
-		
-		
-		
-
+	}
+	
+	
+	public Group getCompCanvas() {
+		return stateGroup;
 	}
 }
