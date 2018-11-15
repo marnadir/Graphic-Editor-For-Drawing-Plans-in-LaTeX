@@ -5,16 +5,9 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.custom.CTabItem;
 import org.eclipse.swt.custom.SashForm;
-import org.eclipse.swt.events.PaintEvent;
-import org.eclipse.swt.events.PaintListener;
-import org.eclipse.swt.graphics.Color;
-import org.eclipse.swt.graphics.Font;
-import org.eclipse.swt.graphics.FontData;
-import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.FormLayout;
 import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Listener;
@@ -106,14 +99,16 @@ public class DrawWindow  {
 	    
 		
 	    sashForm = new SashForm(shell, SWT.HORIZONTAL);
-	
+	    
+	    
 		createDomainView=new CreateDomainView(sashForm);
 		createDomainView.createContent();
+	
 		
-		
-		
-	  
 		sashForm2 = new SashForm(sashForm, SWT.VERTICAL);
+		
+		sashForm.setWeights(new int[] {1,3});
+
 	    PlanView = new CTabFolder (sashForm2, SWT.PUSH);
 		PlanView.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		PlanView.setSimple(false);

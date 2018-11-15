@@ -4,20 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.PaintEvent;
-import org.eclipse.swt.events.PaintListener;
+import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Rectangle;
-import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.layout.FormLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
@@ -35,18 +32,24 @@ import logic.InitialState;
 	Group domainGroup;
 	Shell shell;
 	Group stateGroup;
+	SashForm sashForm;
 	
 	InitialState initialState=null;
 	
 
-	public CreateDomainView(Composite sashForm) {
+	public CreateDomainView(SashForm sashForm) {
+		this.sashForm=sashForm;
 		this.shell=sashForm.getShell();
-		this.domainGroup = new Group(sashForm, SWT.SCROLL_LINE);		
 		setLayout();
+		
 		
 	}
 
 	public void setLayout() {
+		
+//		Composite comp=new Composite(sashForm, SWT.ALL);
+		
+		this.domainGroup = new Group(sashForm, SWT.None);
 		Font boldFont = new Font(this.domainGroup.getDisplay(), new FontData("Arial", 12, SWT.BOLD));
 		this.domainGroup.setText("Domain Graph");
 		this.domainGroup.setFont(boldFont);
@@ -54,6 +57,13 @@ import logic.InitialState;
 		ownerLayout.marginWidth = 5;
 		ownerLayout.marginHeight = 5;
 		this.domainGroup.setLayout(ownerLayout);
+		
+//		 GridLayout layout=new GridLayout();
+//		  layout.numColumns=3;
+//		  domainGroup.setLayout(layout);
+//		this.domainGroup.setLayout(new RowLayout(SWT.HORIZONTAL));
+		
+		
 	}
 
 	public void createContent() {
@@ -125,37 +135,32 @@ import logic.InitialState;
 		bAction.setImage(img);
 		
 		
-		stateGroup=new Group(this.domainGroup, SWT.RESIZE);
+		stateGroup=new Group(this.domainGroup, SWT.ALL);
 		stateGroup.setText("Items for the plan");
 	
-		
-		
+
 		FormData data = new FormData();
 		data.top = new FormAttachment(subOption, 5);
 		data.bottom=new FormAttachment(100,0);
      	data.width=100;
-     	
-     	
-     	
      	stateGroup.setLayoutData(data);
 		
-     	Composite comp=new Composite(stateGroup, SWT.ALL);
-     	comp.pack();
-     	
-     	
-     	
-     	Canvas canvans=new Canvas(comp, SWT.ALL);
-     	canvans.setSize(500, 500);
-     	
-     	canvans.addPaintListener(new PaintListener() {
-			
-			@Override
-			public void paintControl(PaintEvent e) {
-				e.gc.drawText("ciao come stai", 500, 500);
-			}
-		});
-		System.out.print(canvans.getClientArea());
-		System.out.print(comp.getClientArea());
+//     	Composite comp=new Composite(stateGroup, SWT.ALL);
+//     	comp.pack();
+//     	
+//     	
+//     	Canvas canvans=new Canvas(stateGroup, SWT.ALL);
+//     	canvans.setSize(500, 500);
+//     	
+//     	canvans.addPaintListener(new PaintListener() {
+//			
+//			@Override
+//			public void paintControl(PaintEvent e) {
+//				e.gc.drawText("ciao come stai", 500, 500);
+//			}
+//		});
+//		System.out.print(canvans.getClientArea());
+//		System.out.print(comp.getClientArea());
 
 	}
 	
