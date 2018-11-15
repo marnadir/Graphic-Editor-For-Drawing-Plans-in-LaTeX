@@ -8,12 +8,15 @@ import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
+import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.layout.FormLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
@@ -47,16 +50,33 @@ import logic.InitialState;
 
 	public void setLayout() {
 		
-//		Composite comp=new Composite(sashForm, SWT.ALL);
+		Composite over=new Composite(sashForm, SWT.ALL);
+		GridLayout gridLayout = new GridLayout();
+		gridLayout.numColumns = 1;
+		over.setLayout(gridLayout);
+		System.out.println(over.getClientArea());
 		
-		this.domainGroup = new Group(sashForm, SWT.None);
+		Composite top = new Composite(over, SWT.ALL);
+		top.setLayout(new GridLayout());
+		
+		
+
+		
+		this.domainGroup = new Group(top, SWT.ALL);
 		Font boldFont = new Font(this.domainGroup.getDisplay(), new FontData("Arial", 12, SWT.BOLD));
 		this.domainGroup.setText("Domain Graph");
 		this.domainGroup.setFont(boldFont);
-		FormLayout ownerLayout = new FormLayout();
-		ownerLayout.marginWidth = 5;
-		ownerLayout.marginHeight = 5;
-		this.domainGroup.setLayout(ownerLayout);
+		
+		Composite bottom=new Composite(over, SWT.ALL);
+		bottom.setLayout(new GridLayout());
+		
+		stateGroup=new Group(bottom, SWT.ALL);
+		stateGroup.setText("Items for the plan");
+		
+//		FormLayout ownerLayout = new FormLayout();
+//		ownerLayout.marginWidth = 5;
+//		ownerLayout.marginHeight = 5;
+//		this.domainGroup.setLayout(ownerLayout);
 		
 //		 GridLayout layout=new GridLayout();
 //		  layout.numColumns=3;
@@ -135,15 +155,8 @@ import logic.InitialState;
 		bAction.setImage(img);
 		
 		
-		stateGroup=new Group(this.domainGroup, SWT.ALL);
-		stateGroup.setText("Items for the plan");
 	
 
-		FormData data = new FormData();
-		data.top = new FormAttachment(subOption, 5);
-		data.bottom=new FormAttachment(100,0);
-     	data.width=100;
-     	stateGroup.setLayoutData(data);
 		
 //     	Composite comp=new Composite(stateGroup, SWT.ALL);
 //     	comp.pack();
