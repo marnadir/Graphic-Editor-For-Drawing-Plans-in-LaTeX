@@ -45,6 +45,7 @@ import logic.InitialState;
 	SashForm sashForm;
 	Composite outer;
 	Composite inside;
+	Composite canvasContent;
 	
 	InitialState initialState=null;
 	
@@ -117,7 +118,7 @@ import logic.InitialState;
 			@Override
 			public void handleEvent(Event event) {
 				CreateStateDialogCommand so=new CreateStateDialogCommand();
-				so.execute(comboOptionInSt, stateGroup);
+				so.execute(comboOptionInSt, canvasContent);
 				
 			}
 		};
@@ -166,19 +167,37 @@ import logic.InitialState;
 	    firstScroll.setLayout(new GridLayout(1,false));
 	    firstScroll.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
-	    Composite firstContent = new Composite(firstScroll, SWT.NONE);
-	    firstContent.setLayout(new FillLayout());
-	    firstContent.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-
-	    Label ciao=new Label(firstContent, SWT.ALL);
-		ciao.setText("Actions and initial/final states for drawing the full plan ");
+	    canvasContent = new Composite(firstScroll, SWT.NONE);
+	    canvasContent.setLayout(new FillLayout());
+	    canvasContent.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+	    canvasContent.setToolTipText("composite for drwaing canvas");
 	    
-	    firstScroll.setContent(firstContent);
+//	    Label ciao=new Label(canvasContent, SWT.ALL);
+//		ciao.setText("Actions and initial/final states for drawing the full plan ");
+	    
+	    firstScroll.setContent(canvasContent);
 	    firstScroll.setExpandHorizontal(true);
 	    firstScroll.setExpandVertical(true);
-	    firstScroll.setMinSize(ciao.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+	    firstScroll.setMinSize(canvasContent.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 
 	    
+//		Canvas canvas=new Canvas(canvasContent, SWT.ALL);
+//		
+//		
+//		
+//		canvas.addPaintListener(new PaintListener() {
+//			
+//			@Override
+//			public void paintControl(PaintEvent e) {
+//				// TODO Auto-generated method stub
+//				
+//			
+//				Rectangle rect=new Rectangle(0, 0, 60, 30);
+//				
+//				e.gc.drawRectangle(rect);
+//				
+//			}
+//		});
 		
 		
 

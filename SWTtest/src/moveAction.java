@@ -49,7 +49,7 @@ public class moveAction {
 			}
 		});
 
-		composite.pack();
+		//composite.pack();
 		composite.setLocation(60, 60);
 		
 		final Point[] offset = new Point[1];

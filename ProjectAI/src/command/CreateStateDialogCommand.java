@@ -31,7 +31,7 @@ public class CreateStateDialogCommand implements ICommand {
 //				CreateSoDialog dialog = new CreateSoDialog(combo.getShell());
 		if (var2 instanceof Composite) {
 			Composite comp = (Composite) var2;
-			CreateSoDialog dialog = new CreateSoDialog(comp.getShell());
+			CreateSoDialog dialog = new CreateSoDialog(comp);
 			dialog.createContent();
 
 		}
