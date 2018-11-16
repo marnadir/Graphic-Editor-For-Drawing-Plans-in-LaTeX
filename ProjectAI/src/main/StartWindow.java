@@ -1,5 +1,9 @@
 package main;
 
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
@@ -9,17 +13,19 @@ public class StartWindow {
 
 	
 	public void start() {
-		Display display=new Display();
-		Shell shell=new Shell(display);
+		Display display = new Display();
+		Shell shell = new Shell(display);
 		shell.setSize(display.getClientArea().width, display.getClientArea().height);
 		shell.setText("Tool Drawing Plan");
-		
-		DrawWindow drawWindow=new DrawWindow(shell);
+		shell.setLayout(new FillLayout());
+
+		DrawWindow drawWindow = new DrawWindow(shell);
 		drawWindow.draw();
-		
+
 		shell.open();
-		while(!shell.isDisposed()) {
-			if (!display.readAndDispatch()) display.sleep();
+		while (!shell.isDisposed()) {
+			if (!display.readAndDispatch())
+				display.sleep();
 		}
 		display.dispose();
 		

@@ -5,6 +5,10 @@ import java.util.List;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
+import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.events.PaintEvent;
+import org.eclipse.swt.events.PaintListener;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.graphics.Image;
@@ -18,13 +22,16 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Layout;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Text;
 
 import command.CreateStateDialogCommand;
 import logic.InitialState;
@@ -36,6 +43,8 @@ import logic.InitialState;
 	Shell shell;
 	Group stateGroup;
 	SashForm sashForm;
+	Composite outer;
+	Composite inside;
 	
 	InitialState initialState=null;
 	
@@ -50,39 +59,28 @@ import logic.InitialState;
 
 	public void setLayout() {
 		
-		Composite over=new Composite(sashForm, SWT.ALL);
-		GridLayout gridLayout = new GridLayout();
-		gridLayout.numColumns = 1;
-		over.setLayout(gridLayout);
-		System.out.println(over.getClientArea());
+		outer=new Composite(sashForm, SWT.ALL);
+//		FormLayout formLayout = new FormLayout();
+//		formLayout.marginHeight = 5;
+//		formLayout.marginWidth = 5;
+//		formLayout.spacing = 5;
+//		outer.setLayout( formLayout );
+		outer.setLayout(new FillLayout());	
 		
-		Composite top = new Composite(over, SWT.ALL);
-		top.setLayout(new GridLayout());
-		
-		
-
-		
-		this.domainGroup = new Group(top, SWT.ALL);
+		this.domainGroup = new Group(outer, SWT.BORDER);
 		Font boldFont = new Font(this.domainGroup.getDisplay(), new FontData("Arial", 12, SWT.BOLD));
 		this.domainGroup.setText("Domain Graph");
 		this.domainGroup.setFont(boldFont);
 		
-		Composite bottom=new Composite(over, SWT.ALL);
-		bottom.setLayout(new GridLayout());
+		domainGroup.setLayout(new GridLayout(1, false));
 		
-		stateGroup=new Group(bottom, SWT.ALL);
-		stateGroup.setText("Items for the plan");
 		
-//		FormLayout ownerLayout = new FormLayout();
-//		ownerLayout.marginWidth = 5;
-//		ownerLayout.marginHeight = 5;
-//		this.domainGroup.setLayout(ownerLayout);
-		
-//		 GridLayout layout=new GridLayout();
-//		  layout.numColumns=3;
-//		  domainGroup.setLayout(layout);
-//		this.domainGroup.setLayout(new RowLayout(SWT.HORIZONTAL));
-		
+		inside=new Composite(domainGroup, SWT.ALL);
+	    inside.setLayout(new GridLayout(1, true));
+        inside.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+
+
+	
 		
 	}
 
@@ -90,7 +88,7 @@ import logic.InitialState;
 
 		//first group option
 		
-		Group subOption = new Group(this.domainGroup, SWT.ALL);
+		Group subOption = new Group(inside, SWT.ALL);
 		subOption.setText("Option");
 		subOption.setLayout(new GridLayout(4, false));
 		
@@ -155,25 +153,37 @@ import logic.InitialState;
 		bAction.setImage(img);
 		
 		
-	
+		stateGroup=new Group(inside,SWT.NONE);
+		stateGroup.setText("Items for the plan");
+		stateGroup.setLayout(new GridLayout(1, true));
+		GridData firstData = new GridData(SWT.FILL, SWT.FILL, true, true);
+		firstData.heightHint = 750;
+		stateGroup.setLayoutData(firstData);
+		
+		
+		
+		ScrolledComposite firstScroll = new ScrolledComposite(stateGroup, SWT.V_SCROLL | SWT.H_SCROLL);
+	    firstScroll.setLayout(new GridLayout(1,false));
+	    firstScroll.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+
+	    Composite firstContent = new Composite(firstScroll, SWT.NONE);
+	    firstContent.setLayout(new FillLayout());
+	    firstContent.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+
+	    Label ciao=new Label(firstContent, SWT.ALL);
+		ciao.setText("Actions and initial/final states for drawing the full plan ");
+	    
+	    firstScroll.setContent(firstContent);
+	    firstScroll.setExpandHorizontal(true);
+	    firstScroll.setExpandVertical(true);
+	    firstScroll.setMinSize(ciao.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+
+	    
+		
+		
 
 		
-//     	Composite comp=new Composite(stateGroup, SWT.ALL);
-//     	comp.pack();
-//     	
-//     	
-//     	Canvas canvans=new Canvas(stateGroup, SWT.ALL);
-//     	canvans.setSize(500, 500);
-//     	
-//     	canvans.addPaintListener(new PaintListener() {
-//			
-//			@Override
-//			public void paintControl(PaintEvent e) {
-//				e.gc.drawText("ciao come stai", 500, 500);
-//			}
-//		});
-//		System.out.print(canvans.getClientArea());
-//		System.out.print(comp.getClientArea());
+
 
 	}
 	

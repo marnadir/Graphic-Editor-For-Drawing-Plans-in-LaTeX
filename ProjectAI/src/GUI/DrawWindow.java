@@ -5,9 +5,13 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.custom.CTabItem;
 import org.eclipse.swt.custom.SashForm;
+import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.FormLayout;
 import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Listener;
@@ -22,6 +26,7 @@ import logic.IMenu;
 public class DrawWindow  {
 	
 	private Shell shell;
+	//private Composite child;
 	private IMenu menuBar;
 	private SashForm sashForm;
 	private Group domainGroup; 
@@ -32,6 +37,7 @@ public class DrawWindow  {
 	
 	public DrawWindow(Shell shell) {
 		this.shell=shell;
+		
 	}
 	
 	
@@ -42,6 +48,11 @@ public class DrawWindow  {
 	
 	
 	public void createMenuWindow() {
+		
+				
+	
+
+		
 		menuBar=new IMenu(shell,SWT.BAR);
 		MenuItem fileItem=menuBar.createItem("&File",SWT.CASCADE); 
 		IMenu menuFile=new IMenu(shell, SWT.DROP_DOWN);
@@ -95,10 +106,24 @@ public class DrawWindow  {
 	
 	
 	public void createContent() {
-		shell.setLayout(new FillLayout());
 	    
+		ScrolledComposite firstScroll = new ScrolledComposite(shell, SWT.V_SCROLL | SWT.H_SCROLL);
+	    firstScroll.setLayout(new GridLayout(1, false));
+	    firstScroll.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+
+//	    Composite firstContent = new Composite(firstScroll, SWT.NONE);
+//	    firstContent.setLayout(new GridLayout(1, false));
+//	    firstContent.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+
+	    sashForm = new SashForm(firstScroll, SWT.HORIZONTAL);
+
+	    
+	    firstScroll.setContent(sashForm);
+	    firstScroll.setExpandHorizontal(true);
+	    firstScroll.setExpandVertical(true);
 		
-	    sashForm = new SashForm(shell, SWT.HORIZONTAL);
+		
+	    
 	    
 	    
 		createDomainView=new CreateDomainView(sashForm);
@@ -108,6 +133,9 @@ public class DrawWindow  {
 		sashForm2 = new SashForm(sashForm, SWT.VERTICAL);
 		
 		sashForm.setWeights(new int[] {1,3});
+		
+
+		
 
 	    PlanView = new CTabFolder (sashForm2, SWT.PUSH);
 		PlanView.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
@@ -131,7 +159,6 @@ public class DrawWindow  {
 		Layout.marginHeight = 5;
 		console.setLayout(Layout);
 
-	    
 	    
 	    shell.setMaximized(false);
 	}
