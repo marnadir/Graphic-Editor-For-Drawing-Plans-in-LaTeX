@@ -17,11 +17,12 @@ import org.eclipse.swt.widgets.Label;
 public class InitialState {
 
 	ArrayList<String> precPos;
-//	ArrayList<String> precNeg;
+	Canvas canvasSo;
+
 	
 	public InitialState(ArrayList<String> pos) {
 		this.precPos=new ArrayList<>(pos);
-//		this.precNeg=new ArrayList<>(neg);
+
 	}
 	
 	//TODO pay attention for contraction, example we have A, can't be added notA
@@ -35,11 +36,11 @@ public class InitialState {
 	public void draw(Composite composite) {
 		
 		
-		Canvas canvas=new Canvas(composite, SWT.ALL);
+		canvasSo=new Canvas(composite, SWT.ALL);
 		
 		
 		
-		canvas.addPaintListener(new PaintListener() {
+		canvasSo.addPaintListener(new PaintListener() {
 			
 			@Override
 			public void paintControl(PaintEvent e) {
@@ -58,8 +59,6 @@ public class InitialState {
 				int posY=startY+10;
 				for(int i=0;i<numCond;i++) {
 			
-					
-					
 					e.gc.drawLine(startX, posY, startX+50, posY);
 					String string=precPos.get(i);
 					e.gc.drawString(string, startX+10, posY-20,false);
@@ -75,8 +74,15 @@ public class InitialState {
 		});
 		
 		composite.pack();
+		
+		
 	}
 	
+	public void elimanate() {
+		canvasSo.redraw();
+		precPos.clear();
+		
+	}
 
 	
 	//TODO method that write the latex code 

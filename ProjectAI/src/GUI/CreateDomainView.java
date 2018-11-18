@@ -34,6 +34,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
 import command.CreateStateDialogCommand;
+import command.ElimanateStateCommand;
 import logic.InitialState;
 
 
@@ -45,7 +46,8 @@ import logic.InitialState;
 	SashForm sashForm;
 	Composite outer;
 	Composite inside;
-	Composite canvasContent;
+	Composite contentIntState;
+	Combo comboOptionInSt;
 	
 	InitialState initialState=null;
 	
@@ -95,7 +97,7 @@ import logic.InitialState;
 		
 		Label initialState=new Label(subOption, SWT.ALL);
 		initialState.setText("Initial State: ");
-		Combo comboOptionInSt = new Combo (subOption, SWT.READ_ONLY);
+		comboOptionInSt = new Combo (subOption, SWT.READ_ONLY);
 		
 		
 		List<String> possibleOption=new ArrayList<String>();
@@ -112,13 +114,24 @@ import logic.InitialState;
 		bInitState.setImage(img);
 		
 		
-		
+		CreateStateDialogCommand so=new CreateStateDialogCommand();
+		ElimanateStateCommand elimCmd=new ElimanateStateCommand();
+
 		Listener buttonLister=new Listener() {
 			
 			@Override
 			public void handleEvent(Event event) {
-				CreateStateDialogCommand so=new CreateStateDialogCommand();
-				so.execute(comboOptionInSt, canvasContent);
+				
+				so.execute(comboOptionInSt, contentIntState);
+				if(elimCmd.canExecute(comboOptionInSt)) {
+					elimCmd.execute(comboOptionInSt,so.getInitialState());
+				}
+				
+				
+				
+			
+				
+				
 				
 			}
 		};
@@ -167,39 +180,20 @@ import logic.InitialState;
 	    firstScroll.setLayout(new GridLayout(1,false));
 	    firstScroll.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
-	    canvasContent = new Composite(firstScroll, SWT.NONE);
-	    canvasContent.setLayout(new FillLayout());
-	    canvasContent.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-	    canvasContent.setToolTipText("composite for drwaing canvas");
+	    contentIntState = new Composite(firstScroll, SWT.NONE);
+	    contentIntState.setLayout(new FillLayout());
+	    contentIntState.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+	    contentIntState.setToolTipText("composite for drwaing canvas");
 	    
-//	    Label ciao=new Label(canvasContent, SWT.ALL);
-//		ciao.setText("Actions and initial/final states for drawing the full plan ");
-	    
-	    firstScroll.setContent(canvasContent);
-	    firstScroll.setExpandHorizontal(true);
-	    firstScroll.setExpandVertical(true);
-	    firstScroll.setMinSize(canvasContent.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 
 	    
-//		Canvas canvas=new Canvas(canvasContent, SWT.ALL);
-//		
-//		
-//		
-//		canvas.addPaintListener(new PaintListener() {
-//			
-//			@Override
-//			public void paintControl(PaintEvent e) {
-//				// TODO Auto-generated method stub
-//				
-//			
-//				Rectangle rect=new Rectangle(0, 0, 60, 30);
-//				
-//				e.gc.drawRectangle(rect);
-//				
-//			}
-//		});
-		
-		
+	    firstScroll.setContent(contentIntState);
+	    firstScroll.setExpandHorizontal(true);
+	    firstScroll.setExpandVertical(true);
+	    firstScroll.setMinSize(contentIntState.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+
+	    
+
 
 		
 

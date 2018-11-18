@@ -1,9 +1,10 @@
 package GUI;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
@@ -17,6 +18,9 @@ public class CreateSoDialog extends IDialogNewState{
 	Composite compCanvas;
 	ArrayList<String> listPrec;
 	Shell dialog=this.getDialog();
+	boolean createdSo=false;
+	Combo CombOption;
+	InitialState initialState;
 	
 	public CreateSoDialog(Composite compCanvas) {
 		super(compCanvas.getShell());
@@ -38,8 +42,14 @@ public class CreateSoDialog extends IDialogNewState{
 			
 			@Override
 			public void handleEvent(Event event) {
-				InitialState initialState=new InitialState(listPrec);
-				initialState.draw(compCanvas);
+				 initialState=new InitialState(listPrec);
+				if(listPrec.size()>0) {
+					initialState.draw(compCanvas);
+					updateCombo();
+					
+				}
+				
+				
 				
 				dialog.close();
 			}
@@ -48,4 +58,27 @@ public class CreateSoDialog extends IDialogNewState{
 		return btn;
 	}
 
+	public void updateCombo() {
+		List<String> possibleOption=new ArrayList<String>();
+		possibleOption.add("Change");
+		possibleOption.add("Elimanate");
+		String[] convertList=possibleOption.toArray(new String[possibleOption.size()]);
+		this.CombOption.setItems (convertList);
+		this.CombOption.pack();
+	}
+	
+	public void setCombo(Combo combo) {
+		this.CombOption=combo;
+	}
+	
+	public void elimaneState() {
+		listPrec.clear();
+	}
+	
+	public InitialState getInitialState() {
+		return this.initialState;
+	}
+	
+	
+	
 }

@@ -1,8 +1,7 @@
 package command;
 
-
-
-import java.security.GeneralSecurityException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
@@ -10,17 +9,13 @@ import org.eclipse.swt.widgets.Composite;
 import GUI.CreateSoDialog;
 import logic.InitialState;
 
-public class CreateStateDialogCommand implements ICommand {
+public class ElimanateStateCommand  implements ICommand{
 
-	
-	CreateSoDialog dialog;
-	
-	// check if create as option
 	@Override
 	public boolean canExecute(Object var1, Object var2) {
 		if (var1 instanceof Combo) {
 			Combo combo = (Combo) var1;
-			if(combo.getText().equals("Create")) {
+			if(combo.getText().equals("Elimanate")) {
 				return true;
 			}
 		}
@@ -29,27 +24,29 @@ public class CreateStateDialogCommand implements ICommand {
 
 	@Override
 	public void execute(Object var1, Object var2) {
-
 		if (canExecute(var1, var2)) {
-			if (var2 instanceof Composite) {
-				Composite comp = (Composite) var2;
-				dialog = new CreateSoDialog(comp);
-				dialog.createContent();
+			if (var2 instanceof InitialState) {
+				InitialState so = (InitialState) var2;
+				so.elimanate();
+				
 				if(var1 instanceof Combo) {
 					Combo combo=(Combo)var1;
-					dialog.setCombo(combo);
-					
+					updateCombo(combo);
 				}
-				
 			}
 		}
+		
 	}
 
-	public InitialState getInitialState() {
-		return dialog.getInitialState();
+	
+	public void updateCombo(Combo combo) {
+		List<String> possibleOption=new ArrayList<String>();
+		possibleOption.add("Create");
+		String[] convertList=possibleOption.toArray(new String[possibleOption.size()]);
+		combo.setItems (convertList);
+		combo.pack();
 	}
 	
-
 	@Override
 	public String getName() {
 		// TODO Auto-generated method stub
