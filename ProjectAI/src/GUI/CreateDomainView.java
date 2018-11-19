@@ -46,8 +46,9 @@ import logic.InitialState;
 	SashForm sashForm;
 	Composite outer;
 	Composite inside;
-	Composite contentIntState;
+	Composite contentCanvas;
 	Combo comboOptionInSt;
+	Composite ContentInitState;
 	
 	InitialState initialState=null;
 	
@@ -122,7 +123,7 @@ import logic.InitialState;
 			@Override
 			public void handleEvent(Event event) {
 				
-				so.execute(comboOptionInSt, contentIntState);
+				so.execute(comboOptionInSt, ContentInitState);
 				if(elimCmd.canExecute(comboOptionInSt)) {
 					elimCmd.execute(comboOptionInSt,so.getInitialState());
 				}
@@ -180,17 +181,37 @@ import logic.InitialState;
 	    firstScroll.setLayout(new GridLayout(1,false));
 	    firstScroll.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
-	    contentIntState = new Composite(firstScroll, SWT.NONE);
-	    contentIntState.setLayout(new FillLayout());
-	    contentIntState.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-	    contentIntState.setToolTipText("composite for drwaing canvas");
+	    contentCanvas = new Composite(firstScroll, SWT.NONE);
+	    contentCanvas.setLayout(new FillLayout());
+	    contentCanvas.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+	    contentCanvas.setBackground(new Color (shell.getDisplay(), 255, 0, 0));//red
 	    
+	    Composite test=new Composite(contentCanvas, SWT.NONE);
+	    test.setLayout(new GridLayout(2, false));
+	   // ContentInitState.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+	    //test.setBackground(new Color (shell.getDisplay(), 0, 128, 0));//green
+	   
+	    
+	    ContentInitState=new Composite(test, SWT.PUSH);
+	    ContentInitState.setLayout(new FillLayout());
+	    ContentInitState.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+	    ContentInitState.setBackground(shell.getDisplay().getSystemColor(SWT.COLOR_BLACK));//green
 
 	    
-	    firstScroll.setContent(contentIntState);
+	    Composite ContentFinalState=new Composite(test, SWT.PUSH);
+	    ContentFinalState.setLayout(new FillLayout());
+	    ContentFinalState.setBackground(shell.getDisplay().getSystemColor(SWT.COLOR_BLUE));
+	   
+	   ContentFinalState.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+//	    
+//	    Composite ContentActions=new Composite(contentCanvas, SWT.NONE);
+//	    ContentActions.setLayout(new FillLayout());
+//	    ContentActions.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+	    
+	    firstScroll.setContent(contentCanvas);
 	    firstScroll.setExpandHorizontal(true);
 	    firstScroll.setExpandVertical(true);
-	    firstScroll.setMinSize(contentIntState.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+	    firstScroll.setMinSize(contentCanvas.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 
 	    
 
