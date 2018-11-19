@@ -182,7 +182,14 @@ import logic.InitialState;
 	    firstScroll.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
 	    contentCanvas = new Composite(firstScroll, SWT.NONE);
-	    contentCanvas.setLayout(new FillLayout());
+	    
+	    FillLayout fillLayout = new FillLayout();
+
+	       fillLayout.type = SWT.VERTICAL;
+
+	       contentCanvas.setLayout(fillLayout);
+ 
+     
 	    contentCanvas.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 	    contentCanvas.setBackground(new Color (shell.getDisplay(), 255, 0, 0));//red
 	    
@@ -191,6 +198,8 @@ import logic.InitialState;
 	   // ContentInitState.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 	    //test.setBackground(new Color (shell.getDisplay(), 0, 128, 0));//green
 	   
+	    Composite test2=new Composite(contentCanvas, SWT.NONE);
+	    test2.setLayout(new GridLayout(1, false));
 	    
 	    ContentInitState=new Composite(test, SWT.PUSH);
 	    ContentInitState.setLayout(new FillLayout());

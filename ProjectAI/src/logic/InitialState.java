@@ -18,7 +18,7 @@ public class InitialState {
 
 	ArrayList<String> precPos;
 	Canvas canvasSo;
-
+	Composite contentCanvas;
 	
 	public InitialState(ArrayList<String> pos) {
 		this.precPos=new ArrayList<>(pos);
@@ -35,7 +35,7 @@ public class InitialState {
 	
 	public void draw(Composite composite) {
 		
-		
+		this.contentCanvas=composite;
 		canvasSo=new Canvas(composite, SWT.ALL);
 		
 		
@@ -74,12 +74,13 @@ public class InitialState {
 		});
 		
 		composite.pack();
-		
+	
 		
 	}
 	
 	public void elimanate() {
 		canvasSo.redraw();
+		
 		precPos.clear();
 		
 	}
