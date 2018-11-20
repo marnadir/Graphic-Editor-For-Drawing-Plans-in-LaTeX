@@ -42,16 +42,17 @@ public class CreateSoDialog extends IDialogNewState{
 			
 			@Override
 			public void handleEvent(Event event) {
+				if(initialState == null) {
 				 initialState=new InitialState(listPrec);
+				}
 				if(listPrec.size()>0) {
+					initialState.update(listPrec);
 					initialState.draw(compCanvas);
 					updateCombo();
 					
 				}
-				
-				
-				
-				dialog.close();
+				saveContent();
+				dialog.setVisible(false);
 			}
 		};
 		
@@ -80,5 +81,9 @@ public class CreateSoDialog extends IDialogNewState{
 	}
 	
 	
+	
+//	public Shell getDialog() {
+//		return dialog;
+//	}
 	
 }

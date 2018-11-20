@@ -6,6 +6,7 @@ import java.security.GeneralSecurityException;
 
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Shell;
 
 import GUI.CreateSoDialog;
 import logic.InitialState;
@@ -49,6 +50,9 @@ public class CreateStateDialogCommand implements ICommand {
 		return dialog.getInitialState();
 	}
 	
+	public CreateSoDialog getCreateSoDialog() {
+		return dialog;
+	}
 
 	@Override
 	public String getName() {

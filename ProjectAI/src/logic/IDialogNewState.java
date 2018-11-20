@@ -19,7 +19,10 @@ public class IDialogNewState extends IDialog{
 	List list;
 	Text newPrec;
 	Button buttonNeg;
-
+	Composite composite;
+	Composite savedComposite;
+	
+	
 	public IDialogNewState(Shell shell) {
 		super(shell);
 		listPCond=new ArrayList<>();
@@ -30,7 +33,7 @@ public class IDialogNewState extends IDialog{
 	public void createContent() {
 		// TODO Auto-generated method stub
 		this.getLabel().setText("Create a new  state");
-		Composite composite = this.getComposite();
+		composite = this.getComposite();
 		composite.setLayout(new GridLayout(3, false));
 
 		newPrec = new Text(composite, SWT.SINGLE | SWT.BORDER);
@@ -69,7 +72,7 @@ public class IDialogNewState extends IDialog{
 					listPCond.add(cond);
 					list.add(cond);
 				}
-				
+				newPrec.setText("");
 			}
 		};
 		
@@ -94,9 +97,13 @@ public class IDialogNewState extends IDialog{
 
 	}
 	
+    public void saveContent() {
+    	savedComposite=composite;
+	}
 
-
-	
+	public Composite getSavedContent() {
+		return savedComposite;
+	}
 	public ArrayList<String> getCond(){
 		return listPCond;
 	}

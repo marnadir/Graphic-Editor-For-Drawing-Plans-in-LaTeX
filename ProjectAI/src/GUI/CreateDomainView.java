@@ -33,6 +33,7 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
+import command.ChangeStateCommand;
 import command.CreateStateDialogCommand;
 import command.ElimanateStateCommand;
 import logic.InitialState;
@@ -49,6 +50,7 @@ import logic.InitialState;
 	Composite contentCanvas;
 	Combo comboOptionInSt;
 	Composite ContentInitState;
+	 Composite test;
 	
 	InitialState initialState=null;
 	
@@ -98,9 +100,8 @@ import logic.InitialState;
 		
 		Label initialState=new Label(subOption, SWT.ALL);
 		initialState.setText("Initial State: ");
+		
 		comboOptionInSt = new Combo (subOption, SWT.READ_ONLY);
-		
-		
 		List<String> possibleOption=new ArrayList<String>();
 		possibleOption.add("Create");
 		String[] convertList=possibleOption.toArray(new String[possibleOption.size()]);
@@ -117,6 +118,7 @@ import logic.InitialState;
 		
 		CreateStateDialogCommand so=new CreateStateDialogCommand();
 		ElimanateStateCommand elimCmd=new ElimanateStateCommand();
+		ChangeStateCommand changeCmd=new ChangeStateCommand();
 
 		Listener buttonLister=new Listener() {
 			
@@ -126,6 +128,11 @@ import logic.InitialState;
 				so.execute(comboOptionInSt, ContentInitState);
 				if(elimCmd.canExecute(comboOptionInSt)) {
 					elimCmd.execute(comboOptionInSt,so.getInitialState());
+				    ContentInitState.setBackground(shell.getDisplay().getSystemColor(SWT.COLOR_RED));//green
+				
+				}else if(changeCmd.canExecute(comboOptionInSt)) {
+					changeCmd.execute(so.getCreateSoDialog(),so.getInitialState());
+					
 				}
 				
 				
@@ -182,40 +189,46 @@ import logic.InitialState;
 	    firstScroll.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
 	    contentCanvas = new Composite(firstScroll, SWT.NONE);
-	    
-	    FillLayout fillLayout = new FillLayout();
 
-	       fillLayout.type = SWT.VERTICAL;
+		FillLayout fillLayout = new FillLayout();
 
-	       contentCanvas.setLayout(fillLayout);
- 
+		fillLayout.type = SWT.VERTICAL;
+
+		contentCanvas.setLayout(fillLayout);
      
 	    contentCanvas.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 	    contentCanvas.setBackground(new Color (shell.getDisplay(), 255, 0, 0));//red
 	    
-	    Composite test=new Composite(contentCanvas, SWT.NONE);
+	    test=new Composite(contentCanvas, SWT.ALL);
 	    test.setLayout(new GridLayout(2, false));
-	   // ContentInitState.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+	   
+	    
+	    
+	    //test.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 	    //test.setBackground(new Color (shell.getDisplay(), 0, 128, 0));//green
 	   
-	    Composite test2=new Composite(contentCanvas, SWT.NONE);
+	    Composite test2=new Composite(contentCanvas, SWT.ALL);
 	    test2.setLayout(new GridLayout(1, false));
 	    
+	    
+	    
+	    
+	    
 	    ContentInitState=new Composite(test, SWT.PUSH);
-	    ContentInitState.setLayout(new FillLayout());
+	    ContentInitState.setLayout(new GridLayout(1, false));
 	    ContentInitState.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 	    ContentInitState.setBackground(shell.getDisplay().getSystemColor(SWT.COLOR_BLACK));//green
 
 	    
 	    Composite ContentFinalState=new Composite(test, SWT.PUSH);
-	    ContentFinalState.setLayout(new FillLayout());
+	    ContentFinalState.setLayout(new GridLayout(1, false));
 	    ContentFinalState.setBackground(shell.getDisplay().getSystemColor(SWT.COLOR_BLUE));
 	   
 	   ContentFinalState.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 //	    
-//	    Composite ContentActions=new Composite(contentCanvas, SWT.NONE);
-//	    ContentActions.setLayout(new FillLayout());
-//	    ContentActions.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+	    Composite ContentActions=new Composite(test2, SWT.NONE);
+	    ContentActions.setLayout(new FillLayout());
+	    ContentActions.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 	    
 	    firstScroll.setContent(contentCanvas);
 	    firstScroll.setExpandHorizontal(true);
