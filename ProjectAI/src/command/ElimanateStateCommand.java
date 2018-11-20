@@ -7,6 +7,8 @@ import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 
 import GUI.CreateSoDialog;
+import logic.GoalState;
+import logic.IState;
 import logic.InitialState;
 
 public class ElimanateStateCommand  implements ICommand{
@@ -25,9 +27,9 @@ public class ElimanateStateCommand  implements ICommand{
 	@Override
 	public void execute(Object var1, Object var2) {
 		if (canExecute(var1, var2)) {
-			if (var2 instanceof InitialState) {
-				InitialState so = (InitialState) var2;
-				so.elimanate();
+			if (var2 instanceof IState) {
+				IState state = (IState) var2;
+				state.elimanate();
 				
 				if(var1 instanceof Combo) {
 					Combo combo=(Combo)var1;

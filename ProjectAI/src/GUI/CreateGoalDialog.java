@@ -8,10 +8,11 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
-import logic.IDialogNewState;
-import logic.InitialState;
 
-public class CreateSoDialog extends IDialogNewState{
+import logic.GoalState;
+import logic.IDialogNewState;
+
+public class CreateGoalDialog extends IDialogNewState{
 	
 //	ArrayList<String> listPrec=this.getCond();
 
@@ -19,9 +20,9 @@ public class CreateSoDialog extends IDialogNewState{
 	ArrayList<String> listPrec;
 	Shell dialog=this.getDialog();
 	Combo CombOption;
-	InitialState initialState;
+	GoalState goalState;
 	
-	public CreateSoDialog(Composite compCanvas) {
+	public CreateGoalDialog(Composite compCanvas) {
 		super(compCanvas.getShell());
 		this.compCanvas=compCanvas;
 		listPrec=this.getCond();
@@ -32,7 +33,8 @@ public class CreateSoDialog extends IDialogNewState{
 	@Override
 	public void createContent() {
 		super.createContent();
-		this.getLabel().setText("Create a new initial state");
+		this.getLabel().setText("Create a new goal state");
+		dialog.pack();
 		
 	}
 	
@@ -42,13 +44,13 @@ public class CreateSoDialog extends IDialogNewState{
 			
 			@Override
 			public void handleEvent(Event event) {
-				if(initialState == null) {
-				 initialState=new InitialState(listPrec);
+				if(goalState == null) {
+					goalState=new GoalState(listPrec);
 				}
 				if(listPrec != null) {
-					initialState.update(listPrec);
+					goalState.update(listPrec);
 					if(listPrec.size()>0) {
-						initialState.draw(compCanvas);
+						goalState.draw(compCanvas);
 						updateCombo();
 					}
 				}
@@ -78,8 +80,8 @@ public class CreateSoDialog extends IDialogNewState{
 		listPrec.clear();
 	}
 	
-	public InitialState getInitialState() {
-		return this.initialState;
+	public GoalState getGoalState() {
+		return this.goalState;
 	}
 	
 	

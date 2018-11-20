@@ -5,11 +5,12 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
 
 import GUI.CreateSoDialog;
+import logic.IDialogNewState;
 import logic.InitialState;
 
 public class ChangeStateCommand  implements ICommand{
 
-	CreateSoDialog dialog;
+	IDialogNewState dialog;
 	Composite c;
 	@Override
 	public boolean canExecute(Object var1, Object var2) {
@@ -24,8 +25,8 @@ public class ChangeStateCommand  implements ICommand{
 
 	@Override
 	public void execute(Object var1, Object var2) {
-		if(var1 instanceof CreateSoDialog) {
-			dialog=(CreateSoDialog)var1;
+		if(var1 instanceof IDialogNewState) {
+			dialog=(IDialogNewState)var1;
 			dialog.getDialog().setVisible(true);
 
 		}

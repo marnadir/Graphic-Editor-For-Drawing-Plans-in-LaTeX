@@ -34,7 +34,8 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
 import command.ChangeStateCommand;
-import command.CreateStateDialogCommand;
+import command.CreateGoalDialogCommand;
+import command.CreateSoDialogCommand;
 import command.ElimanateStateCommand;
 import logic.InitialState;
 
@@ -51,7 +52,11 @@ import logic.InitialState;
 	Combo comboOptionInSt;
 	Composite ContentInitState;
 	 Composite test;
-	
+	 Composite test2;
+	 Composite ContentFinalState;
+	 Combo comboOptionFnst;
+	 
+	 
 	InitialState initialState=null;
 	
 
@@ -116,11 +121,11 @@ import logic.InitialState;
 		bInitState.setImage(img);
 		
 		
-		CreateStateDialogCommand so=new CreateStateDialogCommand();
+		CreateSoDialogCommand so=new CreateSoDialogCommand();
 		ElimanateStateCommand elimCmd=new ElimanateStateCommand();
 		ChangeStateCommand changeCmd=new ChangeStateCommand();
 
-		Listener buttonLister=new Listener() {
+		Listener buttonInLister=new Listener() {
 			
 			@Override
 			public void handleEvent(Event event) {
@@ -137,13 +142,33 @@ import logic.InitialState;
 				
 				
 				
-			
+			}
+		};
+		
+		CreateGoalDialogCommand goalCommand=new CreateGoalDialogCommand();
+		
+		Listener buttonFinLister=new Listener() {
+  
+        	//TODO	
+			@Override
+			public void handleEvent(Event event) {
+			    
+				goalCommand.execute(comboOptionFnst, ContentFinalState);
+				if(elimCmd.canExecute(comboOptionFnst)) {
+					elimCmd.execute(comboOptionFnst,goalCommand.getGoalState());
+					ContentFinalState.setBackground(shell.getDisplay().getSystemColor(SWT.COLOR_RED));//green
+				
+				}else if(changeCmd.canExecute(comboOptionFnst)) {
+					changeCmd.execute(goalCommand.getCreateGoalDialog(),goalCommand.getGoalState());
+					
+				}
 				
 				
 				
 			}
 		};
-		bInitState.addListener(SWT.Selection, buttonLister);
+		
+		bInitState.addListener(SWT.Selection, buttonInLister);
 		
 		GridData gridData = new GridData(GridData.CENTER, GridData.CENTER, false, false);
 		gridData.horizontalSpan = 2;
@@ -151,15 +176,22 @@ import logic.InitialState;
 		
 		Label finalState=new Label(subOption, SWT.ALL);
 		finalState.setText("Final State: ");
-		Combo comboOptionFnst = new Combo (subOption, SWT.READ_ONLY);
-		comboOptionFnst.setItems ("Create", "Change", "Eliminate");
+		comboOptionFnst = new Combo (subOption, SWT.READ_ONLY);
+		possibleOption=new ArrayList<String>();
+		possibleOption.add("Create");
+		convertList=possibleOption.toArray(new String[possibleOption.size()]);
+		comboOptionFnst.setItems (convertList);
 		comboOptionFnst.setBounds (clientArea.x, clientArea.y, 200, 200);
 		Button bFnState=new Button(subOption, SWT.PUSH);
 		bFnState.setImage(img);
 		
-		comboOptionFnst.setLayoutData(gridData);
+		
+        
+		bFnState.addListener(SWT.Selection, buttonFinLister);
 
 		
+		comboOptionFnst.setLayoutData(gridData);
+	
 		Label actionLabel=new Label(subOption, SWT.ALL);
 		actionLabel.setText("Action:  ");
 		Combo comboOptionAction = new Combo (subOption, SWT.READ_ONLY);
@@ -188,47 +220,46 @@ import logic.InitialState;
 	    firstScroll.setLayout(new GridLayout(1,false));
 	    firstScroll.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
-	    contentCanvas = new Composite(firstScroll, SWT.NONE);
-
+	    contentCanvas = new Composite(firstScroll, SWT.ALL);
 		FillLayout fillLayout = new FillLayout();
-
 		fillLayout.type = SWT.VERTICAL;
-
 		contentCanvas.setLayout(fillLayout);
      
-	    contentCanvas.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-	    contentCanvas.setBackground(new Color (shell.getDisplay(), 255, 0, 0));//red
-	    
 	    test=new Composite(contentCanvas, SWT.ALL);
-	    test.setLayout(new GridLayout(2, false));
+	    fillLayout = new FillLayout();
+		fillLayout.type = SWT.HORIZONTAL;
+		test.setLayout(fillLayout);
 	   
-	    
-	    
-	    //test.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-	    //test.setBackground(new Color (shell.getDisplay(), 0, 128, 0));//green
-	   
-	    Composite test2=new Composite(contentCanvas, SWT.ALL);
+	    test2=new Composite(contentCanvas, SWT.ALL);
 	    test2.setLayout(new GridLayout(1, false));
-	    
-	    
-	    
-	    
-	    
-	    ContentInitState=new Composite(test, SWT.PUSH);
-	    ContentInitState.setLayout(new GridLayout(1, false));
-	    ContentInitState.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-	    ContentInitState.setBackground(shell.getDisplay().getSystemColor(SWT.COLOR_BLACK));//green
+	    test2.setBackground(shell.getDisplay().getSystemColor(SWT.COLOR_RED));//green
 
 	    
-	    Composite ContentFinalState=new Composite(test, SWT.PUSH);
+	    
+	    ContentInitState=new Composite(test, SWT.ALL);
+	    ContentInitState.setLayout(new GridLayout(1, false));
+	   // ContentInitState.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+	    ContentInitState.setBackground(shell.getDisplay().getSystemColor(SWT.COLOR_BLACK));//green
+	    
+	    
+	    ContentFinalState=new Composite(test, SWT.ALL);
 	    ContentFinalState.setLayout(new GridLayout(1, false));
+	    //ContentFinalState.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 	    ContentFinalState.setBackground(shell.getDisplay().getSystemColor(SWT.COLOR_BLUE));
 	   
-	   ContentFinalState.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+
+	    
+	    
+	 
+	
+	    
 //	    
 	    Composite ContentActions=new Composite(test2, SWT.NONE);
 	    ContentActions.setLayout(new FillLayout());
 	    ContentActions.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+	    
+	    Label l2=new Label(ContentActions, SWT.ALL);
+		 l2.setText("dafds");  
 	    
 	    firstScroll.setContent(contentCanvas);
 	    firstScroll.setExpandHorizontal(true);
@@ -236,7 +267,7 @@ import logic.InitialState;
 	    firstScroll.setMinSize(contentCanvas.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 
 	    
-
+	  
 
 		
 

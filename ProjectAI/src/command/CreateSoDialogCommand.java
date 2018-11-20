@@ -2,7 +2,6 @@ package command;
 
 
 
-import java.security.GeneralSecurityException;
 
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
@@ -11,7 +10,7 @@ import org.eclipse.swt.widgets.Shell;
 import GUI.CreateSoDialog;
 import logic.InitialState;
 
-public class CreateStateDialogCommand implements ICommand {
+public class CreateSoDialogCommand implements ICommand {
 
 	
 	CreateSoDialog dialog;
