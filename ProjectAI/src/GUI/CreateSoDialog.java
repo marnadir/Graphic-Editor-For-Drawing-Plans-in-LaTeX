@@ -53,7 +53,6 @@ public class CreateSoDialog extends IDialogNewState{
 					}
 				}
 				
-				saveContent();
 				dialog.setVisible(false);
 			}
 		};

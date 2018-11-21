@@ -55,7 +55,6 @@ public class CreateGoalDialog extends IDialogNewState{
 					}
 				}
 				
-				saveContent();
 				dialog.setVisible(false);
 			}
 		};

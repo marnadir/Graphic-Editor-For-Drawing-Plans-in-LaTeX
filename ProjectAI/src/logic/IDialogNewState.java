@@ -20,7 +20,6 @@ public class IDialogNewState extends IDialog{
 	Text newPrec;
 	Button buttonNeg;
 	Composite composite;
-	Composite savedComposite;
 	
 	
 	public IDialogNewState(Shell shell) {
@@ -79,6 +78,7 @@ public class IDialogNewState extends IDialog{
 		return buttonListener;
 	}
 	
+	
 	public Listener getDelListener() {
 		Listener buttonListener = new Listener() {
 
@@ -97,13 +97,7 @@ public class IDialogNewState extends IDialog{
 
 	}
 	
-    public void saveContent() {
-    	savedComposite=composite;
-	}
-
-	public Composite getSavedContent() {
-		return savedComposite;
-	}
+ 
 	public ArrayList<String> getCond(){
 		return listPCond;
 	}

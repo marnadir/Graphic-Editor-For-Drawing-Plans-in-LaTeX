@@ -33,9 +33,10 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
+import Dialog.CreateActionDialogCommand;
+import Dialog.CreateGoalDialogCommand;
+import Dialog.CreateSoDialogCommand;
 import command.ChangeStateCommand;
-import command.CreateGoalDialogCommand;
-import command.CreateSoDialogCommand;
 import command.ElimanateStateCommand;
 import logic.InitialState;
 
@@ -51,11 +52,12 @@ import logic.InitialState;
 	Composite contentCanvas;
 	Combo comboOptionInSt;
 	Composite ContentInitState;
-	 Composite test;
-	 Composite test2;
-	 Composite ContentFinalState;
-	 Combo comboOptionFnst;
-	 
+	Composite test;
+	Composite test2;
+	Composite ContentFinalState;
+	Combo comboOptionFnst;
+	Composite ContentActions;
+	Combo comboOptionAction; 
 	 
 	InitialState initialState=null;
 	
@@ -120,55 +122,8 @@ import logic.InitialState;
 		Image img=new Image(shell.getDisplay(), "img/ok.png") ;
 		bInitState.setImage(img);
 		
-		
-		CreateSoDialogCommand so=new CreateSoDialogCommand();
-		ElimanateStateCommand elimCmd=new ElimanateStateCommand();
-		ChangeStateCommand changeCmd=new ChangeStateCommand();
 
-		Listener buttonInLister=new Listener() {
-			
-			@Override
-			public void handleEvent(Event event) {
-				
-				so.execute(comboOptionInSt, ContentInitState);
-				if(elimCmd.canExecute(comboOptionInSt)) {
-					elimCmd.execute(comboOptionInSt,so.getInitialState());
-				    ContentInitState.setBackground(shell.getDisplay().getSystemColor(SWT.COLOR_RED));//green
-				
-				}else if(changeCmd.canExecute(comboOptionInSt)) {
-					changeCmd.execute(so.getCreateSoDialog(),so.getInitialState());
-					
-				}
-				
-				
-				
-			}
-		};
 		
-		CreateGoalDialogCommand goalCommand=new CreateGoalDialogCommand();
-		
-		Listener buttonFinLister=new Listener() {
-  
-        	//TODO	
-			@Override
-			public void handleEvent(Event event) {
-			    
-				goalCommand.execute(comboOptionFnst, ContentFinalState);
-				if(elimCmd.canExecute(comboOptionFnst)) {
-					elimCmd.execute(comboOptionFnst,goalCommand.getGoalState());
-					ContentFinalState.setBackground(shell.getDisplay().getSystemColor(SWT.COLOR_RED));//green
-				
-				}else if(changeCmd.canExecute(comboOptionFnst)) {
-					changeCmd.execute(goalCommand.getCreateGoalDialog(),goalCommand.getGoalState());
-					
-				}
-				
-				
-				
-			}
-		};
-		
-		bInitState.addListener(SWT.Selection, buttonInLister);
 		
 		GridData gridData = new GridData(GridData.CENTER, GridData.CENTER, false, false);
 		gridData.horizontalSpan = 2;
@@ -187,24 +142,43 @@ import logic.InitialState;
 		
 		
         
-		bFnState.addListener(SWT.Selection, buttonFinLister);
 
 		
 		comboOptionFnst.setLayoutData(gridData);
 	
+		
+		
+		
+		
+		
 		Label actionLabel=new Label(subOption, SWT.ALL);
 		actionLabel.setText("Action:  ");
-		Combo comboOptionAction = new Combo (subOption, SWT.READ_ONLY);
-		comboOptionAction.setItems ("Create", "Change", "Eliminate");
+		
+		
+		comboOptionAction = new Combo (subOption, SWT.READ_ONLY);
+		possibleOption=new ArrayList<String>();
+		possibleOption.add("Create");
+		convertList=possibleOption.toArray(new String[possibleOption.size()]);
+		comboOptionAction.setItems (convertList);
 		comboOptionAction.setBounds (clientArea.x, clientArea.y, 200, 200);
+		
+		
 		Combo CombolistAction=new Combo(subOption, SWT.READ_ONLY);
 		//TODO action rename
 		ArrayList<String> listAction=new ArrayList<>();
-		listAction.add("Goto");
-		CombolistAction.setItems(listAction.get(0));
+		listAction.add("");
+		convertList=listAction.toArray(new String[possibleOption.size()]);
+		CombolistAction.setItems(convertList);
 		
-		Button bAction=new Button(subOption, SWT.PUSH);
-		bAction.setImage(img);
+		Button bntAct=new Button(subOption, SWT.PUSH);
+		bntAct.setImage(img);
+		
+		
+		
+		
+		
+		
+		
 		
 		
 		stateGroup=new Group(inside,SWT.NONE);
@@ -253,13 +227,13 @@ import logic.InitialState;
 	 
 	
 	    
-//	    
-	    Composite ContentActions=new Composite(test2, SWT.NONE);
+   
+	    ContentActions=new Composite(test2, SWT.NONE);
 	    ContentActions.setLayout(new FillLayout());
 	    ContentActions.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 	    
-	    Label l2=new Label(ContentActions, SWT.ALL);
-		 l2.setText("dafds");  
+	  
+	   
 	    
 	    firstScroll.setContent(contentCanvas);
 	    firstScroll.setExpandHorizontal(true);
@@ -268,6 +242,85 @@ import logic.InitialState;
 
 	    
 	  
+		
+		CreateSoDialogCommand so=new CreateSoDialogCommand();
+		ElimanateStateCommand elimCmd=new ElimanateStateCommand();
+		ChangeStateCommand changeCmd=new ChangeStateCommand();
+
+		Listener buttonInLister=new Listener() {
+			
+			@Override
+			public void handleEvent(Event event) {
+				
+				so.execute(comboOptionInSt, ContentInitState);
+				if(elimCmd.canExecute(comboOptionInSt)) {
+					elimCmd.execute(comboOptionInSt,so.getInitialState());
+				    ContentInitState.setBackground(shell.getDisplay().getSystemColor(SWT.COLOR_RED));//green
+				
+				}else if(changeCmd.canExecute(comboOptionInSt)) {
+					changeCmd.execute(so.getCreateSoDialog(),so.getInitialState());
+					
+				}
+				
+				
+				
+			}
+		};
+		
+		CreateGoalDialogCommand goalCommand=new CreateGoalDialogCommand();
+		
+		Listener buttonFinLister=new Listener() {
+  
+        	//TODO	
+			@Override
+			public void handleEvent(Event event) {
+			    
+				goalCommand.execute(comboOptionFnst, ContentFinalState);
+				if(elimCmd.canExecute(comboOptionFnst)) {
+					elimCmd.execute(comboOptionFnst,goalCommand.getGoalState());
+					ContentFinalState.setBackground(shell.getDisplay().getSystemColor(SWT.COLOR_RED));//green
+				
+				}else if(changeCmd.canExecute(comboOptionFnst)) {
+					changeCmd.execute(goalCommand.getCreateGoalDialog(),goalCommand.getGoalState());
+					
+				}
+				
+				
+				
+			}
+		};
+		
+		
+		CreateActionDialogCommand newAction=new CreateActionDialogCommand();
+		
+		Listener buttonActLister=new Listener() {
+  
+        	//TODO	
+			@Override
+			public void handleEvent(Event event) {
+			    
+				newAction.execute(comboOptionAction, ContentActions);
+//				if(elimCmd.canExecute(comboOptionFnst)) {
+//					elimCmd.execute(comboOptionFnst,goalCommand.getGoalState());
+//					ContentFinalState.setBackground(shell.getDisplay().getSystemColor(SWT.COLOR_RED));//green
+//				
+//				}else if(changeCmd.canExecute(comboOptionFnst)) {
+//					changeCmd.execute(goalCommand.getCreateGoalDialog(),goalCommand.getGoalState());
+//					
+//				}
+//				
+				
+				
+			}
+		};
+		
+		
+	    
+		bInitState.addListener(SWT.Selection, buttonInLister);
+		bFnState.addListener(SWT.Selection, buttonFinLister);
+		bntAct.addListener(SWT.Selection, buttonActLister);
+
+
 
 		
 

@@ -1,4 +1,4 @@
-package command;
+package Dialog;
 
 
 
@@ -12,6 +12,7 @@ import org.eclipse.swt.widgets.Shell;
 
 import GUI.CreateGoalDialog;
 import GUI.CreateSoDialog;
+import command.ICommand;
 import logic.GoalState;
 import logic.InitialState;
 
