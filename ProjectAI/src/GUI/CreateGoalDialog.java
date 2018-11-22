@@ -52,10 +52,10 @@ public class CreateGoalDialog extends IDialogNewState{
 					if(listPrec.size()>0) {
 						goalState.draw(compCanvas);
 						updateCombo();
+						dialog.setVisible(false);
+
 					}
 				}
-				
-				dialog.setVisible(false);
 			}
 		};
 		

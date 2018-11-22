@@ -50,10 +50,11 @@ public class CreateSoDialog extends IDialogNewState{
 					if(listPrec.size()>0) {
 						initialState.draw(compCanvas);
 						updateCombo();
+						dialog.setVisible(false);
 					}
 				}
 				
-				dialog.setVisible(false);
+				
 			}
 		};
 		

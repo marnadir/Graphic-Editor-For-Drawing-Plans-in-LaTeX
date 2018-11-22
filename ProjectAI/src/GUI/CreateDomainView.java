@@ -6,8 +6,14 @@ import java.util.List;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.events.FocusEvent;
+import org.eclipse.swt.events.FocusListener;
+import org.eclipse.swt.events.MenuDetectEvent;
+import org.eclipse.swt.events.MenuDetectListener;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontData;
@@ -38,6 +44,7 @@ import Dialog.CreateGoalDialogCommand;
 import Dialog.CreateSoDialogCommand;
 import command.ChangeStateCommand;
 import command.ElimanateStateCommand;
+import logic.Action;
 import logic.InitialState;
 
 
@@ -58,6 +65,11 @@ import logic.InitialState;
 	Combo comboOptionFnst;
 	Composite ContentActions;
 	Combo comboOptionAction; 
+	Combo[] comboAction;
+	Group subOption;
+	ArrayList<Action> actions=new ArrayList<>();
+	
+	CreateActionDialogCommand actionCommnd;
 	 
 	InitialState initialState=null;
 	
@@ -66,7 +78,8 @@ import logic.InitialState;
 		this.sashForm=sashForm;
 		this.shell=sashForm.getShell();
 		setLayout();
-		
+		 actionCommnd=new CreateActionDialogCommand();
+
 		
 	}
 
@@ -91,6 +104,7 @@ import logic.InitialState;
 		inside=new Composite(domainGroup, SWT.ALL);
 	    inside.setLayout(new GridLayout(1, true));
         inside.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+        
 
 
 	
@@ -101,9 +115,11 @@ import logic.InitialState;
 
 		//first group option
 		
-		Group subOption = new Group(inside, SWT.ALL);
+		subOption = new Group(inside, SWT.ALL);
 		subOption.setText("Option");
+
 		subOption.setLayout(new GridLayout(4, false));
+	
 		
 		Label initialState=new Label(subOption, SWT.ALL);
 		initialState.setText("Initial State: ");
@@ -161,14 +177,33 @@ import logic.InitialState;
 		convertList=possibleOption.toArray(new String[possibleOption.size()]);
 		comboOptionAction.setItems (convertList);
 		comboOptionAction.setBounds (clientArea.x, clientArea.y, 200, 200);
+		gridData = new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false);
+		comboOptionAction.setLayoutData(gridData);
 		
 		
-		Combo CombolistAction=new Combo(subOption, SWT.READ_ONLY);
-		//TODO action rename
-		ArrayList<String> listAction=new ArrayList<>();
-		listAction.add("");
-		convertList=listAction.toArray(new String[possibleOption.size()]);
-		CombolistAction.setItems(convertList);
+		
+		Combo combolistAction=new Combo(subOption, SWT.READ_ONLY);
+
+		comboOptionAction.addListener(SWT.Selection, new Listener() {
+			
+			@Override
+			public void handleEvent(Event event) {
+				if(comboOptionAction.getText().equals("Create")) {
+					combolistAction.clearSelection();
+				}else {
+					if(true) {
+						ArrayList<String> possibleOption=new ArrayList<String>();
+						for(Action action:actions) {
+							possibleOption.add(action.getName());
+						}
+						String[] convertList=possibleOption.toArray(new String[possibleOption.size()]);
+						comboOptionAction.setItems (convertList);
+					}
+				}
+				
+			}
+		});
+		
 		
 		Button bntAct=new Button(subOption, SWT.PUSH);
 		bntAct.setImage(img);
@@ -291,7 +326,9 @@ import logic.InitialState;
 		};
 		
 		
-		CreateActionDialogCommand newAction=new CreateActionDialogCommand();
+		comboAction=new Combo[2];
+		comboAction[0]=comboOptionAction;
+		comboAction[1]=combolistAction;
 		
 		Listener buttonActLister=new Listener() {
   
@@ -299,7 +336,7 @@ import logic.InitialState;
 			@Override
 			public void handleEvent(Event event) {
 			    
-				newAction.execute(comboOptionAction, ContentActions);
+				actionCommnd.execute( comboAction,ContentActions);
 //				if(elimCmd.canExecute(comboOptionFnst)) {
 //					elimCmd.execute(comboOptionFnst,goalCommand.getGoalState());
 //					ContentFinalState.setBackground(shell.getDisplay().getSystemColor(SWT.COLOR_RED));//green

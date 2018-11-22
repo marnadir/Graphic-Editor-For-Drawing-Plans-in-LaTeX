@@ -28,6 +28,9 @@ import logic.InitialState;
 
 public class CreateActionDialog extends IDialog {
 
+	
+	Shell dialog=this.getDialog();
+	Composite compCanvas;
 	Composite composite;
 	List listPrec;
 	List listEff;
@@ -37,12 +40,17 @@ public class CreateActionDialog extends IDialog {
 	Button buttonNegEff;
 	Text actionName;
 	
+	Combo combOption;
+	Combo comboAction;
+	
 	ArrayList<String>  prec;  
 	ArrayList<String>  effect;
+	ArrayList<Action> actionList=new ArrayList<>();
 	  
 	
 	public CreateActionDialog(Composite composite) {
 		super(composite.getShell());
+		this.compCanvas=composite;
 		prec=new  ArrayList<>();
 		effect=new ArrayList<>();
 		// TODO Auto-generated constructor stub
@@ -225,11 +233,52 @@ public class CreateActionDialog extends IDialog {
 			public void handleEvent(Event event) {
 				if(!actionName.equals("")) {
 					Action action=new Action(actionName.getText(), prec, effect);
-					action.draw(composite);
+					action.draw(compCanvas);
+					updateComboOption();
+					updateComboAction();
+					actionList.add(action);
+					dialog.setVisible(false);
 				}
 			}
 		};
 		
 		return btn;
 	}
+
+
+	public void updateComboOption() {
+		ArrayList<String> possibleOption=new ArrayList<String>();
+		possibleOption.add("Create");
+		possibleOption.add("Change");
+		possibleOption.add("Elimanate");
+		String[] convertList=possibleOption.toArray(new String[possibleOption.size()]);
+		this.combOption.setItems (convertList);
+		//this.combOption.pack();
+	}
+	
+	
+	public void updateComboAction() {
+		
+		this.comboAction.add(actionName.getText());
+		this.comboAction.pack();
+		dialog.pack();
+	}
+	
+	public void setComboOption(Combo combo) {
+		this.combOption=combo;
+	}
+
+	public void setComboAction(Combo combo) {
+		this.comboAction=combo;
+	}
+
+	public ArrayList<Action> getActionList(){
+		return actionList;
+	}
+
+
+
+
+
 }
+

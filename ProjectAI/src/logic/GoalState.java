@@ -49,7 +49,7 @@ public class GoalState extends IState{
 					e.gc.drawLine(startX, posY, startX - 50, posY);
 					String string = precPos.get(i);
 			
-					e.gc.drawString(string, startX - (5+string.length()*8), posY - 20, false);
+					e.gc.drawString(string, startX - (5+string.length()*10), posY - 20, false);
 
 					posY = posY + 30;
 
