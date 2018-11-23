@@ -11,13 +11,13 @@ import logic.GoalState;
 import logic.IState;
 import logic.InitialState;
 
-public class ElimanateStateCommand  implements ICommand{
+public class EliminateStateCommand  implements ICommand{
 
 	@Override
 	public boolean canExecute(Object var1, Object var2) {
 		if (var1 instanceof Combo) {
 			Combo combo = (Combo) var1;
-			if(combo.getText().equals("Elimanate")) {
+			if(combo.getText().equals("Eliminate")) {
 				return true;
 			}
 		}

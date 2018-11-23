@@ -45,14 +45,16 @@ public class CreateActionDialog extends IDialog {
 	
 	ArrayList<String>  prec;  
 	ArrayList<String>  effect;
-	ArrayList<Action> actionList=new ArrayList<>();
+	Action action;
+	ArrayList<Action> actions;
 	  
 	
-	public CreateActionDialog(Composite composite) {
+	public CreateActionDialog(Composite composite,ArrayList<Action> a) {
 		super(composite.getShell());
 		this.compCanvas=composite;
 		prec=new  ArrayList<>();
 		effect=new ArrayList<>();
+		actions=a;
 		// TODO Auto-generated constructor stub
 	}
 
@@ -232,11 +234,11 @@ public class CreateActionDialog extends IDialog {
 			@Override
 			public void handleEvent(Event event) {
 				if(!actionName.equals("")) {
-					Action action=new Action(actionName.getText(), prec, effect);
+					action=new Action(actionName.getText(), prec, effect);
 					action.draw(compCanvas);
+					actions.add(action);
 					updateComboOption();
 					updateComboAction();
-					actionList.add(action);
 					dialog.setVisible(false);
 				}
 			}
@@ -250,7 +252,7 @@ public class CreateActionDialog extends IDialog {
 		ArrayList<String> possibleOption=new ArrayList<String>();
 		possibleOption.add("Create");
 		possibleOption.add("Change");
-		possibleOption.add("Elimanate");
+		possibleOption.add("Eliminate");
 		String[] convertList=possibleOption.toArray(new String[possibleOption.size()]);
 		this.combOption.setItems (convertList);
 		//this.combOption.pack();
@@ -258,9 +260,14 @@ public class CreateActionDialog extends IDialog {
 	
 	
 	public void updateComboAction() {
+		String[] convertList=new String[actions.size()];	
+		for(int i=0;i<actions.size();i++) {
+			String name=actions.get(i).getName();
+			convertList[i]=name;
 		
-		this.comboAction.add(actionName.getText());
-		this.comboAction.pack();
+		}
+		this.comboAction.setItems (convertList);
+		//this.comboAction.pack();
 		dialog.pack();
 	}
 	
@@ -271,9 +278,14 @@ public class CreateActionDialog extends IDialog {
 	public void setComboAction(Combo combo) {
 		this.comboAction=combo;
 	}
-
-	public ArrayList<Action> getActionList(){
-		return actionList;
+	
+	public void updateAction() {
+		
+	}
+	
+	
+	public void setListAction(ArrayList<Action> actions){
+		this.actions=actions;
 	}
 
 

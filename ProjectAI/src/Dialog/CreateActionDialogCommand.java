@@ -15,6 +15,7 @@ public class CreateActionDialogCommand implements ICommand {
 
 	
 	CreateActionDialog dialog;
+	ArrayList<Action> actions;
 	
 	@Override
 	public boolean canExecute(Object var1, Object var2) {
@@ -34,17 +35,24 @@ public class CreateActionDialogCommand implements ICommand {
 		if (canExecute(var1, var2)) {
 			if (var2 instanceof Composite) {
 				Composite comp = (Composite) var2;
-				dialog = new CreateActionDialog(comp);
+//				ArrayList<Action> list=getActionList();
+				dialog = new CreateActionDialog(comp,actions);
 				dialog.createContent();
 				if (var1 instanceof Combo[]) {
 					Combo[] combo = (Combo[]) var1;
 					Combo comboOption = (Combo) combo[0];
 					Combo comboAction = (Combo) combo[1];
-								
+					dialog.setListAction(actions);		
 					dialog.setComboOption(comboOption);
 					dialog.setComboAction(comboAction);
+					
 
-				}
+				}	
+//				if(list !=null) {
+//					list.addAll(getActionList());
+//					setActionList(list);
+//				}
+				
 
 			}
 		}
@@ -58,10 +66,18 @@ public class CreateActionDialogCommand implements ICommand {
 		// TODO Auto-generated method stub
 		return null;
 	}
+   public void setAction(ArrayList<Action> a) {
+	   actions=a;
+   }
+	
+	
 
-	public ArrayList<Action> getActionList() {
-		return dialog.getActionList();
-	}
+	
+//
+//	
+//	public void setActionList(ArrayList<Action> a) {
+//		action=a;
+//	}
 	
 	
 }

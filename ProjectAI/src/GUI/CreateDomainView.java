@@ -43,7 +43,8 @@ import Dialog.CreateActionDialogCommand;
 import Dialog.CreateGoalDialogCommand;
 import Dialog.CreateSoDialogCommand;
 import command.ChangeStateCommand;
-import command.ElimanateStateCommand;
+import command.EliminateActionCommand;
+import command.EliminateStateCommand;
 import logic.Action;
 import logic.InitialState;
 
@@ -65,9 +66,10 @@ import logic.InitialState;
 	Combo comboOptionFnst;
 	Composite ContentActions;
 	Combo comboOptionAction; 
+	Combo combolistAction;
 	Combo[] comboAction;
 	Group subOption;
-	ArrayList<Action> actions=new ArrayList<>();
+	ArrayList<Action> actions;
 	
 	CreateActionDialogCommand actionCommnd;
 	 
@@ -79,7 +81,8 @@ import logic.InitialState;
 		this.shell=sashForm.getShell();
 		setLayout();
 		 actionCommnd=new CreateActionDialogCommand();
-
+		 actions=new ArrayList<>();
+		
 		
 	}
 
@@ -153,17 +156,13 @@ import logic.InitialState;
 		convertList=possibleOption.toArray(new String[possibleOption.size()]);
 		comboOptionFnst.setItems (convertList);
 		comboOptionFnst.setBounds (clientArea.x, clientArea.y, 200, 200);
+		comboOptionFnst.setLayoutData(gridData);
+
 		Button bFnState=new Button(subOption, SWT.PUSH);
 		bFnState.setImage(img);
 		
-		
-        
 
-		
-		comboOptionFnst.setLayoutData(gridData);
-	
-		
-		
+
 		
 		
 		
@@ -180,24 +179,27 @@ import logic.InitialState;
 		gridData = new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false);
 		comboOptionAction.setLayoutData(gridData);
 		
-		
-		
-		Combo combolistAction=new Combo(subOption, SWT.READ_ONLY);
+	
+		 combolistAction=new Combo(subOption, SWT.READ_ONLY);
+		 gridData = new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false);
+		 combolistAction.setLayoutData(gridData);
+		 
 
 		comboOptionAction.addListener(SWT.Selection, new Listener() {
 			
 			@Override
 			public void handleEvent(Event event) {
 				if(comboOptionAction.getText().equals("Create")) {
-					combolistAction.clearSelection();
-				}else {
-					if(true) {
+					combolistAction.removeAll();
+					
+				}else if(comboOptionAction.getText().equals("Eliminate") || comboOptionAction.getText().equals("Change")) {
+					if(actions.size()>0 ) {
 						ArrayList<String> possibleOption=new ArrayList<String>();
 						for(Action action:actions) {
 							possibleOption.add(action.getName());
 						}
 						String[] convertList=possibleOption.toArray(new String[possibleOption.size()]);
-						comboOptionAction.setItems (convertList);
+						combolistAction.setItems (convertList);
 					}
 				}
 				
@@ -208,11 +210,7 @@ import logic.InitialState;
 		Button bntAct=new Button(subOption, SWT.PUSH);
 		bntAct.setImage(img);
 		
-		
-		
-		
-		
-		
+	
 		
 		
 		
@@ -263,12 +261,13 @@ import logic.InitialState;
 	
 	    
    
-	    ContentActions=new Composite(test2, SWT.NONE);
-	    ContentActions.setLayout(new FillLayout());
+	    ContentActions=new Composite(test2, SWT.ALL);
+	    ContentActions.setLayout(new GridLayout(2, false));
 	    ContentActions.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 	    
-	  
-	   
+	    
+
+	    
 	    
 	    firstScroll.setContent(contentCanvas);
 	    firstScroll.setExpandHorizontal(true);
@@ -279,7 +278,7 @@ import logic.InitialState;
 	  
 		
 		CreateSoDialogCommand so=new CreateSoDialogCommand();
-		ElimanateStateCommand elimCmd=new ElimanateStateCommand();
+		EliminateStateCommand elimCmd=new EliminateStateCommand();
 		ChangeStateCommand changeCmd=new ChangeStateCommand();
 
 		Listener buttonInLister=new Listener() {
@@ -329,6 +328,8 @@ import logic.InitialState;
 		comboAction=new Combo[2];
 		comboAction[0]=comboOptionAction;
 		comboAction[1]=combolistAction;
+		EliminateActionCommand elimAct=new EliminateActionCommand();
+		
 		
 		Listener buttonActLister=new Listener() {
   
@@ -336,21 +337,25 @@ import logic.InitialState;
 			@Override
 			public void handleEvent(Event event) {
 			    
-				actionCommnd.execute( comboAction,ContentActions);
-//				if(elimCmd.canExecute(comboOptionFnst)) {
-//					elimCmd.execute(comboOptionFnst,goalCommand.getGoalState());
-//					ContentFinalState.setBackground(shell.getDisplay().getSystemColor(SWT.COLOR_RED));//green
-//				
+				actionCommnd.setAction(actions);
+				actionCommnd.execute(comboAction,ContentActions);
+				
+			
+			    elimAct.execute(comboAction,actions);
+					
+				subOption.pack();
 //				}else if(changeCmd.canExecute(comboOptionFnst)) {
 //					changeCmd.execute(goalCommand.getCreateGoalDialog(),goalCommand.getGoalState());
 //					
-//				}
+				}
 //				
 				
 				
-			}
+			
 		};
 		
+
+
 		
 	    
 		bInitState.addListener(SWT.Selection, buttonInLister);

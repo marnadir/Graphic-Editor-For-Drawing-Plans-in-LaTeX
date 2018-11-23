@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Canvas;
@@ -17,6 +18,7 @@ public class Action {
 	ArrayList<String> effect;
 	Canvas canvas;
 	Composite contentCanvas;
+	int max;
 
 	
 	public Action(String name,ArrayList<String> prec, ArrayList<String> eff) {
@@ -33,9 +35,8 @@ public class Action {
 			this.contentCanvas = comp;
 			canvas = new Canvas(comp, SWT.ALL);
 			// canvasSo.setLayout(new FillLayout());
-			canvas.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-			canvas.setBackground(comp.getDisplay().getSystemColor(SWT.COLOR_DARK_CYAN));// green
-			canvas.setSize(comp.getSize());
+//			canvas.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+			//canvas.setSize(comp.getSize().x/2,comp.getSize().y/2);
 
 		}
 		canvas.addPaintListener(new PaintListener() {
@@ -50,8 +51,9 @@ public class Action {
 				int startY = comp.getLocation().y + 55;
 				
 				
+				
 				int heightRect=40;
-				int max=numPrec;
+				max=numPrec;
 				if(numEff>numPrec) {
 					max=numEff;
 				}
@@ -105,10 +107,28 @@ public class Action {
 			}
 		});
 		
+		int sizeString=name.length()*12+120;
+		canvas.setSize(sizeString, max+120);
+		canvas.setBackground(comp.getDisplay().getSystemColor((int) (SWT.COLOR_BLACK*Math.random())));// green
+
+		
+		
+     
+		
+		
 	}
 	
 	public String getName() {
 		
 		return name;
 	}
+	
+	public void elimanate() {
+//		canvasSo.redraw();
+//		canvasSo.layout();
+		canvas.dispose();
+		
+	}
+
+
 }
