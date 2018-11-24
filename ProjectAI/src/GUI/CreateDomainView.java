@@ -1,43 +1,27 @@
 package GUI;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.custom.ScrolledComposite;
-import org.eclipse.swt.events.FocusEvent;
-import org.eclipse.swt.events.FocusListener;
-import org.eclipse.swt.events.MenuDetectEvent;
-import org.eclipse.swt.events.MenuDetectListener;
-import org.eclipse.swt.events.PaintEvent;
-import org.eclipse.swt.events.PaintListener;
-import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
-import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.FillLayout;
-import org.eclipse.swt.layout.FormAttachment;
-import org.eclipse.swt.layout.FormData;
-import org.eclipse.swt.layout.FormLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Layout;
+import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Text;
+import org.eclipse.swt.widgets.Table;
 
 import Dialog.CreateActionDialogCommand;
 import Dialog.CreateGoalDialogCommand;
@@ -65,9 +49,7 @@ import logic.InitialState;
 	Composite ContentFinalState;
 	Combo comboOptionFnst;
 	Composite ContentActions;
-	Combo comboOptionAction; 
-	Combo combolistAction;
-	Combo[] comboAction;
+	List listAction;
 	Group subOption;
 	ArrayList<Action> actions;
 	
@@ -128,7 +110,7 @@ import logic.InitialState;
 		initialState.setText("Initial State: ");
 		
 		comboOptionInSt = new Combo (subOption, SWT.READ_ONLY);
-		List<String> possibleOption=new ArrayList<String>();
+		ArrayList<String> possibleOption=new ArrayList<String>();
 		possibleOption.add("Create");
 		String[] convertList=possibleOption.toArray(new String[possibleOption.size()]);
 		comboOptionInSt.setItems (convertList);
@@ -170,44 +152,47 @@ import logic.InitialState;
 		actionLabel.setText("Action:  ");
 		
 		
-		comboOptionAction = new Combo (subOption, SWT.READ_ONLY);
-		possibleOption=new ArrayList<String>();
-		possibleOption.add("Create");
-		convertList=possibleOption.toArray(new String[possibleOption.size()]);
-		comboOptionAction.setItems (convertList);
-		comboOptionAction.setBounds (clientArea.x, clientArea.y, 200, 200);
-		gridData = new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false);
-		comboOptionAction.setLayoutData(gridData);
 		
-	
-		 combolistAction=new Combo(subOption, SWT.READ_ONLY);
-		 gridData = new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false);
-		 combolistAction.setLayoutData(gridData);
-		 
-
-		comboOptionAction.addListener(SWT.Selection, new Listener() {
-			
-			@Override
-			public void handleEvent(Event event) {
-				if(comboOptionAction.getText().equals("Create")) {
-					combolistAction.removeAll();
-					
-				}else if(comboOptionAction.getText().equals("Eliminate") || comboOptionAction.getText().equals("Change")) {
-					if(actions.size()>0 ) {
-						ArrayList<String> possibleOption=new ArrayList<String>();
-						for(Action action:actions) {
-							possibleOption.add(action.getName());
-						}
-						String[] convertList=possibleOption.toArray(new String[possibleOption.size()]);
-						combolistAction.setItems (convertList);
-					}
-				}
-				
-			}
-		});
+		
+//		comboOptionAction = new Combo (subOption, SWT.READ_ONLY);
+//		possibleOption=new ArrayList<String>();
+//		possibleOption.add("Create");
+//		convertList=possibleOption.toArray(new String[possibleOption.size()]);
+//		comboOptionAction.setItems (convertList);
+//		comboOptionAction.setBounds (clientArea.x, clientArea.y, 200, 200);
+//		gridData = new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false);
+//		comboOptionAction.setLayoutData(gridData);
+//		
+//	
+//		 combolistAction=new Combo(subOption, SWT.READ_ONLY);
+//		 gridData = new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false);
+//		 combolistAction.setLayoutData(gridData);
+//		 
+//
+//		comboOptionAction.addListener(SWT.Selection, new Listener() {
+//			
+//			@Override
+//			public void handleEvent(Event event) {
+//				if(comboOptionAction.getText().equals("Create")) {
+//					combolistAction.removeAll();
+//					
+//				}else if(comboOptionAction.getText().equals("Eliminate") || comboOptionAction.getText().equals("Change")) {
+//					if(actions.size()>0 ) {
+//						ArrayList<String> possibleOption=new ArrayList<String>();
+//						for(Action action:actions) {
+//							possibleOption.add(action.getName());
+//						}
+//						String[] convertList=possibleOption.toArray(new String[possibleOption.size()]);
+//						combolistAction.setItems (convertList);
+//					}
+//				}
+//				
+//			}
+//		});
 		
 		
 		Button bntAct=new Button(subOption, SWT.PUSH);
+		img=new Image(shell.getDisplay(), "img/addCond.png");
 		bntAct.setImage(img);
 		
 	
@@ -258,13 +243,27 @@ import logic.InitialState;
 
 	    
 	    
-	 
-	
 	    
+	    
+	    final ScrolledComposite composite = new ScrolledComposite(test2, SWT.V_SCROLL);
+	    composite.setLayout(new GridLayout());
+	    composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+
+	    listAction=new List(composite, SWT.ALL);
+	    listAction.setSize(20, 20);
+	   
+
+	    composite.setContent(listAction);
+	    composite.setExpandHorizontal(true);
+	    composite.setExpandVertical(true);
+	    composite.setAlwaysShowScrollBars(true);
+	    composite.setMinSize(listAction.computeSize(SWT.DEFAULT, SWT.DEFAULT));
    
 	    ContentActions=new Composite(test2, SWT.ALL);
 	    ContentActions.setLayout(new FillLayout());
 	    ContentActions.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+	    
+	    
 	    
 	    
 
@@ -326,9 +325,7 @@ import logic.InitialState;
 		};
 		
 		
-		comboAction=new Combo[2];
-		comboAction[0]=comboOptionAction;
-		comboAction[1]=combolistAction;
+		
 		EliminateActionCommand elimAct=new EliminateActionCommand();
 		
 		
@@ -342,10 +339,10 @@ import logic.InitialState;
 			    
 			    
 				actionCommnd.setAction(actions);
-				actionCommnd.execute(comboAction,ContentActions);
+				actionCommnd.execute(ContentActions);
 				
 			
-			    elimAct.execute(comboAction,actions);
+			    elimAct.execute(actions);
 					
 				subOption.pack();
 //				}else if(changeCmd.canExecute(comboOptionFnst)) {
