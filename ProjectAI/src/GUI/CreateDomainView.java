@@ -238,7 +238,8 @@ import logic.InitialState;
 		test.setLayout(fillLayout);
 	   
 	    test2=new Composite(contentCanvas, SWT.ALL);
-	    test2.setLayout(new GridLayout(1, false));
+	   // test2.setLayout(new GridLayout(1, false));
+	    test2.setLayout(new GridLayout(2,false));
 	    test2.setBackground(shell.getDisplay().getSystemColor(SWT.COLOR_RED));//green
 
 	    
@@ -262,7 +263,7 @@ import logic.InitialState;
 	    
    
 	    ContentActions=new Composite(test2, SWT.ALL);
-	    ContentActions.setLayout(new GridLayout(2, false));
+	    ContentActions.setLayout(new FillLayout());
 	    ContentActions.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 	    
 	    
@@ -336,6 +337,9 @@ import logic.InitialState;
         	//TODO	
 			@Override
 			public void handleEvent(Event event) {
+				
+				
+			    
 			    
 				actionCommnd.setAction(actions);
 				actionCommnd.execute(comboAction,ContentActions);

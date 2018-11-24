@@ -10,6 +10,7 @@ import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 
 public class Action {
 
@@ -37,6 +38,7 @@ public class Action {
 			// canvasSo.setLayout(new FillLayout());
 //			canvas.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 			//canvas.setSize(comp.getSize().x/2,comp.getSize().y/2);
+			canvas.layout();
 
 		}
 		canvas.addPaintListener(new PaintListener() {
@@ -44,13 +46,22 @@ public class Action {
 			@Override
 			public void paintControl(PaintEvent e) {
 
+				int num= comp.getChildren().length;
+			
+				
 				int numPrec = prec.size();
 				int numEff=effect.size();
 
-				int startX = comp.getLocation().x + 55;
-				int startY = comp.getLocation().y + 55;
 				
 				
+				int startX = canvas.getLocation().x ;
+				int startY = canvas.getLocation().y ;
+				
+				System.out.println(startX);
+				System.out.println(startY);
+				System.out.println(num);
+
+
 				
 				int heightRect=40;
 				max=numPrec;
@@ -109,8 +120,7 @@ public class Action {
 		
 		int sizeString=name.length()*12+120;
 		canvas.setSize(sizeString, max+120);
-		canvas.setBackground(comp.getDisplay().getSystemColor((int) (SWT.COLOR_BLACK*Math.random())));// green
-
+		canvas.setBackground(comp.getDisplay().getSystemColor(SWT.COLOR_RED));
 		
 		
      
