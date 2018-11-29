@@ -20,20 +20,26 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Listener;
+import org.eclipse.swt.widgets.Menu;
+import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
+import org.eclipse.swt.widgets.Tree;
+import org.eclipse.swt.widgets.TreeItem;
 
 import Dialog.CreateActionDialogCommand;
 import Dialog.CreateGoalDialogCommand;
 import Dialog.CreateSoDialogCommand;
+import command.ChangeEffCommand;
+import command.ChangeNameCommand;
+import command.ChangePrecCommand;
 import command.ChangeStateCommand;
 import command.EliminateActionCommand;
 import command.EliminateStateCommand;
 import logic.Action;
 import logic.InitialState;
 
-
- class CreateDomainView{
+class CreateDomainView {
 
 	Group domainGroup;
 	Shell shell;
@@ -44,334 +50,363 @@ import logic.InitialState;
 	Composite contentCanvas;
 	Combo comboOptionInSt;
 	Composite ContentInitState;
-	Composite test;
-	Composite test2;
+	Composite part1;
+	Composite part2;
 	Composite ContentFinalState;
 	Combo comboOptionFnst;
 	Composite ContentActions;
-	List listAction;
+	Tree treeAction;
 	Group subOption;
-	ArrayList<Action> actions;
-	
+	ArrayList<Action> actionsArray;
+
+	MenuItem showAction;
+	MenuItem showActionW;
+	MenuItem elimAction;
+	MenuItem modifAction;
+
 	CreateActionDialogCommand actionCommnd;
-	 
-	InitialState initialState=null;
-	
+
+	InitialState initialState = null;
 
 	public CreateDomainView(SashForm sashForm) {
-		this.sashForm=sashForm;
-		this.shell=sashForm.getShell();
+		this.sashForm = sashForm;
+		this.shell = sashForm.getShell();
 		setLayout();
-		 actionCommnd=new CreateActionDialogCommand();
-		 actions=new ArrayList<>();
-		
-		
+		actionCommnd = new CreateActionDialogCommand();
+		actionsArray = new ArrayList<>();
+
 	}
 
 	public void setLayout() {
-		
-		outer=new Composite(sashForm, SWT.ALL);
+
+		outer = new Composite(sashForm, SWT.ALL);
 //		FormLayout formLayout = new FormLayout();
 //		formLayout.marginHeight = 5;
 //		formLayout.marginWidth = 5;
 //		formLayout.spacing = 5;
 //		outer.setLayout( formLayout );
-		outer.setLayout(new FillLayout());	
-		
+		outer.setLayout(new FillLayout());
+
 		this.domainGroup = new Group(outer, SWT.BORDER);
 		Font boldFont = new Font(this.domainGroup.getDisplay(), new FontData("Arial", 12, SWT.BOLD));
 		this.domainGroup.setText("Domain Graph");
 		this.domainGroup.setFont(boldFont);
-		
+
 		domainGroup.setLayout(new GridLayout(1, false));
-		
-		
-		inside=new Composite(domainGroup, SWT.ALL);
-	    inside.setLayout(new GridLayout(1, true));
-        inside.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-        
 
+		inside = new Composite(domainGroup, SWT.ALL);
+		inside.setLayout(new GridLayout(1, true));
+		inside.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
-	
-		
 	}
 
 	public void createContent() {
 
-		//first group option
-		
+		// first group option
+
 		subOption = new Group(inside, SWT.ALL);
 		subOption.setText("Option");
 
 		subOption.setLayout(new GridLayout(4, false));
-	
-		
-		Label initialState=new Label(subOption, SWT.ALL);
-		initialState.setText("Initial State: ");
-		
-		comboOptionInSt = new Combo (subOption, SWT.READ_ONLY);
-		ArrayList<String> possibleOption=new ArrayList<String>();
-		possibleOption.add("Create");
-		String[] convertList=possibleOption.toArray(new String[possibleOption.size()]);
-		comboOptionInSt.setItems (convertList);
-		
-		Rectangle clientArea = subOption.getClientArea ();
-		comboOptionInSt.setBounds (clientArea.x, clientArea.y, 200, 200);
-		
-		
-		Button bInitState=new Button(subOption, SWT.PUSH);
-		Image img=new Image(shell.getDisplay(), "img/ok.png") ;
-		bInitState.setImage(img);
-		
 
-		
-		
+		Label initialState = new Label(subOption, SWT.ALL);
+		initialState.setText("Initial State: ");
+
+		comboOptionInSt = new Combo(subOption, SWT.READ_ONLY);
+		ArrayList<String> possibleOption = new ArrayList<String>();
+		possibleOption.add("Create");
+		String[] convertList = possibleOption.toArray(new String[possibleOption.size()]);
+		comboOptionInSt.setItems(convertList);
+
+		Rectangle clientArea = subOption.getClientArea();
+		comboOptionInSt.setBounds(clientArea.x, clientArea.y, 200, 200);
+
+		Button bInitState = new Button(subOption, SWT.PUSH);
+		Image img = new Image(shell.getDisplay(), "img/ok.png");
+		bInitState.setImage(img);
+
 		GridData gridData = new GridData(GridData.CENTER, GridData.CENTER, false, false);
 		gridData.horizontalSpan = 2;
 		comboOptionInSt.setLayoutData(gridData);
-		
-		Label finalState=new Label(subOption, SWT.ALL);
+
+		Label finalState = new Label(subOption, SWT.ALL);
 		finalState.setText("Final State: ");
-		comboOptionFnst = new Combo (subOption, SWT.READ_ONLY);
-		possibleOption=new ArrayList<String>();
+		comboOptionFnst = new Combo(subOption, SWT.READ_ONLY);
+		possibleOption = new ArrayList<String>();
 		possibleOption.add("Create");
-		convertList=possibleOption.toArray(new String[possibleOption.size()]);
-		comboOptionFnst.setItems (convertList);
-		comboOptionFnst.setBounds (clientArea.x, clientArea.y, 200, 200);
+		convertList = possibleOption.toArray(new String[possibleOption.size()]);
+		comboOptionFnst.setItems(convertList);
+		comboOptionFnst.setBounds(clientArea.x, clientArea.y, 200, 200);
 		comboOptionFnst.setLayoutData(gridData);
 
-		Button bFnState=new Button(subOption, SWT.PUSH);
+		Button bFnState = new Button(subOption, SWT.PUSH);
 		bFnState.setImage(img);
-		
 
-
-		
-		
-		
-		Label actionLabel=new Label(subOption, SWT.ALL);
+		Label actionLabel = new Label(subOption, SWT.ALL);
 		actionLabel.setText("Action:  ");
-		
-		
-		
-		
-//		comboOptionAction = new Combo (subOption, SWT.READ_ONLY);
-//		possibleOption=new ArrayList<String>();
-//		possibleOption.add("Create");
-//		convertList=possibleOption.toArray(new String[possibleOption.size()]);
-//		comboOptionAction.setItems (convertList);
-//		comboOptionAction.setBounds (clientArea.x, clientArea.y, 200, 200);
-//		gridData = new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false);
-//		comboOptionAction.setLayoutData(gridData);
-//		
-//	
-//		 combolistAction=new Combo(subOption, SWT.READ_ONLY);
-//		 gridData = new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false);
-//		 combolistAction.setLayoutData(gridData);
-//		 
-//
-//		comboOptionAction.addListener(SWT.Selection, new Listener() {
-//			
-//			@Override
-//			public void handleEvent(Event event) {
-//				if(comboOptionAction.getText().equals("Create")) {
-//					combolistAction.removeAll();
-//					
-//				}else if(comboOptionAction.getText().equals("Eliminate") || comboOptionAction.getText().equals("Change")) {
-//					if(actions.size()>0 ) {
-//						ArrayList<String> possibleOption=new ArrayList<String>();
-//						for(Action action:actions) {
-//							possibleOption.add(action.getName());
-//						}
-//						String[] convertList=possibleOption.toArray(new String[possibleOption.size()]);
-//						combolistAction.setItems (convertList);
-//					}
-//				}
-//				
-//			}
-//		});
-		
-		
-		Button bntAct=new Button(subOption, SWT.PUSH);
-		img=new Image(shell.getDisplay(), "img/addCond.png");
+
+		Button bntAct = new Button(subOption, SWT.PUSH);
+		img = new Image(shell.getDisplay(), "img/addCond.png");
 		bntAct.setImage(img);
-		
-	
-		
-		
-		
-		stateGroup=new Group(inside,SWT.NONE);
+
+		stateGroup = new Group(inside, SWT.NONE);
 		stateGroup.setText("Items for the plan");
 		stateGroup.setLayout(new GridLayout(1, true));
 		GridData firstData = new GridData(SWT.FILL, SWT.FILL, true, true);
 		firstData.heightHint = 750;
 		stateGroup.setLayoutData(firstData);
-		
-		
-		
-		ScrolledComposite firstScroll = new ScrolledComposite(stateGroup, SWT.V_SCROLL | SWT.H_SCROLL);
-	    firstScroll.setLayout(new GridLayout(1,false));
-	    firstScroll.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
-	    contentCanvas = new Composite(firstScroll, SWT.ALL);
+		ScrolledComposite firstScroll = new ScrolledComposite(stateGroup, SWT.V_SCROLL | SWT.H_SCROLL);
+		firstScroll.setLayout(new GridLayout(1, false));
+		firstScroll.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+
+		contentCanvas = new Composite(firstScroll, SWT.ALL);
 		FillLayout fillLayout = new FillLayout();
 		fillLayout.type = SWT.VERTICAL;
 		contentCanvas.setLayout(fillLayout);
-     
-	    test=new Composite(contentCanvas, SWT.ALL);
-	    fillLayout = new FillLayout();
+
+		part1 = new Composite(contentCanvas, SWT.ALL);
+		fillLayout = new FillLayout();
 		fillLayout.type = SWT.HORIZONTAL;
-		test.setLayout(fillLayout);
-	   
-	    test2=new Composite(contentCanvas, SWT.ALL);
-	   // test2.setLayout(new GridLayout(1, false));
-	    test2.setLayout(new GridLayout(2,false));
-	    test2.setBackground(shell.getDisplay().getSystemColor(SWT.COLOR_RED));//green
-
-	    
-	    
-	    ContentInitState=new Composite(test, SWT.ALL);
-	    ContentInitState.setLayout(new GridLayout(1, false));
-	   // ContentInitState.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-	    ContentInitState.setBackground(shell.getDisplay().getSystemColor(SWT.COLOR_BLACK));//green
-	    
-	    
-	    ContentFinalState=new Composite(test, SWT.ALL);
-	    ContentFinalState.setLayout(new GridLayout(1, false));
-	    //ContentFinalState.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-	    ContentFinalState.setBackground(shell.getDisplay().getSystemColor(SWT.COLOR_BLUE));
-	   
-
-	    
-	    
-	    
-	    
-	    final ScrolledComposite composite = new ScrolledComposite(test2, SWT.V_SCROLL);
-	    composite.setLayout(new GridLayout());
-	    composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-
-	    listAction=new List(composite, SWT.ALL);
-	    listAction.setSize(20, 20);
-	   
-
-	    composite.setContent(listAction);
-	    composite.setExpandHorizontal(true);
-	    composite.setExpandVertical(true);
-	    composite.setAlwaysShowScrollBars(true);
-	    composite.setMinSize(listAction.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-   
-	    ContentActions=new Composite(test2, SWT.ALL);
-	    ContentActions.setLayout(new FillLayout());
-	    ContentActions.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-	    
-	    
-	    
-	    
-
-	    
-	    
-	    firstScroll.setContent(contentCanvas);
-	    firstScroll.setExpandHorizontal(true);
-	    firstScroll.setExpandVertical(true);
-	    firstScroll.setMinSize(contentCanvas.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-
-	    
-	  
+		part1.setLayout(fillLayout);
 		
-		CreateSoDialogCommand so=new CreateSoDialogCommand();
-		EliminateStateCommand elimCmd=new EliminateStateCommand();
-		ChangeStateCommand changeCmd=new ChangeStateCommand();
 
-		Listener buttonInLister=new Listener() {
-			
+		ContentInitState = new Composite(part1, SWT.BORDER);
+		ContentInitState.setLayout(new GridLayout(1, false));
+
+		ContentFinalState = new Composite(part1, SWT.BORDER);
+		ContentFinalState.setLayout(new GridLayout(1, false));
+
+		
+		part2 = new Composite(contentCanvas, SWT.ALL);
+		part2.setLayout(new GridLayout(3, true));
+		
+//		Composite text = new Composite(part2, SWT.ALL);
+//		gridData = new GridData(GridData.FILL, GridData.FILL, false, false);
+//		gridData.horizontalSpan = 3;
+//		text.setLayoutData(gridData);
+//
+//		Label label = new Label(text, SWT.BORDER);
+//		label.setText("below will be define the created actions");
+//		gridData = new GridData(GridData.FILL, GridData.FILL, false, false);
+//		label.setLayoutData(gridData);
+
+		final ScrolledComposite composite = new ScrolledComposite(part2, SWT.V_SCROLL);
+		composite.setLayout(new GridLayout());
+		composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		
+		
+
+
+		treeAction = new Tree(composite, SWT.BORDER);
+		final Menu menu = new Menu(treeAction);
+		treeAction.setToolTipText("Created Action");
+		treeAction.setMenu(menu);
+
+		MenuItem[] items = menu.getItems();
+		for (int i = 0; i < items.length; i++) {
+			items[i].dispose();
+		}
+		showAction = new MenuItem(menu, SWT.PUSH);
+		showAction.setText("Draw Action");
+
+		elimAction = new MenuItem(menu, SWT.PUSH);
+		elimAction.setText("Eliminate Action");
+
+		modifAction = new MenuItem(menu, SWT.CASCADE);
+		modifAction.setText("Modify...");
+
+		Menu subMenu = new Menu(menu);
+		modifAction.setMenu(subMenu);
+
+		MenuItem modifName = new MenuItem(subMenu, SWT.PUSH);
+		modifName.setText("Name");
+
+		MenuItem modifPrec = new MenuItem(subMenu, SWT.PUSH);
+		modifPrec.setText("Preconditions");
+
+		MenuItem modifEff = new MenuItem(subMenu, SWT.PUSH);
+		modifEff.setText("Effects");
+
+		composite.setContent(treeAction);
+		composite.setExpandHorizontal(true);
+		composite.setExpandVertical(true);
+		composite.setAlwaysShowScrollBars(true);
+		composite.setMinSize(treeAction.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+
+		ContentActions = new Composite(part2,SWT.BORDER);
+		ContentActions.setLayout(new FillLayout());
+		gridData = new GridData(GridData.FILL, GridData.FILL, false, false);
+		gridData.horizontalSpan = 2;
+		ContentActions.setLayoutData(gridData);
+
+		firstScroll.setContent(contentCanvas);
+		firstScroll.setExpandHorizontal(true);
+		firstScroll.setExpandVertical(true);
+		firstScroll.setMinSize(contentCanvas.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+
+		showAction.addListener(SWT.Selection, new Listener() {
+
 			@Override
 			public void handleEvent(Event event) {
-				
+
+				TreeItem[] actions = treeAction.getSelection();
+				if (actions.length > 0) {
+					TreeItem actionItem = getRoot(actions[0]);
+					Action action = findAction(actionItem.getText());
+					action.draw(ContentActions);
+				}
+			}
+		});
+
+		elimAction.addListener(SWT.Selection, new Listener() {
+
+			@Override
+			public void handleEvent(Event event) {
+				TreeItem[] actions = treeAction.getSelection();
+				if (actions.length > 0) {
+
+					TreeItem actionItem = getRoot(actions[0]);
+					Action action = findAction(actionItem.getText());
+					actionItem.dispose();
+					actionsArray.remove(action);
+
+					// a.elimanate(actionName);
+				}
+
+			}
+		});
+
+		modifName.addListener(SWT.Selection, new Listener() {
+
+			@Override
+			public void handleEvent(Event event) {
+				TreeItem[] actions = treeAction.getSelection();
+				if (actions.length > 0) {
+					TreeItem actionItem = getRoot(actions[0]);
+					Action action = findAction(actionItem.getText());
+					ChangeNameCommand cmd = new ChangeNameCommand();
+					cmd.execute(actionItem, action);
+
+				}
+
+			}
+		});
+
+		modifPrec.addListener(SWT.Selection, new Listener() {
+
+			@Override
+			public void handleEvent(Event event) {
+				TreeItem[] actions = treeAction.getSelection();
+				if (actions.length > 0) {
+					TreeItem actionItem = getRoot(actions[0]);
+					Action action = findAction(actionItem.getText());
+					ChangePrecCommand cmd = new ChangePrecCommand();
+					cmd.execute(action, actionItem);
+
+				}
+
+			}
+		});
+
+		modifEff.addListener(SWT.Selection, new Listener() {
+
+			@Override
+			public void handleEvent(Event event) {
+				TreeItem[] actions = treeAction.getSelection();
+				if (actions.length > 0) {
+					TreeItem actionItem = getRoot(actions[0]);
+					Action action = findAction(actionItem.getText());
+					ChangeEffCommand cmd = new ChangeEffCommand();
+					cmd.execute(action, actionItem);
+
+				}
+
+			}
+		});
+
+		CreateSoDialogCommand so = new CreateSoDialogCommand();
+		EliminateStateCommand elimCmd = new EliminateStateCommand();
+		ChangeStateCommand changeCmd = new ChangeStateCommand();
+
+		Listener buttonInLister = new Listener() {
+
+			@Override
+			public void handleEvent(Event event) {
+
 				so.execute(comboOptionInSt, ContentInitState);
-				if(elimCmd.canExecute(comboOptionInSt)) {
-					elimCmd.execute(comboOptionInSt,so.getInitialState());
-				    ContentInitState.setBackground(shell.getDisplay().getSystemColor(SWT.COLOR_RED));//green
-				
-				}else if(changeCmd.canExecute(comboOptionInSt)) {
-					changeCmd.execute(so.getCreateSoDialog(),so.getInitialState());
-					
+				if (elimCmd.canExecute(comboOptionInSt)) {
+					elimCmd.execute(comboOptionInSt, so.getInitialState());
+
+				} else if (changeCmd.canExecute(comboOptionInSt)) {
+					changeCmd.execute(so.getCreateSoDialog(), so.getInitialState());
+
 				}
-				
-				
-				
+
 			}
 		};
-		
-		CreateGoalDialogCommand goalCommand=new CreateGoalDialogCommand();
-		
-		Listener buttonFinLister=new Listener() {
-  
-        	//TODO	
+
+		CreateGoalDialogCommand goalCommand = new CreateGoalDialogCommand();
+
+		Listener buttonFinLister = new Listener() {
+
+			// TODO
 			@Override
 			public void handleEvent(Event event) {
-			    
+
 				goalCommand.execute(comboOptionFnst, ContentFinalState);
-				if(elimCmd.canExecute(comboOptionFnst)) {
-					elimCmd.execute(comboOptionFnst,goalCommand.getGoalState());
-					ContentFinalState.setBackground(shell.getDisplay().getSystemColor(SWT.COLOR_RED));//green
-				
-				}else if(changeCmd.canExecute(comboOptionFnst)) {
-					changeCmd.execute(goalCommand.getCreateGoalDialog(),goalCommand.getGoalState());
-					
+				if (elimCmd.canExecute(comboOptionFnst)) {
+					elimCmd.execute(comboOptionFnst, goalCommand.getGoalState());
+
+				} else if (changeCmd.canExecute(comboOptionFnst)) {
+					changeCmd.execute(goalCommand.getCreateGoalDialog(), goalCommand.getGoalState());
+
 				}
-				
-				
-				
+
 			}
 		};
-		
-		
-		
-		EliminateActionCommand elimAct=new EliminateActionCommand();
-		
-		
-		Listener buttonActLister=new Listener() {
-  
-        	//TODO	
+
+		EliminateActionCommand elimAct = new EliminateActionCommand();
+
+		Listener buttonActLister = new Listener() {
+
+			// TODO
 			@Override
 			public void handleEvent(Event event) {
-				
-				
-			    
-			    
-				actionCommnd.setAction(actions);
-				actionCommnd.execute(ContentActions);
-				
-			
-			    elimAct.execute(actions);
-					
+
+				// actionCommnd.setAction(actions);
+				actionCommnd.execute(treeAction, actionsArray);
+
+				elimAct.execute(actionsArray);
+
 				subOption.pack();
 //				}else if(changeCmd.canExecute(comboOptionFnst)) {
 //					changeCmd.execute(goalCommand.getCreateGoalDialog(),goalCommand.getGoalState());
 //					
-				}
+			}
 //				
-				
-				
-			
+
 		};
-		
 
-
-		
-	    
 		bInitState.addListener(SWT.Selection, buttonInLister);
 		bFnState.addListener(SWT.Selection, buttonFinLister);
 		bntAct.addListener(SWT.Selection, buttonActLister);
 
-
-
-		
-
-
 	}
-	
-	
-	public Group getCompCanvas() {
-		return stateGroup;
+
+	public TreeItem getRoot(TreeItem a) {
+		while (a.getParentItem() instanceof TreeItem) {
+			a = a.getParentItem();
+		}
+		return a;
+	}
+
+	public Action findAction(String actionName) {
+		for (int i = 0; i < actionsArray.size(); i++) {
+			if (actionsArray.get(i).getName().equals(actionName)) {
+				return actionsArray.get(i);
+			}
+		}
+		return null;
 	}
 }

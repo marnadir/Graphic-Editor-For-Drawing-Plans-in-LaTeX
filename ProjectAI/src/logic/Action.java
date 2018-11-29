@@ -3,6 +3,8 @@ package logic;
 import java.util.ArrayList;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.MenuDetectEvent;
+import org.eclipse.swt.events.MenuDetectListener;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.Color;
@@ -11,16 +13,22 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Listener;
+import org.eclipse.swt.widgets.Menu;
+import org.eclipse.swt.widgets.MenuItem;
 
 public class Action {
+
+
 
 	String name;
 	ArrayList<String> prec;
 	ArrayList<String> effect;
-	Canvas canvas;
-	Composite contentCanvas;
+	static Canvas canvas;
+	static Composite contentCanvas;
 	int max;
-
+	boolean shownCond=true;
 	
 	public Action(String name,ArrayList<String> prec, ArrayList<String> eff) {
 		this.name=name;
@@ -31,16 +39,18 @@ public class Action {
 	
 	public void draw(Composite comp) {
 		if (canvas != null) {
-			canvas.redraw();
-		} else {
-			this.contentCanvas = comp;
+			if(!canvas.isDisposed()) {
+				canvas.dispose();
+			}
 			canvas = new Canvas(comp, SWT.ALL);
-			// canvasSo.setLayout(new FillLayout());
-//			canvas.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-			//canvas.setSize(comp.getSize().x/2,comp.getSize().y/2);
-			canvas.layout();
+		} else {
+			contentCanvas = comp;
+			canvas = new Canvas(comp, SWT.ALL);
+			//canvas.layout();
 
 		}
+
+		
 		canvas.addPaintListener(new PaintListener() {
 
 			@Override
@@ -54,15 +64,10 @@ public class Action {
 
 				
 				
-				int startX = canvas.getLocation().x ;
-				int startY = canvas.getLocation().y ;
+				int startX = canvas.getLocation().x+100 ;
+				int startY = canvas.getLocation().y +150;
 				
-				System.out.println(startX);
-				System.out.println(startY);
-				System.out.println(num);
-
-
-				
+			
 				int heightRect=40;
 				max=numPrec;
 				if(numEff>numPrec) {
@@ -75,6 +80,7 @@ public class Action {
 				
 				int sizeString=name.length()*12;
 				
+				
 				Rectangle rect=new Rectangle(startX, startY, sizeString,heightRect);
 				
 				
@@ -85,60 +91,108 @@ public class Action {
 				
 
 				int posY = rect.y + 10;
+
+				System.out.println(shownCond);
+
 				for (int i = 0; i < numPrec; i++) {
 
 					e.gc.drawLine(rect.x, posY, rect.x - 35, posY);
-					String string = prec.get(i);
-					e.gc.drawString(string, rect.x - (5+string.length()*10), posY - 20, false);
-
+					if (shownCond) {
+						String string = prec.get(i);
+						e.gc.drawString(string, rect.x - (5 + string.length() * 10), posY - 20, false);
+					}
 					posY = posY + 30;
-
 				}
-				
-		
-			
-				
-				
-				
+
 				posY = rect.y + 10;
 				for (int i = 0; i < numEff; i++) {
-					
-					int x=rect.x+rect.width;
-					e.gc.drawLine(x, posY, x+30, posY);
-					String string = effect.get(i);
-					e.gc.drawString(string, x + 10, posY - 20, false);
 
+					int x = rect.x + rect.width;
+					e.gc.drawLine(x, posY, x + 30, posY);
+					if (shownCond) {
+
+						String string = effect.get(i);
+						e.gc.drawString(string, x + 10, posY - 20, false);
+					}
 					posY = posY + 30;
 
 				}
 				
-				
-
-				// e.gc.drawRectangle(r);
 			}
 		});
 		
-		int sizeString=name.length()*12+120;
-		canvas.setSize(sizeString, max+120);
-		canvas.setBackground(comp.getDisplay().getSystemColor(SWT.COLOR_RED));
 		
+		canvas.setSize(comp.getSize().x, comp.getSize().y);
 		
+		canvas.addMenuDetectListener(new MenuDetectListener() {
+			
+			@Override
+			public void menuDetected(MenuDetectEvent e) {
+				Menu m=new Menu(canvas);
+				canvas.setMenu(m);
+				
+				MenuItem c=new MenuItem(m,SWT.ALL);
+				c.setText("Clear");
+				c.addListener(SWT.Selection, new Listener() {
+					
+					@Override
+					public void handleEvent(Event event) {
+						clearDisplay();
+					}
+				});
+				
+				MenuItem show=new MenuItem(m,SWT.ALL);
+				show.setText("Show/Hide Cond...");
+				show.addListener(SWT.Selection,new Listener() {
+					
+					@Override
+					public void handleEvent(Event event) {
+						shownCond=!shownCond;
+						canvas.redraw();
+						
+					}
+				});
+				
+				}
+		});
      
 		
 		
 	}
+	
+	
 	
 	public String getName() {
 		
 		return name;
 	}
 	
-	public void elimanate() {
-//		canvasSo.redraw();
-//		canvasSo.layout();
-		canvas.dispose();
-		
+	public void setName(String name) {
+		this.name=name;
+	}
+	
+	public void clearDisplay() {
+
+		if (canvas != null) {
+
+			canvas.dispose();
+
+		}
 	}
 
+	public ArrayList<String> getPrec() {
+		return prec;
+	}
 
+	public void setPrec(ArrayList<String> prec) {
+		this.prec = prec;
+	}
+
+	public ArrayList<String> getEffect() {
+		return effect;
+	}
+
+	public void setEffect(ArrayList<String> effect) {
+		this.effect = effect;
+	}
 }

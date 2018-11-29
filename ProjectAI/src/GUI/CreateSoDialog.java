@@ -64,10 +64,11 @@ public class CreateSoDialog extends IDialogNewState{
 	public void updateCombo() {
 		List<String> possibleOption=new ArrayList<String>();
 		possibleOption.add("Change");
-		possibleOption.add("Eliminate");
+		possibleOption.add("Delete");
 		String[] convertList=possibleOption.toArray(new String[possibleOption.size()]);
 		this.CombOption.setItems (convertList);
-		this.CombOption.pack();
+//		this.CombOption.pack();
+//		this.CombOption.getParent().pack();
 	}
 	
 	public void setCombo(Combo combo) {

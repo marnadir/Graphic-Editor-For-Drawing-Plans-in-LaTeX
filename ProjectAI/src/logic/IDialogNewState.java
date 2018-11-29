@@ -13,7 +13,10 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
-public class IDialogNewState extends IDialog{
+public abstract class IDialogNewState extends IDialog{
+
+
+
 
 	ArrayList<String>  listPCond;
 	List list;
@@ -97,7 +100,21 @@ public class IDialogNewState extends IDialog{
 
 	}
 	
- 
+	public List getList() {
+		return list;
+	}
+
+	public void setList(List list) {
+		this.list = list;
+	}
+	public ArrayList<String> getListPCond() {
+		return listPCond;
+	}
+
+	public void setListPCond(ArrayList<String> listPCond) {
+		this.listPCond = listPCond;
+	}
+
 	public ArrayList<String> getCond(){
 		return listPCond;
 	}

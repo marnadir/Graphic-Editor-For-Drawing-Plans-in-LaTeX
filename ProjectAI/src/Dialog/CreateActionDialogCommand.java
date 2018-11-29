@@ -4,6 +4,9 @@ import java.util.ArrayList;
 
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.List;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Tree;
 
 import GUI.CreateActionDialog;
 import GUI.CreateSoDialog;
@@ -20,41 +23,27 @@ public class CreateActionDialogCommand implements ICommand {
 	@Override
 	public boolean canExecute(Object var1, Object var2) {
 		
-		if (var1 instanceof Combo[]) {
-			Combo[] comboAction = (Combo[])var1;
-			Combo comboOption = (Combo) comboAction[0];
-			if(comboOption.getText().equals("Create")) {
-				return true;
-			}
-		}
+//		if (var1 instanceof Combo[]) {
+//			Combo[] comboAction = (Combo[])var1;
+//			Combo comboOption = (Combo) comboAction[0];
+//			if(comboOption.getText().equals("Create")) {
+//				return true;
+//			}
+//		}
 		return false;
 	}
 
 	@Override
 	public void execute(Object var1, Object var2) {
-		if (canExecute(var1, var2)) {
-			if (var2 instanceof Composite) {
-				Composite comp = (Composite) var2;
-//				ArrayList<Action> list=getActionList();
-				dialog = new CreateActionDialog(comp,actions);
+		if (var1 instanceof Tree) {
+			Tree tree = (Tree) var1;
+			if (var2 instanceof ArrayList<?>) {
+				actions=(ArrayList<Action>)var2;
+				dialog = new CreateActionDialog(tree,actions);
 				dialog.createContent();
-				if (var1 instanceof Combo[]) {
-					Combo[] combo = (Combo[]) var1;
-					Combo comboOption = (Combo) combo[0];
-					Combo comboAction = (Combo) combo[1];
-					dialog.setListAction(actions);		
-					dialog.setComboOption(comboOption);
-					dialog.setComboAction(comboAction);
-					
-
-				}	
-//				if(list !=null) {
-//					list.addAll(getActionList());
-//					setActionList(list);
-//				}
-				
 
 			}
+
 		}
 
 	}

@@ -39,7 +39,7 @@ public class InitialState extends IState{
 			@Override
 			public void paintControl(PaintEvent e) {
 
-				int numCond = precPos.size();
+				int numCond = conds.size();
 
 				int startX = composite.getLocation().x + 40;
 				int startY = composite.getLocation().y + 40;
@@ -52,7 +52,7 @@ public class InitialState extends IState{
 				for (int i = 0; i < numCond; i++) {
 
 					e.gc.drawLine(startX, posY, startX + 50, posY);
-					String string = precPos.get(i);
+					String string = conds.get(i);
 					e.gc.drawString(string, startX + 10, posY - 20, false);
 
 					posY = posY + 30;

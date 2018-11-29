@@ -34,7 +34,7 @@ public class GoalState extends IState{
 			public void paintControl(PaintEvent e) {
 			
 
-				int numCond = precPos.size();
+				int numCond = conds.size();
 
 				int startX = composite.getClientArea().width/2;
 				int startY = 40;
@@ -47,7 +47,7 @@ public class GoalState extends IState{
 				for (int i = 0; i < numCond; i++) {
 
 					e.gc.drawLine(startX, posY, startX - 50, posY);
-					String string = precPos.get(i);
+					String string = conds.get(i);
 			
 					e.gc.drawString(string, startX - (5+string.length()*10), posY - 20, false);
 

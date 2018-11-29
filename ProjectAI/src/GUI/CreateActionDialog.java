@@ -1,10 +1,6 @@
 package GUI;
 
-
 import java.util.ArrayList;
-
-
-
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
@@ -20,6 +16,8 @@ import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.swt.widgets.Tree;
+import org.eclipse.swt.widgets.TreeItem;
 
 import logic.Action;
 import logic.GoalState;
@@ -28,8 +26,7 @@ import logic.InitialState;
 
 public class CreateActionDialog extends IDialog {
 
-	
-	Shell dialog=this.getDialog();
+	Shell dialog = this.getDialog();
 	Composite compCanvas;
 	Composite composite;
 	List listPrec;
@@ -39,107 +36,94 @@ public class CreateActionDialog extends IDialog {
 	Button buttonNegPrec;
 	Button buttonNegEff;
 	Text actionName;
-	
+
 	Combo combOption;
 	Combo comboAction;
-	
-	ArrayList<String>  prec;  
-	ArrayList<String>  effect;
+
+	ArrayList<String> prec;
+	ArrayList<String> effect;
 	Action action;
+	Tree treeActions;
 	ArrayList<Action> actions;
-	  
 	
-	public CreateActionDialog(Composite composite,ArrayList<Action> a) {
-		super(composite.getShell());
-		this.compCanvas=composite;
-		prec=new  ArrayList<>();
-		effect=new ArrayList<>();
-		actions=a;
+
+	public CreateActionDialog(Tree list,ArrayList<Action> actions) {
+		super(list.getShell());
+		this.treeActions=list;
+		this.actions=actions;
+		prec = new ArrayList<>();
+		effect = new ArrayList<>();
+
 		// TODO Auto-generated constructor stub
 	}
 
-	
 	@Override
 	public void createDialog() {
 		// TODO Auto-generated method stub
 		super.createDialog();
 	}
-	
+
 	@Override
 	public void createContent() {
 		this.getLabel().setText("Create a new action");
 		composite = this.getComposite();
 		composite.setLayout(new GridLayout(2, false));
-		
-		Label lNameAct=new Label(composite, SWT.ALL);
+
+		Label lNameAct = new Label(composite, SWT.ALL);
 		lNameAct.setText("Name of the action: ");
-		
+
 		GridData gridData = new GridData(GridData.FILL, GridData.FILL, false, false);
-		//gridData.horizontalSpan = 3;
+		// gridData.horizontalSpan = 3;
 		lNameAct.setLayoutData(gridData);
-		
-		actionName=new Text(composite,SWT.SINGLE | SWT.BORDER);
+
+		actionName = new Text(composite, SWT.SINGLE | SWT.BORDER);
 		gridData = new GridData(GridData.FILL, GridData.FILL, false, false);
-		//gridData.horizontalSpan = 3;
+		// gridData.horizontalSpan = 3;
 		actionName.setLayoutData(gridData);
-		
-		
-		Group groupPrec=new Group(composite, SWT.ALL);
+
+		Group groupPrec = new Group(composite, SWT.ALL);
 		groupPrec.setText("Precondition");
 		groupPrec.setLayout(new GridLayout(3, false));
-		
-		
 
-		newPrec=new Text(groupPrec, SWT.BORDER);
-	    buttonNegPrec = new Button(groupPrec, SWT.CHECK);
+		newPrec = new Text(groupPrec, SWT.BORDER);
+		buttonNegPrec = new Button(groupPrec, SWT.CHECK);
 		buttonNegPrec.setText("neg");
 
-		
-		Button addPrec=new Button(groupPrec, SWT.PUSH);
+		Button addPrec = new Button(groupPrec, SWT.PUSH);
 		Image icon = new Image(composite.getDisplay(), "img/addCond.png");
 		addPrec.setImage(icon);
 		addPrec.addListener(SWT.Selection, addPrecListener());
-		
-		
-		
-		
-		
-        listPrec = new List (groupPrec, SWT.BORDER | SWT.MULTI | SWT.V_SCROLL);
-		
-		Button btnDeletePrec=new Button(groupPrec, SWT.PUSH);
+
+		listPrec = new List(groupPrec, SWT.BORDER | SWT.MULTI | SWT.V_SCROLL);
+
+		Button btnDeletePrec = new Button(groupPrec, SWT.PUSH);
 		icon = new Image(groupPrec.getDisplay(), "img/deleteCond.png");
 		btnDeletePrec.setImage(icon);
 		btnDeletePrec.addListener(SWT.Selection, getDelPrecListener());
-		
 
-		
-		Group groupEff=new Group(composite, SWT.ALL);
+		Group groupEff = new Group(composite, SWT.ALL);
 		groupEff.setText("Effect");
 		groupEff.setLayout(new GridLayout(3, false));
-		
-		newEff=new Text(groupEff, SWT.BORDER);
+
+		newEff = new Text(groupEff, SWT.BORDER);
 		buttonNegEff = new Button(groupEff, SWT.CHECK);
 		buttonNegEff.setText("neg");
-	
-		Button addEff=new Button(groupEff, SWT.PUSH);
-	    icon = new Image(composite.getDisplay(), "img/addCond.png");
-		addEff.setImage(icon);
-		addEff.addListener(SWT.Selection,addEffListener());
-		
 
-		listEff= new List (groupEff, SWT.BORDER | SWT.MULTI | SWT.V_SCROLL);
-		
-		Button btnDeleteEff=new Button(groupEff, SWT.PUSH);
+		Button addEff = new Button(groupEff, SWT.PUSH);
+		icon = new Image(composite.getDisplay(), "img/addCond.png");
+		addEff.setImage(icon);
+		addEff.addListener(SWT.Selection, addEffListener());
+
+		listEff = new List(groupEff, SWT.BORDER | SWT.MULTI | SWT.V_SCROLL);
+
+		Button btnDeleteEff = new Button(groupEff, SWT.PUSH);
 		icon = new Image(composite.getDisplay(), "img/deleteCond.png");
 		btnDeleteEff.setImage(icon);
 		btnDeleteEff.addListener(SWT.Selection, getDelEffListener());
-		
-		
-		
+
 		this.getDialog().pack();
 	}
 
-	
 	public Listener getDelPrecListener() {
 		Listener buttonListener = new Listener() {
 
@@ -157,9 +141,7 @@ public class CreateActionDialog extends IDialog {
 		return buttonListener;
 
 	}
-	
 
-	
 	public Listener getDelEffListener() {
 		Listener buttonListener = new Listener() {
 
@@ -177,7 +159,7 @@ public class CreateActionDialog extends IDialog {
 		return buttonListener;
 
 	}
-	
+
 	public Listener addPrecListener() {
 
 		Listener listener = new Listener() {
@@ -200,7 +182,7 @@ public class CreateActionDialog extends IDialog {
 
 		return listener;
 	}
-	
+
 	public Listener addEffListener() {
 
 		Listener listener = new Listener() {
@@ -223,23 +205,35 @@ public class CreateActionDialog extends IDialog {
 
 		return listener;
 	}
-	
 
-	
-	
 	@Override
 	public Listener getOkbtnListener() {
-     Listener btn=new Listener() {
-			
+		Listener btn = new Listener() {
+
 			@Override
 			public void handleEvent(Event event) {
-				if(!actionName.equals("")) {
-					action=new Action(actionName.getText(), prec, effect);
-					action.draw(compCanvas);
-					actions.add(action);
-					updateComboOption();
-					updateComboAction();
-					dialog.setVisible(false);
+				if (!actionName.equals("") && !isAlreadyCreated(actionName.getText())) {
+						action = new Action(actionName.getText(), prec, effect);
+						TreeItem item=new TreeItem(treeActions, SWT.BORDER);
+						item.setText(actionName.getText());
+						TreeItem childPrec = new TreeItem(item, SWT.NONE);
+						childPrec.setText("Preconditions");
+						TreeItem childEff = new TreeItem(item, SWT.NONE);
+						childEff.setText("Effect");
+						for(String pString:prec) {
+							TreeItem child = new TreeItem(childPrec, SWT.NONE);
+							child.setText(pString);
+						}
+
+						for(String eString:effect) {
+							TreeItem child = new TreeItem(childEff, SWT.NONE);
+							child.setText(eString);
+						}
+	
+						actions.add(action);
+						
+						dialog.setVisible(false);
+				
 				}
 			}
 		};
@@ -247,50 +241,15 @@ public class CreateActionDialog extends IDialog {
 		return btn;
 	}
 
+	public boolean isAlreadyCreated(String actionName) {
+		TreeItem[] items=treeActions.getItems();
 
-	public void updateComboOption() {
-		ArrayList<String> possibleOption=new ArrayList<String>();
-		possibleOption.add("Create");
-		possibleOption.add("Change");
-		possibleOption.add("Eliminate");
-		String[] convertList=possibleOption.toArray(new String[possibleOption.size()]);
-		this.combOption.setItems (convertList);
-		//this.combOption.pack();
+			for(int i=0;i<items.length;i++) {
+				if(items[i].getText().equals(actionName))
+					return true;
+			}
+			return false;
 	}
-	
-	
-	public void updateComboAction() {
-		String[] convertList=new String[actions.size()];	
-		for(int i=0;i<actions.size();i++) {
-			String name=actions.get(i).getName();
-			convertList[i]=name;
-		
-		}
-		this.comboAction.setItems (convertList);
-		//this.comboAction.pack();
-		dialog.pack();
-	}
-	
-	public void setComboOption(Combo combo) {
-		this.combOption=combo;
-	}
-
-	public void setComboAction(Combo combo) {
-		this.comboAction=combo;
-	}
-	
-	public void updateAction() {
-		
-	}
-	
-	
-	public void setListAction(ArrayList<Action> actions){
-		this.actions=actions;
-	}
-
-
-
 
 
 }
-

@@ -101,7 +101,5 @@ public abstract class IDialog {
 
 	}
 	
-	public Listener getOkbtnListener() {
-		return null;
-	}
+	public abstract Listener getOkbtnListener() ;
 }

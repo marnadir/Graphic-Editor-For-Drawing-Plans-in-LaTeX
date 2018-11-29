@@ -37,7 +37,7 @@ public class EliminateActionCommand implements ICommand{
 							comboAction.remove(i);
 						}
 					}
-					actions.get(index).elimanate();
+					//actions.get(index).elimanate();
 					actions.remove(index);
 					
 				}

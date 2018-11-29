@@ -9,18 +9,18 @@ import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
 
 public abstract class IState {
-	ArrayList<String> precPos;
+	ArrayList<String> conds;
 	Canvas canvasState;
 	Composite contentCanvas;
 
 	public IState(ArrayList<String> pos) {
-		this.precPos = new ArrayList<>(pos);
+		this.conds = new ArrayList<>(pos);
 
 	}
 
 	// TODO pay attention for contraction, example we have A, can't be added notA
-	public ArrayList<String> getPrec() {
-		return precPos;
+	public ArrayList<String> getConds() {
+		return conds;
 
 	}
 	
@@ -32,7 +32,6 @@ public abstract class IState {
 			canvasState = new Canvas(composite, SWT.ALL);
 			// canvasSo.setLayout(new FillLayout());
 			canvasState.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-			canvasState.setBackground(composite.getDisplay().getSystemColor(SWT.COLOR_DARK_CYAN));// green
 			canvasState.setSize(composite.getSize());
 
 		}
@@ -41,13 +40,13 @@ public abstract class IState {
 
 
 	public void update(ArrayList<String> pos) {
-		this.precPos = new ArrayList<>(pos);
+		this.conds = new ArrayList<>(pos);
 	}
 
 	public void elimanate() {
 //		canvasSo.redraw();
 //		canvasSo.layout();
 		canvasState.dispose();
-		precPos.clear();
+		conds.clear();
 	}
 }

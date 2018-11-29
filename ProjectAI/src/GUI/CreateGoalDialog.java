@@ -65,10 +65,10 @@ public class CreateGoalDialog extends IDialogNewState{
 	public void updateCombo() {
 		List<String> possibleOption=new ArrayList<String>();
 		possibleOption.add("Change");
-		possibleOption.add("Elimanate");
+		possibleOption.add("Delete");
 		String[] convertList=possibleOption.toArray(new String[possibleOption.size()]);
 		this.CombOption.setItems (convertList);
-		this.CombOption.pack();
+//		this.CombOption.pack();
 	}
 	
 	public void setCombo(Combo combo) {
