@@ -1,3 +1,4 @@
+package DragDrop;
 import org.eclipse.swt.*;
 import org.eclipse.swt.dnd.*;
 import org.eclipse.swt.layout.*;

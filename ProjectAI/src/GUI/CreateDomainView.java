@@ -80,11 +80,6 @@ class CreateDomainView {
 	public void setLayout() {
 
 		outer = new Composite(sashForm, SWT.ALL);
-//		FormLayout formLayout = new FormLayout();
-//		formLayout.marginHeight = 5;
-//		formLayout.marginWidth = 5;
-//		formLayout.spacing = 5;
-//		outer.setLayout( formLayout );
 		outer.setLayout(new FillLayout());
 
 		this.domainGroup = new Group(outer, SWT.BORDER);
@@ -169,7 +164,6 @@ class CreateDomainView {
 		fillLayout = new FillLayout();
 		fillLayout.type = SWT.HORIZONTAL;
 		part1.setLayout(fillLayout);
-		
 
 		ContentInitState = new Composite(part1, SWT.BORDER);
 		ContentInitState.setLayout(new GridLayout(1, false));
@@ -177,26 +171,12 @@ class CreateDomainView {
 		ContentFinalState = new Composite(part1, SWT.BORDER);
 		ContentFinalState.setLayout(new GridLayout(1, false));
 
-		
 		part2 = new Composite(contentCanvas, SWT.ALL);
 		part2.setLayout(new GridLayout(3, true));
-		
-//		Composite text = new Composite(part2, SWT.ALL);
-//		gridData = new GridData(GridData.FILL, GridData.FILL, false, false);
-//		gridData.horizontalSpan = 3;
-//		text.setLayoutData(gridData);
-//
-//		Label label = new Label(text, SWT.BORDER);
-//		label.setText("below will be define the created actions");
-//		gridData = new GridData(GridData.FILL, GridData.FILL, false, false);
-//		label.setLayoutData(gridData);
 
 		final ScrolledComposite composite = new ScrolledComposite(part2, SWT.V_SCROLL);
 		composite.setLayout(new GridLayout());
 		composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-		
-		
-
 
 		treeAction = new Tree(composite, SWT.BORDER);
 		final Menu menu = new Menu(treeAction);
@@ -234,7 +214,7 @@ class CreateDomainView {
 		composite.setAlwaysShowScrollBars(true);
 		composite.setMinSize(treeAction.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 
-		ContentActions = new Composite(part2,SWT.BORDER);
+		ContentActions = new Composite(part2, SWT.BORDER);
 		ContentActions.setLayout(new FillLayout());
 		gridData = new GridData(GridData.FILL, GridData.FILL, false, false);
 		gridData.horizontalSpan = 2;
@@ -270,8 +250,6 @@ class CreateDomainView {
 					Action action = findAction(actionItem.getText());
 					actionItem.dispose();
 					actionsArray.remove(action);
-
-					// a.elimanate(actionName);
 				}
 
 			}
@@ -373,19 +351,10 @@ class CreateDomainView {
 			// TODO
 			@Override
 			public void handleEvent(Event event) {
-
-				// actionCommnd.setAction(actions);
 				actionCommnd.execute(treeAction, actionsArray);
-
 				elimAct.execute(actionsArray);
-
 				subOption.pack();
-//				}else if(changeCmd.canExecute(comboOptionFnst)) {
-//					changeCmd.execute(goalCommand.getCreateGoalDialog(),goalCommand.getGoalState());
-//					
-			}
-//				
-
+			}	
 		};
 
 		bInitState.addListener(SWT.Selection, buttonInLister);

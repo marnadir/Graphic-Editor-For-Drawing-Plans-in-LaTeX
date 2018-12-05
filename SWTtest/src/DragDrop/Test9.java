@@ -1,3 +1,5 @@
+package DragDrop;
+
 import java.io.File;
 import java.util.Arrays;
 import java.util.List;
@@ -13,19 +15,34 @@ import org.eclipse.swt.dnd.DropTargetAdapter;
 import org.eclipse.swt.dnd.DropTargetEvent;
 import org.eclipse.swt.dnd.TextTransfer;
 import org.eclipse.swt.dnd.Transfer;
+import org.eclipse.swt.events.PaintEvent;
+import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 
-public class DragDrop2 {
 
+
+public class Test9 {
+	
+	public static Canvas canvas;
+	public static Canvas canvas2;
+	
+	
     public static void main(String[] args) {
         // setup the SWT window
+    	
+    	
+    	
+    	
         Display display = new Display();
         final Shell shell = new Shell(display);
         shell.setLayout(new FillLayout());
@@ -39,32 +56,54 @@ public class DragDrop2 {
         parent.setLayout(gridLayout);
 
         // determine the path where the pictures are stored
-        String path = System.getProperty("user.dir") + "/images/";
         // initialize an array with the photograph names
+        Group g1=new Group(parent, SWT.ALL);
+        g1.setText("Group1");
+        canvas=new Canvas(g1, SWT.ALL);
+        canvas.addPaintListener(new PaintListener() {
+			
+			@Override
+			public void paintControl(PaintEvent e) {
 
-        File imageDir= new File(path);
+				String s="sd"+parent.getChildren().length;
+				e.gc.drawString(s, 10, 10);
+			}
+		});
+        canvas.pack();
+        
+        
+        Group g2=new Group(parent, SWT.ALL);
+        g2.setText("Group2");
+       canvas2=new Canvas(g2, SWT.ALL);
+        canvas2.addPaintListener(new PaintListener() {
+			
+			@Override
+			public void paintControl(PaintEvent e) {
 
-        // loop over the photo array and establish all listeners
-        List<File> files = Arrays.stream(imageDir.listFiles())
-                        .filter(f -> f.isFile() && f.getName().endsWith(".png"))
-                        .collect(Collectors.toList());
-
-        for (File file : files) {
+			}
+		});
+        
+        canvas2.pack();
+        
+        Control[] con=new Control[2];
+        con[0]=canvas;
+        con[1]=canvas2;
+        
+        for(int i=0;i<con.length;i++) {
+        	
             // labels serve as containers for the images
-            Label label = new Label(parent, SWT.NONE);
-            Image img = new Image(display,file.getAbsolutePath());
-            label.setImage(img);
-
+        	
+        
             // enable each label to be draggable
-            DragSource source = new DragSource(label, DND.DROP_NONE);
+            DragSource source = new DragSource(con[i], DND.DROP_NONE);
             source.setTransfer(TextTransfer.getInstance()); // varargs are supported as of 4.7
             // add a drag listener
             source.addDragListener(new MyDragSourceListener(parent, source));
 
             // enable each label to be a drop target
-            DropTarget target = new DropTarget(label, DND.DROP_NONE);
+            DropTarget target = new DropTarget(con[i], DND.DROP_NONE);
             target.setTransfer(new Transfer[] { TextTransfer.getInstance() }); // varargs are not yet supported see https://git.eclipse.org/r/#/c/92236         // add a drop listener
-            target.addDropListener(new MyDropTargetListener(parent, target));
+            target.addDropListener(new MyDropTargetListener(parent, target));        // add a drop listener
         }
 
         // show the SWT window
@@ -82,6 +121,7 @@ public class DragDrop2 {
 
         private Composite parentComposite;
         private DragSource source;
+        private Control[] c=new Control[2];
 
         /**
          * @param parentComposite - the composite that holds all pictures
@@ -91,6 +131,14 @@ public class DragDrop2 {
         public MyDragSourceListener(Composite parentComposite, DragSource source) {
             this.parentComposite = parentComposite;
             this.source = source;
+            Control[] te=parentComposite.getChildren();
+            for (int i = 0; i < te.length; i++) {
+           	 	if(te[i] instanceof Group) {
+           	 		Group g=(Group)te[i];
+           	 		c[i]=g.getChildren()[0];
+           	 	}
+            	
+            }
         }
 
         /**
@@ -100,8 +148,9 @@ public class DragDrop2 {
          * event.
          */
         public void dragSetData(DragSourceEvent event) {
-            for (int i = 0; i < parentComposite.getChildren().length; i++) {
-                if (parentComposite.getChildren()[i].equals(source.getControl())) {
+             for (int i = 0; i < c.length; i++) {
+            	 
+                if (c[i].equals(source.getControl())) {
                     event.data = new Integer(i).toString();
                     break;
                 }
@@ -115,6 +164,8 @@ public static class MyDropTargetListener extends DropTargetAdapter {
 
     private Composite parentComposite;
     private DropTarget target;
+    private Control[] c=new Control[2];
+
 
     /**
      * @param parentComposite - the composite that holds all pictures
@@ -123,6 +174,14 @@ public static class MyDropTargetListener extends DropTargetAdapter {
     public MyDropTargetListener(Composite parentComposite, DropTarget target) {
         this.parentComposite = parentComposite;
         this.target = target;
+        Control[] te=parentComposite.getChildren();
+        for (int i = 0; i < te.length; i++) {
+       	 	if(te[i] instanceof Group) {
+       	 		Group g=(Group)te[i];
+       	 		c[i]=g.getChildren()[0];
+       	 	}
+        	
+        }
     }
 
     /**
@@ -137,14 +196,14 @@ public static class MyDropTargetListener extends DropTargetAdapter {
         // compute the index of target control
         Control targetControl = target.getControl();
         int targetIndex = -1;
-        for (int i = 0; i < parentComposite.getChildren().length; i++) {
-            if (parentComposite.getChildren()[i].equals(targetControl)) {
+        for (int i = 0; i < c.length; i++) {
+            if (c[i].equals(targetControl)) {
                 targetIndex = i;
                 break;
             }
         }
 
-        Control sourceControl = parentComposite.getChildren()[sourceIndex];
+        Control sourceControl = c[sourceIndex];
         // do not do anything if the dragged photo is dropped at the same
         // position
         if (targetIndex == sourceIndex)
@@ -152,11 +211,22 @@ public static class MyDropTargetListener extends DropTargetAdapter {
 
         // if dragged from left to right
         // shift the old picture to the left
-        if (targetIndex > sourceIndex)
+        if (targetIndex > sourceIndex) {
+        	targetControl.setParent((Composite) parentComposite.getChildren()[0]);
             sourceControl.moveBelow(targetControl);
+
+            
+//            if(sourceControl instanceof Canvas) {
+//            	Canvas c=(Canvas) sourceControl;
+//            	Canvas c2=new Canvas(parentComposite.getShell(), SWT.ALL);
+//            	c2.setData(c.getData());
+//            	
+//            }
+            
+            
         // if dragged from right to left
         // shift the old picture to the right
-        else
+        } else
             sourceControl.moveAbove(targetControl);
 
         // repaint the parent composite
@@ -164,5 +234,4 @@ public static class MyDropTargetListener extends DropTargetAdapter {
     }
 
 }
-
 }
