@@ -38,6 +38,7 @@ import command.EliminateActionCommand;
 import command.EliminateStateCommand;
 import logic.Action;
 import logic.InitialState;
+import logic.PaintAction;
 
 class CreateDomainView {
 
@@ -234,7 +235,9 @@ class CreateDomainView {
 				if (actions.length > 0) {
 					TreeItem actionItem = getRoot(actions[0]);
 					Action action = findAction(actionItem.getText());
-					action.draw(ContentActions);
+					PaintAction paint=new PaintAction(action, ContentActions);
+					action.setPaint(paint);
+					paint.draw();
 				}
 			}
 		});

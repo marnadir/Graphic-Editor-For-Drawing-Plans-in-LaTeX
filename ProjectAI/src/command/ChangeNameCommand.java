@@ -1,12 +1,10 @@
 package command;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
@@ -62,10 +60,8 @@ public class ChangeNameCommand implements ICommand {
 								if (!textName.getText().equals("")) {
 									a.setName(textName.getText());
 									actionTree.setText(textName.getText());
-									a.clearDisplay();
-									
+									a.getPaint().clearDisplay();
 									d.dispose();
-
 								}
 
 							}

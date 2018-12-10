@@ -29,8 +29,6 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 
-
-
 public class Test9 {
 	
 	public static Canvas canvas;
@@ -91,16 +89,10 @@ public class Test9 {
         
         for(int i=0;i<con.length;i++) {
         	
-            // labels serve as containers for the images
-        	
-        
-            // enable each label to be draggable
             DragSource source = new DragSource(con[i], DND.DROP_NONE);
             source.setTransfer(TextTransfer.getInstance()); // varargs are supported as of 4.7
-            // add a drag listener
             source.addDragListener(new MyDragSourceListener(parent, source));
 
-            // enable each label to be a drop target
             DropTarget target = new DropTarget(con[i], DND.DROP_NONE);
             target.setTransfer(new Transfer[] { TextTransfer.getInstance() }); // varargs are not yet supported see https://git.eclipse.org/r/#/c/92236         // add a drop listener
             target.addDropListener(new MyDropTargetListener(parent, target));        // add a drop listener
@@ -212,18 +204,9 @@ public static class MyDropTargetListener extends DropTargetAdapter {
         // if dragged from left to right
         // shift the old picture to the left
         if (targetIndex > sourceIndex) {
-        	targetControl.setParent((Composite) parentComposite.getChildren()[0]);
+        	//targetControl.setParent((Composite) parentComposite.getChildren()[0]);
             sourceControl.moveBelow(targetControl);
-
-            
-//            if(sourceControl instanceof Canvas) {
-//            	Canvas c=(Canvas) sourceControl;
-//            	Canvas c2=new Canvas(parentComposite.getShell(), SWT.ALL);
-//            	c2.setData(c.getData());
-//            	
-//            }
-            
-            
+     
         // if dragged from right to left
         // shift the old picture to the right
         } else
