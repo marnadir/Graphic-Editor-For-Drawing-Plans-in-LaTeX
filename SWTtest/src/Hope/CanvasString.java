@@ -1,29 +1,31 @@
 package Hope;
 
-import java.awt.MouseInfo;
-import java.awt.PointerInfo;
 
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.DragDetectEvent;
 import org.eclipse.swt.events.DragDetectListener;
 import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.MouseMoveListener;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.graphics.Point;
-
+import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Listener;
 
 public class CanvasString extends Canvas{
 
 	String stringa;
 	Composite parent;
+	Composite comp;
 	
 	
 	
 	public CanvasString(Composite parent, int style) {
 		super(parent, style);
 		this.parent=parent;
+	
 		// TODO Auto-generated constructor stub
 	}
 
@@ -50,10 +52,10 @@ public class CanvasString extends Canvas{
 				if(value) {
 					e.gc.drawString(string, x, y);
 				}else {
-					
-					
-				 
+				
 					e.gc.drawString(string,x,y);
+					move();
+
 				}
 				
 				
@@ -62,6 +64,17 @@ public class CanvasString extends Canvas{
 
 		this.pack();
 		
+	}
+	
+	
+	public void move() {
+		this.addDragDetectListener(new DragDetectListener() {
+			
+			@Override
+			public void dragDetected(DragDetectEvent e) {
+				
+			}
+		});
 	}
 	
 }

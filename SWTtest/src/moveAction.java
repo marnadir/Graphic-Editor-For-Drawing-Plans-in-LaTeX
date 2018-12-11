@@ -21,10 +21,8 @@ public class moveAction {
 		composite.setEnabled(false);
 		composite.setLayout(new GridLayout());
 		composite.setSize(shell.getSize());
+		composite.setBackground(display.getSystemColor(SWT.COLOR_DARK_RED));
 
-		Label label=new Label(composite, SWT.NONE);
-		label.setText("ciao");
-		label.setLocation(10, 10);
 		Canvas canvas = new Canvas(composite, SWT.ALL);
 		
 		
@@ -57,6 +55,7 @@ public class moveAction {
 			switch (event.type) {
 			case SWT.MouseDown:
 				Rectangle rect = composite.getBounds();
+				//controlla se e al interno e non esce fuori
 				if (rect.contains(event.x, event.y)) {
 					Point pt1 = composite.toDisplay(0, 0);
 					Point pt2 = shell.toDisplay(event.x, event.y);

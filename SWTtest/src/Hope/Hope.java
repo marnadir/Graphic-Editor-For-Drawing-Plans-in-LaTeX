@@ -31,7 +31,7 @@ public class Hope {
         CanvasString  canvas =new CanvasString(content, SWT.ALL);
         canvas.setStringa("ciao");
         canvas.draw("ciao",15,15,true);
-		System.out.println(canvas.getLocation().x+" "+canvas.getLocation().y);
+		//System.out.println(canvas.getLocation().x+" "+canvas.getLocation().y);
 
         
         
