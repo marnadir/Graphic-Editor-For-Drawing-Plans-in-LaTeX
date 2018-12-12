@@ -65,6 +65,7 @@ public class moveAction {
 			case SWT.MouseMove:
 				if (offset[0] != null) {
 					Point pt = offset[0];
+					
 					composite.setLocation(event.x - pt.x, event.y - pt.y);
 				}
 				break;

@@ -5,6 +5,11 @@ import java.util.ArrayList;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.dnd.DND;
+import org.eclipse.swt.dnd.DragSource;
+import org.eclipse.swt.dnd.DropTarget;
+import org.eclipse.swt.dnd.TextTransfer;
+import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.graphics.Image;
@@ -15,6 +20,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
@@ -27,6 +33,7 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
 
+import DND.MyDragSourceListener;
 import Dialog.CreateActionDialogCommand;
 import Dialog.CreateGoalDialogCommand;
 import Dialog.CreateSoDialogCommand;
@@ -37,8 +44,9 @@ import command.ChangeStateCommand;
 import command.EliminateActionCommand;
 import command.EliminateStateCommand;
 import logic.Action;
+import logic.ContentAction;
 import logic.InitialState;
-import logic.PaintAction;
+import logic.CanvasAction;
 
 class CreateDomainView {
 
@@ -55,7 +63,8 @@ class CreateDomainView {
 	Composite part2;
 	Composite ContentFinalState;
 	Combo comboOptionFnst;
-	Composite ContentActions;
+	ContentAction compositeAction;
+	Composite containerAction;
 	Tree treeAction;
 	Group subOption;
 	ArrayList<Action> actionsArray;
@@ -215,30 +224,70 @@ class CreateDomainView {
 		composite.setAlwaysShowScrollBars(true);
 		composite.setMinSize(treeAction.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 
-		ContentActions = new Composite(part2, SWT.BORDER);
-		ContentActions.setLayout(new FillLayout());
+		compositeAction = new ContentAction(part2, SWT.BORDER);
+		compositeAction.setLayout(new GridLayout(1, false));
 		gridData = new GridData(GridData.FILL, GridData.FILL, false, false);
 		gridData.horizontalSpan = 2;
-		ContentActions.setLayoutData(gridData);
+		compositeAction.setLayoutData(gridData);
+		
+		compositeAction.setBackground(compositeAction.getDisplay().getSystemColor(SWT.COLOR_RED));
+
+		//TODO need to put the container center in the parent composite and resize enough for canvasAction 
+		containerAction=new Composite(compositeAction, SWT.NONE);
+		containerAction.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		containerAction.setLayout(new GridLayout(1, false));
+		containerAction.setLocation(2500, 100);
+		containerAction.setBackground(containerAction.getDisplay().getSystemColor(SWT.COLOR_BLUE));
+
+		
+		
 
 		firstScroll.setContent(contentCanvas);
 		firstScroll.setExpandHorizontal(true);
 		firstScroll.setExpandVertical(true);
 		firstScroll.setMinSize(contentCanvas.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 
+		
+		 DragSource source =new DragSource(containerAction, DND.DROP_NONE);
+	     source.setTransfer(TextTransfer.getInstance()); // varargs are supported as of 4.7
+	     source.addDragListener(new MyDragSourceListener(source));
+		
+		
+		
+
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		showAction.addListener(SWT.Selection, new Listener() {
 
 			@Override
 			public void handleEvent(Event event) {
 
+				//TODO posso creare solo un azione,dovrei ripulire ad ogni nuovo comando
+				
 				TreeItem[] actions = treeAction.getSelection();
+				
+				if(containerAction.getChildren().length>0) {
+					containerAction.redraw();
+				}
 				if (actions.length > 0) {
 					TreeItem actionItem = getRoot(actions[0]);
 					Action action = findAction(actionItem.getText());
-					PaintAction paint=new PaintAction(action, ContentActions);
+					CanvasAction paint=new CanvasAction(containerAction,SWT.ALL,action);
 					action.setPaint(paint);
 					paint.draw();
+					compositeAction.setPaintAction(paint);
+
 				}
+					
 			}
 		});
 
@@ -363,6 +412,10 @@ class CreateDomainView {
 		bInitState.addListener(SWT.Selection, buttonInLister);
 		bFnState.addListener(SWT.Selection, buttonFinLister);
 		bntAct.addListener(SWT.Selection, buttonActLister);
+		
+		
+	
+		
 
 	}
 

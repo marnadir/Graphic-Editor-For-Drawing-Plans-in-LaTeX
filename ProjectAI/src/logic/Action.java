@@ -7,13 +7,13 @@ public class Action {
 	String name;
 	ArrayList<String> prec;
 	ArrayList<String> effect;
-	PaintAction paint;
+	CanvasAction paint;
 
-	public PaintAction getPaint() {
+	public CanvasAction getPaint() {
 		return paint;
 	}
 
-	public void setPaint(PaintAction paint) {
+	public void setPaint(CanvasAction paint) {
 		this.paint = paint;
 	}
 

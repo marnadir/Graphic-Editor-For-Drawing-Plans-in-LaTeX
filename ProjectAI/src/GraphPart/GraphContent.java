@@ -1,4 +1,6 @@
-package Hope;
+package GraphPart;
+
+
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Point;
@@ -7,28 +9,21 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Listener;
 
-public class ContentCanvas extends Composite{
+public class GraphContent extends Composite{
 
-	String stringa;
+	
 	Composite parent;
 	Control c;
 	
 	
-	public ContentCanvas(Composite parent, int style) {
+	public GraphContent(Composite parent, int style) {
 		super(parent, style);
 		this.parent=parent;
 
 	}
 
 
-	public String getStringa() {
-		return stringa;
-	}
 
-
-	public void setStringa(String stringa) {
-		this.stringa = stringa;
-	}
 
 
 	public void addlistener(Composite compi) {

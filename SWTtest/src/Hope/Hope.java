@@ -28,7 +28,7 @@ public class Hope {
         g1.setText("Group1");
         ContentCanvas content=new ContentCanvas(g1, SWT.ALL);
         content.pack();
-        CanvasString  canvas =new CanvasString(content, SWT.ALL);
+        Node  canvas =new Node(content, SWT.ALL);
         canvas.setStringa("ciao");
         canvas.draw("ciao",15,15,true);
 		//System.out.println(canvas.getLocation().x+" "+canvas.getLocation().y);
