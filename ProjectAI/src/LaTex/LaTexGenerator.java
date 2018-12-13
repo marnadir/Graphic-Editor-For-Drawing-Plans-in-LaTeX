@@ -6,6 +6,7 @@ import java.util.Map;
 
 import logic.Action;
 
+
 public class LaTexGenerator {
 	
 	Map<String, String> mapping;

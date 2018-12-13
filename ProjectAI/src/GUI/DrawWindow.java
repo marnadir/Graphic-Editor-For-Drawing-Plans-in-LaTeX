@@ -6,6 +6,12 @@ import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.custom.CTabItem;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.dnd.DND;
+import org.eclipse.swt.dnd.DragSource;
+import org.eclipse.swt.dnd.DropTarget;
+import org.eclipse.swt.dnd.FileTransfer;
+import org.eclipse.swt.dnd.TextTransfer;
+import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.FormLayout;
@@ -20,7 +26,11 @@ import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
+import DND.MyDragSourceListener;
+import DND.MyDropTargetListener;
+import DataTrasfer.MyTransfer;
 import command.ExitCommand;
+import logic.ContentAction;
 import logic.IMenu;
 
 public class DrawWindow  {
@@ -146,9 +156,11 @@ public class DrawWindow  {
 
 		CTabItem item = new CTabItem(PlanView, SWT.CLOSE);
 		item.setText("Item ");
-		Text text = new Text(PlanView, SWT.MULTI | SWT.V_SCROLL | SWT.H_SCROLL);
-		text.setText("vaffanculo!!!");
-		item.setControl(text);
+		ContentAction contentAction=new ContentAction(PlanView, SWT.ALL);
+        item.setControl(contentAction);
+        
+        PlanView.setSelection(item);
+        
 		
 
 		console=new Group(sashForm2, SWT.SCROLL_LINE);
@@ -160,6 +172,29 @@ public class DrawWindow  {
 		console.setLayout(Layout);
 
 	    
+//	   DropTarget target = new DropTarget(contentAction, DND.DROP_MOVE | DND.DROP_COPY);
+//	   target.setTransfer(new Transfer[] { TextTransfer.getInstance() }); // varargs are not yet supported see https://git.eclipse.org/r/#/c/92236         // add a drop listener
+//	   target.addDropListener(new MyDropTargetListener(contentAction, target));
+		
+		   
+//		DragSource source = new DragSource(console, DND.DROP_NONE);
+//		final TextTransfer textTransfer = TextTransfer.getInstance();
+//		final FileTransfer fileTransfer = FileTransfer.getInstance();
+//		Transfer[] types = new Transfer[] { fileTransfer, textTransfer };
+//		source.setTransfer(types); // varargs are supported as of 4.7
+//		source.addDragListener(new MyDragSourceListener(source));
+
+		
+		
+		
+		
+		DropTarget target = new DropTarget(contentAction, DND.DROP_MOVE | DND.DROP_COPY);
+	    target.setTransfer(new Transfer[] { MyTransfer.getInstance() });
+		target.addDropListener(new MyDropTargetListener(PlanView, target));
+		
+		
+		
+		
 	    shell.setMaximized(false);
 	}
 

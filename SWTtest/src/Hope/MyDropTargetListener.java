@@ -40,11 +40,11 @@ public class MyDropTargetListener extends DropTargetAdapter {
 
 			//content.setEnabled(false);
 
-			Node canvas = new Node(comp, SWT.ALL);
+            Node canvas = new Node(comp, SWT.ALL);
 			canvas.setLocation(parentComposite.getDisplay().getCursorLocation().x,
 					parentComposite.getDisplay().getCursorLocation().y);
 
-			content.setBackground(parentComposite.getDisplay().getSystemColor(SWT.COLOR_DARK_RED));
+			canvas.setBackground(parentComposite.getDisplay().getSystemColor(SWT.COLOR_DARK_RED));
 			//canvas.setBackground(parentComposite.getDisplay().getSystemColor(SWT.COLOR_BLUE));
 
 			int x = canvas.getLocation().x - parentComposite.toDisplay(parentComposite.getLocation()).x;
@@ -55,7 +55,7 @@ public class MyDropTargetListener extends DropTargetAdapter {
 			String string = (String) event.data;
 
 			canvas.draw(string, 0, 0, false);
-			comp.setSize(canvas.getSize().x, canvas.getSize().y);
+			comp.setSize(canvas.getSize().x+100, canvas.getSize().y+100);
 			comp.setLocation(x, y);
 			
 			content.addlistener(comp);

@@ -2,6 +2,9 @@ package Hope;
 
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.dnd.DND;
+import org.eclipse.swt.dnd.DragSource;
+import org.eclipse.swt.dnd.TextTransfer;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.PaintEvent;
@@ -61,6 +64,10 @@ public class Node extends Canvas{
 		});
 
 		this.pack();
+		
+	    DragSource source =new DragSource(this, DND.DROP_NONE);
+        source.setTransfer(TextTransfer.getInstance()); // varargs are supported as of 4.7
+        source.addDragListener(new MyDragSourceListener(parent, source));
 		
 	}
 	

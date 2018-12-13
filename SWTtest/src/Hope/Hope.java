@@ -43,9 +43,9 @@ public class Hope {
         cItem.setControl(comp);
         
         
-        DragSource source =new DragSource(canvas, DND.DROP_NONE);
-        source.setTransfer(TextTransfer.getInstance()); // varargs are supported as of 4.7
-        source.addDragListener(new MyDragSourceListener(content, source));
+//        DragSource source =new DragSource(canvas, DND.DROP_COPY);
+//        source.setTransfer(TextTransfer.getInstance()); // varargs are supported as of 4.7
+//        source.addDragListener(new MyDragSourceListener(content, source));
         
         DropTarget target = new DropTarget(comp, DND.DROP_NONE);
         target.setTransfer(new Transfer[] { TextTransfer.getInstance() }); // varargs are not yet supported see https://git.eclipse.org/r/#/c/92236         // add a drop listener

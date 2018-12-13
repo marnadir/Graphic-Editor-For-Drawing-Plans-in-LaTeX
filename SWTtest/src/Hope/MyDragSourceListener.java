@@ -1,5 +1,6 @@
 package Hope;
 
+import org.eclipse.swt.dnd.DND;
 import org.eclipse.swt.dnd.DragSource;
 import org.eclipse.swt.dnd.DragSourceAdapter;
 import org.eclipse.swt.dnd.DragSourceEvent;
@@ -17,6 +18,20 @@ public class MyDragSourceListener extends DragSourceAdapter {
     }
     
    
+	@Override
+	public void dragStart(DragSourceEvent event) {
+		// TODO Auto-generated method stub
+		//super.dragStart(event);
+		if (event.detail == DND.DROP_NONE) {
+			if ((event.detail & DND.DROP_COPY) != 0) {
+				event.detail = DND.DROP_COPY;
+			} else {
+				event.detail = DND.DROP_NONE;
+
+			}
+		}
+	}
+    
     
     @Override
     public void dragSetData(DragSourceEvent event) {

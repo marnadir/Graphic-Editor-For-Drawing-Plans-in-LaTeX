@@ -19,19 +19,8 @@ public class Action {
 
 	public Action(String name, ArrayList<String> prec, ArrayList<String> eff) {
 		this.name = name;
-		if(prec != null) {
-			this.prec = prec;
-
-		}else {
-			this.prec=new ArrayList<>();
-		}
-		
-		if(eff != null) {
-			this.effect=eff;
-		}else {
-			this.effect = new ArrayList<>();
-
-		}
+		this.prec = prec;
+		this.effect = eff;
 
 	}
 

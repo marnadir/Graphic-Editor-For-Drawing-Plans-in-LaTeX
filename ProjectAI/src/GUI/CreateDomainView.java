@@ -7,7 +7,10 @@ import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.dnd.DND;
 import org.eclipse.swt.dnd.DragSource;
+import org.eclipse.swt.dnd.DragSourceEvent;
+import org.eclipse.swt.dnd.DragSourceListener;
 import org.eclipse.swt.dnd.DropTarget;
+import org.eclipse.swt.dnd.FileTransfer;
 import org.eclipse.swt.dnd.TextTransfer;
 import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.graphics.Font;
@@ -20,16 +23,13 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
 
@@ -37,13 +37,13 @@ import DND.MyDragSourceListener;
 import Dialog.CreateActionDialogCommand;
 import Dialog.CreateGoalDialogCommand;
 import Dialog.CreateSoDialogCommand;
+import logic.Action;
 import command.ChangeEffCommand;
 import command.ChangeNameCommand;
 import command.ChangePrecCommand;
 import command.ChangeStateCommand;
 import command.EliminateActionCommand;
 import command.EliminateStateCommand;
-import logic.Action;
 import logic.ContentAction;
 import logic.InitialState;
 import logic.CanvasAction;
@@ -225,7 +225,7 @@ class CreateDomainView {
 		composite.setMinSize(treeAction.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 
 		compositeAction = new ContentAction(part2, SWT.BORDER);
-		compositeAction.setLayout(new GridLayout(1, false));
+		//compositeAction.setLayout(new GridLayout(1, false));
 		gridData = new GridData(GridData.FILL, GridData.FILL, false, false);
 		gridData.horizontalSpan = 2;
 		compositeAction.setLayoutData(gridData);
@@ -233,13 +233,27 @@ class CreateDomainView {
 		compositeAction.setBackground(compositeAction.getDisplay().getSystemColor(SWT.COLOR_RED));
 
 		//TODO need to put the container center in the parent composite and resize enough for canvasAction 
-		containerAction=new Composite(compositeAction, SWT.NONE);
-		containerAction.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-		containerAction.setLayout(new GridLayout(1, false));
-		containerAction.setLocation(2500, 100);
-		containerAction.setBackground(containerAction.getDisplay().getSystemColor(SWT.COLOR_BLUE));
+		
+		
+		
+		containerAction=new Composite(compositeAction, SWT.BORDER);
+		containerAction.setLayoutData(new GridData(GridData.FILL, GridData.FILL, false, false));
+		containerAction.setLayout(new FillLayout());
+		//containerAction.setEnabled(false);
 
 		
+	
+		containerAction.setLocation(40,150);
+		containerAction.setBackground(containerAction.getDisplay().getSystemColor(SWT.COLOR_BLUE));
+		containerAction.setSize(50,50);
+		//compositeAction.addlistener(containerAction);
+		
+//		DragSource source = new DragSource(stateGroup,DND.DROP_NONE );
+//		final TextTransfer textTransfer = TextTransfer.getInstance();
+//		final FileTransfer fileTransfer = FileTransfer.getInstance();
+//		Transfer[] types = new Transfer[] { fileTransfer, textTransfer };
+//		source.setTransfer(types); // varargs are supported as of 4.7
+//		source.addDragListener(new MyDragSourceListener(source));
 		
 
 		firstScroll.setContent(contentCanvas);
@@ -247,11 +261,6 @@ class CreateDomainView {
 		firstScroll.setExpandVertical(true);
 		firstScroll.setMinSize(contentCanvas.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 
-		
-		 DragSource source =new DragSource(containerAction, DND.DROP_NONE);
-	     source.setTransfer(TextTransfer.getInstance()); // varargs are supported as of 4.7
-	     source.addDragListener(new MyDragSourceListener(source));
-		
 		
 		
 
@@ -281,10 +290,11 @@ class CreateDomainView {
 				if (actions.length > 0) {
 					TreeItem actionItem = getRoot(actions[0]);
 					Action action = findAction(actionItem.getText());
-					CanvasAction paint=new CanvasAction(containerAction,SWT.ALL,action);
-					action.setPaint(paint);
-					paint.draw();
-					compositeAction.setPaintAction(paint);
+					CanvasAction canvasAction=new CanvasAction(containerAction,SWT.ALL,action);
+					action.setPaint(canvasAction);
+					canvasAction.draw();
+					canvasAction.addDNDListener();
+					compositeAction.setPaintAction(canvasAction);
 
 				}
 					

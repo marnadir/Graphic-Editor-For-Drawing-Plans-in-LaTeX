@@ -4,7 +4,13 @@ import java.util.ArrayList;
 
 import javax.xml.crypto.dsig.CanonicalizationMethod;
 
+import org.eclipse.jface.util.LocalSelectionTransfer;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.dnd.DND;
+import org.eclipse.swt.dnd.DragSource;
+import org.eclipse.swt.dnd.FileTransfer;
+import org.eclipse.swt.dnd.TextTransfer;
+import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.events.MenuDetectEvent;
 import org.eclipse.swt.events.MenuDetectListener;
 import org.eclipse.swt.events.PaintEvent;
@@ -21,6 +27,9 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Text;
+
+import DND.MyDragSourceListener;
+import DataTrasfer.MyTransfer;
 
 public class CanvasAction  extends Canvas{
 
@@ -45,6 +54,7 @@ public class CanvasAction  extends Canvas{
 		super(parent, style);
 		this.parent=parent;
 		this.action=a;
+		
 	}
 	
 	
@@ -56,23 +66,17 @@ public class CanvasAction  extends Canvas{
 		this.setLayoutData(new GridData(SWT.CENTER,SWT.CENTER,true,true));
 		this.setLocation(40,parent.getLocation().y+parent.getSize().y/3);
 
- 	  	this.setSize(500, 500);
 
 
 		this.addPaintListener(new PaintListener() {
 
-		//Canvas canvas=getCanvas();
 			
 			@Override
 			public void paintControl(PaintEvent e) {
 
 				int numPrec = action.getPrec().size();
 				int numEff = action.getEffect().size();
-
-//				int startX = canvas.getLocation().x + 100;
-//				int startY = canvas.getLocation().y + 150;
-				
-				int startX = 50 ;
+				int startX = 70 ;
 				int startY = 50;
 				
 
@@ -146,6 +150,10 @@ public class CanvasAction  extends Canvas{
 						e.gc.setLineWidth(4);
 						e.gc.drawOval(x+standardLengthEff+1, posY-2, 5, 5);
 						e.gc.setLineWidth(0);
+						int x1=lengthPrec+standardLengthEff+widthRect+100;
+						int y1=heightRect+100;
+						
+						//parent.setSize(x1, y1);
 						//e.gc.drawString("dafd", x, posY);
 						
 
@@ -159,6 +167,13 @@ public class CanvasAction  extends Canvas{
 		});
 	
 		this.addMenuDetectListener(new MenuContentAction(this));
+		int x1=lengthPrec+standardLengthEff+widthRect+100;
+		int y1=heightRect+100;
+		parent.setSize(x1, y1);
+
+	
+		
+
 	}
 	
 	
@@ -321,6 +336,12 @@ public class CanvasAction  extends Canvas{
 		this.defaultValueEffLenght = defaultValueEffLenght;
 	}
 
+	
+	public void addDNDListener() {
+		DragSource source =new DragSource(this, DND.DROP_NONE);
+	    source.setTransfer(new Transfer[] { MyTransfer.getInstance() });
+	    source.addDragListener(new MyDragSourceListener(source));
+	}
 	
 	
 }
