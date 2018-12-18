@@ -10,7 +10,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.TreeItem;
 
-import logic.Action;
+import Action.Action;
 import logic.IDialog;
 
 public class ChangeNameCommand implements ICommand {

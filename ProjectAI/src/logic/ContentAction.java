@@ -6,6 +6,8 @@ import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Listener;
 
+import Action.CanvasAction;
+
 public class ContentAction extends Composite {
 
 	private CanvasAction paintAction;

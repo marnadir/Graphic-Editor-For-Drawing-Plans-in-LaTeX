@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 import org.eclipse.swt.widgets.Combo;
 
-import logic.Action;
+import Action.Action;
 
 public class EliminateActionCommand implements ICommand{
 

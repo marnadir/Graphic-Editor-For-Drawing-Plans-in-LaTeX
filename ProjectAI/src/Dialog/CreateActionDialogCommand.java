@@ -8,11 +8,11 @@ import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Tree;
 
-import logic.Action;
+import Action.Action;
 import GUI.CreateActionDialog;
 import GUI.CreateSoDialog;
+import State.InitialStateCanvas;
 import command.ICommand;
-import logic.InitialState;
 
 public class CreateActionDialogCommand implements ICommand {
 

@@ -5,23 +5,13 @@ import java.util.ArrayList;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.custom.ScrolledComposite;
-import org.eclipse.swt.dnd.DND;
-import org.eclipse.swt.dnd.DragSource;
-import org.eclipse.swt.dnd.DragSourceEvent;
-import org.eclipse.swt.dnd.DragSourceListener;
-import org.eclipse.swt.dnd.DropTarget;
-import org.eclipse.swt.dnd.FileTransfer;
-import org.eclipse.swt.dnd.TextTransfer;
-import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Group;
@@ -33,20 +23,17 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
 
-import DND.MyDragSourceListener;
+import Action.Action;
+import Action.CanvasAction;
 import Dialog.CreateActionDialogCommand;
 import Dialog.CreateGoalDialogCommand;
 import Dialog.CreateSoDialogCommand;
-import logic.Action;
+import State.InitialStateCanvas;
 import command.ChangeEffCommand;
 import command.ChangeNameCommand;
 import command.ChangePrecCommand;
-import command.ChangeStateCommand;
 import command.EliminateActionCommand;
-import command.EliminateStateCommand;
 import logic.ContentAction;
-import logic.InitialState;
-import logic.CanvasAction;
 
 class CreateDomainView {
 
@@ -57,12 +44,12 @@ class CreateDomainView {
 	Composite outer;
 	Composite inside;
 	Composite contentCanvas;
-	Combo comboOptionInSt;
-	Composite ContentInitState;
+	Composite contentInitState;
+	Composite containerInitState;
 	Composite part1;
 	Composite part2;
-	Composite ContentFinalState;
-	Combo comboOptionFnst;
+	Composite contentGoalState;
+	Composite containerGoalState;
 	ContentAction compositeAction;
 	Composite containerAction;
 	Tree treeAction;
@@ -76,7 +63,7 @@ class CreateDomainView {
 
 	CreateActionDialogCommand actionCommnd;
 
-	InitialState initialState = null;
+	InitialStateCanvas initialState = null;
 
 	public CreateDomainView(SashForm sashForm) {
 		this.sashForm = sashForm;
@@ -117,14 +104,9 @@ class CreateDomainView {
 		Label initialState = new Label(subOption, SWT.ALL);
 		initialState.setText("Initial State: ");
 
-		comboOptionInSt = new Combo(subOption, SWT.READ_ONLY);
-		ArrayList<String> possibleOption = new ArrayList<String>();
-		possibleOption.add("Create");
-		String[] convertList = possibleOption.toArray(new String[possibleOption.size()]);
-		comboOptionInSt.setItems(convertList);
+	
 
-		Rectangle clientArea = subOption.getClientArea();
-		comboOptionInSt.setBounds(clientArea.x, clientArea.y, 200, 200);
+	
 
 		Button bInitState = new Button(subOption, SWT.PUSH);
 		Image img = new Image(shell.getDisplay(), "img/ok.png");
@@ -132,18 +114,11 @@ class CreateDomainView {
 
 		GridData gridData = new GridData(GridData.CENTER, GridData.CENTER, false, false);
 		gridData.horizontalSpan = 2;
-		comboOptionInSt.setLayoutData(gridData);
+		//comboOptionInSt.setLayoutData(gridData);
 
 		Label finalState = new Label(subOption, SWT.ALL);
 		finalState.setText("Final State: ");
-		comboOptionFnst = new Combo(subOption, SWT.READ_ONLY);
-		possibleOption = new ArrayList<String>();
-		possibleOption.add("Create");
-		convertList = possibleOption.toArray(new String[possibleOption.size()]);
-		comboOptionFnst.setItems(convertList);
-		comboOptionFnst.setBounds(clientArea.x, clientArea.y, 200, 200);
-		comboOptionFnst.setLayoutData(gridData);
-
+		
 		Button bFnState = new Button(subOption, SWT.PUSH);
 		bFnState.setImage(img);
 
@@ -175,11 +150,28 @@ class CreateDomainView {
 		fillLayout.type = SWT.HORIZONTAL;
 		part1.setLayout(fillLayout);
 
-		ContentInitState = new Composite(part1, SWT.BORDER);
-		ContentInitState.setLayout(new GridLayout(1, false));
+		contentInitState = new Composite(part1, SWT.BORDER);
+		//contentInitState.setLayout(new GridLayout(1, false));
+		//contentInitState.setLayout(new FillLayout());
+		
+		containerInitState=new Composite(contentInitState, SWT.BORDER);
+		containerInitState.setLayoutData(new GridData(GridData.FILL, GridData.FILL, false, false));
+		containerInitState.setLayout(new FillLayout());
+		//containerInitState.setLayout(new GridLayout(1, false));
 
-		ContentFinalState = new Composite(part1, SWT.BORDER);
-		ContentFinalState.setLayout(new GridLayout(1, false));
+		containerInitState.setLocation(50,80);
+//		containerInitState.setSize(60, 150);
+
+
+		contentGoalState = new Composite(part1, SWT.BORDER);
+		//contentGoalState.setLayout(new GridLayout(1, false));
+		containerGoalState=new Composite(contentGoalState, SWT.BORDER);
+		containerGoalState.setLayoutData(new GridData(GridData.FILL, GridData.FILL, false, false));
+		containerGoalState.setLayout(new FillLayout());
+//		containerGoalState.setLocation((3*contentGoalState.getSize().x)/2,20);
+		containerGoalState.setLocation(70,80);
+
+		
 
 		part2 = new Composite(contentCanvas, SWT.ALL);
 		part2.setLayout(new GridLayout(3, true));
@@ -225,37 +217,10 @@ class CreateDomainView {
 		composite.setMinSize(treeAction.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 
 		compositeAction = new ContentAction(part2, SWT.BORDER);
-		//compositeAction.setLayout(new GridLayout(1, false));
 		gridData = new GridData(GridData.FILL, GridData.FILL, false, false);
 		gridData.horizontalSpan = 2;
 		compositeAction.setLayoutData(gridData);
 		
-		compositeAction.setBackground(compositeAction.getDisplay().getSystemColor(SWT.COLOR_RED));
-
-		//TODO need to put the container center in the parent composite and resize enough for canvasAction 
-		
-		
-		
-		containerAction=new Composite(compositeAction, SWT.BORDER);
-		containerAction.setLayoutData(new GridData(GridData.FILL, GridData.FILL, false, false));
-		containerAction.setLayout(new FillLayout());
-		//containerAction.setEnabled(false);
-
-		
-	
-		containerAction.setLocation(40,150);
-		containerAction.setBackground(containerAction.getDisplay().getSystemColor(SWT.COLOR_BLUE));
-		containerAction.setSize(50,50);
-		//compositeAction.addlistener(containerAction);
-		
-//		DragSource source = new DragSource(stateGroup,DND.DROP_NONE );
-//		final TextTransfer textTransfer = TextTransfer.getInstance();
-//		final FileTransfer fileTransfer = FileTransfer.getInstance();
-//		Transfer[] types = new Transfer[] { fileTransfer, textTransfer };
-//		source.setTransfer(types); // varargs are supported as of 4.7
-//		source.addDragListener(new MyDragSourceListener(source));
-		
-
 		firstScroll.setContent(contentCanvas);
 		firstScroll.setExpandHorizontal(true);
 		firstScroll.setExpandVertical(true);
@@ -265,15 +230,17 @@ class CreateDomainView {
 		
 
 		
+//		Display.getDefault().timerExec(100, new Runnable() {
+//		    @Override
+//		    public void run() {
+//		    	containerAction.redraw();
+//		      
+//		      // Run again - 
+//		      Display.getDefault().timerExec(100, this);
+//		    }
+//		   });
 		
-		
-		
-		
-		
-		
-		
-		
-		
+	
 		
 		showAction.addListener(SWT.Selection, new Listener() {
 
@@ -284,18 +251,26 @@ class CreateDomainView {
 				
 				TreeItem[] actions = treeAction.getSelection();
 				
-				if(containerAction.getChildren().length>0) {
-					containerAction.redraw();
-				}
+//				if(containerAction.getChildren().length>0) {
+//					containerAction.redraw();
+//				}
 				if (actions.length > 0) {
 					TreeItem actionItem = getRoot(actions[0]);
 					Action action = findAction(actionItem.getText());
+					if(containerAction!=null) {
+						containerAction.dispose();
+					}
+					containerAction=new Composite(compositeAction, SWT.BORDER);
+					containerAction.setLayoutData(new GridData(GridData.FILL, GridData.FILL, false, false));
+					containerAction.setLayout(new FillLayout());
+					containerAction.setLocation(40,150);
+					
 					CanvasAction canvasAction=new CanvasAction(containerAction,SWT.ALL,action);
 					action.setPaint(canvasAction);
 					canvasAction.draw();
 					canvasAction.addDNDListener();
 					compositeAction.setPaintAction(canvasAction);
-
+					
 				}
 					
 			}
@@ -366,42 +341,21 @@ class CreateDomainView {
 		});
 
 		CreateSoDialogCommand so = new CreateSoDialogCommand();
-		EliminateStateCommand elimCmd = new EliminateStateCommand();
-		ChangeStateCommand changeCmd = new ChangeStateCommand();
-
 		Listener buttonInLister = new Listener() {
 
 			@Override
 			public void handleEvent(Event event) {
-
-				so.execute(comboOptionInSt, ContentInitState);
-				if (elimCmd.canExecute(comboOptionInSt)) {
-					elimCmd.execute(comboOptionInSt, so.getInitialState());
-
-				} else if (changeCmd.canExecute(comboOptionInSt)) {
-					changeCmd.execute(so.getCreateSoDialog(), so.getInitialState());
-
-				}
-
+				so.execute(containerInitState);
 			}
 		};
 
 		CreateGoalDialogCommand goalCommand = new CreateGoalDialogCommand();
-
 		Listener buttonFinLister = new Listener() {
 
-			// TODO
+			
 			@Override
 			public void handleEvent(Event event) {
-
-				goalCommand.execute(comboOptionFnst, ContentFinalState);
-				if (elimCmd.canExecute(comboOptionFnst)) {
-					elimCmd.execute(comboOptionFnst, goalCommand.getGoalState());
-
-				} else if (changeCmd.canExecute(comboOptionFnst)) {
-					changeCmd.execute(goalCommand.getCreateGoalDialog(), goalCommand.getGoalState());
-
-				}
+				goalCommand.execute(containerGoalState);
 
 			}
 		};
@@ -410,7 +364,6 @@ class CreateDomainView {
 
 		Listener buttonActLister = new Listener() {
 
-			// TODO
 			@Override
 			public void handleEvent(Event event) {
 				actionCommnd.execute(treeAction, actionsArray);

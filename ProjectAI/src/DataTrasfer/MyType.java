@@ -3,18 +3,18 @@ package DataTrasfer;
 import java.util.ArrayList;
 
 public class MyType {
-	String actionName;
+	String name;
 
 	ArrayList<String> prec;
 
 	ArrayList<String> eff;
 
-	public String getActionName() {
-		return actionName;
+	public String getName() {
+		return name;
 	}
 
-	public void setActionName(String actionName) {
-		this.actionName = actionName;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public ArrayList<String> getPrec() {

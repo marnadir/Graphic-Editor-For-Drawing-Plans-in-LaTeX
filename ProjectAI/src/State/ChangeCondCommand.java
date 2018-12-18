@@ -1,21 +1,27 @@
-package command;
+package State;
 
 import java.util.ArrayList;
 
+import javax.swing.plaf.nimbus.State;
+
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.TreeItem;
 
 import Action.Action;
+import command.ICommand;
+import logic.IDialog;
 import logic.IDialogNewState;
 
-public class ChangeEffCommand  implements ICommand{
+public class ChangeCondCommand implements ICommand {
 
-
-	Action a;
-	TreeItem itemRoot;
+	IStateCanvas canvas;
+	ArrayList<String> conds;
+	
 	
 	@Override
 	public boolean canExecute(Object var1, Object var2) {
@@ -25,23 +31,24 @@ public class ChangeEffCommand  implements ICommand{
 
 	@Override
 	public void execute(Object var1, Object var2) {
-		if (var1 instanceof Action) {
-			if (var2 instanceof TreeItem) {
-				itemRoot = (TreeItem) var2;
-				a = (Action) var1;
-				IDialogNewState dial = new IDialogNewState(itemRoot.getParent().getShell()) {
+		if (var1 instanceof IStateCanvas) {
+		
+				
+			canvas = (IStateCanvas) var1;
+				IDialogNewState dial = new IDialogNewState(canvas.getShell()) {
 					@Override
 					public void createContent() {
 						// TODO Auto-generated method stub
 						super.createContent();
-						getLabel().setText("Modify the Effect of " + a.getName());
-						getLabel().pack();
+						getLabel().setText("Add/Remove Conds.. ");
 						List l = getList();
+						conds=canvas.getState().getConds();
 
-						for (int i = 0; i < a.getEffect().size(); i++) {
-							l.add(a.getEffect().get(i));
+
+						for (int i = 0; i < conds.size(); i++) {
+							l.add(conds.get(i));
 						}
-						setListPCond(a.getEffect());
+						setListPCond(conds);
 					}
 
 					@Override
@@ -51,9 +58,10 @@ public class ChangeEffCommand  implements ICommand{
 
 							@Override
 							public void handleEvent(Event event) {
-								updateEff(getList());
-								updateTree();
+								if(getList().getItemCount()>0) {
+								updatePrec(getList());
 								getDialog().dispose();
+								}
 							}
 						};
 					}
@@ -61,23 +69,14 @@ public class ChangeEffCommand  implements ICommand{
 				dial.createContent();
 			}
 
-		}
+		
 
 	}
 
-	public void updateEff(List l) {
-		a.setEffect(new ArrayList<>());
+	public void updatePrec(List l) {
+		canvas.getState().removeConds();
 		for(int i=0;i<l.getItemCount();i++) {
-			a.getEffect().add(l.getItem(i));
-		}
-	}
-	
-	public void updateTree() {
-		TreeItem eff=itemRoot.getItem(1);
-		eff.removeAll();
-		for(int i=0;i<a.getEffect().size();i++) {
-			TreeItem item=new TreeItem(eff, SWT.ALL);
-			item.setText(a.getEffect().get(i));
+			canvas.getState().addCond((l.getItem(i)));
 		}
 	}
 	
@@ -88,3 +87,4 @@ public class ChangeEffCommand  implements ICommand{
 	}
 
 }
+

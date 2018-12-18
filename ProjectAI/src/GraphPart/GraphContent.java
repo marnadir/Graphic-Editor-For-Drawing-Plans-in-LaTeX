@@ -2,38 +2,46 @@ package GraphPart;
 
 
 
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
+import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Listener;
 
-public class GraphContent extends Composite{
+import Action.CanvasAction;
 
-	
-	Composite parent;
-	Control c;
+public class GraphContent extends Canvas {
+
+	private CanvasAction paintAction;
+	private Composite parent;
 	
 	
 	public GraphContent(Composite parent, int style) {
 		super(parent, style);
 		this.parent=parent;
+		// TODO Auto-generated constructor stub
+	}
 
+	public CanvasAction getPaintAction() {
+		return paintAction;
 	}
 
 
-
-
+	public void setPaintAction(CanvasAction paintAction) {
+		this.paintAction = paintAction;
+	}
+	
 
 	public void addlistener(Composite compi) {
 	
 		final Point[] offset = new Point[1];
 		Composite comp=compi;
 		Listener listener = event -> {
+		    comp.setEnabled(false);
 			switch (event.type) {
 			case SWT.MouseDown:
-				
 					Rectangle rect = comp.getBounds();
 					int x = event.x;
 					int y = event.y;
@@ -54,6 +62,7 @@ public class GraphContent extends Composite{
 				break;
 			case SWT.MouseUp:
 				offset[0] = null;
+				comp.setEnabled(true);
 				break;
 			}
 		};
@@ -61,16 +70,6 @@ public class GraphContent extends Composite{
         this.addListener(SWT.MouseDown, listener);
         this.addListener(SWT.MouseUp, listener);
         this.addListener(SWT.MouseMove, listener);
-	}
-
-
-	public Control getC() {
-		return c;
-	}
-
-
-	public void setC(Control c) {
-		this.c = c;
 	}
 
 	

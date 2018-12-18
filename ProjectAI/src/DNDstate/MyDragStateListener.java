@@ -1,21 +1,25 @@
-package DND;
+package DNDstate;
 
 import org.eclipse.swt.dnd.DND;
 import org.eclipse.swt.dnd.DragSource;
 import org.eclipse.swt.dnd.DragSourceAdapter;
 import org.eclipse.swt.dnd.DragSourceEvent;
 
+import Action.Action;
+import Action.CanvasAction;
 import DataTrasfer.MyType;
-import logic.Action;
-import logic.CanvasAction;
+import State.IState;
+import State.IStateCanvas;
 
 
 
-public class MyDragSourceListener extends DragSourceAdapter {
+public class MyDragStateListener extends DragSourceAdapter {
     private DragSource source;
+    private String name;
 	
-    public MyDragSourceListener( DragSource source) {
+    public MyDragStateListener( DragSource source,String name) {
         this.source = source;
+        this.name=name;
     }
    
     @Override
@@ -35,13 +39,13 @@ public class MyDragSourceListener extends DragSourceAdapter {
     
 	@Override
 	public void dragSetData(DragSourceEvent event) {
-		if (source.getControl() instanceof CanvasAction) {
-			CanvasAction canvasAction = (CanvasAction) source.getControl();
-			Action action = canvasAction.getAction();
+		if (source.getControl() instanceof IStateCanvas) {
+			IStateCanvas stateCanvas = (IStateCanvas) source.getControl();
+			IState state=(IState) stateCanvas.getState();
 			MyType myType1 = new MyType();
-			myType1.setActionName(action.getName());
-			myType1.setPrec(action.getPrec());
-			myType1.setEff(action.getEffect());
+			myType1.setName(name);
+			myType1.setPrec(state.getConds());
+			myType1.setEff(state.getConds());
 			event.data = new MyType[] { myType1 };
 		}
 

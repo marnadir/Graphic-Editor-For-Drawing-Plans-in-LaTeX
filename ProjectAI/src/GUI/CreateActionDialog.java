@@ -19,10 +19,10 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
 
-import logic.Action;
-import logic.GoalState;
+import Action.Action;
+import State.GoalStateCanvas;
+import State.InitialStateCanvas;
 import logic.IDialog;
-import logic.InitialState;
 
 public class CreateActionDialog extends IDialog {
 

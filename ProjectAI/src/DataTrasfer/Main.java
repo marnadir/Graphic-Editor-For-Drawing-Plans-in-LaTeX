@@ -16,7 +16,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 
-import logic.Action;
+import Action.Action;
 
 public class Main {
 	 public static void main(String[] args) {
@@ -48,7 +48,7 @@ public class Main {
 		    	
 		    	Action action=new Action("first action", prec, eff);
 
-		        myType1.actionName = action.getName();
+		        myType1.name = action.getName();
 		        myType1.prec=action.getPrec();
 		        myType1.eff = action.getEffect();
 		        
@@ -81,7 +81,7 @@ public class Main {
 		          if (myTypes != null) {
 		            String string = "";
 		            for (int i = 0; i < myTypes.length; i++) {
-		              string += myTypes[i].actionName + " ";
+		              string += myTypes[i].name + " ";
 		              
 		              for(int j=0;j< myTypes[i].prec.size();j++) {
 		            	  string +=myTypes[i].prec.get(j);

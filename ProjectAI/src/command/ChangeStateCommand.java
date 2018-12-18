@@ -5,8 +5,8 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
 
 import GUI.CreateSoDialog;
+import State.InitialStateCanvas;
 import logic.IDialogNewState;
-import logic.InitialState;
 
 public class ChangeStateCommand  implements ICommand{
 

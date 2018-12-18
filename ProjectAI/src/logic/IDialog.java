@@ -25,19 +25,6 @@ public abstract class IDialog {
 
 	public void createDialog() {
 		dialog = new Shell(shell, SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL | SWT.CENTER);
-//
-//		/** get the size of the screen */
-//		Rectangle bounds = shell.getBounds();
-//
-//		/** get the size of the window */
-//		Rectangle rect = shell.getBounds();
-//
-//		/** calculate the centre */
-//		int x = bounds.x + (bounds.width - rect.width) / 2;
-//		int y = bounds.y + (bounds.height - rect.height) / 2;
-//
-//		/** set the new location */
-//		dialog.setLocation(x, y);
 
 		Button okButton = new Button(dialog, SWT.PUSH);
 		okButton.setText("&OK");

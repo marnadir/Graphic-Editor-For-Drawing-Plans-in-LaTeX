@@ -23,7 +23,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 
-import logic.Action;
+import Action.Action;
 
 
 
@@ -50,7 +50,7 @@ public class MyTransfer extends ByteArrayTransfer {
 			ByteArrayOutputStream out = new ByteArrayOutputStream();
 			DataOutputStream writeOut = new DataOutputStream(out);
 			for (int i = 0, length = myTypes.length; i < length; i++) {
-				byte[] buffer = myTypes[i].actionName.getBytes();
+				byte[] buffer = myTypes[i].name.getBytes();
 				writeOut.writeInt(buffer.length);
 				writeOut.write(buffer);
 
@@ -89,7 +89,7 @@ public class MyTransfer extends ByteArrayTransfer {
 					int size = readIn.readInt();
 					byte[] name = new byte[size];
 					readIn.read(name);
-					action.actionName = new String(name);
+					action.name = new String(name);
 
 					size = readIn.readInt();
 					action.prec = new ArrayList<>();
@@ -134,7 +134,7 @@ public class MyTransfer extends ByteArrayTransfer {
 		}
 		MyType[] myTypes = (MyType[]) object;
 		for (int i = 0; i < myTypes.length; i++) {
-			if (myTypes[i] == null || myTypes[i].actionName == null || myTypes[i].actionName.length() == 0) {
+			if (myTypes[i] == null || myTypes[i].name == null || myTypes[i].name.length() == 0) {
 				return false;
 			}
 		}

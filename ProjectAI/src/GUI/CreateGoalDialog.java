@@ -3,13 +3,15 @@ package GUI;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 
-import logic.GoalState;
+import State.GoalStateCanvas;
+import State.IState;
 import logic.IDialogNewState;
 
 public class CreateGoalDialog extends IDialogNewState{
@@ -17,15 +19,16 @@ public class CreateGoalDialog extends IDialogNewState{
 //	ArrayList<String> listPrec=this.getCond();
 
 	Composite compCanvas;
-	ArrayList<String> listPrec;
+	ArrayList<String> listEff;
 	Shell dialog=this.getDialog();
 	Combo CombOption;
-	GoalState goalState;
+	GoalStateCanvas goalStateCanvas;
+	IState goalState;
 	
 	public CreateGoalDialog(Composite compCanvas) {
 		super(compCanvas.getShell());
 		this.compCanvas=compCanvas;
-		listPrec=this.getCond();
+		listEff=this.getCond();
 		
 		
 	}
@@ -44,16 +47,16 @@ public class CreateGoalDialog extends IDialogNewState{
 			
 			@Override
 			public void handleEvent(Event event) {
-				if(goalState == null) {
-					goalState=new GoalState(listPrec);
+				if(goalStateCanvas == null) {
+					goalState=new IState(listEff);
+					goalStateCanvas=new GoalStateCanvas(compCanvas,SWT.ALL,goalState);
+					goalStateCanvas.addDNDListener();
 				}
-				if(listPrec != null) {
-					goalState.update(listPrec);
-					if(listPrec.size()>0) {
-						goalState.draw(compCanvas);
-						updateCombo();
+				if(listEff != null) {
+					goalState.updateConds(listEff);
+					if(listEff.size()>0) {
+						goalStateCanvas.draw();
 						dialog.setVisible(false);
-
 					}
 				}
 			}
@@ -62,31 +65,6 @@ public class CreateGoalDialog extends IDialogNewState{
 		return btn;
 	}
 
-	public void updateCombo() {
-		List<String> possibleOption=new ArrayList<String>();
-		possibleOption.add("Change");
-		possibleOption.add("Delete");
-		String[] convertList=possibleOption.toArray(new String[possibleOption.size()]);
-		this.CombOption.setItems (convertList);
-//		this.CombOption.pack();
-	}
-	
-	public void setCombo(Combo combo) {
-		this.CombOption=combo;
-	}
-	
-	public void elimaneState() {
-		listPrec.clear();
-	}
-	
-	public GoalState getGoalState() {
-		return this.goalState;
-	}
-	
-	
-	
-//	public Shell getDialog() {
-//		return dialog;
-//	}
+
 	
 }

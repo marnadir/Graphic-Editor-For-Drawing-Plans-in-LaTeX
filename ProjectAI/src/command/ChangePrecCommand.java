@@ -10,7 +10,7 @@ import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.TreeItem;
 
-import logic.Action;
+import Action.Action;
 import logic.IDialog;
 import logic.IDialogNewState;
 

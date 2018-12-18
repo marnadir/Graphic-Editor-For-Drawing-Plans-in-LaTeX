@@ -3,13 +3,16 @@ package GUI;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
+
+import State.IState;
+import State.InitialStateCanvas;
 import logic.IDialogNewState;
-import logic.InitialState;
 
 public class CreateSoDialog extends IDialogNewState{
 	
@@ -19,7 +22,8 @@ public class CreateSoDialog extends IDialogNewState{
 	ArrayList<String> listPrec;
 	Shell dialog=this.getDialog();
 	Combo CombOption;
-	InitialState initialState;
+	InitialStateCanvas initialStateCanvas;
+	IState initialState;
 	
 	public CreateSoDialog(Composite compCanvas) {
 		super(compCanvas.getShell());
@@ -42,14 +46,15 @@ public class CreateSoDialog extends IDialogNewState{
 			
 			@Override
 			public void handleEvent(Event event) {
-				if(initialState == null) {
-				 initialState=new InitialState(listPrec);
+				if(initialStateCanvas == null) {
+				initialState=new IState(listPrec);
+				 initialStateCanvas=new InitialStateCanvas(compCanvas,SWT.ALL,initialState);
+				 initialStateCanvas.addDNDListener();
 				}
 				if(listPrec != null) {
-					initialState.update(listPrec);
+					initialState.updateConds(listPrec);
 					if(listPrec.size()>0) {
-						initialState.draw(compCanvas);
-						updateCombo();
+						initialStateCanvas.draw();
 						dialog.setVisible(false);
 					}
 				}
@@ -61,26 +66,11 @@ public class CreateSoDialog extends IDialogNewState{
 		return btn;
 	}
 
-	public void updateCombo() {
-		List<String> possibleOption=new ArrayList<String>();
-		possibleOption.add("Change");
-		possibleOption.add("Delete");
-		String[] convertList=possibleOption.toArray(new String[possibleOption.size()]);
-		this.CombOption.setItems (convertList);
-//		this.CombOption.pack();
-//		this.CombOption.getParent().pack();
-	}
+
 	
-	public void setCombo(Combo combo) {
-		this.CombOption=combo;
-	}
-	
-	public void elimaneState() {
-		listPrec.clear();
-	}
-	
-	public InitialState getInitialState() {
-		return this.initialState;
+
+	public InitialStateCanvas getInitialState() {
+		return this.initialStateCanvas;
 	}
 	
 	

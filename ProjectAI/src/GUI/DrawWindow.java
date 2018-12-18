@@ -12,6 +12,8 @@ import org.eclipse.swt.dnd.DropTarget;
 import org.eclipse.swt.dnd.FileTransfer;
 import org.eclipse.swt.dnd.TextTransfer;
 import org.eclipse.swt.dnd.Transfer;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.FormLayout;
@@ -26,11 +28,13 @@ import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
-import DND.MyDragSourceListener;
-import DND.MyDropTargetListener;
+import DNDAaction.MyDragActionListener;
+import DNDAaction.MyDropActionListener;
 import DataTrasfer.MyTransfer;
+import GraphPart.GraphContent;
 import command.ExitCommand;
 import logic.ContentAction;
+import logic.IDialog;
 import logic.IMenu;
 
 public class DrawWindow  {
@@ -68,6 +72,10 @@ public class DrawWindow  {
 		IMenu menuFile=new IMenu(shell, SWT.DROP_DOWN);
 		fileItem.setMenu(menuFile);
 		
+		MenuItem option=menuBar.createItem("&Option", SWT.CASCADE);
+		IMenu menuOption=new IMenu(shell, SWT.DROP_DOWN);
+		option.setMenu(menuOption);
+		
 		MenuItem saveItem= new MenuItem(menuFile, SWT.PUSH);
 		saveItem.setText("&Save\tCtrl+S");
 		saveItem.setAccelerator(SWT.CONTROL+'S');
@@ -102,6 +110,42 @@ public class DrawWindow  {
 			}
 		};
 		
+		
+		MenuItem showCond=new MenuItem(menuOption, SWT.PUSH);
+		showCond.setText("Conditions in the Plan");
+		
+		Listener listenerShow=new Listener() {
+			
+			@Override
+			public void handleEvent(Event event) {
+				IDialog dialog=new IDialog(shell) {
+					
+					@Override
+					public Listener getOkbtnListener() {
+						// TODO Auto-generated method stub
+						return null;
+					}
+					
+					@Override
+					public void createContent() {
+						getLabel().setText("Choice for Showing/Hiding conds");
+						this.getLabel().pack();
+						Composite c = getComposite();
+						c.setLayout(new GridLayout(1, false));
+						
+
+					}
+				};
+				
+				dialog.createContent();
+			}
+		};
+		
+		showCond.addListener(SWT.Selection, listenerShow);
+		
+	
+		
+		
 		shell.setMenuBar(menuBar);
 		
 		shell.addListener (SWT.Close, e -> {
@@ -121,10 +165,6 @@ public class DrawWindow  {
 	    firstScroll.setLayout(new GridLayout(1, false));
 	    firstScroll.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
-//	    Composite firstContent = new Composite(firstScroll, SWT.NONE);
-//	    firstContent.setLayout(new GridLayout(1, false));
-//	    firstContent.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-
 	    sashForm = new SashForm(firstScroll, SWT.HORIZONTAL);
 
 	    
@@ -132,10 +172,7 @@ public class DrawWindow  {
 	    firstScroll.setExpandHorizontal(true);
 	    firstScroll.setExpandVertical(true);
 		
-		
-	    
-	    
-	    
+
 		createDomainView=new CreateDomainView(sashForm);
 		createDomainView.createContent();
 	
@@ -143,26 +180,18 @@ public class DrawWindow  {
 		sashForm2 = new SashForm(sashForm, SWT.VERTICAL);
 		
 		sashForm.setWeights(new int[] {1,3});
-		
-
-		
 
 	    PlanView = new CTabFolder (sashForm2, SWT.PUSH);
 		PlanView.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		PlanView.setSimple(false);
 		PlanView.setUnselectedImageVisible(false);
 		PlanView.setUnselectedCloseVisible(false);
-		
-
 		CTabItem item = new CTabItem(PlanView, SWT.CLOSE);
 		item.setText("Item ");
-		ContentAction contentAction=new ContentAction(PlanView, SWT.ALL);
+		GraphContent contentAction=new GraphContent(PlanView, SWT.ALL);
         item.setControl(contentAction);
-        
         PlanView.setSelection(item);
-        
-		
-
+ 
 		console=new Group(sashForm2, SWT.SCROLL_LINE);
 		console.setText("Console");
 		//console.setFont(boldFont);
@@ -171,37 +200,14 @@ public class DrawWindow  {
 		Layout.marginHeight = 5;
 		console.setLayout(Layout);
 
-	    
-//	   DropTarget target = new DropTarget(contentAction, DND.DROP_MOVE | DND.DROP_COPY);
-//	   target.setTransfer(new Transfer[] { TextTransfer.getInstance() }); // varargs are not yet supported see https://git.eclipse.org/r/#/c/92236         // add a drop listener
-//	   target.addDropListener(new MyDropTargetListener(contentAction, target));
-		
-		   
-//		DragSource source = new DragSource(console, DND.DROP_NONE);
-//		final TextTransfer textTransfer = TextTransfer.getInstance();
-//		final FileTransfer fileTransfer = FileTransfer.getInstance();
-//		Transfer[] types = new Transfer[] { fileTransfer, textTransfer };
-//		source.setTransfer(types); // varargs are supported as of 4.7
-//		source.addDragListener(new MyDragSourceListener(source));
-
-		
-		
-		
-		
 		DropTarget target = new DropTarget(contentAction, DND.DROP_MOVE | DND.DROP_COPY);
 	    target.setTransfer(new Transfer[] { MyTransfer.getInstance() });
-		target.addDropListener(new MyDropTargetListener(PlanView, target));
-		
-		
-		
-		
+		target.addDropListener(new MyDropActionListener(PlanView, target));
+
 	    shell.setMaximized(false);
 	}
 
-	
-	
-	
-	
+
 
 	public Shell getShell() {
 		return shell;
@@ -230,8 +236,5 @@ public class DrawWindow  {
 	public Group getConsole() {
 		return console;
 	}
-	
-	
-	
-	
+
 }
