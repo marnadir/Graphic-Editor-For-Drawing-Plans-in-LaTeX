@@ -16,7 +16,6 @@ import logic.IDialogNewState;
 
 public class CreateSoDialog extends IDialogNewState{
 	
-//	ArrayList<String> listPrec=this.getCond();
 
 	Composite compCanvas;
 	ArrayList<String> listPrec;
@@ -26,7 +25,7 @@ public class CreateSoDialog extends IDialogNewState{
 	IState initialState;
 	
 	public CreateSoDialog(Composite compCanvas) {
-		super(compCanvas.getShell());
+		super(compCanvas.getShell(),SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL | SWT.CENTER);
 		this.compCanvas=compCanvas;
 		listPrec=this.getCond();
 		

@@ -11,6 +11,7 @@ import org.eclipse.swt.widgets.Composite;
 
 import DNDAaction.MyDragActionListener;
 import DataTrasfer.MyTransfer;
+import GraphPart.GraphContent;
 import GraphPart.Oval;
 
 public abstract class ICanvasAction  extends Canvas{
@@ -29,6 +30,7 @@ public abstract class ICanvasAction  extends Canvas{
 	int standardLengthPrec=30;
 	boolean defaultValuePrecLenght=true;
 	boolean defaultValueEffLenght=true;
+	String actionName;
 	
 
 	
@@ -56,7 +58,15 @@ public abstract class ICanvasAction  extends Canvas{
 		}
 	}
 	
-	
+	public void addOval(String name,String cond,int x, int y) {
+		Oval oval=new Oval(this,name,cond);
+		oval.setLocation(x, y);
+		oval.drawOval();
+		if(parent.getParent() instanceof GraphContent) {
+			GraphContent graphContent=(GraphContent) parent.getParent();
+			graphContent.getOvalCounter().add(oval);
+		}
+	}
 	
 	public int getLenght(ArrayList<String> conds) {
 

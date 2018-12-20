@@ -56,7 +56,6 @@ public class MyDropActionListener extends DropTargetAdapter {
 			IState state=null;
 			GraphContent content = (GraphContent) target.getControl();
 			Composite comp = new Composite(content, SWT.ALL);
-			//comp.setEnabled(false);
 			comp.setLayoutData(new GridData(GridData.FILL, GridData.FILL, false, false));
 			comp.setLayout(new FillLayout());
 			comp.setLocation(comp.toControl(event.x, event.y));
@@ -80,7 +79,7 @@ public class MyDropActionListener extends DropTargetAdapter {
 
 						default:
 							action = new Action(myTypes[i].getName(), myTypes[i].getPrec(), myTypes[i].getEff());
-							Node canvas = new Node(comp, SWT.ALL,action);
+							Node canvas = new Node(comp, SWT.NO_REDRAW_RESIZE | SWT.DOUBLE_BUFFERED,action);
 							canvas.draw();
 							canvas.pack();
 							

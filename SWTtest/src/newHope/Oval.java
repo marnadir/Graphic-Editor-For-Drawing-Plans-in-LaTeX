@@ -24,6 +24,8 @@ public class Oval {
 	Color red;
 	Color black;
 	Controller controller;
+	PaintListener paint;
+	boolean drawed=false;
 
 	boolean select = false;
 
@@ -42,25 +44,29 @@ public class Oval {
 	public Point getP() {
 		return p;
 	}
+	
+
 
 	public PaintListener getListener() {
-		PaintListener l;
 		
-		l=new PaintListener() {
+		
+		paint=new PaintListener() {
 
 			@Override
 			public void paintControl(PaintEvent e) {
-
+				
+				
 				//e.gc=new GC(canvasContainer);
 				e.gc.setForeground(black);
 				e.gc.setLineWidth(0);
 				e.gc.drawOval(p.x, p.y, 10, 10);
-				System.out.println("Draw:" +p.x+"-"+p.y);
-				
+			
+				e.gc.dispose();
+				//removePaint();
 			}
 			
 		};
 		
-		return l;
+		return paint;
 	}
 }

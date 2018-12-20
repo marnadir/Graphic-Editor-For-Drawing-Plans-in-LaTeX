@@ -14,6 +14,7 @@ import org.eclipse.swt.widgets.Composite;
 
 import DNDAaction.MyDragActionListener;
 import DataTrasfer.MyTransfer;
+import GraphPart.GraphContent;
 import GraphPart.Oval;
 import logic.MenuContentAction;
 
@@ -80,13 +81,13 @@ public class Node  extends ICanvasAction{
 					if (shownCond) {
 						e.gc.drawLine(0, posY, (lengthPrec), posY);
 						e.gc.drawString(string, 2, posY - 20, false);				
-						addOval(string,1, posY-2);
+						addOval(action.getName(),string,1, posY-2);
 					
 						
 									
 					} else {
 						e.gc.drawLine(0, posY,  standardLengthPrec, posY);	
-						addOval(string,1, posY-2);
+						addOval(action.getName(),string,1, posY-2);
 
 					}
 
@@ -125,13 +126,13 @@ public class Node  extends ICanvasAction{
 						e.gc.drawLine(x, posY, x + lengthEff, posY);
 						e.gc.drawString(string, x + 2, posY - 20, false);
 			
-						addOval(string,x+lengthEff, posY-2);
+						addOval(action.getName(),string,x+lengthEff, posY-2);
 						//e.gc.drawOval(x + (16 + lengthEff), posY-2, 5, 5);
 							
 					}else {
 							
 						e.gc.drawLine(x, posY, x + standardLengthEff, posY);
-						addOval(string,x+standardLengthEff-3, posY-2);
+						addOval(action.getName(),string,x+standardLengthEff-3, posY-2);
 			
 					}
 
@@ -179,13 +180,6 @@ public class Node  extends ICanvasAction{
 		return lenght;
 	}
 	
-	
-	
-	public void addOval(String name,int x, int y) {
-		Oval oval=new Oval(this,name);
-		oval.setLocation(x, y);
-		oval.drawO();
-	}
 	
 
 	

@@ -35,7 +35,7 @@ public class ChangeCondCommand implements ICommand {
 		
 				
 			canvas = (IStateCanvas) var1;
-				IDialogNewState dial = new IDialogNewState(canvas.getShell()) {
+				IDialogNewState dial = new IDialogNewState(canvas.getShell(),SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL | SWT.CENTER) {
 					@Override
 					public void createContent() {
 						// TODO Auto-generated method stub

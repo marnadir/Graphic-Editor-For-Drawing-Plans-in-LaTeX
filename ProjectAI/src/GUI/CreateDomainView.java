@@ -265,7 +265,7 @@ class CreateDomainView {
 					containerAction.setLayout(new FillLayout());
 					containerAction.setLocation(40,150);
 					
-					CanvasAction canvasAction=new CanvasAction(containerAction,SWT.ALL,action);
+					CanvasAction canvasAction=new CanvasAction(containerAction,SWT.DOUBLE_BUFFERED|SWT.NO_REDRAW_RESIZE,action);
 					action.setPaint(canvasAction);
 					canvasAction.draw();
 					canvasAction.addDNDListener();

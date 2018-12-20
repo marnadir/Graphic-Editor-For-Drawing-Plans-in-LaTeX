@@ -31,7 +31,7 @@ public class ChangeNameCommand implements ICommand {
 			TreeItem actionTree = (TreeItem) var1;
 			if (var2 instanceof Action) {
 				Action a = (Action) var2;
-				IDialog dialof = new IDialog(actionTree.getParent().getShell()) {
+				IDialog dialof = new IDialog(actionTree.getParent().getShell(),SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL | SWT.CENTER) {
 
 					@Override
 					public void createContent() {

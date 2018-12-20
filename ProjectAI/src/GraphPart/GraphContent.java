@@ -1,8 +1,6 @@
 package GraphPart;
 
 
-
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
@@ -10,29 +8,35 @@ import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Listener;
 
-import Action.CanvasAction;
-
 public class GraphContent extends Canvas {
 
-	private CanvasAction paintAction;
 	private Composite parent;
-	
+	private OvalCounter ovalCounter;
 	
 	public GraphContent(Composite parent, int style) {
 		super(parent, style);
 		this.parent=parent;
+		this.ovalCounter=new OvalCounter();
 		// TODO Auto-generated constructor stub
 	}
 
-	public CanvasAction getPaintAction() {
-		return paintAction;
+
+
+
+
+
+
+
+	public OvalCounter getOvalCounter() {
+		return ovalCounter;
 	}
 
 
-	public void setPaintAction(CanvasAction paintAction) {
-		this.paintAction = paintAction;
-	}
-	
+
+
+
+
+
 
 	public void addlistener(Composite compi) {
 	

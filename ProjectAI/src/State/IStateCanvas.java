@@ -14,6 +14,7 @@ import org.eclipse.swt.widgets.Composite;
 import DNDAaction.MyDragActionListener;
 import DNDstate.MyDragStateListener;
 import DataTrasfer.MyTransfer;
+import GraphPart.GraphContent;
 import GraphPart.Oval;
 
 public abstract class IStateCanvas extends Canvas {
@@ -156,10 +157,14 @@ public abstract class IStateCanvas extends Canvas {
 	}
 
 
-	public void addOval(String name,int x, int y) {
-		Oval oval=new Oval(this,name);
+	public void addOval(String name,String cond,int x, int y) {
+		Oval oval=new Oval(this,name,cond);
 		oval.setLocation(x, y);
-		oval.drawO();
+		oval.drawOval();
+		if(parent.getParent() instanceof GraphContent) {
+			GraphContent graphContent=(GraphContent) parent.getParent();
+			graphContent.getOvalCounter().add(oval);
+		}
 	}
 	
 	

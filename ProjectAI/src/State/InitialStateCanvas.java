@@ -52,12 +52,12 @@ public class InitialStateCanvas extends IStateCanvas{
 						e.gc.drawLine(startX, posY, startX + lengthCond, posY);
 						e.gc.drawString(string, startX + 5, posY - 20, false);
 						if(parent.getParent() instanceof GraphContent) {
-							addOval(string,startX+lengthCond, posY-2);
+							addOval(name,string,startX+lengthCond, posY-2);
 						}
 					}else {
 						e.gc.drawLine(startX, posY, startX + standardLength, posY);
 						if(parent.getParent() instanceof GraphContent) {
-							addOval(string,startX+standardLength, posY-2);
+							addOval(name,string,startX+standardLength, posY-2);
 						}
 					}
 					posY = posY + 30;

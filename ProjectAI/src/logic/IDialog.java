@@ -16,15 +16,17 @@ public abstract class IDialog {
 	private Shell dialog;
 	private Label label;
 	private Composite composite;
+	int style;
 
-	public IDialog(Shell shell) {
+	public IDialog(Shell shell,int style) {
 		this.shell = shell;
+		this.style=style;
 		this.createDialog();
 		
 	}
 
 	public void createDialog() {
-		dialog = new Shell(shell, SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL | SWT.CENTER);
+		dialog = new Shell(shell, style);
 
 		Button okButton = new Button(dialog, SWT.PUSH);
 		okButton.setText("&OK");

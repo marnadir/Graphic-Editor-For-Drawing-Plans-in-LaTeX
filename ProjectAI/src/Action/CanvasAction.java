@@ -34,8 +34,12 @@ public class CanvasAction  extends ICanvasAction{
 //	boolean defaultValueEffLenght=true;
 	
 
+	int style;
+	PaintListener p;
+	
 	public CanvasAction(Composite parent, int style, Action a) {
 		super(parent, style, a);
+		this.style=style;
 		// TODO Auto-generated constructor stub
 	}
 
@@ -47,24 +51,41 @@ public class CanvasAction  extends ICanvasAction{
 
 		widthRect = action.getName().length() * 12;
 		
-		//this.setLayoutData(new GridData(SWT.CENTER,SWT.CENTER,true,true));
-		//this.setLocation(40,parent.getLocation().y+parent.getSize().y/3);
+		this.addPaintListener(createPaintListener());
+		
+		this.redraw();
+		this.addMenuDetectListener(new MenuContentAction(this));
+		resizeParent();
+		
+		
+		
 
+	}
+	
+	public void removeListener() {	
+		this.removePaintListener(getPaintListener());
+	}
+	
+	public PaintListener getPaintListener() {
+		return p;
+	}
+	
+	public PaintListener createPaintListener() {
+		
 
+		 p = new PaintListener() {
 
-		this.addPaintListener(new PaintListener() {
-
-			
 			@Override
 			public void paintControl(PaintEvent e) {
 
+				
+				
+				
 				int numPrec = action.getPrec().size();
 				int numEff = action.getEffect().size();
-//				int startX = 70 ;
-//				int startY = 50;
-				
 
-				/*for setting the height of rectangle action, depending on Precs or Effs*/
+
+				/* for setting the height of rectangle action, depending on Precs or Effs */
 				max = numPrec;
 				if (numEff > max) {
 					max = numEff;
@@ -74,55 +95,50 @@ public class CanvasAction  extends ICanvasAction{
 					heightRect = 30 + max * 10;
 				}
 
-				if(numPrec==0) {
-					standardLengthPrec=0;
-				}else {
-					standardLengthPrec=40;
+				if (numPrec == 0) {
+					standardLengthPrec = 0;
+				} else {
+					standardLengthPrec = 40;
 				}
-				
-				if(numEff==0) {
-					standardLengthEff=0;
-				}else {
-					standardLengthEff=40;
+
+				if (numEff == 0) {
+					standardLengthEff = 0;
+				} else {
+					standardLengthEff = 40;
 				}
-				
-				
-				/* draw precs with their "point"*/
-				
+
+				/* draw precs with their "point" */
 
 				int posY = 30;
-				int y=25;
-				
+				int y = 25;
+
 				int avergWidth = (int) e.gc.getFontMetrics().getAverageCharacterWidth();
 
-				if(defaultValuePrecLenght) {
-					lengthPrec=getLenght(action.getPrec())*avergWidth;
+				if (defaultValuePrecLenght) {
+					lengthPrec = getLenght(action.getPrec()) * avergWidth;
 				}
-				
+
 				for (int i = 0; i < numPrec; i++) {
 
 					if (shownCond) {
 						String string = action.getPrec().get(i);
 						e.gc.drawLine(0, posY, (lengthPrec), posY);
-						e.gc.drawString(string, 2, posY - 20, false);				
-												
+						e.gc.drawString(string, 2, posY - 20, false);
+
 					} else {
-						e.gc.drawLine(0, posY,  standardLengthPrec, posY);	
+						e.gc.drawLine(0, posY, standardLengthPrec, posY);
 					}
 
 					posY = posY + 30;
 				}
-				
 
-								
-
-				/*Drawing rectangle w/o name*/
+				/* Drawing rectangle w/o name */
 				Rectangle rect;
-				if(shownCond) {
-				    rect = new Rectangle((lengthPrec), y-5, widthRect, heightRect);
+				if (shownCond) {
+					rect = new Rectangle((lengthPrec), y - 5, widthRect, heightRect);
 					e.gc.drawRectangle(rect);
-				}else {
-					rect = new Rectangle((standardLengthPrec), y-5, widthRect, heightRect);
+				} else {
+					rect = new Rectangle((standardLengthPrec), y - 5, widthRect, heightRect);
 					e.gc.drawRectangle(rect);
 				}
 
@@ -130,46 +146,36 @@ public class CanvasAction  extends ICanvasAction{
 					int l = rect.x + rect.width / 6;
 					e.gc.drawString(action.getName(), l, rect.y + rect.height / 3);
 				}
-				
-				
-				
+
 				posY = rect.y + 10;
 				Oval oval;
-				if(defaultValueEffLenght) {
-					lengthEff=getLenght(action.getEffect())*avergWidth;
+				if (defaultValueEffLenght) {
+					lengthEff = getLenght(action.getEffect()) * avergWidth;
 				}
 				for (int i = 0; i < numEff; i++) {
 					int x = rect.x + rect.width;
 
 					if (shownCond) {
-						String string = action.getEffect().get(i); 
+						String string = action.getEffect().get(i);
 						e.gc.drawLine(x, posY, x + lengthEff, posY);
 						e.gc.drawString(string, x + 2, posY - 20, false);
-			
-							
-					}else {
-							
+
+					} else {
+
 						e.gc.drawLine(x, posY, x + standardLengthEff, posY);
-						
-			
+
 					}
 
 					posY = posY + 30;
 
 				}
-				
+
 				resizeParent();
-
-				
+		
 			}
-		});
-	
-		this.addMenuDetectListener(new MenuContentAction(this));
-		resizeParent();
+		};
 		
-		
-		
-
+		return p;
 	}
 	
 	public void resizeParent() {

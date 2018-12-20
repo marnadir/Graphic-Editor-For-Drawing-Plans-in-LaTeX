@@ -25,8 +25,8 @@ public abstract class IDialogNewState extends IDialog{
 	Composite composite;
 	
 	
-	public IDialogNewState(Shell shell) {
-		super(shell);
+	public IDialogNewState(Shell shell,int style) {
+		super(shell,style);
 		listPCond=new ArrayList<>();
 		// TODO Auto-generated constructor stub
 	}

@@ -57,12 +57,12 @@ public class GoalStateCanvas extends IStateCanvas{
 						e.gc.drawLine(startX, posY, startX - lengthCond, posY);
 						e.gc.drawString(string, startX+3 - lengthCond, posY - 20, false);
 						if(parent.getParent() instanceof GraphContent) {
-							addOval(string,1, posY-2);
+							addOval(name,string,1, posY-2);
 						}
 					}else {
 						e.gc.drawLine(startX, posY, startX - standardLength, posY);
 						if(parent.getParent() instanceof GraphContent) {
-							addOval(string,1, posY-2);
+							addOval(name,string,1, posY-2);
 						}
 					}
 					posY = posY + 30;

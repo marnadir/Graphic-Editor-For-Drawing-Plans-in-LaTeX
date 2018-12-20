@@ -48,7 +48,7 @@ public class CreateActionDialog extends IDialog {
 	
 
 	public CreateActionDialog(Tree list,ArrayList<Action> actions) {
-		super(list.getShell());
+		super(list.getShell(),SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL | SWT.CENTER);
 		this.treeActions=list;
 		this.actions=actions;
 		prec = new ArrayList<>();

@@ -1,39 +1,37 @@
 package GUI;
 
 
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.custom.CTabItem;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.dnd.DND;
-import org.eclipse.swt.dnd.DragSource;
 import org.eclipse.swt.dnd.DropTarget;
-import org.eclipse.swt.dnd.FileTransfer;
-import org.eclipse.swt.dnd.TextTransfer;
 import org.eclipse.swt.dnd.Transfer;
-import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
-import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.FormLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.layout.RowLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Group;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Text;
 
-import DNDAaction.MyDragActionListener;
 import DNDAaction.MyDropActionListener;
 import DataTrasfer.MyTransfer;
 import GraphPart.GraphContent;
+import GraphPart.LineCanvas;
 import command.ExitCommand;
-import logic.ContentAction;
 import logic.IDialog;
 import logic.IMenu;
 
@@ -48,6 +46,7 @@ public class DrawWindow  {
 	private CTabFolder PlanView;
 	private Group console;
 	private CreateDomainView createDomainView;
+	private GraphContent contentAction;
 	
 	public DrawWindow(Shell shell) {
 		this.shell=shell;
@@ -118,22 +117,52 @@ public class DrawWindow  {
 			
 			@Override
 			public void handleEvent(Event event) {
-				IDialog dialog=new IDialog(shell) {
+				IDialog dialog=new IDialog(shell,SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL | SWT.CENTER) {
+					Composite compButton;
 					
 					@Override
 					public Listener getOkbtnListener() {
-						// TODO Auto-generated method stub
-						return null;
+						Listener l;
+						l =new Listener() {
+							
+							@Override
+							public void handleEvent(Event event) {
+								Control[] child=compButton.getChildren();
+								for(int i=0;i<child.length;i++) {
+									Button btn=(Button) child[i];
+									if(btn.getSelection()) {
+										System.out.println(btn.getText());
+										getDialog().setVisible(false);
+									}
+								}
+								
+								
+							}
+						};
+						return l;
 					}
 					
 					@Override
 					public void createContent() {
-						getLabel().setText("Choice for Showing/Hiding conds");
+						getLabel().setText("Choice for Showing/Hiding conditions");
 						this.getLabel().pack();
 						Composite c = getComposite();
 						c.setLayout(new GridLayout(1, false));
+						compButton=new Composite(c, SWT.ALL);
+						compButton.setLayout (new RowLayout (SWT.HORIZONTAL));
 						
+						Button showAllBtn=new Button(compButton, SWT.RADIO);
+						showAllBtn.setText("ShowAll Conditions");
+						
+						Button hideAllBtn=new Button(compButton, SWT.RADIO);
+						hideAllBtn.setText("HideAll Conditions");
+						
+						Button choiceUserBtn=new Button(compButton, SWT.RADIO);
+						choiceUserBtn.setText("Depending on Choice");
+						
+						this.getDialog().pack();
 
+						
 					}
 				};
 				
@@ -142,6 +171,71 @@ public class DrawWindow  {
 		};
 		
 		showCond.addListener(SWT.Selection, listenerShow);
+		
+		MenuItem menuLines=new MenuItem(menuOption, SWT.PUSH);
+		menuLines.setText("Create Connection");
+        Listener listenerLine=new Listener() {
+			Composite compButton;
+
+			@Override
+			public void handleEvent(Event event) {
+				IDialog dialog=new IDialog(shell,SWT.DIALOG_TRIM) {
+					
+					@Override
+					public Listener getOkbtnListener() {
+						Listener l;
+						l =new Listener() {
+							
+							@Override
+							public void handleEvent(Event event) {
+								
+								Control[] child=compButton.getChildren();
+								for(int i=0;i<child.length;i++) {
+									Button btn=(Button) child[i];
+									if(btn.getSelection()) {
+											LineCanvas lineCanvas=new LineCanvas(contentAction);
+											lineCanvas.addlistener();
+										
+										
+									}
+								}
+									
+								
+								
+							}
+						};
+						return l;
+					}
+					
+					@Override
+					public void createContent() {
+						getLabel().setText("Create Connection");
+						this.getLabel().pack();
+						Composite c = getComposite();
+						c.setLayout(new GridLayout(1, false));
+						compButton=new Composite(c, SWT.ALL);
+						compButton.setLayout (new RowLayout (SWT.VERTICAL));
+												
+						
+						Button archBtn=new Button(compButton, SWT.TOGGLE);
+						archBtn.setText("draw arch");
+						
+						
+						Button ordBtn=new Button(compButton, SWT.TOGGLE);
+						ordBtn.setText("draw Ord");
+						
+						
+						this.getDialog().pack();
+
+						
+					}
+				};
+				
+				dialog.createContent();
+			}
+		};
+		
+		menuLines.addListener(SWT.Selection, listenerLine);
 		
 	
 		
@@ -188,7 +282,7 @@ public class DrawWindow  {
 		PlanView.setUnselectedCloseVisible(false);
 		CTabItem item = new CTabItem(PlanView, SWT.CLOSE);
 		item.setText("Item ");
-		GraphContent contentAction=new GraphContent(PlanView, SWT.ALL);
+		contentAction=new GraphContent(PlanView, SWT.ALL);
         item.setControl(contentAction);
         PlanView.setSelection(item);
  
@@ -203,6 +297,18 @@ public class DrawWindow  {
 		DropTarget target = new DropTarget(contentAction, DND.DROP_MOVE | DND.DROP_COPY);
 	    target.setTransfer(new Transfer[] { MyTransfer.getInstance() });
 		target.addDropListener(new MyDropActionListener(PlanView, target));
+		
+		Display.getDefault().timerExec(100, new Runnable() {
+	    @Override
+	    public void run() {
+	      //composite.redraw();
+	    	contentAction.redraw();
+	      // Run again - TODO add logic to stop after correct number of moves
+	      Display.getDefault().timerExec(100, this);
+	    }
+	   });
+		
+		
 
 	    shell.setMaximized(false);
 	}

@@ -78,7 +78,7 @@ public class MenuContentState implements MenuDetectListener {
 
 				@Override
 				public void handleEvent(Event event) {
-					IDialog dialog = new IDialog(canvas.getShell()) {
+					IDialog dialog = new IDialog(canvas.getShell(),SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL | SWT.CENTER) {
 
 						Text textWid;
 

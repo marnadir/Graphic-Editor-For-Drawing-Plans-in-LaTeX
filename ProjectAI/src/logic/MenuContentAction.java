@@ -1,12 +1,10 @@
 package logic;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.MenuAdapter;
 import org.eclipse.swt.events.MenuDetectEvent;
 import org.eclipse.swt.events.MenuDetectListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
@@ -79,7 +77,7 @@ public class MenuContentAction implements MenuDetectListener {
 
 				@Override
 				public void handleEvent(Event event) {
-					IDialog dialog = new IDialog(boxSize.getParent().getShell()) {
+					IDialog dialog = new IDialog(boxSize.getParent().getShell(),SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL | SWT.CENTER) {
 
 						Text textWid;
 						Text textHei;
@@ -138,7 +136,7 @@ public class MenuContentAction implements MenuDetectListener {
 
 				@Override
 				public void handleEvent(Event event) {
-					IDialog dialog = new IDialog(boxSize.getParent().getShell()) {
+					IDialog dialog = new IDialog(boxSize.getParent().getShell(),SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL | SWT.CENTER) {
 
 						Text textWid;
 
@@ -207,7 +205,7 @@ public class MenuContentAction implements MenuDetectListener {
 
 				@Override
 				public void handleEvent(Event event) {
-					IDialog dialog = new IDialog(boxSize.getParent().getShell()) {
+					IDialog dialog = new IDialog(boxSize.getParent().getShell(),SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL | SWT.CENTER) {
 
 						Text textWid;
 

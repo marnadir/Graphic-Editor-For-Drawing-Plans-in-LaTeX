@@ -10,6 +10,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 
+
 public class LineCanvas  {
 
 	Point p1=null;
@@ -55,6 +56,8 @@ public class LineCanvas  {
 			}
 		});
 	}
+	
+	
 
 	public void drawLine() {
 		canvasContainer.addPaintListener(new PaintListener() {

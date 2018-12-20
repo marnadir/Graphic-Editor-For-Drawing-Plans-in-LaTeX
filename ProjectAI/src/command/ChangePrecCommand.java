@@ -31,7 +31,7 @@ public class ChangePrecCommand implements ICommand {
 			if (var2 instanceof TreeItem) {
 				itemRoot = (TreeItem) var2;
 				a = (Action) var1;
-				IDialogNewState dial = new IDialogNewState(itemRoot.getParent().getShell()) {
+				IDialogNewState dial = new IDialogNewState(itemRoot.getParent().getShell(),SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL | SWT.CENTER) {
 					@Override
 					public void createContent() {
 						// TODO Auto-generated method stub
