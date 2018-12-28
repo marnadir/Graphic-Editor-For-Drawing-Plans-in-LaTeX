@@ -1,5 +1,7 @@
 package State;
 
+import java.text.DecimalFormat;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MenuDetectEvent;
 import org.eclipse.swt.events.MenuDetectListener;
@@ -20,6 +22,7 @@ import logic.IDialog;
 public class MenuContentState implements MenuDetectListener {
 
 	IStateCanvas canvas;
+	
 
 	public MenuContentState(IStateCanvas canvas) {
 		this.canvas = canvas;
@@ -91,9 +94,9 @@ public class MenuContentState implements MenuDetectListener {
 
 									if (canvas.isShownCond()) {
 										canvas.setDefaultValue(false);
-										canvas.setLength(Integer.parseInt(textWid.getText()));
+										canvas.setLengthFromCm(Double.parseDouble(textWid.getText()));
 									} else {
-										canvas.setStandardLength(Integer.parseInt(textWid.getText()));
+										canvas.setStandardLengthFromCm(Double.parseDouble(textWid.getText()));
 									}
 									// canvas.resizeParent();
 									getDialog().setVisible(false);
@@ -111,21 +114,23 @@ public class MenuContentState implements MenuDetectListener {
 
 							if (canvas.isShownCond()) {
 								Label lWidth = new Label(c, SWT.ALL);
-								lWidth.setText("Lenght: ");
+								lWidth.setText("Lenght in cm: ");
 								textWid = new Text(c, SWT.BORDER);
-								textWid.setText(Integer.toString(canvas.getLength()));
+								textWid.setText(canvas.getLengthCondInCm());
 								Label info = new Label(c, SWT.BORDER);
-								info.setText("the minimum lenght is: " + canvas.getLength());
+								info.setText("the minimum lenght is: " + canvas.getLengthCondInCm()+"cm");
 								GridData gridData = new GridData(GridData.CENTER, GridData.CENTER, false, false);
 								gridData.horizontalSpan = 2;
 								info.setLayoutData(gridData);
 							} else {
 								Label lWidth = new Label(c, SWT.ALL);
-								lWidth.setText("Lenght: ");
+								lWidth.setText("Lenght in cm: ");
 								textWid = new Text(c, SWT.BORDER);
-								textWid.setText(Integer.toString(canvas.getStandardLength()));
+								DecimalFormat df = new DecimalFormat("#.00");
+							    String angleFormated = df.format((canvas.getLengthCondInCm()));
+								textWid.setText( angleFormated);
 								Label info = new Label(c, SWT.BORDER);
-								info.setText("the default lenght is: " + 35);
+								info.setText("the default lenght is: " + "1.4cm");
 								GridData gridData = new GridData(GridData.CENTER, GridData.CENTER, false, false);
 								gridData.horizontalSpan = 2;
 								info.setLayoutData(gridData);

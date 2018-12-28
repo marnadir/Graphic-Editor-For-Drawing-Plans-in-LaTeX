@@ -168,7 +168,7 @@ public class CreateActionDialog extends IDialog {
 			public void handleEvent(Event event) {
 
 				String cond = newPrec.getText();
-				cond=cond.toLowerCase();
+				//cond=cond.toLowerCase();
 				boolean isChecked = buttonNegPrec.getSelection();
 				if (!(prec.contains(cond)) && !cond.equals("")) {
 					if (isChecked) {
@@ -192,7 +192,7 @@ public class CreateActionDialog extends IDialog {
 			public void handleEvent(Event event) {
 
 				String cond = newEff.getText();
-				cond=cond.toLowerCase();
+				//cond=cond.toLowerCase();
 				boolean isChecked = buttonNegEff.getSelection();
 				if (!(effect.contains(cond)) && !cond.equals("")) {
 					if (isChecked) {
@@ -233,6 +233,8 @@ public class CreateActionDialog extends IDialog {
 						}
 	
 						actions.add(action);
+						action.generateLatexCode();
+						action.getLatexCode();
 						
 						dialog.setVisible(false);
 				

@@ -1,6 +1,7 @@
 package State;
 
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import org.eclipse.swt.SWT;
@@ -16,6 +17,8 @@ import DNDstate.MyDragStateListener;
 import DataTrasfer.MyTransfer;
 import GraphPart.GraphContent;
 import GraphPart.Oval;
+import LaTex.LaTexGeneratorAction;
+import LaTex.LaTexGeneratorState;
 
 public abstract class IStateCanvas extends Canvas {
 
@@ -24,10 +27,14 @@ public abstract class IStateCanvas extends Canvas {
 	Composite contentCanvas;
 	boolean shownCond = false;
 	int lengthCond;
-	int standardLength=30;
+	int standardLength=53;
 	boolean defaultValue;
 	Composite parent;
 	int lenIn;
+	String latexCode;
+	final double PIXEL_MEASUREMNT= 0.026458;
+	final double CM_MEASUREMNT= 37.7957517575025;
+
 
 	public IStateCanvas(Composite parent, int style, IState state) {
 		super(parent, style);
@@ -53,7 +60,7 @@ public abstract class IStateCanvas extends Canvas {
 
 	public void resizeParent() {
 		if(shownCond) {
-			int x1=lengthCond+6;
+			int x1=(int)lengthCond+6;
 			int y1=lenIn;
 			parent.setSize(x1,y1);
 			
@@ -92,14 +99,19 @@ public abstract class IStateCanvas extends Canvas {
 
 
 
-	public int getLength() {
+	public int getLengthCond() {
 		return lengthCond;
 	}
 
+	public String getLengthCondInCm() {
+		DecimalFormat df = new DecimalFormat("#.00");
+	    String angleFormated = df.format(lengthCond*PIXEL_MEASUREMNT);
+		return angleFormated;
+	}
 
 
-	public void setLength(int length) {
-		this.lengthCond = length;
+	public void setLengthFromCm(double d) {
+		this.lengthCond = (int)(d*CM_MEASUREMNT);
 	}
 
 
@@ -108,10 +120,14 @@ public abstract class IStateCanvas extends Canvas {
 		return standardLength;
 	}
 
+	public String getStandardLengthInCm() {
+		DecimalFormat df = new DecimalFormat("#.00");
+	    String angleFormated = df.format(standardLength*PIXEL_MEASUREMNT);
+		return angleFormated;
+	}
 
-
-	public void setStandardLength(int standardLengthPrec) {
-		this.standardLength = standardLengthPrec;
+	public void setStandardLengthFromCm(double standardLengthPrec) {
+		this.standardLength = (int)(standardLengthPrec*CM_MEASUREMNT);
 	}
 
 
@@ -166,6 +182,25 @@ public abstract class IStateCanvas extends Canvas {
 			graphContent.getOvalCounter().add(oval);
 		}
 	}
+	
+	public void generateLatexCode() {
+		LaTexGeneratorState generator=new LaTexGeneratorState();
+
+		if(this instanceof GoalStateCanvas) {
+			latexCode=generator.getLatexGoalcode(this);
+		}else {
+			latexCode=generator.getLatexSocode(this);
+
+		}
+	
+	}
+	
+	public String getLatexCode() {
+		System.out.println(latexCode);
+		return latexCode;
+	}
+	
+	
 	
 	
 }

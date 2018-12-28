@@ -18,24 +18,9 @@ import logic.MenuContentAction;
 
 public class CanvasAction  extends ICanvasAction{
 
-
-//	Action action;
-//	Composite parent;
-//	int max;
-//	boolean shownCond = false;
-//	boolean shownName = true;
-//	int widthRect;
-//	int lengthPrec;
-//	int lengthEff;
-//	int heightRect = 40;
-//	int standardLengthEff=30; //Standard lenght of effect line 
-//	int standardLengthPrec=30;
-//	boolean defaultValuePrecLenght=true;
-//	boolean defaultValueEffLenght=true;
-	
-
 	int style;
 	PaintListener p;
+
 	
 	public CanvasAction(Composite parent, int style, Action a) {
 		super(parent, style, a);
@@ -43,21 +28,18 @@ public class CanvasAction  extends ICanvasAction{
 		// TODO Auto-generated constructor stub
 	}
 
-
 	
 	
 	
 	public void draw() {
 
-		widthRect = action.getName().length() * 12;
 		
 		this.addPaintListener(createPaintListener());
 		
 		this.redraw();
 		this.addMenuDetectListener(new MenuContentAction(this));
 		resizeParent();
-		
-		
+	
 		
 
 	}
@@ -78,55 +60,22 @@ public class CanvasAction  extends ICanvasAction{
 			@Override
 			public void paintControl(PaintEvent e) {
 
-				
-				
-				
-				int numPrec = action.getPrec().size();
-				int numEff = action.getEffect().size();
-
-
-				/* for setting the height of rectangle action, depending on Precs or Effs */
-				max = numPrec;
-				if (numEff > max) {
-					max = numEff;
-				}
-
-				if (max > 1) {
-					heightRect = 30 + max * 10;
-				}
-
-				if (numPrec == 0) {
-					standardLengthPrec = 0;
-				} else {
-					standardLengthPrec = 40;
-				}
-
-				if (numEff == 0) {
-					standardLengthEff = 0;
-				} else {
-					standardLengthEff = 40;
-				}
-
-				/* draw precs with their "point" */
+				action.resize();
+		
 
 				int posY = 30;
 				int y = 25;
 
-				int avergWidth = (int) e.gc.getFontMetrics().getAverageCharacterWidth();
 
-				if (defaultValuePrecLenght) {
-					lengthPrec = getLenght(action.getPrec()) * avergWidth;
-				}
-
-				for (int i = 0; i < numPrec; i++) {
+				for (int i = 0; i < action.getNumPrec(); i++) {
 
 					if (shownCond) {
 						String string = action.getPrec().get(i);
-						e.gc.drawLine(0, posY, (lengthPrec), posY);
+						e.gc.drawLine(0, posY, (action.getLengthPrec()), posY);
 						e.gc.drawString(string, 2, posY - 20, false);
 
 					} else {
-						e.gc.drawLine(0, posY, standardLengthPrec, posY);
+						e.gc.drawLine(0, posY, action.getStandardLengthPrec(), posY);
 					}
 
 					posY = posY + 30;
@@ -135,10 +84,10 @@ public class CanvasAction  extends ICanvasAction{
 				/* Drawing rectangle w/o name */
 				Rectangle rect;
 				if (shownCond) {
-					rect = new Rectangle((lengthPrec), y - 5, widthRect, heightRect);
+					rect = new Rectangle((action.getLengthPrec()), y - 5, action.getWidthRect(), action.getHeightRect());
 					e.gc.drawRectangle(rect);
 				} else {
-					rect = new Rectangle((standardLengthPrec), y - 5, widthRect, heightRect);
+					rect = new Rectangle((action.getStandardLengthPrec()), y - 5, action.getWidthRect(), action.getHeightRect());
 					e.gc.drawRectangle(rect);
 				}
 
@@ -149,20 +98,18 @@ public class CanvasAction  extends ICanvasAction{
 
 				posY = rect.y + 10;
 				Oval oval;
-				if (defaultValueEffLenght) {
-					lengthEff = getLenght(action.getEffect()) * avergWidth;
-				}
-				for (int i = 0; i < numEff; i++) {
+				
+				for (int i = 0; i < action.getEffect().size(); i++) {
 					int x = rect.x + rect.width;
 
 					if (shownCond) {
 						String string = action.getEffect().get(i);
-						e.gc.drawLine(x, posY, x + lengthEff, posY);
+						e.gc.drawLine(x, posY, x + action.getLengthEff(), posY);
 						e.gc.drawString(string, x + 2, posY - 20, false);
 
 					} else {
 
-						e.gc.drawLine(x, posY, x + standardLengthEff, posY);
+						e.gc.drawLine(x, posY, x + action.getStandardLengthEff(), posY);
 
 					}
 
@@ -180,13 +127,13 @@ public class CanvasAction  extends ICanvasAction{
 	
 	public void resizeParent() {
 		if(shownCond) {
-			int x1=lengthPrec+lengthEff+widthRect+4;
-			int y1=heightRect+40;
+			int x1=action.getLengthPrec()+action.getLengthEff()+action.getWidthRect()+4;
+			int y1=action.getHeightRect()+40;
 			parent.setSize(x1,y1);
 			
 		}else {
-			int x1=standardLengthPrec+standardLengthEff+widthRect+4;
-			int y1=heightRect+40;
+			int x1=action.getStandardLengthPrec()+action.getStandardLengthEff()+action.getWidthRect()+4;
+			int y1=action.getHeightRect()+40;
 			parent.setSize(x1,y1);
 		}
 	}
@@ -216,6 +163,8 @@ public class CanvasAction  extends ICanvasAction{
 	    source.setTransfer(new Transfer[] { MyTransfer.getInstance() });
 	    source.addDragListener(new MyDragActionListener(source));
 	}
+	
+	
 	
 	
 }

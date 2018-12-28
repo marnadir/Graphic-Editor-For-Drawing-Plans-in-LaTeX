@@ -17,6 +17,10 @@ public abstract class IDialog {
 	private Label label;
 	private Composite composite;
 	int style;
+	Button okButton ;
+	Button cancelButton;
+	
+	
 
 	public IDialog(Shell shell,int style) {
 		this.shell = shell;
@@ -28,11 +32,11 @@ public abstract class IDialog {
 	public void createDialog() {
 		dialog = new Shell(shell, style);
 
-		Button okButton = new Button(dialog, SWT.PUSH);
+		okButton = new Button(dialog, SWT.PUSH);
 		okButton.setText("&OK");
 		okButton.addListener(SWT.Selection, getOkbtnListener());
 		
-		Button cancelButton = new Button(dialog, SWT.PUSH);
+		cancelButton = new Button(dialog, SWT.PUSH);
 		cancelButton.setText("&Cancel");
 		cancelButton.addListener(SWT.Selection, getCancListener());
 
@@ -73,6 +77,14 @@ public abstract class IDialog {
 	
 	
 	
+	public Button getOkButton() {
+		return okButton;
+	}
+
+	public Button getCancelButton() {
+		return cancelButton;
+	}
+
 	public Composite getComposite() {
 		return this.composite;
 	}

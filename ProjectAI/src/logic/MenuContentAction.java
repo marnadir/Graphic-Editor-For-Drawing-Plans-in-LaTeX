@@ -1,5 +1,7 @@
 package logic;
 
+import java.text.DecimalFormat;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MenuDetectEvent;
 import org.eclipse.swt.events.MenuDetectListener;
@@ -19,6 +21,7 @@ import GraphPart.GraphContent;
 public class MenuContentAction implements MenuDetectListener {
 
 	ICanvasAction canvas;
+
 
 	public MenuContentAction(ICanvasAction canvas) {
 		this.canvas = canvas;
@@ -88,8 +91,8 @@ public class MenuContentAction implements MenuDetectListener {
 
 								@Override
 								public void handleEvent(Event event) {
-									canvas.setWidthRect(Integer.parseInt(textWid.getText()));
-									canvas.setHeightRect(Integer.parseInt(textHei.getText()));
+									canvas.getAction().setWidthRectFromCm(Integer.parseInt(textWid.getText()));
+									canvas.getAction().setHeightRectFromCm(Integer.parseInt(textHei.getText()));
 									getDialog().setVisible(false);
 									canvas.resizeParent();
 
@@ -105,20 +108,20 @@ public class MenuContentAction implements MenuDetectListener {
 							c.setLayout(new GridLayout(2, false));
 
 							Label lWidth = new Label(c, SWT.ALL);
-							lWidth.setText("Width: ");
+							lWidth.setText("Width in cm: ");
 							textWid = new Text(c, SWT.BORDER);
-							textWid.setText(Integer.toString(canvas.getWidthRect()));
+							textWid.setText(canvas.getAction().getWidthRectInCm());
 							textWid.setLayoutData(new GridData(40, 20));
 
 							Label lHeight = new Label(c, SWT.ALL);
-							lHeight.setText("Height: ");
+							lHeight.setText("Height in cm: ");
 							textHei = new Text(c, SWT.BORDER);
-							textHei.setText(Integer.toString(canvas.getHeightRect()));
+						    textHei.setText(canvas.getAction().getHeightRectInCm());
 							textHei.setLayoutData(new GridData(40, 20));
 
 							Label info = new Label(c, SWT.BORDER);
 							info.setText(
-									"the default size is: " + canvas.getWidthRect() + "x" + canvas.getHeightRect());
+									"the default size is: " + canvas.getAction().getWidthRectInCm() + "cm x" + canvas.getAction().getHeightRectInCm()+"cm");
 							GridData gridData = new GridData(GridData.CENTER, GridData.CENTER, false, false);
 							gridData.horizontalSpan = 2;
 							info.setLayoutData(gridData);
@@ -148,10 +151,10 @@ public class MenuContentAction implements MenuDetectListener {
 								public void handleEvent(Event event) {
 
 									if (canvas.isShownCond()) {
-										canvas.setDefaultValuePrecLenght(false);
-										canvas.setLengthPrec(Integer.parseInt(textWid.getText()));
+										canvas.getAction().setDefaultValuePrecLenght(false);
+										canvas.getAction().setLengthPrecFromCm(Integer.parseInt(textWid.getText()));
 									} else {
-										canvas.setStandardLengthPrec(Integer.parseInt(textWid.getText()));
+										canvas.getAction().setStandardLengthPrecFromCm(Integer.parseInt(textWid.getText()));
 									}
 									canvas.resizeParent();
 									getDialog().setVisible(false);
@@ -170,21 +173,21 @@ public class MenuContentAction implements MenuDetectListener {
 
 							if (canvas.isShownCond()) {
 								Label lWidth = new Label(c, SWT.ALL);
-								lWidth.setText("Lenght: ");
+								lWidth.setText("Lenght in cm: ");
 								textWid = new Text(c, SWT.BORDER);
-								textWid.setText(Integer.toString(canvas.getLengthPrec()));
+								textWid.setText(canvas.getAction().getLengthPrecInCm());
 								Label info = new Label(c, SWT.BORDER);
-								info.setText("the minimum lenght is: " + canvas.getLengthPrec());
+								info.setText("the minimum lenght is: " + canvas.getAction().getLengthPrecInCm()+"cm");
 								GridData gridData = new GridData(GridData.CENTER, GridData.CENTER, false, false);
 								gridData.horizontalSpan = 2;
 								info.setLayoutData(gridData);
 							} else {
 								Label lWidth = new Label(c, SWT.ALL);
-								lWidth.setText("Lenght: ");
+								lWidth.setText("Lenght in cm: ");
 								textWid = new Text(c, SWT.BORDER);
-								textWid.setText(Integer.toString(canvas.getStandardLengthPrec()));
+								textWid.setText(canvas.getAction().getStandardLengthPrecInCm());
 								Label info = new Label(c, SWT.BORDER);
-								info.setText("the default lenght is: " + 35);
+								info.setText("the default lenght is: " + canvas.getAction().getStandardLengthPrecInCm()+"cm");
 								GridData gridData = new GridData(GridData.CENTER, GridData.CENTER, false, false);
 								gridData.horizontalSpan = 2;
 								info.setLayoutData(gridData);
@@ -217,10 +220,10 @@ public class MenuContentAction implements MenuDetectListener {
 								public void handleEvent(Event event) {
 
 									if (canvas.isShownCond()) {
-										canvas.setDefaultValueEffLenght(false);
-										canvas.setLengthEff(Integer.parseInt(textWid.getText()));
+										canvas.getAction().setDefaultValueEffLenght(false);
+										canvas.getAction().setLengthEffFromCm(Integer.parseInt(textWid.getText()));
 									} else {
-										canvas.setStandardLengthEff(Integer.parseInt(textWid.getText()));
+										canvas.getAction().setStandardLengthEffFromCM(Integer.parseInt(textWid.getText()));
 
 									}
 									canvas.resizeParent();
@@ -241,21 +244,21 @@ public class MenuContentAction implements MenuDetectListener {
 
 							if (canvas.isShownCond()) {
 								Label lWidth = new Label(c, SWT.ALL);
-								lWidth.setText("Lenght: ");
+								lWidth.setText("Lenght in cm: ");
 								textWid = new Text(c, SWT.BORDER);
-								textWid.setText(Integer.toString(canvas.getLengthEff()));
+								textWid.setText(canvas.getAction().getLengthEffInCm());
 								Label info = new Label(c, SWT.BORDER);
-								info.setText("the minimum lenght is: " + canvas.getLengthEff());
+								info.setText("the minimum lenght is: " + canvas.getAction().getLengthEffInCm()+"cm");
 								GridData gridData = new GridData(GridData.CENTER, GridData.CENTER, false, false);
 								gridData.horizontalSpan = 2;
 								info.setLayoutData(gridData);
 							} else {
 								Label lWidth = new Label(c, SWT.ALL);
-								lWidth.setText("Lenght: ");
+								lWidth.setText("Lenght in cm: ");
 								textWid = new Text(c, SWT.BORDER);
-								textWid.setText(Integer.toString(canvas.getStandardLengthEff()));
+								textWid.setText(canvas.getAction().getStandardLengthEffInCm());
 								Label info = new Label(c, SWT.BORDER);
-								info.setText("the default lenght is: " + 30);
+								info.setText("the default lenght is: " +canvas.getAction().getStandardLengthEffInCm()+"cm");
 								GridData gridData = new GridData(GridData.CENTER, GridData.CENTER, false, false);
 								gridData.horizontalSpan = 2;
 								info.setLayoutData(gridData);

@@ -9,6 +9,7 @@ import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 
 
@@ -38,19 +39,31 @@ public class LineCanvas  {
 		this.p2=p2;
 	}
 	
-	public void addlistener() {
-//		
-//		Control[] child=canvasContainer.getChildren();
-//		for(int i=0;i<child.length;i++) {
-//		
-//		child[i].addListener(SWT.MouseDoubleClick, new Listener() {
-		
-		
-		
+	public void addlistener(Label l1,Label l2) {
+
 		for(int i=0;i<canvasContainer.getChildren().length;i++) {
 			Composite comp=(Composite)canvasContainer.getChildren()[i];
 			comp.setEnabled(true);
-			comp.getChildren()[0].addListener(SWT.MouseDoubleClick, new Listener() {
+			comp.getChildren()[0].addListener(SWT.MouseDoubleClick, addLi(l1,l2,comp));
+		
+		}
+	}
+
+	public void removelistener(Label l1,Label l2) {
+
+		for(int i=0;i<canvasContainer.getChildren().length;i++) {
+			Composite comp=(Composite)canvasContainer.getChildren()[i];
+			comp.setEnabled(true);
+			comp.getChildren()[0].addListener(SWT.MouseDoubleClick, addLi(l1,l2,comp));
+			comp.getChildren()[0].removeListener(SWT.MouseDoubleClick, addLi(l1,l2,comp));
+		}
+	}
+	
+	
+	
+	public Listener addLi(Label l1,Label l2,Composite comp) {
+		Listener l;
+		l=new Listener() {
 			
 			@Override
 			public void handleEvent(Event event) {
@@ -61,7 +74,9 @@ public class LineCanvas  {
 							
 							oval1=canvasContainer.getOvalCounter().getListOval().get(i);
 							c1=comp;
-							//p1=comp.getParent().toControl(comp.toDisplay(p.x, p.y));
+							l1.setText("First Cond. :"+oval1.getCond());
+							l1.pack();
+							
 						}	
 					}
 				}else if(oval2==null) {
@@ -71,19 +86,20 @@ public class LineCanvas  {
 							
 							oval2=canvasContainer.getOvalCounter().getListOval().get(i);
 							c2=comp;
-							//p2=comp.getParent().toControl(comp.toDisplay(p.x, p.y));
+							l2.setText("Second Cond. :"+oval2.getCond());
+							l2.pack();
 
-							drawLine();
+//							drawLine();
 							
 						}	
 					}
 				}
 			}
-		});
-		
-		}
+		};
+			
+			return l;
 	}
-
+	
 	public void drawLine() {
 		canvasContainer.addPaintListener(new PaintListener() {
 			
@@ -104,9 +120,12 @@ public class LineCanvas  {
 				System.out.println(p2);
 
 				
-				//e.gc.drawLine(p1.x, p1.y+5, p2.x, p2.y+5);
-				
-		        e.gc.drawArc(p1.x, p1.y, 300, 50,0,180);
+				e.gc.drawLine(p1.x, p1.y+5, p2.x, p2.y+5);
+//				double angle = Math.atan2(p2.y - p1.y, p2.x - p1.x);
+//		        
+//				
+//				
+//		        e.gc.drawArc(p1.x, p1.y, 300, 50,0,(int)angle);
 
 				
 				

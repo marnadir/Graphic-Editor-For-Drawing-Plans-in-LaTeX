@@ -1,5 +1,6 @@
 package Action;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 
@@ -13,6 +14,7 @@ import DNDAaction.MyDragActionListener;
 import DataTrasfer.MyTransfer;
 import GraphPart.GraphContent;
 import GraphPart.Oval;
+import LaTex.LaTexGeneratorAction;
 
 public abstract class ICanvasAction  extends Canvas{
 
@@ -22,16 +24,11 @@ public abstract class ICanvasAction  extends Canvas{
 	int max;
 	boolean shownCond = false;
 	boolean shownName = true;
-	int widthRect;
-	int lengthPrec;
-	int lengthEff;
-	int heightRect = 40;
-	int standardLengthEff=30; //Standard lenght of effect line 
-	int standardLengthPrec=30;
-	boolean defaultValuePrecLenght=true;
-	boolean defaultValueEffLenght=true;
-	String actionName;
-	
+
+	String latexCode;
+	final double PIXEL_MEASUREMNT= 0.026458;
+	final double CM_MEASUREMNT= 37.7957517575025;
+
 
 	
 	public ICanvasAction(Composite parent, int style,Action a) {
@@ -47,13 +44,13 @@ public abstract class ICanvasAction  extends Canvas{
 	
 	public void resizeParent() {
 		if(shownCond) {
-			int x1=lengthPrec+lengthEff+widthRect+4;
-			int y1=heightRect+40;
+			int x1=action.getLengthPrec()+action.getLengthEff()+action.getWidthRect()+4;
+			int y1=action.getHeightRect()+40;
 			parent.setSize(x1,y1);
 			
 		}else {
-			int x1=standardLengthPrec+standardLengthEff+widthRect+4;
-			int y1=heightRect+40;
+			int x1=action.getStandardLengthPrec()+action.getStandardLengthEff()+action.getWidthRect()+4;
+			int y1=action.getHeightRect()+40;
 			parent.setSize(x1,y1);
 		}
 	}
@@ -68,21 +65,7 @@ public abstract class ICanvasAction  extends Canvas{
 		}
 	}
 	
-	public int getLenght(ArrayList<String> conds) {
 
-		int lenght = 0;
-		if (conds.size() > 0) {
-			String stringa = conds.get(0);
-			lenght=stringa.length();
-			for (String cond : conds) {
-				if (cond.length() > stringa.length()) {
-					stringa = cond;
-					lenght = cond.length();
-				}
-			}
-		}
-		return lenght;
-	}
 	
 	
 	
@@ -127,101 +110,9 @@ public abstract class ICanvasAction  extends Canvas{
 	
 	
 
-	public int getWidthRect() {
-		return widthRect;
-	}
+	
 
-
-
-	public void setWidthRect(int widthRect) {
-		this.widthRect = widthRect;
-	}
-
-
-
-	public int getLengthPrec() {
-		return lengthPrec;
-	}
-
-
-
-	public void setLengthPrec(int lengthPrec) {
-		this.lengthPrec = lengthPrec;
-	}
-
-
-
-	public int getLengthEff() {
-		return lengthEff;
-	}
-
-
-
-	public void setLengthEff(int lengthEff) {
-		this.lengthEff = lengthEff;
-	}
-
-
-
-	public int getHeightRect() {
-		return heightRect;
-	}
-
-
-
-	public void setHeightRect(int heightRect) {
-		this.heightRect = heightRect;
-	}
-
-
-
-	public int getStandardLengthEff() {
-		return standardLengthEff;
-	}
-
-
-
-	public void setStandardLengthEff(int standardLengthEff) {
-		this.standardLengthEff = standardLengthEff;
-	}
-
-
-
-	public int getStandardLengthPrec() {
-		return standardLengthPrec;
-	}
-
-
-
-	public void setStandardLengthPrec(int standardLengthPrec) {
-		this.standardLengthPrec = standardLengthPrec;
-	}
-
-
-
-	public boolean isDefaultValuePrecLenght() {
-		return defaultValuePrecLenght;
-	}
-
-
-
-	public void setDefaultValuePrecLenght(boolean defaultValuePrecLenght) {
-		this.defaultValuePrecLenght = defaultValuePrecLenght;
-	}
-
-
-
-	public boolean isDefaultValueEffLenght() {
-		return defaultValueEffLenght;
-	}
-
-
-
-	public void setDefaultValueEffLenght(boolean defaultValueEffLenght) {
-		this.defaultValueEffLenght = defaultValueEffLenght;
-	}
-
-		
+	
 	
 }
 

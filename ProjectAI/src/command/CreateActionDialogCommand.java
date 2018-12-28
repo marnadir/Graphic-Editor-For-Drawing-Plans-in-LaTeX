@@ -1,4 +1,4 @@
-package Dialog;
+package command;
 
 import java.util.ArrayList;
 
@@ -12,7 +12,6 @@ import Action.Action;
 import GUI.CreateActionDialog;
 import GUI.CreateSoDialog;
 import State.InitialStateCanvas;
-import command.ICommand;
 
 public class CreateActionDialogCommand implements ICommand {
 
@@ -58,15 +57,5 @@ public class CreateActionDialogCommand implements ICommand {
    public void setAction(ArrayList<Action> a) {
 	   actions=a;
    }
-	
-	
 
-	
-//
-//	
-//	public void setActionList(ArrayList<Action> a) {
-//		action=a;
-//	}
-	
-	
 }

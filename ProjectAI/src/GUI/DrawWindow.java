@@ -2,6 +2,8 @@ package GUI;
 
 
 
+import java.util.ArrayList;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.custom.CTabItem;
@@ -10,6 +12,7 @@ import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.dnd.DND;
 import org.eclipse.swt.dnd.DropTarget;
 import org.eclipse.swt.dnd.Transfer;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.FormLayout;
 import org.eclipse.swt.layout.GridData;
@@ -26,7 +29,11 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Text;
+import org.eclipse.swt.widgets.ToolBar;
+import org.eclipse.swt.widgets.ToolItem;
 
+import Action.Action;
 import DNDAaction.MyDropActionListener;
 import DataTrasfer.MyTransfer;
 import GraphPart.GraphContent;
@@ -47,6 +54,10 @@ public class DrawWindow  {
 	private Group console;
 	private CreateDomainView createDomainView;
 	private GraphContent contentAction;
+	private ArrayList<Action> updateActionList;
+
+
+
 	
 	public DrawWindow(Shell shell) {
 		this.shell=shell;
@@ -176,9 +187,16 @@ public class DrawWindow  {
 		menuLines.setText("Create Connection");
         Listener listenerLine=new Listener() {
 			Composite compButton;
+			private Composite compPoint;
+			private LineCanvas line;
+			Label l1 = null;
+			Label l2 = null;
+			
 
 			@Override
 			public void handleEvent(Event event) {
+			
+				
 				IDialog dialog=new IDialog(shell,SWT.DIALOG_TRIM) {
 					
 					@Override
@@ -189,26 +207,28 @@ public class DrawWindow  {
 							@Override
 							public void handleEvent(Event event) {
 								
-								Control[] child=compButton.getChildren();
-								for(int i=0;i<child.length;i++) {
-									Button btn=(Button) child[i];
-									if(btn.getSelection()) {
-											LineCanvas lineCanvas=new LineCanvas(contentAction);
-											lineCanvas.addlistener();
-										
+								if(line != null) {
+									if(!l1.getText().contains("Select the point") && !l2.getText().contains("Select the point")) {
+										line.drawLine();
+										l1.setText("First Cond. :" +"Select the point");
+										l2.setText("Second Cond. :" +"Select the point");
+										line.removelistener(l1, l2);
 										
 									}
 								}
-									
-								
-								
+		
 							}
 						};
 						return l;
 					}
 					
+				
+					
 					@Override
 					public void createContent() {
+						
+						
+						
 						getLabel().setText("Create Connection");
 						this.getLabel().pack();
 						Composite c = getComposite();
@@ -217,18 +237,73 @@ public class DrawWindow  {
 						compButton.setLayout (new RowLayout (SWT.VERTICAL));
 												
 						
-						Button archBtn=new Button(compButton, SWT.TOGGLE);
+						Button archBtn=new Button(compButton, SWT.PUSH);
 						archBtn.setText("draw arch");
 						
 						
-						Button ordBtn=new Button(compButton, SWT.TOGGLE);
+						Button ordBtn=new Button(compButton,SWT.PUSH);
 						ordBtn.setText("draw Ord");
+						
+						compPoint =new Composite(c, SWT.ALL);
+						compPoint.setLayout(new GridLayout());								
+
+						archBtn.addListener(SWT.Selection, new Listener() {
+
+							@Override
+							public void handleEvent(Event event) {
+
+							
+								
+								if (compPoint.getChildren().length < 1) {
+									 l1 = new Label(compPoint, SWT.ALL);
+									l1.setText("First Cond. :" + "Select the point");
+
+									l1.pack();
+
+									l2 = new Label(compPoint, SWT.ALL);
+									l2.setText("Second Cond. :" + "Select the point");
+
+									l2.pack();
+									compPoint.pack();
+									getDialog().pack();
+									
+								}else {
+									compPoint.setVisible(true);
+									l1.setText("First Cond. :" + "Select the point");
+									l2.setText("Second Cond. :" + "Select the point");
+
+									
+								}
+							
+								
+								line=new LineCanvas(contentAction);
+								line.addlistener(l1,l2);
+
+							}
+						});
+
+						ordBtn.addListener(SWT.Selection, new Listener() {
+							
+							@Override
+							public void handleEvent(Event event) {
+
+							
+								compPoint.setVisible(false);
+								line=null;
+								getDialog().pack();
+								
+								
+							}
+						});
 						
 						
 						this.getDialog().pack();
 
-						
 					}
+					
+					
+					
+					
 				};
 				
 				dialog.createContent();
@@ -288,11 +363,100 @@ public class DrawWindow  {
  
 		console=new Group(sashForm2, SWT.SCROLL_LINE);
 		console.setText("Console");
-		//console.setFont(boldFont);
-		FormLayout Layout = new FormLayout();
-		Layout.marginWidth = 5;
-		Layout.marginHeight = 5;
-		console.setLayout(Layout);
+		console.setLayout(new GridLayout(2, true));
+		
+		
+		
+		Group consoleDomain=new Group(console, SWT.ALL);
+		consoleDomain.setText("Domain");
+		consoleDomain.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		consoleDomain.setLayout(new GridLayout(1, true));
+	    
+		ToolBar toolBarDomain = new ToolBar(consoleDomain, SWT.FLAT | SWT.WRAP | SWT.RIGHT);
+	   
+		ToolItem updateTextDomain = new ToolItem(toolBarDomain, SWT.PUSH);
+		updateTextDomain.setText("update");
+	    Image icon = new Image(shell.getDisplay(), "img/refresh.png");
+	    updateTextDomain.setImage(icon);
+	    Text textDomain = new Text(consoleDomain, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL | SWT.READ_ONLY);
+	    
+	    textDomain.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+	    textDomain.pack();
+	    updateTextDomain.addListener(SWT.Selection, new Listener() {
+			
+			@Override
+			public void handleEvent(Event event) {
+				textDomain.setText(".....");
+				if(createDomainView.getInitialState() != null) {
+					createDomainView.getInitialState().generateLatexCode();
+					textDomain.insert(createDomainView.getInitialState().getLatexCode());
+				}
+				if(createDomainView.getGoalState() != null) {
+					createDomainView.getGoalState().generateLatexCode();
+					textDomain.insert(createDomainView.getGoalState().getLatexCode());
+				}
+			
+				
+				updateActionList=createDomainView.getListAction();
+				for(int i=0;i<updateActionList.size();i++) {
+					updateActionList.get(i).generateLatexCode();
+					textDomain.insert(updateActionList.get(i).getLatexCode());
+				}
+			
+				
+			}
+		});
+	    
+	    ToolItem clearTextDomain = new ToolItem(toolBarDomain, SWT.PUSH);
+	    clearTextDomain.setText("clear");
+	    icon = new Image(shell.getDisplay(), "img/clear.ico");
+	    clearTextDomain.setImage(icon);
+	    clearTextDomain.addListener(SWT.Selection, new Listener() {
+			
+			@Override
+			public void handleEvent(Event event) {
+				textDomain.setText(".....");
+				
+			}
+		});
+	    
+	   
+	    
+		
+	    toolBarDomain.pack();
+	    
+	    
+	    
+		
+		
+		Group consolePlan=new Group(console, SWT.ALL);
+		consolePlan.setText("Plan");
+		consolePlan.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		consolePlan.setLayout(new GridLayout(1, true));
+
+		
+		ToolBar toolBarPlan = new ToolBar(consolePlan, SWT.FLAT | SWT.WRAP | SWT.RIGHT);
+		   
+		ToolItem updateTextPlan = new ToolItem(toolBarPlan, SWT.PUSH);
+		updateTextPlan.setText("update");
+	    icon = new Image(shell.getDisplay(), "img/refresh.png");
+	    updateTextPlan.setImage(icon);
+	    
+	    
+	    
+	    ToolItem clearTextPlan = new ToolItem(toolBarPlan, SWT.PUSH);
+	    clearTextPlan.setText("clear");
+	    icon = new Image(shell.getDisplay(), "img/clear.ico");
+	    clearTextPlan.setImage(icon);
+	    
+	    Text textPlan = new Text(consolePlan, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL | SWT.READ_ONLY);
+	    textPlan.insert("update data...");
+	    textPlan.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+	    textPlan.pack();
+		
+	    toolBarPlan.pack();
+
+
 
 		DropTarget target = new DropTarget(contentAction, DND.DROP_MOVE | DND.DROP_COPY);
 	    target.setTransfer(new Transfer[] { MyTransfer.getInstance() });
@@ -343,4 +507,8 @@ public class DrawWindow  {
 		return console;
 	}
 
+
+	
+
+	
 }

@@ -2,9 +2,13 @@ package State;
 
 import java.util.ArrayList;
 
+import LaTex.LaTexGeneratorAction;
+
 public class IState {
 
 	ArrayList<String> conds;
+	String name;
+
 	
 	public IState(ArrayList<String> conds) {
 		this.conds=conds;
@@ -25,4 +29,12 @@ public class IState {
 	public void updateConds(ArrayList<String> conds) {
 		this.conds=conds;
 	}
+	
+
+	public String getName() {
+		return name;
+	}
+
+
+
 }

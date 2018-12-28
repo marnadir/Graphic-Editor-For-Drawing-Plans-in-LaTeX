@@ -1,11 +1,10 @@
-package Dialog;
+package command;
 
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 
 import GUI.CreateGoalDialog;
 import State.GoalStateCanvas;
-import command.ICommand;
 
 public class CreateGoalDialogCommand implements ICommand {
 

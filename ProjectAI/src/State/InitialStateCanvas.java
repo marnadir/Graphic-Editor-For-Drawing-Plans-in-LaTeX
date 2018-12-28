@@ -1,13 +1,9 @@
 package State;
 
-import java.util.ArrayList;
 
-import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Menu;
-import org.eclipse.swt.widgets.MenuItem;
 
 import GraphPart.GraphContent;
 
@@ -68,10 +64,6 @@ public class InitialStateCanvas extends IStateCanvas{
 				// e.gc.drawRectangle(r);
 			}
 		});
-		// parent.pack();
-
-	
-		
 	}
     
 

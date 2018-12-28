@@ -1,4 +1,4 @@
-package Dialog;
+package command;
 
 
 
@@ -9,7 +9,6 @@ import org.eclipse.swt.widgets.Shell;
 
 import GUI.CreateSoDialog;
 import State.InitialStateCanvas;
-import command.ICommand;
 
 public class CreateSoDialogCommand implements ICommand {
 

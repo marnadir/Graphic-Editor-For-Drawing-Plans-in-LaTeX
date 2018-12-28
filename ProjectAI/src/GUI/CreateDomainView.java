@@ -13,6 +13,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
@@ -25,13 +26,15 @@ import org.eclipse.swt.widgets.TreeItem;
 
 import Action.Action;
 import Action.CanvasAction;
-import Dialog.CreateActionDialogCommand;
-import Dialog.CreateGoalDialogCommand;
-import Dialog.CreateSoDialogCommand;
+import State.IState;
+import State.IStateCanvas;
 import State.InitialStateCanvas;
 import command.ChangeEffCommand;
 import command.ChangeNameCommand;
 import command.ChangePrecCommand;
+import command.CreateActionDialogCommand;
+import command.CreateGoalDialogCommand;
+import command.CreateSoDialogCommand;
 import command.EliminateActionCommand;
 import logic.ContentAction;
 
@@ -226,19 +229,7 @@ class CreateDomainView {
 		firstScroll.setExpandVertical(true);
 		firstScroll.setMinSize(contentCanvas.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 
-		
-		
 
-		
-//		Display.getDefault().timerExec(100, new Runnable() {
-//		    @Override
-//		    public void run() {
-//		    	containerAction.redraw();
-//		      
-//		      // Run again - 
-//		      Display.getDefault().timerExec(100, this);
-//		    }
-//		   });
 		
 	
 		
@@ -250,10 +241,7 @@ class CreateDomainView {
 				//TODO posso creare solo un azione,dovrei ripulire ad ogni nuovo comando
 				
 				TreeItem[] actions = treeAction.getSelection();
-				
-//				if(containerAction.getChildren().length>0) {
-//					containerAction.redraw();
-//				}
+
 				if (actions.length > 0) {
 					TreeItem actionItem = getRoot(actions[0]);
 					Action action = findAction(actionItem.getText());
@@ -266,10 +254,15 @@ class CreateDomainView {
 					containerAction.setLocation(40,150);
 					
 					CanvasAction canvasAction=new CanvasAction(containerAction,SWT.DOUBLE_BUFFERED|SWT.NO_REDRAW_RESIZE,action);
+					//is necessary?
 					action.setPaint(canvasAction);
+					
 					canvasAction.draw();
 					canvasAction.addDNDListener();
+					//is necessary? 
 					compositeAction.setPaintAction(canvasAction);
+					
+					
 					
 				}
 					
@@ -397,4 +390,32 @@ class CreateDomainView {
 		}
 		return null;
 	}
+	
+	public ArrayList<Action> getListAction(){
+		return actionsArray;
+	}
+	
+	public IStateCanvas getInitialState() {
+		Control[] child=containerInitState.getChildren();
+		for(int i=0;i<child.length;i++) {
+			if(child[i] instanceof IStateCanvas) {
+				IStateCanvas iStateCanvas=(IStateCanvas) child[i];
+				return iStateCanvas;
+			}
+		}
+		return null;
+	}
+	public IStateCanvas getGoalState() {
+		Control[] child=containerGoalState.getChildren();
+		for(int i=0;i<child.length;i++) {
+			if(child[i] instanceof IStateCanvas) {
+				IStateCanvas iStateCanvas=(IStateCanvas) child[i];
+				return iStateCanvas;
+			}
+		}
+		return null;
+	}
+	
+	
+	
 }

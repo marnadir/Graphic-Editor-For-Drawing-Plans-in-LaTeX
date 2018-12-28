@@ -10,6 +10,7 @@ import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 
+import LaTex.LaTexGeneratorAction;
 import State.IState;
 import State.InitialStateCanvas;
 import logic.IDialogNewState;
@@ -20,7 +21,6 @@ public class CreateSoDialog extends IDialogNewState{
 	Composite compCanvas;
 	ArrayList<String> listPrec;
 	Shell dialog=this.getDialog();
-	Combo CombOption;
 	InitialStateCanvas initialStateCanvas;
 	IState initialState;
 	
@@ -49,6 +49,8 @@ public class CreateSoDialog extends IDialogNewState{
 				initialState=new IState(listPrec);
 				 initialStateCanvas=new InitialStateCanvas(compCanvas,SWT.ALL,initialState);
 				 initialStateCanvas.addDNDListener();
+				 initialStateCanvas.generateLatexCode();
+				initialStateCanvas.getLatexCode();
 				}
 				if(listPrec != null) {
 					initialState.updateConds(listPrec);
@@ -65,17 +67,5 @@ public class CreateSoDialog extends IDialogNewState{
 		return btn;
 	}
 
-
-	
-
-	public InitialStateCanvas getInitialState() {
-		return this.initialStateCanvas;
-	}
-	
-	
-	
-//	public Shell getDialog() {
-//		return dialog;
-//	}
 	
 }

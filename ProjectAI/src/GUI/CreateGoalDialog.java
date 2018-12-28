@@ -51,6 +51,8 @@ public class CreateGoalDialog extends IDialogNewState{
 					goalState=new IState(listEff);
 					goalStateCanvas=new GoalStateCanvas(compCanvas,SWT.ALL,goalState);
 					goalStateCanvas.addDNDListener();
+					goalStateCanvas.generateLatexCode();
+					goalStateCanvas.getLatexCode();
 				}
 				if(listEff != null) {
 					goalState.updateConds(listEff);

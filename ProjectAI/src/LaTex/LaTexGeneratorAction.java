@@ -7,28 +7,24 @@ import java.util.Map;
 import Action.Action;
 
 
-public class LaTexGenerator {
+
+public class LaTexGeneratorAction {
 	
 	Map<String, String> mapping;
 	
-	public static void main(String[] args) {
-		LaTexGenerator l=new LaTexGenerator();
-		ArrayList<String> prec=new ArrayList<>();
-		prec.add("at(v,l)");
-		prec.add("at(p,l)");
-		
-		ArrayList<String> eff=new ArrayList<>();
-		eff.add("in(p,v)");
-		eff.add("¬at(p,l)");
-		
-		Action a=new Action("Pick-Up(v,l,p)",prec , eff);
-		
-		System.out.println(l.generatAction(a));
-		
+
+	public LaTexGeneratorAction() {
 	}
-	public LaTexGenerator() {
-		// TODO Auto-generated constructor stub
+	
+	
+	public String getLatexActionCode(Action action) {
+		StringBuilder sb = new StringBuilder();
+		sb.append(generatAction(action));
+		sb.append("\n");
+		sb.append(generatActionE(action));
+		return sb.toString();
 	}
+	
 	
 	public String generatAction(Action a) {
 		StringBuilder sb = new StringBuilder();
@@ -42,16 +38,41 @@ public class LaTexGenerator {
 		
 		sb.append(space+"text"+"{/textit"+getText(a.getName())+"},"+"\n");
 		sb.append(space+"pres = {");
-		sb.append(getConds(a.getPrec())+"},"+"\n");
+		sb.append(getTextPrecEff(a.getPrec())+"},"+"\n");
 		sb.append(space+"eff = {");
-		sb.append(getConds(a.getEffect())+"},"+"\n");
-		sb.append(space+"pre length = "+","+"\n");
-		sb.append(space+"eff length = "+","+"\n");
-		sb.append(space+"height = "+","+"\n");
-		sb.append(space+"width = "+""+"\n"+"}"+"\n");
+		sb.append(getTextPrecEff(a.getEffect())+"},"+"\n");
+		sb.append(space+"pre length = "+a.getLengthPrecInCm()+"cm,"+"\n");
+		sb.append(space+"eff length = "+a.getLengthEffInCm()+"cm,"+"\n");
+		sb.append(space+"height = "+a.getHeightRectInCm()+"cm,"+"\n");
+		sb.append(space+"width = "+a.getWidthRectInCm()+"cm"+"\n"+"}"+"\n");
 
 		return sb.toString();
 	}
+	
+	
+	public String generatActionE(Action a) {
+		StringBuilder sb = new StringBuilder();
+		String space="  ";
+		sb.append("% PRIMITIVE");
+		sb.append("\n");
+		sb.append("\\scheme");
+		sb.append(getScheme(a.getName()));
+		sb.append("{");
+		sb.append("\n");
+		
+		sb.append(space+"text"+"{/textit"+getText(a.getName())+"},"+"\n");
+		sb.append(space+"pres = {");
+		sb.append(getTextPrecEff(a.getPrec())+"},"+"\n");
+		sb.append(space+"eff = {");
+		sb.append(getTextPrecEffE(a.getEffect())+"},"+"\n");
+		sb.append(space+"pre length = "+a.getStandardLengthPrecInCm()+"cm,"+"\n");
+		sb.append(space+"eff length = "+a.getStandardLengthEffInCm()+"cm,"+"\n");
+		sb.append(space+"height = "+a.getHeightRectInCm()+"cm,"+"\n");
+		sb.append(space+"width = "+a.getWidthRectInCm()+"cm"+"\n"+"}"+"\n");
+
+		return sb.toString();
+	}
+	
 	
 	public String getScheme(String string) {
 		String name[]=string.split("\\(");
@@ -60,7 +81,7 @@ public class LaTexGenerator {
 		int num=variable.length;
 		
 		StringBuilder sb=new StringBuilder();
-		sb.append("{"+name[0]+"}");
+		sb.append("{"+name[0]+"-E"+"}");
 		sb.append("{"+num+"}");
 
 		
@@ -92,12 +113,17 @@ public class LaTexGenerator {
 		return sb.toString();
 	}
 	
-	public String getConds(ArrayList<String> cond) {
+	
+	/*take the prec and affect actions and trasform into latex code*/
+	public String getTextPrecEff(ArrayList<String> cond) {
 		String space="  ";
 		StringBuilder sb=new StringBuilder();
 		
 		for(int i=0;i<cond.size();i++) {
-			sb.append("\n"+"\t"+getCond(cond.get(i))+",");
+			sb.append("\n"+"\t"+getCond(cond.get(i)));
+			if(i<cond.size()-1) {
+				sb.append(",");
+			}
 		}
 		if(cond.size()>0) {
 			sb.append("\n"+space);
@@ -105,7 +131,30 @@ public class LaTexGenerator {
 	
 		return sb.toString();
 	}
+	
+	public String getTextPrecEffE(ArrayList<String> cond) {
+		String space="  ";
+		StringBuilder sb=new StringBuilder();
+		sb.append("\n"+"\t");
 
+		for(int i=0;i<cond.size();i++) {
+			sb.append("{}");
+			if(i<cond.size()-1) {
+				sb.append(",");
+			}
+		}
+		if(cond.size()>0) {
+			sb.append("\n"+space);
+		}
+	
+		return sb.toString();
+	}
+	
+	
+	/*take the PRec/Eff and convert into correct format
+	 * 
+	 * at(Home) ---> at(#1)
+	 */
 	public String getCond(String string) {
 
 		String name[] = string.split("\\(");
@@ -129,4 +178,9 @@ public class LaTexGenerator {
 		return sb.toString();
 	}
 
+	
+
+	
+	
+	
 }
