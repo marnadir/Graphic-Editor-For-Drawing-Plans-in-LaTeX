@@ -76,7 +76,7 @@ public class DrawWindow  {
 				
 	
 
-		
+
 		menuBar=new IMenu(shell,SWT.BAR);
 		MenuItem fileItem=menuBar.createItem("&File",SWT.CASCADE); 
 		IMenu menuFile=new IMenu(shell, SWT.DROP_DOWN);
@@ -456,11 +456,11 @@ public class DrawWindow  {
 		
 	    toolBarPlan.pack();
 
-
+		updateActionList=createDomainView.getListAction();
 
 		DropTarget target = new DropTarget(contentAction, DND.DROP_MOVE | DND.DROP_COPY);
 	    target.setTransfer(new Transfer[] { MyTransfer.getInstance() });
-		target.addDropListener(new MyDropActionListener(PlanView, target));
+		target.addDropListener(new MyDropActionListener(PlanView, target,updateActionList));
 		
 		Display.getDefault().timerExec(100, new Runnable() {
 	    @Override

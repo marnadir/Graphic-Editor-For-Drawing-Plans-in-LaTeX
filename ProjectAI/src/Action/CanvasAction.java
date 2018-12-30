@@ -69,7 +69,7 @@ public class CanvasAction  extends ICanvasAction{
 
 				for (int i = 0; i < action.getNumPrec(); i++) {
 
-					if (shownCond) {
+					if (action.isShownCond()) {
 						String string = action.getPrec().get(i);
 						e.gc.drawLine(0, posY, (action.getLengthPrec()), posY);
 						e.gc.drawString(string, 2, posY - 20, false);
@@ -83,7 +83,7 @@ public class CanvasAction  extends ICanvasAction{
 
 				/* Drawing rectangle w/o name */
 				Rectangle rect;
-				if (shownCond) {
+				if (action.isShownCond()) {
 					rect = new Rectangle((action.getLengthPrec()), y - 5, action.getWidthRect(), action.getHeightRect());
 					e.gc.drawRectangle(rect);
 				} else {
@@ -91,7 +91,7 @@ public class CanvasAction  extends ICanvasAction{
 					e.gc.drawRectangle(rect);
 				}
 
-				if (shownName) {
+				if (action.isShownName()) {
 					int l = rect.x + rect.width / 6;
 					e.gc.drawString(action.getName(), l, rect.y + rect.height / 3);
 				}
@@ -102,7 +102,7 @@ public class CanvasAction  extends ICanvasAction{
 				for (int i = 0; i < action.getEffect().size(); i++) {
 					int x = rect.x + rect.width;
 
-					if (shownCond) {
+					if (action.isShownCond()) {
 						String string = action.getEffect().get(i);
 						e.gc.drawLine(x, posY, x + action.getLengthEff(), posY);
 						e.gc.drawString(string, x + 2, posY - 20, false);
@@ -126,7 +126,7 @@ public class CanvasAction  extends ICanvasAction{
 	}
 	
 	public void resizeParent() {
-		if(shownCond) {
+		if(action.isShownCond()) {
 			int x1=action.getLengthPrec()+action.getLengthEff()+action.getWidthRect()+4;
 			int y1=action.getHeightRect()+40;
 			parent.setSize(x1,y1);

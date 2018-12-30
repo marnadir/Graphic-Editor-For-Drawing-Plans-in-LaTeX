@@ -54,8 +54,6 @@ public class CreateActionDialogCommand implements ICommand {
 		// TODO Auto-generated method stub
 		return null;
 	}
-   public void setAction(ArrayList<Action> a) {
-	   actions=a;
-   }
+
 
 }

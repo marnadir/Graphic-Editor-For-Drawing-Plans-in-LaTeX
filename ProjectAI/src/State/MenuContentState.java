@@ -126,9 +126,8 @@ public class MenuContentState implements MenuDetectListener {
 								Label lWidth = new Label(c, SWT.ALL);
 								lWidth.setText("Lenght in cm: ");
 								textWid = new Text(c, SWT.BORDER);
-								DecimalFormat df = new DecimalFormat("#.00");
-							    String angleFormated = df.format((canvas.getLengthCondInCm()));
-								textWid.setText( angleFormated);
+							
+								textWid.setText((canvas.getLengthCondInCm()));
 								Label info = new Label(c, SWT.BORDER);
 								info.setText("the default lenght is: " + "1.4cm");
 								GridData gridData = new GridData(GridData.CENTER, GridData.CENTER, false, false);

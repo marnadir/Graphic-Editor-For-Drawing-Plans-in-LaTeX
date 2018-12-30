@@ -38,7 +38,7 @@ import command.CreateSoDialogCommand;
 import command.EliminateActionCommand;
 import logic.ContentAction;
 
-class CreateDomainView {
+public class CreateDomainView {
 
 	Group domainGroup;
 	Shell shell;
@@ -57,8 +57,9 @@ class CreateDomainView {
 	Composite containerAction;
 	Tree treeAction;
 	Group subOption;
-	ArrayList<Action> actionsArray;
-
+	ArrayList<Action> actionList;
+	
+	
 	MenuItem showAction;
 	MenuItem showActionW;
 	MenuItem elimAction;
@@ -73,7 +74,7 @@ class CreateDomainView {
 		this.shell = sashForm.getShell();
 		setLayout();
 		actionCommnd = new CreateActionDialogCommand();
-		actionsArray = new ArrayList<>();
+		actionList = new ArrayList<>();
 
 	}
 
@@ -279,7 +280,7 @@ class CreateDomainView {
 					TreeItem actionItem = getRoot(actions[0]);
 					Action action = findAction(actionItem.getText());
 					actionItem.dispose();
-					actionsArray.remove(action);
+					actionList.remove(action);
 				}
 
 			}
@@ -359,8 +360,8 @@ class CreateDomainView {
 
 			@Override
 			public void handleEvent(Event event) {
-				actionCommnd.execute(treeAction, actionsArray);
-				elimAct.execute(actionsArray);
+				actionCommnd.execute(treeAction, actionList);
+				elimAct.execute(actionList);
 				subOption.pack();
 			}	
 		};
@@ -383,16 +384,16 @@ class CreateDomainView {
 	}
 
 	public Action findAction(String actionName) {
-		for (int i = 0; i < actionsArray.size(); i++) {
-			if (actionsArray.get(i).getName().equals(actionName)) {
-				return actionsArray.get(i);
+		for (int i = 0; i < actionList.size(); i++) {
+			if (actionList.get(i).getName().equals(actionName)) {
+				return actionList.get(i);
 			}
 		}
 		return null;
 	}
 	
 	public ArrayList<Action> getListAction(){
-		return actionsArray;
+		return actionList;
 	}
 	
 	public IStateCanvas getInitialState() {

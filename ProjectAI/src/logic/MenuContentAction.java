@@ -1,6 +1,5 @@
 package logic;
 
-import java.text.DecimalFormat;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MenuDetectEvent;
@@ -50,7 +49,7 @@ public class MenuContentAction implements MenuDetectListener {
 
 				@Override
 				public void handleEvent(Event event) {
-					canvas.negateIsShownCond();
+					canvas.getAction().negateIsShownCond();
 					canvas.redraw();
 
 				}
@@ -62,7 +61,7 @@ public class MenuContentAction implements MenuDetectListener {
 
 				@Override
 				public void handleEvent(Event event) {
-					canvas.negateIsShownName();
+					canvas.getAction().negateIsShownName();
 					canvas.redraw();
 
 				}
@@ -91,8 +90,11 @@ public class MenuContentAction implements MenuDetectListener {
 
 								@Override
 								public void handleEvent(Event event) {
-									canvas.getAction().setWidthRectFromCm(Integer.parseInt(textWid.getText()));
-									canvas.getAction().setHeightRectFromCm(Integer.parseInt(textHei.getText()));
+									canvas.getAction().setWidthRectFromCm(Double.parseDouble(textWid.getText()));
+									canvas.getAction().setHeightRectFromCm(Double.parseDouble(textHei.getText()));
+									canvas.getAction().setDefaultValueWid(false);
+									canvas.getAction().setDefaultValueHeig(false);
+
 									getDialog().setVisible(false);
 									canvas.resizeParent();
 
@@ -150,11 +152,11 @@ public class MenuContentAction implements MenuDetectListener {
 								@Override
 								public void handleEvent(Event event) {
 
-									if (canvas.isShownCond()) {
+									if (canvas.getAction().isShownCond()) {
 										canvas.getAction().setDefaultValuePrecLenght(false);
-										canvas.getAction().setLengthPrecFromCm(Integer.parseInt(textWid.getText()));
+										canvas.getAction().setLengthPrecFromCm(Double.parseDouble(textWid.getText()));
 									} else {
-										canvas.getAction().setStandardLengthPrecFromCm(Integer.parseInt(textWid.getText()));
+										canvas.getAction().setStandardLengthPrecFromCm(Double.parseDouble(textWid.getText()));
 									}
 									canvas.resizeParent();
 									getDialog().setVisible(false);
@@ -171,7 +173,7 @@ public class MenuContentAction implements MenuDetectListener {
 							Composite c = getComposite();
 							c.setLayout(new GridLayout(2, false));
 
-							if (canvas.isShownCond()) {
+							if (canvas.getAction().isShownCond()) {
 								Label lWidth = new Label(c, SWT.ALL);
 								lWidth.setText("Lenght in cm: ");
 								textWid = new Text(c, SWT.BORDER);
@@ -219,11 +221,11 @@ public class MenuContentAction implements MenuDetectListener {
 								@Override
 								public void handleEvent(Event event) {
 
-									if (canvas.isShownCond()) {
+									if (canvas.getAction().isShownCond()) {
 										canvas.getAction().setDefaultValueEffLenght(false);
-										canvas.getAction().setLengthEffFromCm(Integer.parseInt(textWid.getText()));
+										canvas.getAction().setLengthEffFromCm(Double.parseDouble(textWid.getText()));
 									} else {
-										canvas.getAction().setStandardLengthEffFromCM(Integer.parseInt(textWid.getText()));
+										canvas.getAction().setStandardLengthEffFromCM(Double.parseDouble(textWid.getText()));
 
 									}
 									canvas.resizeParent();
@@ -242,7 +244,7 @@ public class MenuContentAction implements MenuDetectListener {
 							Composite c = getComposite();
 							c.setLayout(new GridLayout(2, false));
 
-							if (canvas.isShownCond()) {
+							if (canvas.getAction().isShownCond()) {
 								Label lWidth = new Label(c, SWT.ALL);
 								lWidth.setText("Lenght in cm: ");
 								textWid = new Text(c, SWT.BORDER);

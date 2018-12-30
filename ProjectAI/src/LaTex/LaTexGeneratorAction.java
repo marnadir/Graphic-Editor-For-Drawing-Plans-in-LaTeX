@@ -17,7 +17,10 @@ public class LaTexGeneratorAction {
 	}
 	
 	
-	public String getLatexActionCode(Action action) {
+
+	
+	
+	public String getLatexActionCodeDomain(Action action) {
 		StringBuilder sb = new StringBuilder();
 		sb.append(generatAction(action));
 		sb.append("\n");
@@ -36,7 +39,7 @@ public class LaTexGeneratorAction {
 		sb.append("{");
 		sb.append("\n");
 		
-		sb.append(space+"text"+"{/textit"+getText(a.getName())+"},"+"\n");
+		sb.append(space+"text="+"{/textit"+getText(a.getName())+"},"+"\n");
 		sb.append(space+"pres = {");
 		sb.append(getTextPrecEff(a.getPrec())+"},"+"\n");
 		sb.append(space+"eff = {");

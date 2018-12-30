@@ -1,5 +1,7 @@
 package DNDAaction;
 
+import java.util.ArrayList;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.dnd.DND;
 import org.eclipse.swt.dnd.DropTarget;
@@ -7,32 +9,32 @@ import org.eclipse.swt.dnd.DropTargetAdapter;
 import org.eclipse.swt.dnd.DropTargetEvent;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 
 import Action.Action;
-import Action.CanvasAction;
-import Action.ICanvasAction;
 import Action.Node;
 import DataTrasfer.MyType;
+import GUI.CreateDomainView;
+import GUI.DrawWindow;
 import GraphPart.GraphContent;
 import State.GoalStateCanvas;
 import State.IState;
 import State.IStateCanvas;
 import State.InitialStateCanvas;
-import logic.ContentAction;
 
 public class MyDropActionListener extends DropTargetAdapter {
 	private Composite parentComposite;
 	private DropTarget target;
+	private ArrayList<Action> actionList;
 
 	/**
 	 * @param parentComposite - the composite that holds all pictures
 	 * @param target          - the drop target
 	 */
-	public MyDropActionListener(Composite parentComposite, DropTarget target) {
+	public MyDropActionListener(Composite parentComposite, DropTarget target,ArrayList<Action> actionListobject) {
 		this.parentComposite = parentComposite;
 		this.target = target;
+		this.actionList=actionListobject;
 	}
 
 	public void dragEnter(DropTargetEvent event) {
@@ -78,7 +80,19 @@ public class MyDropActionListener extends DropTargetAdapter {
 							break;
 
 						default:
-							action = new Action(myTypes[i].getName(), myTypes[i].getPrec(), myTypes[i].getEff());
+							
+							
+							for(int j=0;j<actionList.size();j++) {
+								if(myTypes[i].getName().equals(actionList.get(j).getName())) {
+									if(myTypes[i].getPrec().equals(actionList.get(j).getPrec()) && 
+											myTypes[i].getEff().equals(actionList.get(j).getEffect())) {
+										action=actionList.get(j);
+										
+										
+									}
+								}
+							}
+							
 							Node canvas = new Node(comp, SWT.NO_REDRAW_RESIZE | SWT.DOUBLE_BUFFERED,action);
 							canvas.draw();
 							canvas.pack();

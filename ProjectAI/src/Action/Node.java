@@ -4,18 +4,11 @@ import java.util.ArrayList;
 
 
 
-import org.eclipse.swt.dnd.DND;
-import org.eclipse.swt.dnd.DragSource;
-import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Composite;
 
-import DNDAaction.MyDragActionListener;
-import DataTrasfer.MyTransfer;
-import GraphPart.GraphContent;
-import GraphPart.Oval;
 import logic.MenuContentAction;
 
 
@@ -47,14 +40,13 @@ public class Node  extends ICanvasAction{
 				int posY = 30;
 				int y=25;
 				
-				int avergWidth = (int) e.gc.getFontMetrics().getAverageCharacterWidth();
 
 			
 				
 				for (int i = 0; i < action.getPrec().size(); i++) {
 					String string = action.getPrec().get(i);
 
-					if (shownCond) {
+					if (action.isShownCond()) {
 						e.gc.drawLine(0, posY, (action.getLengthPrec()), posY);
 						e.gc.drawString(string, 2, posY - 20, false);				
 						addOval(action.getName(),string,1, posY-2);
@@ -75,7 +67,7 @@ public class Node  extends ICanvasAction{
 
 				/*Drawing rectangle w/o name*/
 				Rectangle rect;
-				if(shownCond) {
+				if(action.isShownCond()) {
 				    rect = new Rectangle((action.getLengthPrec()), y-5, action.getWidthRect(), action.getHeightRect());
 					e.gc.drawRectangle(rect);
 				}else {
@@ -83,7 +75,7 @@ public class Node  extends ICanvasAction{
 					e.gc.drawRectangle(rect);
 				}
 
-				if (shownName) {
+				if (action.isShownName()) {
 					int l = rect.x + rect.width / 6;
 					e.gc.drawString(action.getName(), l, rect.y + rect.height / 3);
 				}
@@ -96,7 +88,7 @@ public class Node  extends ICanvasAction{
 					int x = rect.x + rect.width;
 					String string = action.getEffect().get(i); 
 
-					if (shownCond) {
+					if (action.isShownCond()) {
 						e.gc.drawLine(x, posY, x + action.getLengthEff(), posY);
 						e.gc.drawString(string, x + 2, posY - 20, false);
 			
@@ -125,22 +117,7 @@ public class Node  extends ICanvasAction{
 	
 
 	
-	
-	public int getLenght(ArrayList<String> conds) {
 
-		int lenght = 0;
-		if (conds.size() > 0) {
-			String stringa = conds.get(0);
-			lenght=stringa.length();
-			for (String cond : conds) {
-				if (cond.length() > stringa.length()) {
-					stringa = cond;
-					lenght = cond.length();
-				}
-			}
-		}
-		return lenght;
-	}
 	
 	
 

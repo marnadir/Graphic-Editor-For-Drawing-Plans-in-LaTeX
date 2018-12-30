@@ -22,8 +22,7 @@ public abstract class ICanvasAction  extends Canvas{
 	Action action;
 	Composite parent;
 	int max;
-	boolean shownCond = false;
-	boolean shownName = true;
+
 
 	String latexCode;
 	final double PIXEL_MEASUREMNT= 0.026458;
@@ -43,7 +42,7 @@ public abstract class ICanvasAction  extends Canvas{
 	public abstract void draw();
 	
 	public void resizeParent() {
-		if(shownCond) {
+		if(action.isShownCond()) {
 			int x1=action.getLengthPrec()+action.getLengthEff()+action.getWidthRect()+4;
 			int y1=action.getHeightRect()+40;
 			parent.setSize(x1,y1);
@@ -80,34 +79,12 @@ public abstract class ICanvasAction  extends Canvas{
 		return this.action;
 	}
 	
-	public boolean isShownCond() {
-		return shownCond;
-	}
 
 
 
-	public void setShownCond(boolean shownCond) {
-		this.shownCond = shownCond;
-	}
-
-	public void negateIsShownCond() {
-		shownCond=!shownCond;
-	}
-
-	public boolean isShownName() {
-		return shownName;
-	}
 
 
 
-	public void setShownName(boolean shownName) {
-		this.shownName = shownName;
-	}
-
-	public void negateIsShownName() {
-		shownName=!shownName;
-	}
-	
 	
 
 	

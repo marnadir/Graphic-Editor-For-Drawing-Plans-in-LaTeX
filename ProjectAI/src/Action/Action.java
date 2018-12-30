@@ -10,7 +10,7 @@ public class Action {
 	String name;
 	ArrayList<String> prec;
 	ArrayList<String> effect;
-	CanvasAction paint;
+	CanvasAction paintCanvas;
 	String latexCode;
 
 	
@@ -22,19 +22,23 @@ public class Action {
 	int standardLengthPrec=14;
 	boolean defaultValuePrecLenght=true;
 	boolean defaultValueEffLenght=true;
+	boolean defaultValueWid=true;
+	boolean defaultValueHeig=true;
 	int numPrec;
 	int numEff;
+	boolean shownCond = false;
+	boolean shownName = true;
 	
 	final double PIXEL_MEASUREMNT= 0.026458;
 	final double CM_MEASUREMNT= 37.7957517575025;
 	
 
 	public CanvasAction getPaint() {
-		return paint;
+		return paintCanvas;
 	}
 
 	public void setPaint(CanvasAction paint) {
-		this.paint = paint;
+		this.paintCanvas = paint;
 	}
 
 	public Action(String name, ArrayList<String> prec, ArrayList<String> eff) {
@@ -58,7 +62,7 @@ public class Action {
 	
 	public void generateLatexCode() {
 		LaTexGeneratorAction generator=new LaTexGeneratorAction();
-		latexCode=generator.getLatexActionCode(this);
+		latexCode=generator.getLatexActionCodeDomain(this);
 	
 		
 	}
@@ -71,7 +75,10 @@ public class Action {
 
 	public void resize() {
 		int max;
-		widthRect = name.length() * 12;
+		if(defaultValueWid) {
+			widthRect = name.length() * 12;
+
+		}
 		numPrec = prec.size();
 		numEff= effect.size();
 		if (defaultValuePrecLenght) {
@@ -86,7 +93,10 @@ public class Action {
 		}
 
 		if (max > 1) {
-			heightRect = 30 + max * 10;
+			if(defaultValueHeig) {
+				heightRect = 30 + max * 10;
+
+			}
 		}
 
 		if (numPrec == 0) {
@@ -154,12 +164,15 @@ public class Action {
 	public String getWidthRectInCm() {
 		DecimalFormat df = new DecimalFormat("#.00");
 	    String angleFormated = df.format(widthRect*PIXEL_MEASUREMNT);
+	    System.out.println("before"+widthRect);
+	    System.out.println("cm"+angleFormated);
 		return angleFormated;
 	}
 	
 
-	public void setWidthRectFromCm(int widthRect) {
+	public void setWidthRectFromCm(double widthRect) {
 		this.widthRect = (int)(widthRect*CM_MEASUREMNT);
+		System.out.println(this.widthRect);
 	}
 
 
@@ -174,7 +187,7 @@ public class Action {
 		return angleFormated;
 	}
 
-	public void setLengthPrecFromCm(int lengthPrec) {
+	public void setLengthPrecFromCm(double lengthPrec) {
 		this.lengthPrec = (int)(lengthPrec*CM_MEASUREMNT);
 	}
 
@@ -190,7 +203,7 @@ public class Action {
 		return angleFormated;
 	}
 
-	public void setLengthEffFromCm(int lengthEff) {
+	public void setLengthEffFromCm(double lengthEff) {
 		this.lengthEff = (int)(lengthEff*CM_MEASUREMNT);
 	}
 
@@ -206,7 +219,7 @@ public class Action {
 		return angleFormated;
 	}
 
-	public void setHeightRectFromCm(int heightRect) {
+	public void setHeightRectFromCm(double heightRect) {
 		this.heightRect =(int)( heightRect*CM_MEASUREMNT);
 	}
 
@@ -222,7 +235,7 @@ public class Action {
 		return angleFormated;
 	}
 
-	public void setStandardLengthEffFromCM(int standardLengthEff) {
+	public void setStandardLengthEffFromCM(double standardLengthEff) {
 		this.standardLengthEff =(int) (standardLengthEff*CM_MEASUREMNT);
 	}
 
@@ -239,7 +252,7 @@ public class Action {
 	}
 
 
-	public void setStandardLengthPrecFromCm(int standardLengthPrec) {
+	public void setStandardLengthPrecFromCm(double standardLengthPrec) {
 		this.standardLengthPrec = (int)(standardLengthPrec*CM_MEASUREMNT);
 	}
 
@@ -307,6 +320,39 @@ public class Action {
 		this.numEff = numEff;
 	}
 
+	public boolean isDefaultValueWid() {
+		return defaultValueWid;
+	}
+
+	public void setDefaultValueWid(boolean defaultValueWid) {
+		this.defaultValueWid = defaultValueWid;
+	}
+
+	public boolean isDefaultValueHeig() {
+		return defaultValueHeig;
+	}
+
+	public void setDefaultValueHeig(boolean defaultValueHeig) {
+		this.defaultValueHeig = defaultValueHeig;
+	}
+
+	public boolean isShownCond() {
+		return shownCond;
+	}
+
+	public boolean isShownName() {
+		return shownName;
+	}
+
+
+	public void negateIsShownCond() {
+		shownCond=!shownCond;
+	}
+
+
+	public void negateIsShownName() {
+		shownName=!shownName;
+	}
 	
 	
 	
