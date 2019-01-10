@@ -8,6 +8,9 @@ import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Composite;
 
+import Action.Action;
+import State.IState;
+
 
 public class Oval {
 
@@ -16,15 +19,20 @@ public class Oval {
 	Color red;
 	Color black;
 	String cond;
-	String nameAction;
+	Action action;
+	IState state;
 	boolean select = false;
 
-	public Oval(Composite parent,String nameAction,String cond) {
+	public Oval(Composite parent,Object a,String cond) {
 		this.canvasContainer = parent;
 		red = parent.getDisplay().getSystemColor(SWT.COLOR_RED);
 		black = parent.getDisplay().getSystemColor(SWT.COLOR_BLACK);
 		this.cond=cond;
-		this.nameAction=nameAction;
+		if(a instanceof Action ) {
+			this.action=(Action)a;
+		}else {
+			this.state=(IState)a;
+		}
 	}
 
 	public void drawOval() {
@@ -93,9 +101,23 @@ public class Oval {
 		return cond;
 	}
 
-	public String getNameAction() {
-		return nameAction;
+	public Action getAction() {
+		return action;
 	}
+
+	public void setAction(Action action) {
+		this.action = action;
+	}
+
+	public IState getState() {
+		return state;
+	}
+
+	public void setState(IState state) {
+		this.state = state;
+	}
+
+
 	
 	
 }

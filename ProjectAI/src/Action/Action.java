@@ -164,15 +164,12 @@ public class Action {
 	public String getWidthRectInCm() {
 		DecimalFormat df = new DecimalFormat("#.00");
 	    String angleFormated = df.format(widthRect*PIXEL_MEASUREMNT);
-	    System.out.println("before"+widthRect);
-	    System.out.println("cm"+angleFormated);
 		return angleFormated;
 	}
 	
 
 	public void setWidthRectFromCm(double widthRect) {
 		this.widthRect = (int)(widthRect*CM_MEASUREMNT);
-		System.out.println(this.widthRect);
 	}
 
 

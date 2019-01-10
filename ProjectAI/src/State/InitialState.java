@@ -6,7 +6,7 @@ public class InitialState extends IState {
 
 	public InitialState(ArrayList<String> conds) {
 		super(conds);
-		this.name="InitialState";
+		this.name="start";
 	}
 
 }

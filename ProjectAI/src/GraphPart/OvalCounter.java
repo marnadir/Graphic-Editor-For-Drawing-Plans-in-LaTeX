@@ -14,11 +14,32 @@ public class OvalCounter {
 	
 	public void add(Oval o) {
 		for (int i = 0; i < listOval.size(); i++) {
-			if (listOval.get(i).getCond().equals(o.getCond())
-					&& listOval.get(i).getNameAction().equals(o.getNameAction())) {
-				return;
+			if (listOval.get(i).getCond().equals(o.getCond())) {
+//				if(listOval.get(i).getAction().getName().equals(o.getAction().getName())) {
+//					return;
+//				}
+				
+				/*per non so quale motivo viene chiamato due volte add(Oval o)
+				 per cio devo inserlo solo una volta*/
+				
+				/*that means that belongs to action*/
+				if(listOval.get(i).getAction()!=null) {
+					if(listOval.get(i).getAction().getName().equals(o.getAction().getName())) {
+						return;
+					}
+					
+					/*that means that belongs to state*/
+
+				}else if (listOval.get(i).getState()!=null){
+					if(listOval.get(i).getState().getName().equals(o.getState().getName())) {
+						return;
+					}
+				}
+			
 			}
-		}
+					 
+			}
+		
 		listOval.add(o);
 	}
 

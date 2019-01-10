@@ -12,6 +12,7 @@ import org.eclipse.swt.widgets.Shell;
 
 import LaTex.LaTexGeneratorAction;
 import State.IState;
+import State.InitialState;
 import State.InitialStateCanvas;
 import logic.IDialogNewState;
 
@@ -46,7 +47,7 @@ public class CreateSoDialog extends IDialogNewState{
 			@Override
 			public void handleEvent(Event event) {
 				if(initialStateCanvas == null) {
-				initialState=new IState(listPrec);
+				initialState=new InitialState(listPrec);
 				 initialStateCanvas=new InitialStateCanvas(compCanvas,SWT.ALL,initialState);
 				 initialStateCanvas.addDNDListener();
 				 initialStateCanvas.generateLatexCode();

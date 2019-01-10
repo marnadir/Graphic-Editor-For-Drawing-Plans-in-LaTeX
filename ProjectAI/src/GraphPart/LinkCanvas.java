@@ -4,16 +4,15 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Path;
 import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 
 
-public class LineCanvas  {
+public class LinkCanvas  {
 
 	Point p1=null;
 	Point p2=null;
@@ -27,7 +26,7 @@ public class LineCanvas  {
 	GraphContent canvasContainer;
 	Color black;
 	
-	public LineCanvas(GraphContent parent) {
+	public LinkCanvas(GraphContent parent) {
 		this.canvasContainer=parent;
 	    black=parent.getDisplay().getSystemColor(SWT.COLOR_BLACK);
 
@@ -116,11 +115,22 @@ public class LineCanvas  {
 				p=oval2.getP();
 				p2=c2.getParent().toControl(c2.toDisplay(p.x, p.y));
 
-				System.out.println(p1);
-				System.out.println(p2);
-
 				
-				e.gc.drawLine(p1.x, p1.y+5, p2.x, p2.y+5);
+	            Path path=new Path(canvasContainer.getDisplay());
+
+			
+			    
+			    
+			    path.moveTo((float)(p1.x), (float)(p1.y));
+			    path.quadTo(p2.x, p1.y, p2.x, p2.y);
+				e.gc.drawPath(path);
+				
+				//e.gc.drawLine(p1.x, p1.y+5, p2.x, p2.y+5);
+				
+//				Path path=new Path(canvasContainer.getDisplay());
+//				path.addArc(p1.x, y, width, height, startAngle, arcAngle);
+//				e.gc.drawPath(path);
+				
 //				double angle = Math.atan2(p2.y - p1.y, p2.x - p1.x);
 //		        
 //				
@@ -132,6 +142,14 @@ public class LineCanvas  {
 			}
 		});
 		
+	}
+
+	public Oval getOval1() {
+		return oval1;
+	}
+
+	public Oval getOval2() {
+		return oval2;
 	}
 	
 

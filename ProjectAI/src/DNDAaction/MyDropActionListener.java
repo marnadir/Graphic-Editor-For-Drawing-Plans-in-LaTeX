@@ -67,13 +67,13 @@ public class MyDropActionListener extends DropTargetAdapter {
 				if (myTypes != null) {
 					for (int i = 0; i < myTypes.length; i++) {
 						switch (myTypes[i].getName()) {
-						case "SoState":
+						case "start":
 							state=new IState(myTypes[i].getEff());
 							InitialStateCanvas stateCanvas=new InitialStateCanvas(comp, SWT.ALL, state);
 							stateCanvas.draw();
 							break;
 							
-						case "GoalState":
+						case "goal":
 							state=new IState(myTypes[i].getEff());
 							IStateCanvas stateCanvas2=new GoalStateCanvas(comp, SWT.ALL, state);
 							stateCanvas2.draw();

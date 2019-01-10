@@ -1,9 +1,5 @@
 package Action;
 
-import java.util.ArrayList;
-
-
-
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.Rectangle;
@@ -49,13 +45,13 @@ public class Node  extends ICanvasAction{
 					if (action.isShownCond()) {
 						e.gc.drawLine(0, posY, (action.getLengthPrec()), posY);
 						e.gc.drawString(string, 2, posY - 20, false);				
-						addOval(action.getName(),string,1, posY-2);
+						addOval(action,string,1, posY-2);
 					
 						
 									
 					} else {
 						e.gc.drawLine(0, posY,  action.getStandardLengthPrec(), posY);	
-						addOval(action.getName(),string,1, posY-2);
+						addOval(action,string,1, posY-2);
 
 					}
 
@@ -92,13 +88,13 @@ public class Node  extends ICanvasAction{
 						e.gc.drawLine(x, posY, x + action.getLengthEff(), posY);
 						e.gc.drawString(string, x + 2, posY - 20, false);
 			
-						addOval(action.getName(),string,x+action.getLengthEff(), posY-2);
+						addOval(action,string,x+action.getLengthEff(), posY-2);
 						//e.gc.drawOval(x + (16 + lengthEff), posY-2, 5, 5);
 							
 					}else {
 							
 						e.gc.drawLine(x, posY, x + action.getStandardLengthEff(), posY);
-						addOval(action.getName(),string,x+action.getStandardLengthEff()-3, posY-2);
+						addOval(action,string,x+action.getStandardLengthEff()-3, posY-2);
 			
 					}
 

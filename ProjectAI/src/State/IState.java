@@ -7,7 +7,7 @@ import LaTex.LaTexGeneratorAction;
 public class IState {
 
 	ArrayList<String> conds;
-	String name;
+	String name="state";
 
 	
 	public IState(ArrayList<String> conds) {
@@ -35,6 +35,8 @@ public class IState {
 		return name;
 	}
 
+	
+	
 
 
 }

@@ -173,8 +173,8 @@ public abstract class IStateCanvas extends Canvas {
 	}
 
 
-	public void addOval(String name,String cond,int x, int y) {
-		Oval oval=new Oval(this,name,cond);
+	public void addOval(IState state,String cond,int x, int y) {
+		Oval oval=new Oval(this,state,cond);
 		oval.setLocation(x, y);
 		oval.drawOval();
 		if(parent.getParent() instanceof GraphContent) {

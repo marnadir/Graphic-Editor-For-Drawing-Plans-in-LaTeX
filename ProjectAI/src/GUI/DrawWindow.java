@@ -37,7 +37,7 @@ import Action.Action;
 import DNDAaction.MyDropActionListener;
 import DataTrasfer.MyTransfer;
 import GraphPart.GraphContent;
-import GraphPart.LineCanvas;
+import GraphPart.LinkCanvas;
 import command.ExitCommand;
 import logic.IDialog;
 import logic.IMenu;
@@ -188,7 +188,7 @@ public class DrawWindow  {
         Listener listenerLine=new Listener() {
 			Composite compButton;
 			private Composite compPoint;
-			private LineCanvas line;
+			private LinkCanvas line;
 			Label l1 = null;
 			Label l2 = null;
 			
@@ -276,7 +276,7 @@ public class DrawWindow  {
 								}
 							
 								
-								line=new LineCanvas(contentAction);
+								line=new LinkCanvas(contentAction);
 								line.addlistener(l1,l2);
 
 							}

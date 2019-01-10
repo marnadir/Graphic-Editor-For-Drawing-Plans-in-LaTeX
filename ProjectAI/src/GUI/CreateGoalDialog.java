@@ -10,6 +10,7 @@ import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 
+import State.GoalState;
 import State.GoalStateCanvas;
 import State.IState;
 import logic.IDialogNewState;
@@ -48,7 +49,8 @@ public class CreateGoalDialog extends IDialogNewState{
 			@Override
 			public void handleEvent(Event event) {
 				if(goalStateCanvas == null) {
-					goalState=new IState(listEff);
+					goalState=new GoalState(listEff);
+					
 					goalStateCanvas=new GoalStateCanvas(compCanvas,SWT.ALL,goalState);
 					goalStateCanvas.addDNDListener();
 					goalStateCanvas.generateLatexCode();
