@@ -13,8 +13,6 @@ import org.eclipse.swt.dnd.DND;
 import org.eclipse.swt.dnd.DropTarget;
 import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.layout.FillLayout;
-import org.eclipse.swt.layout.FormLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.RowLayout;
@@ -38,6 +36,7 @@ import DNDAaction.MyDropActionListener;
 import DataTrasfer.MyTransfer;
 import GraphPart.GraphContent;
 import GraphPart.LinkCanvas;
+import GraphPart.OrderCondition;
 import command.ExitCommand;
 import logic.IDialog;
 import logic.IMenu;
@@ -185,13 +184,15 @@ public class DrawWindow  {
 		
 		MenuItem menuLines=new MenuItem(menuOption, SWT.PUSH);
 		menuLines.setText("Create Connection");
-        Listener listenerLine=new Listener() {
+        Listener listenerLink=new Listener() {
 			Composite compButton;
 			private Composite compPoint;
-			private LinkCanvas line;
+			private LinkCanvas link;
+			private OrderCondition orderCond;
 			Label l1 = null;
 			Label l2 = null;
-			
+			String c1="....";
+			String c2="....";
 
 			@Override
 			public void handleEvent(Event event) {
@@ -207,12 +208,22 @@ public class DrawWindow  {
 							@Override
 							public void handleEvent(Event event) {
 								
-								if(line != null) {
+								if(link != null) {
 									if(!l1.getText().contains("Select the point") && !l2.getText().contains("Select the point")) {
-										line.drawLine();
+										link.drawLine();
 										l1.setText("First Cond. :" +"Select the point");
 										l2.setText("Second Cond. :" +"Select the point");
-										line.removelistener(l1, l2);
+										link.removelistener(l1, l2);
+										
+									}
+								}else if(orderCond !=null){
+									if(!l2.getText().contains("null")) {
+										orderCond.drawOrder();
+										c1 = "null";
+										c2 = "null";
+										l1.setText("ordering of actions");
+										l2.setText(c1 + "<" + c2);										
+										orderCond.removelistener(l2);
 										
 									}
 								}
@@ -243,60 +254,57 @@ public class DrawWindow  {
 						
 						Button ordBtn=new Button(compButton,SWT.PUSH);
 						ordBtn.setText("draw Ord");
-						
-						compPoint =new Composite(c, SWT.ALL);
-						compPoint.setLayout(new GridLayout());								
+
+						compPoint = new Composite(c, SWT.ALL);
+						compPoint.setLayout(new GridLayout());
+						l1 = new Label(compPoint, SWT.ALL);
+						l2 = new Label(compPoint, SWT.ALL);
+						compPoint.setVisible(false);
 
 						archBtn.addListener(SWT.Selection, new Listener() {
 
 							@Override
 							public void handleEvent(Event event) {
 
-							
+								orderCond=null;
 								
-								if (compPoint.getChildren().length < 1) {
-									 l1 = new Label(compPoint, SWT.ALL);
-									l1.setText("First Cond. :" + "Select the point");
-
-									l1.pack();
-
-									l2 = new Label(compPoint, SWT.ALL);
-									l2.setText("Second Cond. :" + "Select the point");
-
-									l2.pack();
-									compPoint.pack();
-									getDialog().pack();
-									
-								}else {
-									compPoint.setVisible(true);
-									l1.setText("First Cond. :" + "Select the point");
-									l2.setText("Second Cond. :" + "Select the point");
-
-									
-								}
-							
+								l1.setText("First Cond. :" + "Select the point");
+								l1.pack();
+								l2.setText("Second Cond. :" + "Select the point");
+								l2.pack();
+								compPoint.pack();
+								getDialog().pack();
+								compPoint.setVisible(true);
 								
-								line=new LinkCanvas(contentAction);
-								line.addlistener(l1,l2);
+
+								link = new LinkCanvas(contentAction);
+								link.addlistener(l1, l2);
 
 							}
 						});
 
 						ordBtn.addListener(SWT.Selection, new Listener() {
-							
+
 							@Override
 							public void handleEvent(Event event) {
 
-							
-								compPoint.setVisible(false);
-								line=null;
+								link = null;
+
+								c1 = "null";
+								c2 = "null";
+								l1.setText("ordering of actions");
+								l2.setText(c1 + "<" + c2);
+								l2.pack();
+								compPoint.pack();
 								getDialog().pack();
-								
+								compPoint.setVisible(true);
+
+								orderCond = new OrderCondition(contentAction);
+								orderCond.addlistener(l2);
 								
 							}
 						});
-						
-						
+
 						this.getDialog().pack();
 
 					}
@@ -310,7 +318,7 @@ public class DrawWindow  {
 			}
 		};
 		
-		menuLines.addListener(SWT.Selection, listenerLine);
+		menuLines.addListener(SWT.Selection, listenerLink);
 		
 	
 		
@@ -420,15 +428,8 @@ public class DrawWindow  {
 			}
 		});
 	    
-	   
-	    
-		
 	    toolBarDomain.pack();
 	    
-	    
-	    
-		
-		
 		Group consolePlan=new Group(console, SWT.ALL);
 		consolePlan.setText("Plan");
 		consolePlan.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
@@ -471,8 +472,6 @@ public class DrawWindow  {
 	      Display.getDefault().timerExec(100, this);
 	    }
 	   });
-		
-		
 
 	    shell.setMaximized(false);
 	}

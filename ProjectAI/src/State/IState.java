@@ -2,8 +2,6 @@ package State;
 
 import java.util.ArrayList;
 
-import LaTex.LaTexGeneratorAction;
-
 public class IState {
 
 	ArrayList<String> conds;

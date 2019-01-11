@@ -106,7 +106,11 @@ public class LaTexGeneratorNode {
 		sb.append("[bend");
 		
 		//ask if is left o right
-		
+		if(link.getOval1().getP().y>link.getOval2().getP().y) {
+			sb.append("right,");
+		}else {
+			sb.append("left,");
+		}
 		//ask the inclination of curve
 		
 		sb.append("->]");

@@ -43,7 +43,7 @@ public class LinkCanvas  {
 		for(int i=0;i<canvasContainer.getChildren().length;i++) {
 			Composite comp=(Composite)canvasContainer.getChildren()[i];
 			comp.setEnabled(true);
-			comp.getChildren()[0].addListener(SWT.MouseDoubleClick, addLi(l1,l2,comp));
+			comp.getChildren()[0].addListener(SWT.MouseDoubleClick, addLink(l1,l2,comp));
 		
 		}
 	}
@@ -53,14 +53,14 @@ public class LinkCanvas  {
 		for(int i=0;i<canvasContainer.getChildren().length;i++) {
 			Composite comp=(Composite)canvasContainer.getChildren()[i];
 			comp.setEnabled(true);
-			comp.getChildren()[0].addListener(SWT.MouseDoubleClick, addLi(l1,l2,comp));
-			comp.getChildren()[0].removeListener(SWT.MouseDoubleClick, addLi(l1,l2,comp));
+			comp.getChildren()[0].addListener(SWT.MouseDoubleClick, addLink(l1,l2,comp));
+			comp.getChildren()[0].removeListener(SWT.MouseDoubleClick, addLink(l1,l2,comp));
 		}
 	}
 	
 	
 	
-	public Listener addLi(Label l1,Label l2,Composite comp) {
+	public Listener addLink(Label l1,Label l2,Composite comp) {
 		Listener l;
 		l=new Listener() {
 			
@@ -122,9 +122,15 @@ public class LinkCanvas  {
 			    
 			    
 			    path.moveTo((float)(p1.x), (float)(p1.y));
-			    path.quadTo(p2.x, p1.y, p2.x, p2.y);
-				e.gc.drawPath(path);
+			    if(p1.y>p2.y) {
+			    	path.quadTo(p1.y, p2.x, p2.x, p2.y);
+			    }else {
+				    path.quadTo(p2.x, p1.y, p2.x, p2.y);
+
+			    }
 				
+				e.gc.drawPath(path);
+
 				//e.gc.drawLine(p1.x, p1.y+5, p2.x, p2.y+5);
 				
 //				Path path=new Path(canvasContainer.getDisplay());

@@ -1,42 +1,41 @@
 package GraphPart;
 
 
+import java.util.ArrayList;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Listener;
+import Action.Node;
 
 public class GraphContent extends Canvas {
 
 	private Composite parent;
 	private OvalCounter ovalCounter;
+	private ArrayList<Node> actionInPlan;
 	
 	public GraphContent(Composite parent, int style) {
 		super(parent, style);
 		this.parent=parent;
 		this.ovalCounter=new OvalCounter();
+		actionInPlan=new ArrayList<>();
 		// TODO Auto-generated constructor stub
 	}
-
-
-
-
-
-
-
 
 	public OvalCounter getOvalCounter() {
 		return ovalCounter;
 	}
 
+	public ArrayList<Node> getActionInPlan() {
+		return actionInPlan;
+	}
 
-
-
-
-
-
+	public void setListAction(ArrayList<Node> listAction) {
+		this.actionInPlan = listAction;
+	}
 
 	public void addlistener(Composite compi) {
 	
