@@ -1,12 +1,16 @@
 package GraphPart;
 
-import javax.xml.crypto.dsig.CanonicalizationMethod;
+
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Path;
 import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
@@ -14,16 +18,21 @@ import org.eclipse.swt.widgets.Listener;
 
 import Action.Node;
 
-public class OrderCondition {
+public class OrderCondition extends Canvas{
  
 	GraphContent canvasContainer;
 	Node cond1=null;
 	Node cond2=null;
 	Composite c1;
 	Composite c2;
+	Composite parent;
 	
-	public OrderCondition(GraphContent parent) {
-		this.canvasContainer=parent;
+	public OrderCondition(Composite parent) {
+		super(parent, SWT.ALL);
+		this.canvasContainer=(GraphContent)parent.getParent();
+		this.parent=parent;
+
+		//parent.pack();
 	}
 	
 	public void addlistener(Label l1) {
@@ -32,7 +41,7 @@ public class OrderCondition {
 			Composite comp=(Composite)canvasContainer.getChildren()[i];
 			comp.setEnabled(true);
 			comp.getChildren()[0].addListener(SWT.MouseDoubleClick, addOrdCond(l1,comp));
-		
+			
 		}
 	}
 	
@@ -88,7 +97,7 @@ public class OrderCondition {
 	}
 	
 	public void drawOrder() {
-		canvasContainer.addPaintListener(new PaintListener() {
+		this.addPaintListener(new PaintListener() {
 			
 			
 			@Override
@@ -99,36 +108,48 @@ public class OrderCondition {
 				Point p=new Point(cond1.getBounds().x+cond1.getBounds().width,cond1.getBounds().y-20);
 				Point p1=c1.getParent().toControl(c1.toDisplay(p.x, p.y));
 				
-				p=new Point(cond2.getBounds().x+cond2.getBounds().width,cond2.getBounds().y-20);
+				p=new Point(cond2.getBounds().x,cond2.getBounds().y-20);
 				Point p2=c2.getParent().toControl(c2.toDisplay(p.x, p.y));
 
+				
+				parent.setSize(p2.x-p1.x,40);
+				
+				parent.setLocation(p1.x,p1.y-30);
+				//parent.setBackground(parent.getDisplay().getSystemColor(SWT.COLOR_DARK_BLUE));
+				parent.layout();
 	            Path path=new Path(canvasContainer.getDisplay());
 
 
 			    
 			    path.moveTo((float)(p1.x), (float)(p1.y));
-			    if(p1.y>p2.y) {
-			    	path.quadTo(p1.y, p2.x, p2.x, p2.y);
-			    }else {
-				    path.quadTo(p2.x, p1.y, p2.x, p2.y);
+//			    if(p1.y>p2.y) {
+//			    	path.quadTo(p1.y, p2.x, p2.x, p2.y);
+//			    }
+//			    else {
+//				    path.quadTo(p2.x, p1.y, p2.x, p2.y);
+//
+//			    }
+				
+			    
+			    path.quadTo(p2.x, p1.y, p2.x, p2.y);
 
-			    }
-				
-				e.gc.drawPath(path);
+				//e.gc.drawPath(path);
 
-				//e.gc.drawLine(p1.x, p1.y+5, p2.x, p2.y+5);
+				Image img=new Image(canvasContainer.getDisplay(), "img/ord.png");
+				img.setBackground(canvasContainer.getDisplay().getSystemColor(SWT.COLOR_DARK_GRAY));
 				
-//				Path path=new Path(canvasContainer.getDisplay());
-//				path.addArc(p1.x, y, width, height, startAngle, arcAngle);
-//				e.gc.drawPath(path);
 				
-//				double angle = Math.atan2(p2.y - p1.y, p2.x - p1.x);
-//		        
-//				
-//				
-//		        e.gc.drawArc(p1.x, p1.y, 300, 50,0,(int)angle);
-
+				//e.gc.drawString("ciao", 5, 5);
+				e.gc.drawImage(img, 0, 0);
 				
+				//e.gc.drawImage(img, p1.x, p1.y-20, 60, 40, p2.x, p2.y, 60, 40);
+				
+//				Composite comp = new Composite(canvasContainer, SWT.ALL);
+//				comp.setLayoutData(new GridData(GridData.FILL, GridData.FILL, false, false));
+//				comp.setLayout(new FillLayout());
+//				comp.setBackground(canvasContainer.getDisplay().getSystemColor(SWT.COLOR_BLUE));
+//				comp.setBounds(p1.x, p1.y-20, p2.x-p1.x, 20);
+				parent.pack();
 				
 			}
 		});

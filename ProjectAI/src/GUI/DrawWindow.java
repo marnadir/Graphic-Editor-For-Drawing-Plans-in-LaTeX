@@ -13,6 +13,7 @@ import org.eclipse.swt.dnd.DND;
 import org.eclipse.swt.dnd.DropTarget;
 import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.RowLayout;
@@ -219,6 +220,7 @@ public class DrawWindow  {
 								}else if(orderCond !=null){
 									if(!l2.getText().contains("null")) {
 										orderCond.drawOrder();
+										orderCond.pack();
 										c1 = "null";
 										c2 = "null";
 										l1.setText("ordering of actions");
@@ -299,7 +301,16 @@ public class DrawWindow  {
 								getDialog().pack();
 								compPoint.setVisible(true);
 
-								orderCond = new OrderCondition(contentAction);
+								Composite comp = new Composite(contentAction, SWT.BORDER);
+//								comp.setLayoutData(new GridData(GridData.FILL, GridData.FILL, false, false));
+//								comp.setLayout(new FillLayout());
+								
+								comp.setSize(50,50);
+								comp.setLocation(20, 30);
+								//comp.setBackground(comp.getDisplay().getSystemColor(SWT.COLOR_RED));
+								
+								
+								orderCond = new OrderCondition(comp);
 								orderCond.addlistener(l2);
 								
 							}
