@@ -24,8 +24,9 @@ public class MyDropActionListener extends DropTargetAdapter {
 	private Composite parentComposite;
 	private DropTarget target;
 	private ArrayList<Action> actionList;
-    private GraphContent graphContent;
-    private Node node;
+	private GraphContent graphContent;
+	private Node node;
+
 	/**
 	 * @param parentComposite - the composite that holds all pictures
 	 * @param target          - the drop target
@@ -37,6 +38,7 @@ public class MyDropActionListener extends DropTargetAdapter {
 	}
 
 	public void dragEnter(DropTargetEvent event) {
+		System.out.println("ciao");
 		if (event.detail == DND.DROP_DEFAULT) {
 			event.detail = DND.DROP_COPY;
 		}
@@ -90,7 +92,7 @@ public class MyDropActionListener extends DropTargetAdapter {
 								}
 							}
 
-							node = new Node(comp, SWT.NO_REDRAW_RESIZE | SWT.DOUBLE_BUFFERED, action);
+							node = new Node(comp, SWT.ALL, action);
 							node.draw();
 							node.pack();
 							comp.pack();
@@ -104,33 +106,32 @@ public class MyDropActionListener extends DropTargetAdapter {
 				}
 			}
 
-			graphContent.addlistener(comp);
+			graphContent.addMoveListener(comp);
 		}
 	}
 
 	public void setNodeID() {
-	//impostare id diversi per ogni nodo
 		int t = 1;
-		String ID=getNameAction(node.getAction().getName()) + "-" + t;
+		String ID = getNameAction(node.getAction().getName()) + "-" + t;
 		for (int i = 0; i < graphContent.getActionInPlan().size(); i++) {
-			if(graphContent.getActionInPlan().get(i).getID()!=null) {
+			if (graphContent.getActionInPlan().get(i).getID() != null) {
 				if (graphContent.getActionInPlan().get(i).getID().equals(ID)) {
 					t++;
-					ID=getNameAction(node.getAction().getName()) + "-" + t;;
+					ID = getNameAction(node.getAction().getName()) + "-" + t;
+					;
 					i = 0;
 				}
 			}
-			
+
 		}
 		node.setID(ID);
 	}
-	
+
 	public String getNameAction(String string) {
-		String name[]=string.split("\\(");	
-		StringBuilder sb=new StringBuilder();
+		String name[] = string.split("\\(");
+		StringBuilder sb = new StringBuilder();
 		sb.append(name[0]);
 		return sb.toString();
 	}
-	
-	
+
 }

@@ -123,13 +123,9 @@ public class LinkCanvas  {
 
 				
 	            Path path=new Path(canvasContainer.getDisplay());
-
-			
-			    
-			    
 			    path.moveTo((float)(p1.x), (float)(p1.y));
 			    if(p1.y>p2.y) {
-			    	path.quadTo(p1.y, p2.x, p2.x, p2.y);
+			    	path.quadTo(p1.y, p2.y, p2.x, p2.y);
 			    }else {
 				    path.quadTo(p2.x, p1.y, p2.x, p2.y);
 

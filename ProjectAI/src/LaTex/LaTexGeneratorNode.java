@@ -163,8 +163,8 @@ public class LaTexGeneratorNode {
 	
 	public String getPosition(ICanvasAction node) {
 		StringBuilder sb=new StringBuilder();		
-		sb.append("("+convertInCm(node.getLocation().x)+",");
-		sb.append(convertInCm(node.getLocation().y)+")");
+		sb.append("("+convertInCm(node.getParent().getLocation().x)+",");
+		sb.append(convertInCm(node.getParent().getLocation().y)+")");
 		return sb.toString();
 	}
 	

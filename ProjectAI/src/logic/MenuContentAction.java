@@ -15,6 +15,7 @@ import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Text;
 
 import Action.ICanvasAction;
+import Action.Node;
 import GraphPart.GraphContent;
 
 public class MenuContentAction implements MenuDetectListener {
@@ -37,6 +38,15 @@ public class MenuContentAction implements MenuDetectListener {
 
 			@Override
 			public void handleEvent(Event event) {
+				if(canvas instanceof Node) {
+					if(canvas.getParent().getParent() instanceof GraphContent) {
+						GraphContent contentAction=(GraphContent)canvas.getParent().getParent();
+						contentAction.getActionInPlan().remove(canvas);
+						canvas.getParent().setVisible(false);
+						canvas.clearDisplay();
+						return;
+					}
+				}
 				canvas.clearDisplay();
 			}
 		});

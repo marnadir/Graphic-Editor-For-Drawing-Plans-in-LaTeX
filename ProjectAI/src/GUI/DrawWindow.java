@@ -53,7 +53,7 @@ public class DrawWindow {
 	private SashForm sashForm;
 	private Group domainGroup;
 	private SashForm sashForm2;
-	private CTabFolder PlanView;
+	private CTabFolder planView;
 	private Group console;
 	private CreateDomainView createDomainView;
 	private GraphContent contentAction;
@@ -291,12 +291,12 @@ public class DrawWindow {
 								getDialog().pack();
 								compPoint.setVisible(true);
 
-								Composite comp = new Composite(contentAction, SWT.BORDER);
+								Composite comp = new Composite(contentAction, SWT.ALL);
 //								comp.setLayoutData(new GridData(GridData.FILL, GridData.FILL, false, false));
 //								comp.setLayout(new FillLayout());
 
 								// sulla definizione di cio, ce qualcosa che mi turba!!
-								comp.setSize(100, 50);
+								comp.setSize(50, 50);
 								comp.setLocation(20, 30);
 								// comp.setBackground(comp.getDisplay().getSystemColor(SWT.COLOR_RED));
 
@@ -349,54 +349,51 @@ public class DrawWindow {
 
 		sashForm.setWeights(new int[] { 1, 3 });
 
-		PlanView = new CTabFolder(sashForm2, SWT.PUSH);
-		PlanView.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-		PlanView.setSimple(false);
-		PlanView.setUnselectedImageVisible(false);
-		PlanView.setUnselectedCloseVisible(false);
+		planView = new CTabFolder(sashForm2, SWT.PUSH);
+		planView.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		planView.setSimple(false);
+		planView.setUnselectedImageVisible(false);
+		planView.setUnselectedCloseVisible(false);
 		
-		CTabItem item = new CTabItem(PlanView, SWT.CLOSE);
-		
-		contentAction = new GraphContent(PlanView, SWT.ALL);
-		item.setControl(contentAction);
-		PlanView.setSelection(item);
-		listOfPlan=new ArrayList<>();
-		listOfPlan.add(contentAction);
-		item.setText("Plan"+listOfPlan.size());
+		CTabItem item = new CTabItem(planView, SWT.CLOSE);
 
-		ToolBar t = new ToolBar( PlanView, SWT.FLAT ); 
-		ToolItem i = new ToolItem( t, SWT.PUSH ); 
+		contentAction = new GraphContent(planView, SWT.ALL);
+		item.setControl(contentAction);
+		planView.setSelection(item);
+		listOfPlan = new ArrayList<>();
+		listOfPlan.add(contentAction);
+		item.setText("Plan" + listOfPlan.size());
+
+		ToolBar t = new ToolBar(planView, SWT.FLAT);
+		ToolItem i = new ToolItem(t, SWT.PUSH);
 		i.setToolTipText("add a new Plan");
-	    Image icon = new Image(shell.getDisplay(), "img/add-documents.png");
-		i.setImage(icon); 
+		Image icon = new Image(shell.getDisplay(), "img/add-documents.png");
+		i.setImage(icon);
 		i.addSelectionListener(new SelectionListener() {
-			
+
 			@Override
 			public void widgetSelected(SelectionEvent var1) {
 
-				CTabItem item2 = new CTabItem(PlanView, SWT.CLOSE);
-				contentAction = new GraphContent(PlanView, SWT.ALL);
+				CTabItem item2 = new CTabItem(planView, SWT.CLOSE);
+				contentAction = new GraphContent(planView, SWT.ALL);
+				item2.setControl(contentAction);
 				listOfPlan.add(contentAction);
-				item2.setText("Plan"+listOfPlan.size());
-	
-				
+				item2.setText("Plan" + listOfPlan.size());
+				contentAction.addDndListener(updateActionListDomain);
 
 			}
+
 			@Override
 			public void widgetDefaultSelected(SelectionEvent var1) {
 				// TODO Auto-generated method stub
-				
+
 			}
 		});
-		
-		
-		PlanView.setTopRight( t, SWT.RIGHT ); 
-		
-		PlanView.setTabHeight(Math.max(t.computeSize(SWT.DEFAULT, 
-				SWT.DEFAULT).y, PlanView.getTabHeight())); 
-		
-		
-		
+
+		planView.setTopRight(t, SWT.RIGHT);
+
+		planView.setTabHeight(Math.max(t.computeSize(SWT.DEFAULT, SWT.DEFAULT).y, planView.getTabHeight()));
+
 		console = new Group(sashForm2, SWT.SCROLL_LINE);
 		console.setText("Console");
 		console.setLayout(new GridLayout(2, true));
@@ -485,6 +482,8 @@ public class DrawWindow {
 			public void handleEvent(Event event) {
 				textPlan.setText("");
 
+				
+				contentAction = (GraphContent)planView.getSelection().getControl();
 				updateNodeList = contentAction.getActionInPlan();
 				for (int i = 0; i < updateNodeList.size(); i++) {
 					updateNodeList.get(i).generateLatexCode();
@@ -508,9 +507,12 @@ public class DrawWindow {
 
 		updateActionListDomain = createDomainView.getListAction();
 
-		DropTarget target = new DropTarget(contentAction, DND.DROP_MOVE | DND.DROP_COPY);
-		target.setTransfer(new Transfer[] { MyTransfer.getInstance() });
-		target.addDropListener(new MyDropActionListener(PlanView, target, updateActionListDomain));
+		contentAction.addDndListener(updateActionListDomain);
+
+		
+//		DropTarget target = new DropTarget(contentAction, DND.DROP_MOVE | DND.DROP_COPY);
+//		target.setTransfer(new Transfer[] { MyTransfer.getInstance() });
+//		target.addDropListener(new MyDropActionListener(planView, target, updateActionListDomain));
 
 		Display.getDefault().timerExec(100, new Runnable() {
 			@Override
@@ -546,7 +548,7 @@ public class DrawWindow {
 	}
 
 	public CTabFolder getPlanView() {
-		return PlanView;
+		return planView;
 	}
 
 	public Group getConsole() {

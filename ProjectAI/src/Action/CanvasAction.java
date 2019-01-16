@@ -10,10 +10,8 @@ import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Composite;
-
 import DNDAaction.MyDragActionListener;
 import DataTrasfer.MyTransfer;
-import GraphPart.Oval;
 import logic.MenuContentAction;
 
 public class CanvasAction  extends ICanvasAction{
@@ -96,9 +94,7 @@ public class CanvasAction  extends ICanvasAction{
 					e.gc.drawString(action.getName(), l, rect.y + rect.height / 3);
 				}
 
-				posY = rect.y + 10;
-				Oval oval;
-				
+				posY = rect.y + 10;				
 				for (int i = 0; i < action.getEffect().size(); i++) {
 					int x = rect.x + rect.width;
 

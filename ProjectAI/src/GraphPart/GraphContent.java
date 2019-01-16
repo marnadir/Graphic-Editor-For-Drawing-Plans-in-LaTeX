@@ -4,12 +4,19 @@ package GraphPart;
 import java.util.ArrayList;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.dnd.DND;
+import org.eclipse.swt.dnd.DropTarget;
+import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Listener;
+
+import Action.Action;
 import Action.Node;
+import DNDAaction.MyDropActionListener;
+import DataTrasfer.MyTransfer;
 
 public class GraphContent extends Canvas {
 
@@ -47,7 +54,7 @@ public class GraphContent extends Canvas {
 		return ords;
 	}
 
-	public void addlistener(Composite compi) {
+	public void addMoveListener(Composite compi) {
 	
 		final Point[] offset = new Point[1];
 		Composite comp=compi;
@@ -85,6 +92,10 @@ public class GraphContent extends Canvas {
         this.addListener(SWT.MouseMove, listener);
 	}
 
-	
+	public void addDndListener(ArrayList<Action> updateActionListDomain) {
+		DropTarget target = new DropTarget(this, DND.DROP_MOVE | DND.DROP_COPY);
+		target.setTransfer(new Transfer[] { MyTransfer.getInstance() });
+		target.addDropListener(new MyDropActionListener(parent, target, updateActionListDomain));
+	}
 	
 }
