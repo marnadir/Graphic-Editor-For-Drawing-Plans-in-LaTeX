@@ -60,6 +60,7 @@ public class CreateGoalDialog extends IDialogNewState{
 					goalState.updateConds(listEff);
 					if(listEff.size()>0) {
 						goalStateCanvas.draw();
+						goalStateCanvas.pack();
 						dialog.setVisible(false);
 					}
 				}

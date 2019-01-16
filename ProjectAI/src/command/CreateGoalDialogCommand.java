@@ -1,10 +1,7 @@
 package command;
 
-import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
-
 import GUI.CreateGoalDialog;
-import State.GoalStateCanvas;
 
 public class CreateGoalDialogCommand implements ICommand {
 
@@ -23,10 +20,11 @@ public class CreateGoalDialogCommand implements ICommand {
 		if (canExecute(var1, var2)) {
 			if (var1 instanceof Composite) {
 				Composite comp = (Composite) var1;
-				if(dialog ==null) {
-					dialog = new CreateGoalDialog(comp);	
+				/* container of goal is empty*/ 
+				if(comp.getChildren().length<1) {
+					dialog = new CreateGoalDialog(comp);
+					dialog.createContent();		
 				}
-				dialog.createContent();
 			}
 		}
 	}

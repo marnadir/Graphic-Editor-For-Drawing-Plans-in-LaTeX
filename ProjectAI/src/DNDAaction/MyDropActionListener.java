@@ -93,6 +93,7 @@ public class MyDropActionListener extends DropTargetAdapter {
 							node = new Node(comp, SWT.NO_REDRAW_RESIZE | SWT.DOUBLE_BUFFERED, action);
 							node.draw();
 							node.pack();
+							comp.pack();
 							graphContent.getActionInPlan().add(node);
 							setNodeID();
 							break;

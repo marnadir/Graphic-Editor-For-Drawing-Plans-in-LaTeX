@@ -12,12 +12,10 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
 
-import DNDAaction.MyDragActionListener;
 import DNDstate.MyDragStateListener;
 import DataTrasfer.MyTransfer;
 import GraphPart.GraphContent;
 import GraphPart.Oval;
-import LaTex.LaTexGeneratorAction;
 import LaTex.LaTexGeneratorState;
 
 public abstract class IStateCanvas extends Canvas {

@@ -3,12 +3,8 @@ package command;
 
 
 
-import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Shell;
-
 import GUI.CreateSoDialog;
-import State.InitialStateCanvas;
 
 public class CreateSoDialogCommand implements ICommand {
 
@@ -27,10 +23,13 @@ public class CreateSoDialogCommand implements ICommand {
 		if (canExecute(var1, var2)) {
 			if (var1 instanceof Composite) {
 				Composite comp = (Composite) var1;
-				if(dialog==null) {
+				
+				/* container of So is empty*/ 
+				if(comp.getChildren().length<1) {
 					dialog = new CreateSoDialog(comp);
+					dialog.createContent();		
 				}
-				dialog.createContent();		
+				
 			}
 		}
 	}

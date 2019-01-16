@@ -26,7 +26,6 @@ import org.eclipse.swt.widgets.TreeItem;
 
 import Action.Action;
 import Action.CanvasAction;
-import State.IState;
 import State.IStateCanvas;
 import State.InitialStateCanvas;
 import command.ChangeEffCommand;
@@ -118,7 +117,6 @@ public class CreateDomainView {
 
 		GridData gridData = new GridData(GridData.CENTER, GridData.CENTER, false, false);
 		gridData.horizontalSpan = 2;
-		//comboOptionInSt.setLayoutData(gridData);
 
 		Label finalState = new Label(subOption, SWT.ALL);
 		finalState.setText("Final State: ");
@@ -130,7 +128,7 @@ public class CreateDomainView {
 		actionLabel.setText("Action:  ");
 
 		Button bntAct = new Button(subOption, SWT.PUSH);
-		img = new Image(shell.getDisplay(), "img/addCond.png");
+		img = new Image(shell.getDisplay(), "img/ok.png");
 		bntAct.setImage(img);
 
 		stateGroup = new Group(inside, SWT.NONE);
@@ -155,24 +153,16 @@ public class CreateDomainView {
 		part1.setLayout(fillLayout);
 
 		contentInitState = new Composite(part1, SWT.BORDER);
-		//contentInitState.setLayout(new GridLayout(1, false));
-		//contentInitState.setLayout(new FillLayout());
-		
-		containerInitState=new Composite(contentInitState, SWT.BORDER);
+		containerInitState=new Composite(contentInitState, SWT.ALL);
 		containerInitState.setLayoutData(new GridData(GridData.FILL, GridData.FILL, false, false));
 		containerInitState.setLayout(new FillLayout());
-		//containerInitState.setLayout(new GridLayout(1, false));
-
 		containerInitState.setLocation(50,80);
-//		containerInitState.setSize(60, 150);
 
 
 		contentGoalState = new Composite(part1, SWT.BORDER);
-		//contentGoalState.setLayout(new GridLayout(1, false));
-		containerGoalState=new Composite(contentGoalState, SWT.BORDER);
+		containerGoalState=new Composite(contentGoalState, SWT.ALL);
 		containerGoalState.setLayoutData(new GridData(GridData.FILL, GridData.FILL, false, false));
 		containerGoalState.setLayout(new FillLayout());
-//		containerGoalState.setLocation((3*contentGoalState.getSize().x)/2,20);
 		containerGoalState.setLocation(70,80);
 
 		
@@ -252,16 +242,16 @@ public class CreateDomainView {
 					containerAction=new Composite(compositeAction, SWT.BORDER);
 					containerAction.setLayoutData(new GridData(GridData.FILL, GridData.FILL, false, false));
 					containerAction.setLayout(new FillLayout());
-					containerAction.setLocation(40,150);
+					containerAction.setLocation(15,150);
 					
 					CanvasAction canvasAction=new CanvasAction(containerAction,SWT.DOUBLE_BUFFERED|SWT.NO_REDRAW_RESIZE,action);
 					//is necessary?
-					action.setPaint(canvasAction);
+					//action.setPaint(canvasAction);
 					
 					canvasAction.draw();
 					canvasAction.addDNDListener();
 					//is necessary? 
-					compositeAction.setPaintAction(canvasAction);
+					//compositeAction.setPaintAction(canvasAction);
 					
 					
 					
