@@ -312,7 +312,9 @@ public class DrawWindow  {
 //								comp.setLayoutData(new GridData(GridData.FILL, GridData.FILL, false, false));
 //								comp.setLayout(new FillLayout());
 								
-								comp.setSize(50,50);
+								
+								//sulla definizione di cio, ce qualcosa che mi turba!!
+								comp.setSize(100,50);
 								comp.setLocation(20, 30);
 								//comp.setBackground(comp.getDisplay().getSystemColor(SWT.COLOR_RED));
 								

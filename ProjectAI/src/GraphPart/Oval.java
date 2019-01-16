@@ -9,6 +9,7 @@ import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Composite;
 
 import Action.Action;
+import Action.Node;
 import State.IState;
 
 
@@ -101,13 +102,15 @@ public class Oval {
 		return cond;
 	}
 
-	public Action getAction() {
-		return action;
+	public Node getNode() {
+		if(action !=null) {
+			Node node=(Node)canvasContainer;
+			return node;
+		}
+		return null;
 	}
 
-	public void setAction(Action action) {
-		this.action = action;
-	}
+
 
 	public IState getState() {
 		return state;

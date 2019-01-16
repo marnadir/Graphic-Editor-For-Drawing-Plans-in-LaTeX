@@ -25,7 +25,7 @@ public class MyDropActionListener extends DropTargetAdapter {
 	private DropTarget target;
 	private ArrayList<Action> actionList;
     private GraphContent graphContent;
-    private Node canvas;
+    private Node node;
 	/**
 	 * @param parentComposite - the composite that holds all pictures
 	 * @param target          - the drop target
@@ -90,10 +90,10 @@ public class MyDropActionListener extends DropTargetAdapter {
 								}
 							}
 
-							canvas = new Node(comp, SWT.NO_REDRAW_RESIZE | SWT.DOUBLE_BUFFERED, action);
-							canvas.draw();
-							canvas.pack();
-							graphContent.getActionInPlan().add(canvas);
+							node = new Node(comp, SWT.NO_REDRAW_RESIZE | SWT.DOUBLE_BUFFERED, action);
+							node.draw();
+							node.pack();
+							graphContent.getActionInPlan().add(node);
 							setNodeID();
 							break;
 						}
@@ -107,14 +107,29 @@ public class MyDropActionListener extends DropTargetAdapter {
 		}
 	}
 
-	public String setNodeID() {
+	public void setNodeID() {
 	//impostare id diversi per ogni nodo
-		for(int i=0;i<graphContent.getActionInPlan().size();i++) {
-			if() {
-				
+		int t = 1;
+		String ID=getNameAction(node.getAction().getName()) + "-" + t;
+		for (int i = 0; i < graphContent.getActionInPlan().size(); i++) {
+			if(graphContent.getActionInPlan().get(i).getID()!=null) {
+				if (graphContent.getActionInPlan().get(i).getID().equals(ID)) {
+					t++;
+					ID=getNameAction(node.getAction().getName()) + "-" + t;;
+					i = 0;
+				}
 			}
+			
 		}
-		
+		node.setID(ID);
 	}
+	
+	public String getNameAction(String string) {
+		String name[]=string.split("\\(");	
+		StringBuilder sb=new StringBuilder();
+		sb.append(name[0]);
+		return sb.toString();
+	}
+	
 	
 }

@@ -23,8 +23,8 @@ public class OvalCounter {
 				 per cio devo inserlo solo una volta*/
 				
 				/*that means that belongs to action*/
-				if(listOval.get(i).getAction()!=null) {
-					if(listOval.get(i).getAction().getName().equals(o.getAction().getName())) {
+				if(listOval.get(i).getNode().getAction()!=null) {
+					if(listOval.get(i).getNode().getAction().getName().equals(o.getNode().getAction().getName())) {
 						return;
 					}
 					

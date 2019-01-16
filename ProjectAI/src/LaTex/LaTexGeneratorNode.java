@@ -26,10 +26,10 @@ public class LaTexGeneratorNode {
 	public String getLatexActionCodePlan(Action action,Node node) {
 		StringBuilder sb = new StringBuilder();
 		sb.append("/action");
-		sb.append("{"+getIDAction(node)+"}");//numerare le azioni
+		sb.append("{"+node.getID()+"}");//numerare le azioni
 		sb.append("{"+getNameAction(action.getName())+"=");
-		sb.append(getVariable(action.getName())+",");
-		sb.append("body="+"{at={"+getPosition(node)+"}}}");
+		sb.append(getVariable(action.getName())+","+"\n");
+		sb.append("  body="+"{at={"+getPosition(node)+"}}}"+"\n"+"\n");
 		
 
 		return sb.toString();
@@ -38,9 +38,9 @@ public class LaTexGeneratorNode {
 	public String getLatexLinkCodePlan(LinkCanvas link) {
 		StringBuilder sb = new StringBuilder();
 		sb.append("/link");
-		sb.append("{"+link.getOval1().getCond()+"/"+isPreOrEff(link.getOval1())+"}");
-		sb.append("{"+link.getOval2().getCond()+"}");
-		sb.append("{edge"+getBend(link)+"}");
+		sb.append("{"+link.getOval1().getNode().getID()+"/"+isPreOrEff(link.getOval1())+"}");
+		sb.append("{"+link.getOval2().getNode().getID()+"/"+isPreOrEff(link.getOval2())+"}");
+		sb.append("{edge"+getBend(link)+"}"+"\n"+"\n");
 		return sb.toString();
 	}
 	
@@ -49,7 +49,7 @@ public class LaTexGeneratorNode {
 		StringBuilder sb = new StringBuilder();
 		sb.append("/ordering");
 		sb.append("{[yshift=.65cm,xshift=.2cm]"+order.getCond1().getID()+".east}");
-		sb.append("{[yshift=.65cm,xshift=.2cm]"+order.getCond2().getID()+".west}");
+		sb.append("{[yshift=.65cm,xshift=.2cm]"+order.getCond2().getID()+".west}"+"\n"+"\n");
 		return sb.toString();
 	}
 	
@@ -60,8 +60,8 @@ public class LaTexGeneratorNode {
 		String cond=o.getCond();
 
 		/*if is a action*/
-		if(o.getAction()!= null) {
-			Action a=o.getAction();
+		if(o.getNode().getAction()!= null) {
+			Action a=o.getNode().getAction();
 			for(int i=0;i<a.getPrec().size();i++) {
 				if(a.getPrec().get(i).equals(cond)) {
 					sb.append("pre/");
@@ -118,14 +118,7 @@ public class LaTexGeneratorNode {
 		return sb.toString();
 	}
 	
-	public String getIDAction(Node node) {
-		node.getAction().getName();
-		String name[]=node.getAction().getName().split("\\(");	
-		StringBuilder sb=new StringBuilder();
-		sb.append(name[0]);
-		
-		return sb.toString();
-	}
+
 	
 	
 	public String getBend(LinkCanvas link) {
