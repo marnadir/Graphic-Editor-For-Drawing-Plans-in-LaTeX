@@ -24,7 +24,8 @@ public class MyDropActionListener extends DropTargetAdapter {
 	private Composite parentComposite;
 	private DropTarget target;
 	private ArrayList<Action> actionList;
-
+    private GraphContent graphContent;
+    private Node canvas;
 	/**
 	 * @param parentComposite - the composite that holds all pictures
 	 * @param target          - the drop target
@@ -54,7 +55,7 @@ public class MyDropActionListener extends DropTargetAdapter {
 
 			Action action = null;
 			IState state = null;
-			GraphContent graphContent = (GraphContent) target.getControl();
+			graphContent = (GraphContent) target.getControl();
 			Composite comp = new Composite(graphContent, SWT.ALL);
 			comp.setLayoutData(new GridData(GridData.FILL, GridData.FILL, false, false));
 			comp.setLayout(new FillLayout());
@@ -89,10 +90,11 @@ public class MyDropActionListener extends DropTargetAdapter {
 								}
 							}
 
-							Node canvas = new Node(comp, SWT.NO_REDRAW_RESIZE | SWT.DOUBLE_BUFFERED, action);
+							canvas = new Node(comp, SWT.NO_REDRAW_RESIZE | SWT.DOUBLE_BUFFERED, action);
 							canvas.draw();
 							canvas.pack();
 							graphContent.getActionInPlan().add(canvas);
+							setNodeID();
 							break;
 						}
 
@@ -105,4 +107,14 @@ public class MyDropActionListener extends DropTargetAdapter {
 		}
 	}
 
+	public String setNodeID() {
+	//impostare id diversi per ogni nodo
+		for(int i=0;i<graphContent.getActionInPlan().size();i++) {
+			if() {
+				
+			}
+		}
+		
+	}
+	
 }

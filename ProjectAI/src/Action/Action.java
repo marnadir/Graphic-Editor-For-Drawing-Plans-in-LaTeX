@@ -68,7 +68,6 @@ public class Action {
 	}
 	
 	public String getLatexCode() {
-		 System.out.println(latexCode);
 		return latexCode;
 	}
 	

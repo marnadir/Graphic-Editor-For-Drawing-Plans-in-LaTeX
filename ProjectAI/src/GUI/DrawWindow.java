@@ -33,6 +33,7 @@ import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 
 import Action.Action;
+import Action.Node;
 import DNDAaction.MyDropActionListener;
 import DataTrasfer.MyTransfer;
 import GraphPart.GraphContent;
@@ -54,8 +55,10 @@ public class DrawWindow  {
 	private Group console;
 	private CreateDomainView createDomainView;
 	private GraphContent contentAction;
-	private ArrayList<Action> updateActionList;
-
+	private ArrayList<Action> updateActionListDomain;
+	private ArrayList<Node> updateNodeList;
+	private ArrayList<LinkCanvas> updateLinkList;
+	private ArrayList<OrderCondition> updateOrder;
 
 
 	
@@ -188,9 +191,11 @@ public class DrawWindow  {
         Listener listenerLink=new Listener() {
 			Composite compButton;
 			private Composite compPoint;
+			
 			private LinkCanvas link;
 			private OrderCondition orderCond;
 			Label l1 = null;
+			
 			Label l2 = null;
 			String c1="....";
 			String c2="....";
@@ -212,6 +217,7 @@ public class DrawWindow  {
 								if(link != null) {
 									if(!l1.getText().contains("Select the point") && !l2.getText().contains("Select the point")) {
 										link.drawLine();
+										contentAction.getLink().add(link);
 										l1.setText("First Cond. :" +"Select the point");
 										l2.setText("Second Cond. :" +"Select the point");
 										link.removelistener(l1, l2);
@@ -220,6 +226,7 @@ public class DrawWindow  {
 								}else if(orderCond !=null){
 									if(!l2.getText().contains("null")) {
 										orderCond.drawOrder();
+										contentAction.getOrds().add(orderCond);
 										orderCond.pack();
 										c1 = "null";
 										c2 = "null";
@@ -401,11 +408,14 @@ public class DrawWindow  {
 	    
 	    textDomain.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 	    textDomain.pack();
+	    
+	    
+	    /*domain*/
 	    updateTextDomain.addListener(SWT.Selection, new Listener() {
 			
 			@Override
 			public void handleEvent(Event event) {
-				textDomain.setText(".....");
+				textDomain.setText("");
 				if(createDomainView.getInitialState() != null) {
 					createDomainView.getInitialState().generateLatexCode();
 					textDomain.insert(createDomainView.getInitialState().getLatexCode());
@@ -416,10 +426,10 @@ public class DrawWindow  {
 				}
 			
 				
-				updateActionList=createDomainView.getListAction();
-				for(int i=0;i<updateActionList.size();i++) {
-					updateActionList.get(i).generateLatexCode();
-					textDomain.insert(updateActionList.get(i).getLatexCode());
+				updateActionListDomain=createDomainView.getListAction();
+				for(int i=0;i<updateActionListDomain.size();i++) {
+					updateActionListDomain.get(i).generateLatexCode();
+					textDomain.insert(updateActionListDomain.get(i).getLatexCode());
 				}
 			
 				
@@ -439,6 +449,7 @@ public class DrawWindow  {
 			}
 		});
 	    
+	    
 	    toolBarDomain.pack();
 	    
 		Group consolePlan=new Group(console, SWT.ALL);
@@ -453,9 +464,6 @@ public class DrawWindow  {
 		updateTextPlan.setText("update");
 	    icon = new Image(shell.getDisplay(), "img/refresh.png");
 	    updateTextPlan.setImage(icon);
-	    
-	    
-	    
 	    ToolItem clearTextPlan = new ToolItem(toolBarPlan, SWT.PUSH);
 	    clearTextPlan.setText("clear");
 	    icon = new Image(shell.getDisplay(), "img/clear.ico");
@@ -467,12 +475,42 @@ public class DrawWindow  {
 	    textPlan.pack();
 		
 	    toolBarPlan.pack();
+	    /*Plan*/
+	    updateTextPlan.addListener(SWT.Selection, new Listener() {
+			
+				@Override
+				public void handleEvent(Event event) {
+					textPlan.setText("");
+									
+					updateNodeList=contentAction.getActionInPlan();
+					for(int i=0;i<updateNodeList.size();i++) {
+						updateNodeList.get(i).generateLatexCode();
+						textPlan.insert(updateNodeList.get(i).getLatexCode());
+					}
+				
+					updateLinkList=contentAction.getLink();
+					for(int i=0;i<updateLinkList.size();i++) {
+						updateLinkList.get(i).generateLatexCode();
+						textPlan.insert(updateLinkList.get(i).getLatexCode());
+					}
+					
+					updateOrder=contentAction.getOrds();
+					for(int i=0;i<updateOrder.size();i++) {
+						updateOrder.get(i).generateLatexCode();
+						textPlan.insert(updateOrder.get(i).getLatexCode());
+					}
+					
+				}
+			});
+	    
+	    
+	 
 
-		updateActionList=createDomainView.getListAction();
+		updateActionListDomain=createDomainView.getListAction();
 
 		DropTarget target = new DropTarget(contentAction, DND.DROP_MOVE | DND.DROP_COPY);
 	    target.setTransfer(new Transfer[] { MyTransfer.getInstance() });
-		target.addDropListener(new MyDropActionListener(PlanView, target,updateActionList));
+		target.addDropListener(new MyDropActionListener(PlanView, target,updateActionListDomain));
 		
 		Display.getDefault().timerExec(100, new Runnable() {
 	    @Override

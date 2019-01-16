@@ -11,6 +11,9 @@ import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 
+import LaTex.LaTexGeneratorAction;
+import LaTex.LaTexGeneratorNode;
+
 
 public class LinkCanvas  {
 
@@ -25,6 +28,9 @@ public class LinkCanvas  {
 	
 	GraphContent canvasContainer;
 	Color black;
+	
+	String latexCode;
+
 	
 	public LinkCanvas(GraphContent parent) {
 		this.canvasContainer=parent;
@@ -158,6 +164,16 @@ public class LinkCanvas  {
 		return oval2;
 	}
 	
-
+	public void generateLatexCode() {
+		LaTexGeneratorNode generator=new LaTexGeneratorNode();
+		latexCode=generator.getLatexLinkCodePlan(this);
+	
+		
+	}
+	
+	public String getLatexCode() {
+		return latexCode;
+	}
+	
 	
 }

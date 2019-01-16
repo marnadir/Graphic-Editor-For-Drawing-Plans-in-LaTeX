@@ -5,18 +5,23 @@ package GraphPart;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
+import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.Path;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 
 import Action.Node;
+import LaTex.LaTexGeneratorAction;
+import LaTex.LaTexGeneratorNode;
 
 public class OrderCondition extends Canvas{
  
@@ -26,6 +31,8 @@ public class OrderCondition extends Canvas{
 	Composite c1;
 	Composite c2;
 	Composite parent;
+	String latexCode;
+
 	
 	public OrderCondition(Composite parent) {
 		super(parent, SWT.ALL);
@@ -98,65 +105,71 @@ public class OrderCondition extends Canvas{
 	
 	public void drawOrder() {
 		this.addPaintListener(new PaintListener() {
-			
-			
+
 			@Override
 			public void paintControl(PaintEvent e) {
 				// TODO Auto-generated method stub
 				e.gc.setLineWidth(1);
-				
-				Point p=new Point(cond1.getBounds().x+cond1.getBounds().width,cond1.getBounds().y-20);
-				Point p1=c1.getParent().toControl(c1.toDisplay(p.x, p.y));
-				
-				p=new Point(cond2.getBounds().x,cond2.getBounds().y-20);
-				Point p2=c2.getParent().toControl(c2.toDisplay(p.x, p.y));
 
-				
-				parent.setSize(p2.x-p1.x,40);
-				
-				parent.setLocation(p1.x,p1.y-30);
-				//parent.setBackground(parent.getDisplay().getSystemColor(SWT.COLOR_DARK_BLUE));
-				parent.layout();
-	            Path path=new Path(canvasContainer.getDisplay());
+				Point p = new Point(cond1.getBounds().x + cond1.getBounds().width, cond1.getBounds().y - 20);
+				Point p1 = c1.getParent().toControl(c1.toDisplay(p.x, p.y));
 
+				p = new Point(cond2.getBounds().x, cond2.getBounds().y - 20);
+				Point p2 = c2.getParent().toControl(c2.toDisplay(p.x, p.y));
 
-			    
-			    path.moveTo((float)(p1.x), (float)(p1.y));
-//			    if(p1.y>p2.y) {
-//			    	path.quadTo(p1.y, p2.x, p2.x, p2.y);
-//			    }
-//			    else {
-//				    path.quadTo(p2.x, p1.y, p2.x, p2.y);
+//				Path path = new Path(canvasContainer.getDisplay());
+//				path.moveTo((float) (p1.x), (float) (p1.y));
+//				if (p1.y > p2.y) {
+//					path.quadTo(p1.y, p2.x, p2.x, p2.y);
+//				} else {
+//					path.quadTo(p2.x, p1.y, p2.x, p2.y);
 //
-//			    }
+//				}
+//				path.quadTo(p2.x, p1.y, p2.x, p2.y);
+//				e.gc.drawPath(path);
+
+				//parent.setSize(p2.x - p1.x, 40);
+				parent.setLocation(p1.x, p1.y - 30);
+				
+				Image img = new Image(parent.getDisplay(), "img/ord.png");
+//				img.setBackground(canvasContainer.getDisplay().getSystemColor(SWT.COLOR_DARK_GRAY));
+				//e.gc.drawImage(img, 0, 0);
+				e.gc.drawImage(img, 0, 0, img.getImageData().width, img.getImageData().height, 0, 0, p2.x- p1.x, 40);
+				
+			
+			    img.dispose();
+
+				
+				//parent.layout();
+			    //parent.pack();
 				
 			    
-			    path.quadTo(p2.x, p1.y, p2.x, p2.y);
-
-				//e.gc.drawPath(path);
-
-				Image img=new Image(canvasContainer.getDisplay(), "img/ord.png");
-				img.setBackground(canvasContainer.getDisplay().getSystemColor(SWT.COLOR_DARK_GRAY));
-				
-				
-				//e.gc.drawString("ciao", 5, 5);
-				e.gc.drawImage(img, 0, 0);
-				
-				//e.gc.drawImage(img, p1.x, p1.y-20, 60, 40, p2.x, p2.y, 60, 40);
-				
-//				Composite comp = new Composite(canvasContainer, SWT.ALL);
-//				comp.setLayoutData(new GridData(GridData.FILL, GridData.FILL, false, false));
-//				comp.setLayout(new FillLayout());
-//				comp.setBackground(canvasContainer.getDisplay().getSystemColor(SWT.COLOR_BLUE));
-//				comp.setBounds(p1.x, p1.y-20, p2.x-p1.x, 20);
-				parent.pack();
-				
+			    
 			}
 		});
+	
 		
+		
+
+	}
+
+	public Node getCond1() {
+		return cond1;
+	}
+
+	public Node getCond2() {
+		return cond2;
 	}
 	
+	public void generateLatexCode() {
+		LaTexGeneratorNode generator=new LaTexGeneratorNode();
+		latexCode=generator.getLatexOrderCodePlan(this);
 	
-	
+		
+	}
+
+	public String getLatexCode() {
+		return latexCode;
+	}
 	
 }

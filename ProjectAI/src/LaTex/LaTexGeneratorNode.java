@@ -5,7 +5,9 @@ import java.text.DecimalFormat;
 
 import Action.Action;
 import Action.ICanvasAction;
+import Action.Node;
 import GraphPart.LinkCanvas;
+import GraphPart.OrderCondition;
 import GraphPart.Oval;
 import State.GoalState;
 import State.IState;
@@ -21,11 +23,11 @@ public class LaTexGeneratorNode {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public String getLatexActionCodePlan(Action action,ICanvasAction node) {
+	public String getLatexActionCodePlan(Action action,Node node) {
 		StringBuilder sb = new StringBuilder();
 		sb.append("/action");
-		sb.append("{"+action.getName()+"}");//numerare le azioni
-		sb.append("{"+action.getName()+"=");
+		sb.append("{"+getIDAction(node)+"}");//numerare le azioni
+		sb.append("{"+getNameAction(action.getName())+"=");
 		sb.append(getVariable(action.getName())+",");
 		sb.append("body="+"{at={"+getPosition(node)+"}}}");
 		
@@ -39,6 +41,15 @@ public class LaTexGeneratorNode {
 		sb.append("{"+link.getOval1().getCond()+"/"+isPreOrEff(link.getOval1())+"}");
 		sb.append("{"+link.getOval2().getCond()+"}");
 		sb.append("{edge"+getBend(link)+"}");
+		return sb.toString();
+	}
+	
+	
+	public String getLatexOrderCodePlan(OrderCondition order) {
+		StringBuilder sb = new StringBuilder();
+		sb.append("/ordering");
+		sb.append("{[yshift=.65cm,xshift=.2cm]"+order.getCond1().getID()+".east}");
+		sb.append("{[yshift=.65cm,xshift=.2cm]"+order.getCond2().getID()+".west}");
 		return sb.toString();
 	}
 	
@@ -98,6 +109,22 @@ public class LaTexGeneratorNode {
 		return sb.toString();
 
 
+	}
+	
+	public String getNameAction(String string) {
+		String name[]=string.split("\\(");	
+		StringBuilder sb=new StringBuilder();
+		sb.append(name[0]);
+		return sb.toString();
+	}
+	
+	public String getIDAction(Node node) {
+		node.getAction().getName();
+		String name[]=node.getAction().getName().split("\\(");	
+		StringBuilder sb=new StringBuilder();
+		sb.append(name[0]);
+		
+		return sb.toString();
 	}
 	
 	

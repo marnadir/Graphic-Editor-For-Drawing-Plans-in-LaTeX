@@ -233,8 +233,6 @@ public class CreateActionDialog extends IDialog {
 						}
 	
 						actions.add(action);
-						action.generateLatexCode();
-						action.getLatexCode();
 						
 						dialog.setVisible(false);
 				

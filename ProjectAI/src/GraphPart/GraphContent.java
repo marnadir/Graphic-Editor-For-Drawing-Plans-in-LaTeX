@@ -16,12 +16,18 @@ public class GraphContent extends Canvas {
 	private Composite parent;
 	private OvalCounter ovalCounter;
 	private ArrayList<Node> actionInPlan;
+	private ArrayList<LinkCanvas> link;
+	private ArrayList<OrderCondition> ords;
 	
 	public GraphContent(Composite parent, int style) {
 		super(parent, style);
 		this.parent=parent;
 		this.ovalCounter=new OvalCounter();
 		actionInPlan=new ArrayList<>();
+		link=new ArrayList<>();
+		ords=new ArrayList<>();
+
+		
 		// TODO Auto-generated constructor stub
 	}
 
@@ -33,8 +39,12 @@ public class GraphContent extends Canvas {
 		return actionInPlan;
 	}
 
-	public void setListAction(ArrayList<Node> listAction) {
-		this.actionInPlan = listAction;
+	public ArrayList<LinkCanvas> getLink() {
+		return link;
+	}
+
+	public ArrayList<OrderCondition> getOrds() {
+		return ords;
 	}
 
 	public void addlistener(Composite compi) {

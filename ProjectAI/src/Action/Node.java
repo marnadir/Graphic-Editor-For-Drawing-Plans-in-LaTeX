@@ -5,11 +5,14 @@ import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Composite;
 
+import LaTex.LaTexGeneratorNode;
 import logic.MenuContentAction;
 
 public class Node extends ICanvasAction {
 	
 	public  String ID;
+	String latexCode;
+
 
 	public Node(Composite parent, int style, Action a) {
 		super(parent, style, a);
@@ -103,7 +106,13 @@ public class Node extends ICanvasAction {
 		ID = iD;
 	}
 
+	public void generateLatexCode() {
+		LaTexGeneratorNode generator=new LaTexGeneratorNode();
+		latexCode=generator.getLatexActionCodePlan(action, this);
+		
+	}
 	
-	
-	
+	public String getLatexCode() {
+		return latexCode;
+	}
 }
