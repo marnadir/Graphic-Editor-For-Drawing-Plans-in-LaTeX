@@ -1,4 +1,4 @@
-package State;
+package Menu;
 
 import java.text.DecimalFormat;
 
@@ -15,9 +15,11 @@ import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Text;
 
+import Dialog.IDialog;
 import GraphPart.GraphContent;
+import State.ChangeCondCommand;
+import State.IStateCanvas;
 import command.ChangePrecCommand;
-import logic.IDialog;
 
 public class MenuContentState implements MenuDetectListener {
 
@@ -43,7 +45,7 @@ public class MenuContentState implements MenuDetectListener {
 			}
 		});
 
-		if (!(canvas.parent.getParent() instanceof GraphContent)) {
+		if (!(canvas.getParent().getParent() instanceof GraphContent)) {
 
 			MenuItem showC = new MenuItem(m, SWT.ALL);
 			showC.setText("Show/Hide Cond...");

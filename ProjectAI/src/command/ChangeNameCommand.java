@@ -11,7 +11,7 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.TreeItem;
 
 import Action.Action;
-import logic.IDialog;
+import Dialog.IDialog;
 
 public class ChangeNameCommand implements ICommand {
 

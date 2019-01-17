@@ -38,7 +38,6 @@ public class MyDropActionListener extends DropTargetAdapter {
 	}
 
 	public void dragEnter(DropTargetEvent event) {
-		System.out.println("ciao");
 		if (event.detail == DND.DROP_DEFAULT) {
 			event.detail = DND.DROP_COPY;
 		}

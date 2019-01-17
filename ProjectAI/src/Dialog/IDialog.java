@@ -1,4 +1,4 @@
-package logic;
+package Dialog;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FormAttachment;

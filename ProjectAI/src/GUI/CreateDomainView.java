@@ -35,7 +35,6 @@ import command.CreateActionDialogCommand;
 import command.CreateGoalDialogCommand;
 import command.CreateSoDialogCommand;
 import command.EliminateActionCommand;
-import logic.ContentAction;
 
 public class CreateDomainView {
 
@@ -52,7 +51,7 @@ public class CreateDomainView {
 	Composite part2;
 	Composite contentGoalState;
 	Composite containerGoalState;
-	ContentAction compositeAction;
+	Composite compositeAction;
 	Composite containerAction;
 	Tree treeAction;
 	Group subOption;
@@ -210,7 +209,7 @@ public class CreateDomainView {
 		composite.setAlwaysShowScrollBars(true);
 		composite.setMinSize(treeAction.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 
-		compositeAction = new ContentAction(part2, SWT.BORDER);
+		compositeAction = new Composite(part2, SWT.BORDER);
 		gridData = new GridData(GridData.FILL, GridData.FILL, false, false);
 		gridData.horizontalSpan = 2;
 		compositeAction.setLayoutData(gridData);

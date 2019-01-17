@@ -1,4 +1,4 @@
-package logic;
+package Menu;
 
 
 import org.eclipse.swt.SWT;
@@ -16,6 +16,7 @@ import org.eclipse.swt.widgets.Text;
 
 import Action.ICanvasAction;
 import Action.Node;
+import Dialog.IDialog;
 import GraphPart.GraphContent;
 
 public class MenuContentAction implements MenuDetectListener {

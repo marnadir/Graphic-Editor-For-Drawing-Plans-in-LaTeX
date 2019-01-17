@@ -17,6 +17,7 @@ import DataTrasfer.MyTransfer;
 import GraphPart.GraphContent;
 import GraphPart.Oval;
 import LaTex.LaTexGeneratorState;
+import Menu.MenuContentState;
 
 public abstract class IStateCanvas extends Canvas {
 
@@ -172,7 +173,7 @@ public abstract class IStateCanvas extends Canvas {
 
 
 	public void addOval(IState state,String cond,int x, int y) {
-		Oval oval=new Oval(this,state,cond);
+		Oval oval=new Oval(this,cond);
 		oval.setLocation(x, y);
 		oval.drawOval();
 		if(parent.getParent() instanceof GraphContent) {

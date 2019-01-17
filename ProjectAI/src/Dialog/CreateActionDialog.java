@@ -1,4 +1,4 @@
-package GUI;
+package Dialog;
 
 import java.util.ArrayList;
 
@@ -22,7 +22,6 @@ import org.eclipse.swt.widgets.TreeItem;
 import Action.Action;
 import State.GoalStateCanvas;
 import State.InitialStateCanvas;
-import logic.IDialog;
 
 public class CreateActionDialog extends IDialog {
 

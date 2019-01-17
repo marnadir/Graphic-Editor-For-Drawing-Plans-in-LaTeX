@@ -12,7 +12,7 @@ import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Composite;
 import DNDAaction.MyDragActionListener;
 import DataTrasfer.MyTransfer;
-import logic.MenuContentAction;
+import Menu.MenuContentAction;
 
 public class CanvasAction  extends ICanvasAction{
 

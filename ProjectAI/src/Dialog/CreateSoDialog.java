@@ -1,4 +1,4 @@
-package GUI;
+package Dialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +14,6 @@ import LaTex.LaTexGeneratorAction;
 import State.IState;
 import State.InitialState;
 import State.InitialStateCanvas;
-import logic.IDialogNewState;
 
 public class CreateSoDialog extends IDialogNewState{
 	

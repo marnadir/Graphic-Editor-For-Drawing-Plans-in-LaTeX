@@ -1,4 +1,4 @@
-package GUI;
+package Dialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +13,6 @@ import org.eclipse.swt.widgets.Shell;
 import State.GoalState;
 import State.GoalStateCanvas;
 import State.IState;
-import logic.IDialogNewState;
 
 public class CreateGoalDialog extends IDialogNewState{
 	

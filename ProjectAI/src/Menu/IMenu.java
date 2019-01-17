@@ -1,4 +1,4 @@
-package logic;
+package Menu;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Control;

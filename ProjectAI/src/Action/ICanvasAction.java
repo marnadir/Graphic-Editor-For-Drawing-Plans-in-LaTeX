@@ -37,7 +37,7 @@ public abstract class ICanvasAction extends Canvas {
 	}
 
 	public void addOval(Action action, String cond, int x, int y) {
-		Oval oval = new Oval(this, action, cond);
+		Oval oval = new Oval(this, cond);
 		oval.setLocation(x, y);
 		oval.drawOval();
 		if (parent.getParent() instanceof GraphContent) {

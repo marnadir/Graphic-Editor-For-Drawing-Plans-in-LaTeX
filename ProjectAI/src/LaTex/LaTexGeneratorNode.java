@@ -38,6 +38,14 @@ public class LaTexGeneratorNode {
 	public String getLatexLinkCodePlan(LinkCanvas link) {
 		StringBuilder sb = new StringBuilder();
 		sb.append("/link");
+		
+		Oval o1=link.getOval1();
+		Oval o2=link.getOval2();
+
+		Node n1=link.getOval1().getNode();
+		Node n2=link.getOval2().getNode();
+		
+		
 		sb.append("{"+link.getOval1().getNode().getID()+"/"+isPreOrEff(link.getOval1())+"}");
 		sb.append("{"+link.getOval2().getNode().getID()+"/"+isPreOrEff(link.getOval2())+"}");
 		sb.append("{edge"+getBend(link)+"}"+"\n"+"\n");
@@ -81,8 +89,8 @@ public class LaTexGeneratorNode {
 			
 			
 		/*if it is a start/goal state*/
-		}else if(o.getState()!= null) {
-			IState state=o.getState();
+		}else if(o.getStateCanvas()!= null) {
+			IState state=o.getStateCanvas().getState();
 			if(state instanceof InitialState) {
 				for(int i=0;i<state.getConds().size();i++) {
 					if(state.getConds().get(i).equals(cond)) {
@@ -123,7 +131,7 @@ public class LaTexGeneratorNode {
 	
 	public String getBend(LinkCanvas link) {
 		StringBuilder sb=new StringBuilder();		
-		sb.append("[bend");
+		sb.append("[bend ");
 		
 		//ask if is left o right
 		if(link.getOval1().getP().y>link.getOval2().getP().y) {

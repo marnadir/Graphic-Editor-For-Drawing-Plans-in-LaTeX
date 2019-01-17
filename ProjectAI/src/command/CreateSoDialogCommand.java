@@ -4,7 +4,8 @@ package command;
 
 
 import org.eclipse.swt.widgets.Composite;
-import GUI.CreateSoDialog;
+
+import Dialog.CreateSoDialog;
 
 public class CreateSoDialogCommand implements ICommand {
 

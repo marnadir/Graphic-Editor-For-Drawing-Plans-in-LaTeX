@@ -13,9 +13,9 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.TreeItem;
 
 import Action.Action;
+import Dialog.IDialog;
+import Dialog.IDialogNewState;
 import command.ICommand;
-import logic.IDialog;
-import logic.IDialogNewState;
 
 public class ChangeCondCommand implements ICommand {
 

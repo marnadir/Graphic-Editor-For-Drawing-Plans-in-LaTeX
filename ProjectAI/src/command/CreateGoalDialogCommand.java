@@ -1,7 +1,8 @@
 package command;
 
 import org.eclipse.swt.widgets.Composite;
-import GUI.CreateGoalDialog;
+
+import Dialog.CreateGoalDialog;
 
 public class CreateGoalDialogCommand implements ICommand {
 

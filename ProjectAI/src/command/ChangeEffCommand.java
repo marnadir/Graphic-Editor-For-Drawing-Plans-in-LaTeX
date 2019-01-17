@@ -9,7 +9,7 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.TreeItem;
 
 import Action.Action;
-import logic.IDialogNewState;
+import Dialog.IDialogNewState;
 
 public class ChangeEffCommand  implements ICommand{
 

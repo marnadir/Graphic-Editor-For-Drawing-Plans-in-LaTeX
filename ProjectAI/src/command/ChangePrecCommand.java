@@ -11,8 +11,8 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.TreeItem;
 
 import Action.Action;
-import logic.IDialog;
-import logic.IDialogNewState;
+import Dialog.IDialog;
+import Dialog.IDialogNewState;
 
 public class ChangePrecCommand implements ICommand {
 

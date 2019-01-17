@@ -11,38 +11,39 @@ import org.eclipse.swt.widgets.Composite;
 import Action.Action;
 import Action.Node;
 import State.IState;
+import State.IStateCanvas;
 
 
 public class Oval {
 
 	Point p;
-	Composite canvasContainer;
 	Color red;
 	Color black;
 	String cond;
-	Action action;
-	IState state;
+	Node node;
+	IStateCanvas state;
 	boolean select = false;
+	Composite container;
 
-	public Oval(Composite parent,Object a,String cond) {
-		this.canvasContainer = parent;
-		red = parent.getDisplay().getSystemColor(SWT.COLOR_RED);
-		black = parent.getDisplay().getSystemColor(SWT.COLOR_BLACK);
+	public Oval(Composite container,String cond) {
+		this.container=container;
+		red = container.getDisplay().getSystemColor(SWT.COLOR_RED);
+		black = container.getDisplay().getSystemColor(SWT.COLOR_BLACK);
 		this.cond=cond;
-		if(a instanceof Action ) {
-			this.action=(Action)a;
+		if(container instanceof Node ) {
+			this.node=(Node)container;
 		}else {
-			this.state=(IState)a;
+			this.state=(IStateCanvas)container;
 		}
 	}
 
 	public void drawOval() {
-		canvasContainer.addPaintListener(getListener());
+		container.addPaintListener(getListener());
 		//canvasContainer.removePaintListener(getListener());
 	}
 
 	public void fillOval() {
-		canvasContainer.addPaintListener(getListenerFill());
+		container.addPaintListener(getListenerFill());
 
 	}
 	
@@ -103,26 +104,15 @@ public class Oval {
 	}
 
 	public Node getNode() {
-		if(action !=null) {
-			Node node=(Node)canvasContainer;
-			return node;
-		}
-		return null;
+		return node;
 	}
 
 
 
-	public IState getState() {
+	public IStateCanvas getStateCanvas() {
 		return state;
 	}
 
-	public void setState(IState state) {
-		this.state = state;
-	}
-
-
-	
-	
 }
 
 

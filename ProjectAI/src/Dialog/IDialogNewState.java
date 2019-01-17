@@ -1,4 +1,4 @@
-package logic;
+package Dialog;
 
 import java.util.ArrayList;
 

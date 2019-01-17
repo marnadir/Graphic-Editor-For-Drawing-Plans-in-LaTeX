@@ -6,7 +6,7 @@ import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Composite;
 
 import LaTex.LaTexGeneratorNode;
-import logic.MenuContentAction;
+import Menu.MenuContentAction;
 
 public class Node extends ICanvasAction {
 	

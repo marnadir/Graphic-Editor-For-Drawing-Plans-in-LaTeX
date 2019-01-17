@@ -70,16 +70,7 @@ public class LinkCanvas  {
 				// TODO Auto-generated method stub
 				e.gc.setLineWidth(1);
 				e.gc.setForeground(black);
-				
-			    FontData data = canvasContainer.getDisplay().getSystemFont().getFontData()[0];
-			    Font font = new Font(canvasContainer.getDisplay(), data.getName(), 96, SWT.BOLD | SWT.ITALIC);
-
-				
 				Path path=new Path(canvasContainer.getDisplay());
-
-			
-			    
-			    
 			    path.moveTo((float)(p1.x), (float)(p1.y));
 			    if(p1.y>p2.y) {
 			    	path.quadTo(p1.y, p2.x, p2.x, p2.y);

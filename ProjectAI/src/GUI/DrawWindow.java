@@ -38,12 +38,12 @@ import Action.Action;
 import Action.Node;
 import DNDAaction.MyDropActionListener;
 import DataTrasfer.MyTransfer;
+import Dialog.IDialog;
 import GraphPart.GraphContent;
 import GraphPart.LinkCanvas;
 import GraphPart.OrderCondition;
+import Menu.IMenu;
 import command.ExitCommand;
-import logic.IDialog;
-import logic.IMenu;
 
 public class DrawWindow {
 
@@ -210,7 +210,10 @@ public class DrawWindow {
 										contentAction.getLink().add(link);
 										l1.setText("First Cond. :" + "Select the point");
 										l2.setText("Second Cond. :" + "Select the point");
-										link.removelistener(l1, l2);
+										l1.pack();
+										l2.pack();
+										link.removeL();
+										//link.removelistener(l1, l2,archBtn);
 
 									}
 								} else if (orderCond != null) {
@@ -222,7 +225,9 @@ public class DrawWindow {
 										c2 = "null";
 										l1.setText("ordering of actions");
 										l2.setText(c1 + "<" + c2);
-										orderCond.removelistener(l2);
+										l1.pack();
+										l2.pack();
+										//orderCond.removelistener(l2);
 
 									}
 								}
@@ -270,7 +275,7 @@ public class DrawWindow {
 								compPoint.setVisible(true);
 
 								link = new LinkCanvas(contentAction);
-								link.addlistener(l1, l2);
+								link.addlistener(l1, l2,archBtn);
 
 							}
 						});
@@ -281,7 +286,6 @@ public class DrawWindow {
 							public void handleEvent(Event event) {
 
 								link = null;
-
 								c1 = "null";
 								c2 = "null";
 								l1.setText("ordering of actions");
@@ -301,7 +305,7 @@ public class DrawWindow {
 								// comp.setBackground(comp.getDisplay().getSystemColor(SWT.COLOR_RED));
 
 								orderCond = new OrderCondition(comp);
-								orderCond.addlistener(l2);
+								orderCond.addlistener(l1,l2);
 
 							}
 						});
