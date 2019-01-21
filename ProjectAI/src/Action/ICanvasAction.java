@@ -42,7 +42,7 @@ public abstract class ICanvasAction extends Canvas {
 		oval.drawOval();
 		if (parent.getParent() instanceof GraphContent) {
 			GraphContent graphContent = (GraphContent) parent.getParent();
-			graphContent.getOvalCounter().add(oval);
+			graphContent.getOvalCounter().addA(oval);
 		}
 	}
 

@@ -1,16 +1,13 @@
 package Dialog;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 
-import LaTex.LaTexGeneratorAction;
 import State.IState;
 import State.InitialState;
 import State.InitialStateCanvas;

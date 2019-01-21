@@ -29,10 +29,11 @@ public class InitialStateCanvas extends IStateCanvas{
 				int avergWidth = (int) e.gc.getFontMetrics().getAverageCharacterWidth();
 				lengthCond=getLenght(state.getConds())*avergWidth+6;
 
-				int numCond = state.getConds().size();
+				
 				int startX = 0;
 				int startY =0;
-				
+//				
+				int numCond = state.getConds().size();
 				lenIn=numCond*30;
 				
 				e.gc.setLineWidth(6);

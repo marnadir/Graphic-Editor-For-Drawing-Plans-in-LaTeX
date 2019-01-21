@@ -155,7 +155,7 @@ public class CreateDomainView {
 		containerInitState=new Composite(contentInitState, SWT.ALL);
 		containerInitState.setLayoutData(new GridData(GridData.FILL, GridData.FILL, false, false));
 		containerInitState.setLayout(new FillLayout());
-		containerInitState.setLocation(50,80);
+		containerInitState.setLocation(30,80);
 
 
 		contentGoalState = new Composite(part1, SWT.BORDER);

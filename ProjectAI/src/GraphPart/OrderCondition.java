@@ -93,7 +93,7 @@ public class OrderCondition extends Canvas{
 								if(canvasContainer.getActionInPlan().get(i)!=nod1) {
 									c2 = comp;
 									nod2 = canvasContainer.getActionInPlan().get(i);
-									l2.setText(nod1.getAction().getName() + "<" + nod1.getAction().getName());
+									l2.setText(nod1.getAction().getName() + "<" + nod2.getAction().getName());
 									l2.pack();
 								}
 							

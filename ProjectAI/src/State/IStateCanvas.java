@@ -178,7 +178,7 @@ public abstract class IStateCanvas extends Canvas {
 		oval.drawOval();
 		if(parent.getParent() instanceof GraphContent) {
 			GraphContent graphContent=(GraphContent) parent.getParent();
-			graphContent.getOvalCounter().add(oval);
+			graphContent.getOvalCounter().addSt(oval);
 		}
 	}
 	

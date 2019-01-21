@@ -2,6 +2,7 @@ package LaTex;
 
 import java.text.DecimalFormat;
 
+import org.eclipse.swt.widgets.Link;
 
 import Action.Action;
 import Action.ICanvasAction;
@@ -10,8 +11,11 @@ import GraphPart.LinkCanvas;
 import GraphPart.OrderCondition;
 import GraphPart.Oval;
 import State.GoalState;
+import State.GoalStateCanvas;
 import State.IState;
+import State.IStateCanvas;
 import State.InitialState;
+import State.InitialStateCanvas;
 
 public class LaTexGeneratorNode {
 
@@ -46,8 +50,8 @@ public class LaTexGeneratorNode {
 		Node n2=link.getOval2().getNode();
 		
 		
-		sb.append("{"+link.getOval1().getNode().getID()+"/"+isPreOrEff(link.getOval1())+"}");
-		sb.append("{"+link.getOval2().getNode().getID()+"/"+isPreOrEff(link.getOval2())+"}");
+		sb.append("{"+isStateorAction(link.getOval1())+"/"+isPreOrEff(link.getOval1())+"}");
+		sb.append("{"+isStateorAction(link.getOval2())+"/"+isPreOrEff(link.getOval2())+"}");
 		sb.append("{edge"+getBend(link)+"}"+"\n"+"\n");
 		return sb.toString();
 	}
@@ -61,6 +65,22 @@ public class LaTexGeneratorNode {
 		return sb.toString();
 	}
 	
+	
+	
+	public String isStateorAction(Oval o) {
+		StringBuilder sb = new StringBuilder();
+		if(o.getNode()!= null) {
+			sb.append(o.getNode().getID());
+		}else if(o.getStateCanvas()!=null) {
+			sb.append(o.getStateCanvas().getName());
+		}
+		
+		
+		return sb.toString();
+
+
+	}
+	
 	/*tell if it is a prec or eff and the number*/
 	public String isPreOrEff(Oval o){
 		
@@ -68,7 +88,7 @@ public class LaTexGeneratorNode {
 		String cond=o.getCond();
 
 		/*if is a action*/
-		if(o.getNode().getAction()!= null) {
+		if(o.getNode()!= null) {
 			Action a=o.getNode().getAction();
 			for(int i=0;i<a.getPrec().size();i++) {
 				if(a.getPrec().get(i).equals(cond)) {
@@ -90,10 +110,10 @@ public class LaTexGeneratorNode {
 			
 		/*if it is a start/goal state*/
 		}else if(o.getStateCanvas()!= null) {
-			IState state=o.getStateCanvas().getState();
-			if(state instanceof InitialState) {
-				for(int i=0;i<state.getConds().size();i++) {
-					if(state.getConds().get(i).equals(cond)) {
+			IStateCanvas stateCanv=o.getStateCanvas();
+			if(stateCanv instanceof InitialStateCanvas) {
+				for(int i=0;i<stateCanv.getState().getConds().size();i++) {
+					if(stateCanv.getState().getConds().get(i).equals(cond)) {
 						sb.append("eff/");
 						int num=i+1;
 						sb.append(num);
@@ -101,10 +121,10 @@ public class LaTexGeneratorNode {
 					}
 				}
 				return sb.toString();
-			}else if(state instanceof GoalState) {
+			}else if(stateCanv instanceof GoalStateCanvas) {
 				
-				for(int i=0;i<state.getConds().size();i++) {
-					if(state.getConds().get(i).equals(cond)) {
+				for(int i=0;i<stateCanv.getState().getConds().size();i++) {
+					if(stateCanv.getState().getConds().get(i).equals(cond)) {
 						sb.append("pre/");
 						int num=i+1;
 						sb.append(num);

@@ -8,9 +8,7 @@ import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Composite;
 
-import Action.Action;
 import Action.Node;
-import State.IState;
 import State.IStateCanvas;
 
 

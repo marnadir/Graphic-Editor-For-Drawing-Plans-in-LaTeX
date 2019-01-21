@@ -1,7 +1,6 @@
 package Menu;
 
-import java.text.DecimalFormat;
-
+ 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MenuDetectEvent;
 import org.eclipse.swt.events.MenuDetectListener;
@@ -19,7 +18,6 @@ import Dialog.IDialog;
 import GraphPart.GraphContent;
 import State.ChangeCondCommand;
 import State.IStateCanvas;
-import command.ChangePrecCommand;
 
 public class MenuContentState implements MenuDetectListener {
 
