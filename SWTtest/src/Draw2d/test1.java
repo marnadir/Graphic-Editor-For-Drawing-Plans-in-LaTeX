@@ -1,6 +1,9 @@
 package Draw2d;
 
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+
 import org.eclipse.draw2d.*;
 import org.eclipse.draw2d.geometry.*;
 import org.eclipse.swt.SWT;
@@ -40,44 +43,74 @@ public class test1
 
 	   // Create a root figure and simple layout to contain
 	   // all other figures
-	   Figure root = new Figure();
-	   root.setFont(parent.getFont());
-	   XYLayout layout = new XYLayout();
-	   root.setLayoutManager(layout);
+	   
+	   
+		Figure root = new Figure();
+		root.setFont(parent.getFont());
+		XYLayout layout = new XYLayout();
+		root.setLayoutManager(layout);
 
-	   // Create a canvas to display the root figure
-	   Canvas canvas = new Canvas(parent, SWT.DOUBLE_BUFFERED);
-	   canvas.setBackground(ColorConstants.white);
-	   LightweightSystem lws = new LightweightSystem(canvas);
-	   lws.setContents(root);
-	   
-	   IFigure andy = createPersonFigure("Andy");
-	   root.add(andy);
-	   layout.setConstraint(andy,
-	      new Rectangle(new Point(10, 10), andy.getPreferredSize()));
+		// Create a canvas to display the root figure
+		Canvas canvas = new Canvas(parent, SWT.DOUBLE_BUFFERED);
+		canvas.setBackground(ColorConstants.white);
+		LightweightSystem lws = new LightweightSystem(canvas);
+		lws.setContents(root);
 
-	   // Add the mother "Betty"
-	   IFigure betty = createPersonFigure("Betty");
-	   root.add(betty);
-	   layout.setConstraint(betty,
-	      new Rectangle(new Point(230, 10), betty.getPreferredSize()));
+		IFigure andy = createPersonFigure("Andy");
+		root.add(andy);
+		layout.setConstraint(andy, new Rectangle(new Point(10, 10), andy.getPreferredSize()));
+		andy.addPropertyChangeListener(new PropertyChangeListener() {
+			@Override
+			public void propertyChange(PropertyChangeEvent evt) {
+				System.out.println("ciao");
+			}
+		});
+		
+		
+		andy.addMouseListener(new MouseListener() {
+			
+			@Override
+			public void mouseReleased(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mousePressed(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseDoubleClicked(MouseEvent arg0) {
+				andy.setSize(20, 20);
+				
+			}
+		});
+	   
 
-	   // Add the son "Carl"
-	   IFigure carl = createPersonFigure("Carl");
-	   root.add(carl);
-	   layout.setConstraint(carl,
-	   new Rectangle(new Point(120, 120), carl.getPreferredSize()));
+//	   // Add the mother "Betty"
+//	   IFigure betty = createPersonFigure("Betty");
+//	   root.add(betty);
+//	   layout.setConstraint(betty,
+//	      new Rectangle(new Point(230, 10), betty.getPreferredSize()));
+//
+//	   // Add the son "Carl"
+//	   IFigure carl = createPersonFigure("Carl");
+//	   root.add(carl);
+//	   layout.setConstraint(carl,
+//	   new Rectangle(new Point(120, 120), carl.getPreferredSize()));
 	   
 	   
-	   IFigure marriage = createMarriageFigure();
-	   root.add(marriage,
-	      new Rectangle(new Point(145, 35),
-	      marriage.getPreferredSize()));
+//	   IFigure marriage = createMarriageFigure();
+//	   root.add(marriage,
+//	      new Rectangle(new Point(145, 35),
+//	      marriage.getPreferredSize()));
 	   
-	   
-	   root.add(connect(andy, marriage));
-	   root.add(connect(betty, marriage));
-	   root.add(connect(carl, marriage));
+//	   
+//	   root.add(connect(andy, marriage));
+//	   root.add(connect(betty, marriage));
+//	   root.add(connect(carl, marriage));
 
 	   return canvas;
 	}

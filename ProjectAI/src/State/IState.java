@@ -1,9 +1,14 @@
 package State;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class IState {
+public class IState  implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2082191482890474964L;
 	ArrayList<String> conds;
 	String name="state";
 

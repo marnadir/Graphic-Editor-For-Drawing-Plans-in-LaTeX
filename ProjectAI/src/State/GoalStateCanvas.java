@@ -8,7 +8,7 @@ import GraphPart.GraphContent;
 
 
 
-public class GoalStateCanvas extends IStateCanvas{
+public class GoalStateCanvas extends IStateCanvas {
 
 	
 

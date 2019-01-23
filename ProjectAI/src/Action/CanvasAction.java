@@ -114,7 +114,7 @@ public class CanvasAction  extends ICanvasAction{
 				}
 
 				resizeParent();
-		
+				e.gc.dispose();
 			}
 		};
 		

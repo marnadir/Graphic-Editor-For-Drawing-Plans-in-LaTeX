@@ -36,7 +36,7 @@ import command.CreateGoalDialogCommand;
 import command.CreateSoDialogCommand;
 import command.EliminateActionCommand;
 
-public class CreateDomainView {
+public class DomainView {
 
 	Group domainGroup;
 	Shell shell;
@@ -67,7 +67,7 @@ public class CreateDomainView {
 
 	InitialStateCanvas initialState = null;
 
-	public CreateDomainView(SashForm sashForm) {
+	public DomainView(SashForm sashForm) {
 		this.sashForm = sashForm;
 		this.shell = sashForm.getShell();
 		setLayout();
@@ -96,8 +96,6 @@ public class CreateDomainView {
 
 	public void createContent() {
 
-		// first group option
-
 		subOption = new Group(inside, SWT.ALL);
 		subOption.setText("Option");
 
@@ -105,10 +103,6 @@ public class CreateDomainView {
 
 		Label initialState = new Label(subOption, SWT.ALL);
 		initialState.setText("Initial State: ");
-
-	
-
-	
 
 		Button bInitState = new Button(subOption, SWT.PUSH);
 		Image img = new Image(shell.getDisplay(), "img/ok.png");
@@ -164,8 +158,6 @@ public class CreateDomainView {
 		containerGoalState.setLayout(new FillLayout());
 		containerGoalState.setLocation(70,80);
 
-		
-
 		part2 = new Composite(contentCanvas, SWT.ALL);
 		part2.setLayout(new GridLayout(3, true));
 
@@ -219,43 +211,37 @@ public class CreateDomainView {
 		firstScroll.setExpandVertical(true);
 		firstScroll.setMinSize(contentCanvas.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 
+		CreateSoDialogCommand so = new CreateSoDialogCommand();
+		CreateGoalDialogCommand goalCommand = new CreateGoalDialogCommand();
+		EliminateActionCommand elimAct = new EliminateActionCommand();
 
 		
-	
 		
 		showAction.addListener(SWT.Selection, new Listener() {
 
 			@Override
 			public void handleEvent(Event event) {
 
-				//TODO posso creare solo un azione,dovrei ripulire ad ogni nuovo comando
-				
 				TreeItem[] actions = treeAction.getSelection();
 
 				if (actions.length > 0) {
 					TreeItem actionItem = getRoot(actions[0]);
 					Action action = findAction(actionItem.getText());
-					if(containerAction!=null) {
+					if (containerAction != null) {
 						containerAction.dispose();
 					}
-					containerAction=new Composite(compositeAction, SWT.BORDER);
+					containerAction = new Composite(compositeAction, SWT.BORDER);
 					containerAction.setLayoutData(new GridData(GridData.FILL, GridData.FILL, false, false));
 					containerAction.setLayout(new FillLayout());
-					containerAction.setLocation(15,150);
-					
-					CanvasAction canvasAction=new CanvasAction(containerAction,SWT.DOUBLE_BUFFERED|SWT.NO_REDRAW_RESIZE,action);
-					//is necessary?
-					//action.setPaint(canvasAction);
-					
+					containerAction.setLocation(15, 150);
+
+					CanvasAction canvasAction = new CanvasAction(containerAction,
+							SWT.DOUBLE_BUFFERED | SWT.NO_REDRAW_RESIZE, action);
 					canvasAction.draw();
 					canvasAction.addDNDListener();
-					//is necessary? 
-					//compositeAction.setPaintAction(canvasAction);
-					
-					
-					
+
 				}
-					
+
 			}
 		});
 
@@ -323,7 +309,6 @@ public class CreateDomainView {
 			}
 		});
 
-		CreateSoDialogCommand so = new CreateSoDialogCommand();
 		Listener buttonInLister = new Listener() {
 
 			@Override
@@ -332,7 +317,6 @@ public class CreateDomainView {
 			}
 		};
 
-		CreateGoalDialogCommand goalCommand = new CreateGoalDialogCommand();
 		Listener buttonFinLister = new Listener() {
 
 			
@@ -343,7 +327,6 @@ public class CreateDomainView {
 			}
 		};
 
-		EliminateActionCommand elimAct = new EliminateActionCommand();
 
 		Listener buttonActLister = new Listener() {
 
@@ -358,11 +341,7 @@ public class CreateDomainView {
 		bInitState.addListener(SWT.Selection, buttonInLister);
 		bFnState.addListener(SWT.Selection, buttonFinLister);
 		bntAct.addListener(SWT.Selection, buttonActLister);
-		
-		
-	
-		
-
+			
 	}
 
 	public TreeItem getRoot(TreeItem a) {
@@ -383,6 +362,27 @@ public class CreateDomainView {
 	
 	public ArrayList<Action> getListAction(){
 		return actionList;
+	}
+	
+	public void restoreActionList(ArrayList<Action> actions) {
+		actionList=actions;
+		for(Action action:actionList) {
+			TreeItem item=new TreeItem(treeAction, SWT.BORDER);
+			item.setText(action.getName());
+			TreeItem childPrec = new TreeItem(item, SWT.NONE);
+			childPrec.setText("Preconditions");
+			TreeItem childEff = new TreeItem(item, SWT.NONE);
+			childEff.setText("Effect");
+			for(String pString:action.getPrec()) {
+				TreeItem child = new TreeItem(childPrec, SWT.NONE);
+				child.setText(pString);
+			}
+
+			for(String eString:action.getEffect()) {
+				TreeItem child = new TreeItem(childEff, SWT.NONE);
+				child.setText(eString);
+			}
+		}
 	}
 	
 	public IStateCanvas getInitialState() {

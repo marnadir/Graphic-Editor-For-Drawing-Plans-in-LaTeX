@@ -1,12 +1,17 @@
 package Action;
 
+import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import LaTex.LaTexGeneratorAction;
 
-public class Action {
+public class Action implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	String name;
 	ArrayList<String> prec;
 	ArrayList<String> effect;

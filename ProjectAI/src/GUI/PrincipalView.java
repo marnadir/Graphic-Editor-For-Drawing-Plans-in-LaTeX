@@ -1,5 +1,10 @@
 package GUI;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 import org.eclipse.swt.SWT;
@@ -7,15 +12,9 @@ import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.custom.CTabItem;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.custom.ScrolledComposite;
-import org.eclipse.swt.dnd.DND;
-import org.eclipse.swt.dnd.DragSource;
-import org.eclipse.swt.dnd.DropTarget;
-import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
-import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.RowLayout;
@@ -36,16 +35,16 @@ import org.eclipse.swt.widgets.ToolItem;
 
 import Action.Action;
 import Action.Node;
-import DNDAaction.MyDropActionListener;
-import DataTrasfer.MyTransfer;
 import Dialog.IDialog;
 import GraphPart.GraphContent;
 import GraphPart.LinkCanvas;
 import GraphPart.OrderCondition;
 import Menu.IMenu;
+import State.GoalState;
+import State.InitialState;
 import command.ExitCommand;
 
-public class DrawWindow {
+public class PrincipalView {
 
 	private Shell shell;
 	// private Composite child;
@@ -55,15 +54,22 @@ public class DrawWindow {
 	private SashForm sashForm2;
 	private CTabFolder planView;
 	private Group console;
-	private CreateDomainView createDomainView;
+	private DomainView domainView;
 	private GraphContent contentAction;
 	private ArrayList<Action> updateActionListDomain;
 	private ArrayList<Node> updateNodeList;
 	private ArrayList<LinkCanvas> updateLinkList;
 	private ArrayList<OrderCondition> updateOrder;
 	private ArrayList<GraphContent> listOfPlan;
+	
+	String fileName;
+	File file;
+	File directory;
+	
+	
+	
 
-	public DrawWindow(Shell shell) {
+	public PrincipalView(Shell shell) {
 		this.shell = shell;
 
 	}
@@ -71,6 +77,7 @@ public class DrawWindow {
 	public void draw() {
 		createMenuWindow();
 		createContent();
+		createDirector();
 	}
 
 	public void createMenuWindow() {
@@ -84,12 +91,15 @@ public class DrawWindow {
 		IMenu menuOption = new IMenu(shell, SWT.DROP_DOWN);
 		option.setMenu(menuOption);
 
-		MenuItem saveItem = new MenuItem(menuFile, SWT.PUSH);
-		saveItem.setText("&Save\tCtrl+S");
-		saveItem.setAccelerator(SWT.CONTROL + 'S');
-
+		MenuItem storeStateDomain = new MenuItem(menuFile, SWT.PUSH);
+		storeStateDomain.setText("&Save Domain\tCtrl+S");
+		
+		MenuItem restoreStateDomain = new MenuItem(menuFile, SWT.PUSH);
+		restoreStateDomain.setText("&Reload domain\tCtrl+S");
+		
+		
 		MenuItem saveAsItem = new MenuItem(menuFile, SWT.PUSH);
-		saveAsItem.setText("&Save as...");
+		saveAsItem.setText("&Save LatexCode");
 
 		MenuItem saveAllItem = new MenuItem(menuFile, SWT.PUSH);
 		saveAllItem.setText("&Save All\tShift+Ctrl+S");
@@ -98,6 +108,13 @@ public class DrawWindow {
 		MenuItem exitItem = new MenuItem(menuFile, SWT.PUSH);
 		exitItem.setText("&Exit");
 
+		
+		MenuItem showCond = new MenuItem(menuOption, SWT.PUSH);
+		showCond.setText("Conditions in the Plan");
+		
+		MenuItem menuLines = new MenuItem(menuOption, SWT.PUSH);
+		menuLines.setText("Create Connection");
+		
 		Listener listenerExit = new Listener() {
 			@Override
 			public void handleEvent(Event event) {
@@ -106,18 +123,31 @@ public class DrawWindow {
 			}
 		};
 
-		exitItem.addListener(SWT.Selection, listenerExit);
 
-		Listener listenerSave = new Listener() {
+		Listener listenerStoreDomain = new Listener() {
 
 			@Override
 			public void handleEvent(Event event) {
-
+				createFileLog();
+				ArrayList<Object> data = new ArrayList<Object>();
+				data.add(updateActionListDomain);
+				data.add(domainView.getInitialState().getState());
+				data.add(domainView.getGoalState().getState());
+				WriteObjectToFile(data);
 			}
 		};
 
-		MenuItem showCond = new MenuItem(menuOption, SWT.PUSH);
-		showCond.setText("Conditions in the Plan");
+		
+		Listener listenerRestoreDomain = new Listener() {
+
+			@Override
+			public void handleEvent(Event event) {
+				createFileLog();
+				ReadObjectToFile();
+				domainView.restoreActionList(updateActionListDomain);
+			}
+		};
+		
 
 		Listener listenerShow = new Listener() {
 
@@ -174,10 +204,10 @@ public class DrawWindow {
 			}
 		};
 
-		showCond.addListener(SWT.Selection, listenerShow);
+	
 
-		MenuItem menuLines = new MenuItem(menuOption, SWT.PUSH);
-		menuLines.setText("Create Connection");
+		
+	
 		Listener listenerLink = new Listener() {
 			Composite compButton;
 			private Composite compPoint;
@@ -319,11 +349,15 @@ public class DrawWindow {
 				dialog.createContent();
 			}
 		};
-
+		
+		
+		showCond.addListener(SWT.Selection, listenerShow);
+		restoreStateDomain.addListener(SWT.Selection, listenerRestoreDomain);
+		storeStateDomain.addListener(SWT.Selection, listenerStoreDomain);
+		exitItem.addListener(SWT.Selection, listenerExit);
 		menuLines.addListener(SWT.Selection, listenerLink);
 
 		shell.setMenuBar(menuBar);
-
 		shell.addListener(SWT.Close, e -> {
 			if (shell.getModified()) {
 				MessageBox box = new MessageBox(shell, SWT.PRIMARY_MODAL | SWT.OK | SWT.CANCEL);
@@ -334,6 +368,11 @@ public class DrawWindow {
 		});
 	}
 
+	
+	
+	
+	
+	
 	public void createContent() {
 
 		ScrolledComposite firstScroll = new ScrolledComposite(shell, SWT.V_SCROLL | SWT.H_SCROLL);
@@ -346,13 +385,12 @@ public class DrawWindow {
 		firstScroll.setExpandHorizontal(true);
 		firstScroll.setExpandVertical(true);
 
-		createDomainView = new CreateDomainView(sashForm);
-		createDomainView.createContent();
+		domainView = new DomainView(sashForm);
+		domainView.createContent();
 
 		sashForm2 = new SashForm(sashForm, SWT.VERTICAL);
-
 		sashForm.setWeights(new int[] { 1, 3 });
-
+		
 		planView = new CTabFolder(sashForm2, SWT.PUSH);
 		planView.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		planView.setSimple(false);
@@ -360,7 +398,6 @@ public class DrawWindow {
 		planView.setUnselectedCloseVisible(false);
 		
 		CTabItem item = new CTabItem(planView, SWT.CLOSE);
-
 		contentAction = new GraphContent(planView, SWT.ALL);
 		item.setControl(contentAction);
 		planView.setSelection(item);
@@ -395,9 +432,10 @@ public class DrawWindow {
 		});
 
 		planView.setTopRight(t, SWT.RIGHT);
-
 		planView.setTabHeight(Math.max(t.computeSize(SWT.DEFAULT, SWT.DEFAULT).y, planView.getTabHeight()));
 
+		
+		
 		console = new Group(sashForm2, SWT.SCROLL_LINE);
 		console.setText("Console");
 		console.setLayout(new GridLayout(2, true));
@@ -424,16 +462,16 @@ public class DrawWindow {
 			@Override
 			public void handleEvent(Event event) {
 				textDomain.setText("");
-				if (createDomainView.getInitialState() != null) {
-					createDomainView.getInitialState().generateLatexCode();
-					textDomain.insert(createDomainView.getInitialState().getLatexCode());
+				if (domainView.getInitialState() != null) {
+					domainView.getInitialState().generateLatexCode();
+					textDomain.insert(domainView.getInitialState().getLatexCode());
 				}
-				if (createDomainView.getGoalState() != null) {
-					createDomainView.getGoalState().generateLatexCode();
-					textDomain.insert(createDomainView.getGoalState().getLatexCode());
+				if (domainView.getGoalState() != null) {
+					domainView.getGoalState().generateLatexCode();
+					textDomain.insert(domainView.getGoalState().getLatexCode());
 				}
 
-				updateActionListDomain = createDomainView.getListAction();
+				updateActionListDomain = domainView.getListAction();
 				for (int i = 0; i < updateActionListDomain.size(); i++) {
 					updateActionListDomain.get(i).generateLatexCode();
 					textDomain.insert(updateActionListDomain.get(i).getLatexCode());
@@ -509,21 +547,13 @@ public class DrawWindow {
 			}
 		});
 
-		updateActionListDomain = createDomainView.getListAction();
-
+		updateActionListDomain = domainView.getListAction();
 		contentAction.addDndListener(updateActionListDomain);
-
-		
-//		DropTarget target = new DropTarget(contentAction, DND.DROP_MOVE | DND.DROP_COPY);
-//		target.setTransfer(new Transfer[] { MyTransfer.getInstance() });
-//		target.addDropListener(new MyDropActionListener(planView, target, updateActionListDomain));
 
 		Display.getDefault().timerExec(100, new Runnable() {
 			@Override
 			public void run() {
-				// composite.redraw();
 				contentAction.redraw();
-				// Run again - TODO add logic to stop after correct number of moves
 				Display.getDefault().timerExec(100, this);
 			}
 		});
@@ -531,6 +561,121 @@ public class DrawWindow {
 		shell.setMaximized(false);
 	}
 
+	
+	public void createFileLog() {
+		String filepath = System.getProperty("user.home") + "/Desktop/TDP.txt";
+		file = new File(filepath);
+		if (file.exists() && !file.isDirectory()) {
+			
+		}
+
+	}
+	
+	
+	public void createDirector() {
+		String filepath = System.getProperty("user.home") ;
+		 directory = new File(filepath+ "/TDP");
+		 File dirLog=new File(filepath+ "/TDP"+"/dirLog");
+		 File dirLatex=new File(filepath+ "/TDP"+"/dirLatex");
+
+		// if the directory does not exist, create it
+		if (!directory.exists()) {
+		    System.out.println("creating directory: " + directory.getName());
+		    boolean result = false;
+
+		    try{
+		        directory.mkdir();
+		        result = true;
+		    } 
+		    catch(SecurityException se){
+		        //handle it
+		    }        
+		    if(result) {    
+		        System.out.println("DIR created");  
+		    }
+		}
+		
+		if (!dirLog.exists()) {
+		    System.out.println("creating directory: " + dirLog.getName());
+		    boolean result = false;
+
+		    try{
+		    	dirLog.mkdir();
+		        result = true;
+		    } 
+		    catch(SecurityException se){
+		        //handle it
+		    }        
+		    if(result) {    
+		        System.out.println("DIR created");  
+		    }
+		}
+		
+		if (!dirLatex.exists()) {
+		    System.out.println("creating directory: " + dirLatex.getName());
+		    boolean result = false;
+
+		    try{
+		    	dirLatex.mkdir();
+		        result = true;
+		    } 
+		    catch(SecurityException se){
+		        //handle it
+		    }        
+		    if(result) {    
+		        System.out.println("DIR created");  
+		    }
+		}
+		
+		
+	}
+
+	
+	
+	
+	public void WriteObjectToFile(Object serObj){
+	
+		
+		try {
+	        FileOutputStream fileOut = new FileOutputStream(file.getAbsolutePath());
+	        ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
+	        objectOut.writeObject(serObj);
+	        objectOut.close();
+	        System.out.println("The Object  was succesfully written to a file");
+		} catch (Exception e) {
+            e.printStackTrace();
+		}
+
+ 		
+	}
+
+	public void ReadObjectToFile() {
+
+
+		try {
+			FileInputStream fileIn = new FileInputStream(file.getAbsolutePath());
+			ObjectInputStream objectIn = new ObjectInputStream(fileIn);
+			ArrayList<Object> data = (ArrayList<Object>) objectIn.readObject();
+			updateActionListDomain=(ArrayList<Action>)data.get(0);
+			
+			InitialState in=(InitialState) data.get(1);
+			GoalState goal=(GoalState) data.get(2);
+			
+			
+			
+			objectIn.close();
+			System.out.println("The Object  was succesfully read from a file");
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	
+	
+	
+	
 	public Shell getShell() {
 		return shell;
 	}

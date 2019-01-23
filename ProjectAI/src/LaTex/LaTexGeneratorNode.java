@@ -2,7 +2,6 @@ package LaTex;
 
 import java.text.DecimalFormat;
 
-import org.eclipse.swt.widgets.Link;
 
 import Action.Action;
 import Action.ICanvasAction;
@@ -10,11 +9,8 @@ import Action.Node;
 import GraphPart.LinkCanvas;
 import GraphPart.OrderCondition;
 import GraphPart.Oval;
-import State.GoalState;
 import State.GoalStateCanvas;
-import State.IState;
 import State.IStateCanvas;
-import State.InitialState;
 import State.InitialStateCanvas;
 
 public class LaTexGeneratorNode {

@@ -7,7 +7,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
-import GUI.DrawWindow;
+import GUI.PrincipalView;
 
 public class StartWindow {
 
@@ -19,7 +19,7 @@ public class StartWindow {
 		shell.setText("Tool Drawing Plan");
 		shell.setLayout(new FillLayout());
 
-		DrawWindow drawWindow = new DrawWindow(shell);
+		PrincipalView drawWindow = new PrincipalView(shell);
 		drawWindow.draw();
 
 		shell.open();

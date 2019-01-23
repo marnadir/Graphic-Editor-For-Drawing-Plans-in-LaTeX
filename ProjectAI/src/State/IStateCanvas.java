@@ -1,6 +1,7 @@
 package State;
 
 
+import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
@@ -19,8 +20,11 @@ import GraphPart.Oval;
 import LaTex.LaTexGeneratorState;
 import Menu.MenuContentState;
 
-public abstract class IStateCanvas extends Canvas {
+public abstract class IStateCanvas extends Canvas  {
 
+	/**
+	 * 
+	 */
 	String name;
 	IState state;
 	Composite contentCanvas;

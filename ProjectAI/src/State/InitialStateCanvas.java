@@ -1,17 +1,24 @@
 package State;
 
 
+import java.io.Serializable;
+
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.widgets.Composite;
 
 import GraphPart.GraphContent;
 
-public class InitialStateCanvas extends IStateCanvas{
+public class InitialStateCanvas extends IStateCanvas {
 
 	
 	
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public InitialStateCanvas(Composite parent, int style, IState state) {
 		super(parent, style, state);
 		name="start";
