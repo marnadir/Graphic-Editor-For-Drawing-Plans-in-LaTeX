@@ -7,7 +7,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
-import GUI.PrincipalView;
+import View.PrincipalView;
 
 public class StartWindow {
 

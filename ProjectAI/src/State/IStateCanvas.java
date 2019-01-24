@@ -1,7 +1,6 @@
 package State;
 
 
-import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
@@ -53,7 +52,6 @@ public abstract class IStateCanvas extends Canvas  {
 	public void draw() {
 
 		this.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-//		this.setSize(contentCanvas.getSize());
 		int numCond = state.getConds().size();
 		lenIn=numCond*30;
 		this.addMenuDetectListener(new MenuContentState(this));
@@ -199,7 +197,6 @@ public abstract class IStateCanvas extends Canvas  {
 	}
 	
 	public String getLatexCode() {
-		System.out.println(latexCode);
 		return latexCode;
 	}
 	

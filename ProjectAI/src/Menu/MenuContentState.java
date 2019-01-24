@@ -6,7 +6,10 @@ import org.eclipse.swt.events.MenuDetectEvent;
 import org.eclipse.swt.events.MenuDetectListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.layout.RowLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
@@ -16,8 +19,8 @@ import org.eclipse.swt.widgets.Text;
 
 import Dialog.IDialog;
 import GraphPart.GraphContent;
-import State.ChangeCondCommand;
 import State.IStateCanvas;
+import command.ChangeCondCommand;
 
 public class MenuContentState implements MenuDetectListener {
 
@@ -43,6 +46,100 @@ public class MenuContentState implements MenuDetectListener {
 			}
 		});
 
+		MenuItem vs = new MenuItem(m, SWT.ALL);
+		vs.setText("Line vs Text");
+		vs.addListener(SWT.Selection, new Listener() {
+			
+			@Override
+			public void handleEvent(Event event) {
+
+				IDialog dialog =new IDialog(canvas.getShell(), SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL | SWT.CENTER) {
+					Composite compButton;
+					Composite textButton;
+					Button btnText;
+
+					@Override
+					public Listener getOkbtnListener() {
+						Listener l;
+						l = new Listener() {
+
+							@Override
+							public void handleEvent(Event event) {
+								if(btnText.getSelection()) {
+									System.out.println("Text");
+								}else {
+									System.out.println("Line");
+								}
+								
+								getDialog().dispose();
+							}
+						};
+						return l;
+					}
+					
+					@Override
+					public void createContent() {
+						getLabel().setText("Line vs Text");
+						this.getLabel().pack();
+						Composite c = getComposite();
+						c.setLayout(new GridLayout(1, false));
+						compButton = new Composite(c, SWT.ALL);
+						compButton.setLayout(new RowLayout(SWT.HORIZONTAL));
+
+						btnText = new Button(compButton, SWT.RADIO);
+						btnText.setText("Text");
+						
+						Button btnLine = new Button(compButton, SWT.RADIO);
+						btnLine.setText("Line");
+
+					
+						
+						textButton=new Composite(c, SWT.ALL);
+						textButton.setLayout(new RowLayout(SWT.HORIZONTAL));
+
+						Label l=new Label(textButton, SWT.ALL);
+						l.setText("set the text:");
+						
+						Text text=new Text(textButton, SWT.BORDER);
+						text.setText("init");
+						text.setSize(20, 10);
+						
+						btnText.setSelection(true);
+						
+						//textButton.setVisible(false);
+						
+						btnText.addListener(SWT.Selection, new Listener() {
+							
+							@Override
+							public void handleEvent(Event event) {
+								textButton.setVisible(true);
+								
+							}
+						});
+						
+						btnLine.addListener(SWT.Selection, new Listener() {
+							
+							@Override
+							public void handleEvent(Event event) {
+								textButton.setVisible(false);
+								
+							}
+						});
+						
+						
+						
+						this.getDialog().pack();
+
+					}
+				};
+				
+				dialog.createContent();
+				
+			}
+		});
+		
+		
+		
 		if (!(canvas.getParent().getParent() instanceof GraphContent)) {
 
 			MenuItem showC = new MenuItem(m, SWT.ALL);

@@ -20,8 +20,6 @@ import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
 
 import Action.Action;
-import State.GoalStateCanvas;
-import State.InitialStateCanvas;
 
 public class CreateActionDialog extends IDialog {
 
@@ -234,7 +232,8 @@ public class CreateActionDialog extends IDialog {
 						actions.add(action);
 						
 						dialog.setVisible(false);
-				
+						System.out.println(treeActions.getItemCount());
+						treeActions.pack();
 				}
 			}
 		};

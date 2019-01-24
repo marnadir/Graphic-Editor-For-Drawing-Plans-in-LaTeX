@@ -1,4 +1,4 @@
-package State;
+package command;
 
 import java.util.ArrayList;
 
@@ -15,7 +15,7 @@ import org.eclipse.swt.widgets.TreeItem;
 import Action.Action;
 import Dialog.IDialog;
 import Dialog.IDialogNewState;
-import command.ICommand;
+import State.IStateCanvas;
 
 public class ChangeCondCommand implements ICommand {
 

@@ -1,4 +1,4 @@
-package GUI;
+package View;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -41,7 +41,9 @@ import GraphPart.LinkCanvas;
 import GraphPart.OrderCondition;
 import Menu.IMenu;
 import State.GoalState;
+import State.GoalStateCanvas;
 import State.InitialState;
+import State.InitialStateCanvas;
 import command.ExitCommand;
 
 public class PrincipalView {
@@ -131,8 +133,16 @@ public class PrincipalView {
 				createFileLog();
 				ArrayList<Object> data = new ArrayList<Object>();
 				data.add(updateActionListDomain);
-				data.add(domainView.getInitialState().getState());
-				data.add(domainView.getGoalState().getState());
+				if(domainView.getInitialState()!=null) {
+					data.add(domainView.getInitialState().getState());
+				}else {
+					data.add(null);
+				}
+				if(domainView.getGoalState()!=null) {
+					data.add(domainView.getGoalState().getState());
+				}else {
+					data.add(null);
+				}
 				WriteObjectToFile(data);
 			}
 		};
@@ -471,7 +481,7 @@ public class PrincipalView {
 					textDomain.insert(domainView.getGoalState().getLatexCode());
 				}
 
-				updateActionListDomain = domainView.getListAction();
+				updateActionListDomain = domainView.getTreeAction().getActionList();
 				for (int i = 0; i < updateActionListDomain.size(); i++) {
 					updateActionListDomain.get(i).generateLatexCode();
 					textDomain.insert(updateActionListDomain.get(i).getLatexCode());
@@ -547,7 +557,7 @@ public class PrincipalView {
 			}
 		});
 
-		updateActionListDomain = domainView.getListAction();
+		updateActionListDomain = domainView.getTreeAction().getActionList();
 		contentAction.addDndListener(updateActionListDomain);
 
 		Display.getDefault().timerExec(100, new Runnable() {
@@ -563,7 +573,7 @@ public class PrincipalView {
 
 	
 	public void createFileLog() {
-		String filepath = System.getProperty("user.home") + "/Desktop/TDP.txt";
+		String filepath = directory.getAbsolutePath()+"TDP.txt";
 		file = new File(filepath);
 		if (file.exists() && !file.isDirectory()) {
 			
@@ -658,8 +668,27 @@ public class PrincipalView {
 			ArrayList<Object> data = (ArrayList<Object>) objectIn.readObject();
 			updateActionListDomain=(ArrayList<Action>)data.get(0);
 			
-			InitialState in=(InitialState) data.get(1);
-			GoalState goal=(GoalState) data.get(2);
+			
+			
+			if(data.get(1)!=null) {
+				InitialState in=(InitialState) data.get(1);
+				InitialStateCanvas initialStateCanvas=new InitialStateCanvas(
+						domainView.getInitStateView().getContainerInitState(), SWT.ALL, in);
+				initialStateCanvas.draw();
+				initialStateCanvas.addDNDListener();
+				initialStateCanvas.generateLatexCode();
+				initialStateCanvas.getLatexCode();
+			}
+			if(data.get(2) !=null) {
+				GoalState goal=(GoalState) data.get(2);
+				GoalStateCanvas goalStateCanvas=new GoalStateCanvas(
+						domainView.getInitStateView().getContainerInitState(), SWT.ALL, goal);
+				goalStateCanvas.draw();
+				goalStateCanvas.addDNDListener();
+				goalStateCanvas.generateLatexCode();
+				goalStateCanvas.getLatexCode();
+			}
+			
 			
 			
 			
