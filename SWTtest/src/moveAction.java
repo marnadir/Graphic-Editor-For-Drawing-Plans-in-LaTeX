@@ -38,9 +38,7 @@ public class moveAction {
 				
 				e.gc.drawRectangle(rect);
 
-				//e.gc.drawLine(0, 40, 500, 500);
-				//e.gc.drawLine(0, 0, 0, 1200);
-				//e.gc.drawLine(0, 0, 1200, 0);
+			
 				
 				
 

@@ -1,10 +1,13 @@
 package State;
 
 
+import java.awt.geom.AffineTransform;
 import java.io.Serializable;
 
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
+import org.eclipse.swt.graphics.Transform;
 import org.eclipse.swt.widgets.Composite;
 
 import GraphPart.GraphContent;
@@ -42,13 +45,31 @@ public class InitialStateCanvas extends IStateCanvas {
 				
 				int numCond = state.getConds().size();
 				lenIn=numCond*30;
+				if(isText) {
+					e.gc.drawRectangle(startX, startY, startX+20, startY + lenIn);
+				  
+					Transform t=new Transform(getDisplay());
+					t.rotate(90);
+					
+					e.gc.setTransform(t);
+					int val=getTextPosition(avergWidth);
+					
+					e.gc.drawString(text, val, -20);
+					startX=20;
+					
+					t.rotate(-90);
+					e.gc.setTransform(t);
+
+					
+				}else {
+					e.gc.setLineWidth(6);
+					e.gc.drawLine(startX, startY, startX, startY + lenIn);
+					e.gc.setLineWidth(1);
+				}
 				
-				e.gc.setLineWidth(6);
-				e.gc.drawLine(startX, startY, startX, startY + lenIn);
-				e.gc.setLineWidth(1);
 
 				
-				int posY = startY + 20;
+				int posY = startY + 15;
 				for (int i = 0; i < numCond; i++) {
 					String string = state.getConds().get(i);
 
@@ -68,12 +89,23 @@ public class InitialStateCanvas extends IStateCanvas {
 
 				}
 				resizeParent();
-
+				//pack();
 				// e.gc.drawRectangle(r);
 			}
 		});
 	}
     
-
+    public  int getTextPosition(int avergWidth) {
+    	  int i = 5;
+    	  int stringLenght=text.length()*avergWidth+6;
+    	  if(stringLenght>lenIn) {
+    		  lenIn=stringLenght;
+    		  return i;
+    	  }else {
+    		  i=(lenIn-stringLenght)/2;
+    		  return i;
+    	  }
+    	  
+    }
 
 }

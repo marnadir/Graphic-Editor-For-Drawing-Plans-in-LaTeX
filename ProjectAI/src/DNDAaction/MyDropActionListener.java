@@ -19,10 +19,12 @@ import State.GoalStateCanvas;
 import State.IState;
 import State.IStateCanvas;
 import State.InitialStateCanvas;
+import View.TreeActioDomain;
 
 public class MyDropActionListener extends DropTargetAdapter {
 	private Composite parentComposite;
 	private DropTarget target;
+	private TreeActioDomain treeAction;
 	private ArrayList<Action> actionList;
 	private GraphContent graphContent;
 	private Node node;
@@ -31,10 +33,10 @@ public class MyDropActionListener extends DropTargetAdapter {
 	 * @param parentComposite - the composite that holds all pictures
 	 * @param target          - the drop target
 	 */
-	public MyDropActionListener(Composite parentComposite, DropTarget target, ArrayList<Action> actionListobject) {
+	public MyDropActionListener(Composite parentComposite, DropTarget target, TreeActioDomain treeAction) {
 		this.parentComposite = parentComposite;
 		this.target = target;
-		this.actionList = actionListobject;
+		this.treeAction = treeAction;
 	}
 
 	public void dragEnter(DropTargetEvent event) {
@@ -80,7 +82,7 @@ public class MyDropActionListener extends DropTargetAdapter {
 							break;
 
 						default:
-
+							actionList=treeAction.getActionList();
 							for (int j = 0; j < actionList.size(); j++) {
 								if (myTypes[i].getName().equals(actionList.get(j).getName())) {
 									if (myTypes[i].getPrec().equals(actionList.get(j).getPrec())

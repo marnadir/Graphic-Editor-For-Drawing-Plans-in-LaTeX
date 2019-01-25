@@ -174,6 +174,10 @@ public class DomainView {
 		return initStateView;
 	}
 
+	public GoalStateView getGoalStateView() {
+		return goalStateView;
+	}
+
 
 
 	

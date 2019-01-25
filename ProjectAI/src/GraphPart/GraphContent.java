@@ -17,6 +17,7 @@ import Action.Action;
 import Action.Node;
 import DNDAaction.MyDropActionListener;
 import DataTrasfer.MyTransfer;
+import View.TreeActioDomain;
 
 public class GraphContent extends Canvas {
 
@@ -78,6 +79,7 @@ public class GraphContent extends Canvas {
 				if (offset[0] != null) {
 					Point pt = offset[0];
 					comp.setLocation(event.x - pt.x, event.y - pt.y);
+					redraw();
 				}
 				break;
 			case SWT.MouseUp:
@@ -92,10 +94,10 @@ public class GraphContent extends Canvas {
         this.addListener(SWT.MouseMove, listener);
 	}
 
-	public void addDndListener(ArrayList<Action> updateActionListDomain) {
+	public void addDndListener(TreeActioDomain treeAction) {
 		DropTarget target = new DropTarget(this, DND.DROP_MOVE | DND.DROP_COPY);
 		target.setTransfer(new Transfer[] { MyTransfer.getInstance() });
-		target.addDropListener(new MyDropActionListener(parent, target, updateActionListDomain));
+		target.addDropListener(new MyDropActionListener(parent, target, treeAction));
 	}
 	
 }

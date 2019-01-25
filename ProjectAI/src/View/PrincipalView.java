@@ -430,7 +430,7 @@ public class PrincipalView {
 				item2.setControl(contentAction);
 				listOfPlan.add(contentAction);
 				item2.setText("Plan" + listOfPlan.size());
-				contentAction.addDndListener(updateActionListDomain);
+				contentAction.addDndListener(domainView.getTreeAction());
 
 			}
 
@@ -558,15 +558,15 @@ public class PrincipalView {
 		});
 
 		updateActionListDomain = domainView.getTreeAction().getActionList();
-		contentAction.addDndListener(updateActionListDomain);
+		contentAction.addDndListener(domainView.getTreeAction());
 
-		Display.getDefault().timerExec(100, new Runnable() {
-			@Override
-			public void run() {
-				contentAction.redraw();
-				Display.getDefault().timerExec(100, this);
-			}
-		});
+//		Display.getDefault().timerExec(100, new Runnable() {
+//			@Override
+//			public void run() {
+//				contentAction.redraw();
+//				Display.getDefault().timerExec(100, this);
+//			}
+//		});
 
 		shell.setMaximized(false);
 	}
@@ -673,7 +673,7 @@ public class PrincipalView {
 			if(data.get(1)!=null) {
 				InitialState in=(InitialState) data.get(1);
 				InitialStateCanvas initialStateCanvas=new InitialStateCanvas(
-						domainView.getInitStateView().getContainerInitState(), SWT.ALL, in);
+						domainView.getInitStateView().getContainerInitState(), SWT.BORDER, in);
 				initialStateCanvas.draw();
 				initialStateCanvas.addDNDListener();
 				initialStateCanvas.generateLatexCode();
@@ -682,7 +682,7 @@ public class PrincipalView {
 			if(data.get(2) !=null) {
 				GoalState goal=(GoalState) data.get(2);
 				GoalStateCanvas goalStateCanvas=new GoalStateCanvas(
-						domainView.getInitStateView().getContainerInitState(), SWT.ALL, goal);
+						domainView.getGoalStateView().getContainerGoalState(), SWT.ALL, goal);
 				goalStateCanvas.draw();
 				goalStateCanvas.addDNDListener();
 				goalStateCanvas.generateLatexCode();

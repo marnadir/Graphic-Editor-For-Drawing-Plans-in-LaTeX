@@ -36,6 +36,8 @@ public abstract class IStateCanvas extends Canvas  {
 	String latexCode;
 	final double PIXEL_MEASUREMNT= 0.026458;
 	final double CM_MEASUREMNT= 37.7957517575025;
+	boolean isText=false;
+	String text;
 
 
 	public IStateCanvas(Composite parent, int style, IState state) {
@@ -61,14 +63,15 @@ public abstract class IStateCanvas extends Canvas  {
 
 	public void resizeParent() {
 		if(shownCond) {
-			int x1=(int)lengthCond+6;
-			int y1=lenIn;
+			int x1=(int)lengthCond+20;
+			int y1=lenIn+5;
 			parent.setSize(x1,y1);
 			
 		}else {
-			int x1=standardLength+6;
-			int y1=this.lenIn;
+			int x1=standardLength+20;
+			int y1=this.lenIn+5;
 			parent.setSize(x1,y1);
+
 		}
 	}
 	
@@ -199,8 +202,28 @@ public abstract class IStateCanvas extends Canvas  {
 	public String getLatexCode() {
 		return latexCode;
 	}
+
+
+
+	public String getText() {
+		return text;
+	}
+
+
+
+	public void setText(String text) {
+		this.text = text;
+	}
+
+
+
+	public boolean isText() {
+		return isText;
+	}
 	
-	
+	public void setIsText(boolean isText) {
+		this.isText=isText;
+	}
 	
 	
 }
