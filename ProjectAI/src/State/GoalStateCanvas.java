@@ -38,22 +38,24 @@ public class GoalStateCanvas extends IStateCanvas {
 
 				lenIn=numCond*30;
 				if(isText) {
-					e.gc.drawRectangle(startX, startY, startX+20, startY + lenIn);
-					  
+					int val=getTextPosition(avergWidth);
+
+					e.gc.drawRectangle(startX-20, startY, startX, startY + lenIn);	  
 					Transform t=new Transform(getDisplay());
 					t.rotate(90);
 					
 					e.gc.setTransform(t);
-					int val=getTextPosition(avergWidth);
 					
-					e.gc.drawString(text, val, -20);
-					startX=parent.getClientArea().width-20;
+					e.gc.drawString(text, val, -startX);
+					
 					
 					t.rotate(-90);
 					e.gc.setTransform(t);
+					
+					startX=parent.getClientArea().width-20;
 				}else {
 					e.gc.setLineWidth(6);
-					e.gc.drawLine(startX, startY, startX, startY + lenIn);
+					e.gc.drawLine(startX-2, startY, startX-2, startY + lenIn);
 					e.gc.setLineWidth(1);
 				}
 				

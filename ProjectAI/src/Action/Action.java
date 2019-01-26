@@ -350,6 +350,10 @@ public class Action implements Serializable {
 		shownCond=!shownCond;
 	}
 
+	public void setIsShownCond(boolean bol) {
+		shownCond=bol;
+	}
+	
 
 	public void negateIsShownName() {
 		shownName=!shownName;

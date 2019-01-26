@@ -13,7 +13,6 @@ import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Listener;
 
-import Action.Action;
 import Action.Node;
 import DNDAaction.MyDropActionListener;
 import DataTrasfer.MyTransfer;

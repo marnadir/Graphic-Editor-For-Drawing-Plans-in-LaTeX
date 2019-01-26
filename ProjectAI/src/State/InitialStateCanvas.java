@@ -1,10 +1,7 @@
 package State;
 
 
-import java.awt.geom.AffineTransform;
-import java.io.Serializable;
 
-import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.Transform;
@@ -17,11 +14,6 @@ public class InitialStateCanvas extends IStateCanvas {
 	
 	
 	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-
 	public InitialStateCanvas(Composite parent, int style, IState state) {
 		super(parent, style, state);
 		name="start";
@@ -46,13 +38,14 @@ public class InitialStateCanvas extends IStateCanvas {
 				int numCond = state.getConds().size();
 				lenIn=numCond*30;
 				if(isText) {
+					int val=getTextPosition(avergWidth);
+
 					e.gc.drawRectangle(startX, startY, startX+20, startY + lenIn);
 				  
 					Transform t=new Transform(getDisplay());
 					t.rotate(90);
 					
 					e.gc.setTransform(t);
-					int val=getTextPosition(avergWidth);
 					
 					e.gc.drawString(text, val, -20);
 					startX=20;

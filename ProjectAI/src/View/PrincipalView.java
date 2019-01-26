@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.TooManyListenersException;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;
@@ -21,7 +22,6 @@ import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
@@ -415,10 +415,40 @@ public class PrincipalView {
 		listOfPlan.add(contentAction);
 		item.setText("Plan" + listOfPlan.size());
 
-		ToolBar t = new ToolBar(planView, SWT.FLAT);
+		ToolBar t = new ToolBar(planView, SWT.ALL);
+		ToolItem toolShow=new ToolItem(t, SWT.CHECK);
+		Image icon = new Image(shell.getDisplay(), "img/eye.png");
+		toolShow.setImage(icon);
+		toolShow.addListener(SWT.Selection,new Listener() {
+			
+			@Override
+			public void handleEvent(Event event) {
+				
+				updateNodeList = contentAction.getActionInPlan();
+				for(Node node:updateNodeList) {
+					if(toolShow.getSelection()) {
+						node.getAction().setIsShownCond(true);
+						node.pack();
+
+					}else {
+						node.getAction().setIsShownCond(false);
+						node.pack();
+					}
+				}
+				
+			}
+		} );
+		
+		
+		ToolItem toolSetLenght=new ToolItem(t, SWT.PUSH);
+		icon = new Image(shell.getDisplay(), "img/setL.png");
+		toolSetLenght.setImage(icon);
+		
+		
+		
 		ToolItem i = new ToolItem(t, SWT.PUSH);
 		i.setToolTipText("add a new Plan");
-		Image icon = new Image(shell.getDisplay(), "img/add-documents.png");
+		 icon = new Image(shell.getDisplay(), "img/add-documents.png");
 		i.setImage(icon);
 		i.addSelectionListener(new SelectionListener() {
 
@@ -682,7 +712,7 @@ public class PrincipalView {
 			if(data.get(2) !=null) {
 				GoalState goal=(GoalState) data.get(2);
 				GoalStateCanvas goalStateCanvas=new GoalStateCanvas(
-						domainView.getGoalStateView().getContainerGoalState(), SWT.ALL, goal);
+						domainView.getGoalStateView().getContainerGoalState(), SWT.BORDER, goal);
 				goalStateCanvas.draw();
 				goalStateCanvas.addDNDListener();
 				goalStateCanvas.generateLatexCode();

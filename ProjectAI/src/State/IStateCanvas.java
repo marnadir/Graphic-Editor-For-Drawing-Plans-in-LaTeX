@@ -63,13 +63,25 @@ public abstract class IStateCanvas extends Canvas  {
 
 	public void resizeParent() {
 		if(shownCond) {
-			int x1=(int)lengthCond+20;
-			int y1=lenIn+5;
+			int x1;
+			if(isText) {
+				 x1=(int)lengthCond+20;
+
+			}else {
+				 x1=(int)lengthCond+6;
+
+			}
+			int y1=lenIn+4;
 			parent.setSize(x1,y1);
 			
 		}else {
-			int x1=standardLength+20;
-			int y1=this.lenIn+5;
+			int x1;
+			if(isText) {
+				x1=standardLength+20;
+			}else {
+				x1=standardLength+20;
+			}
+			int y1=this.lenIn+4;
 			parent.setSize(x1,y1);
 
 		}
