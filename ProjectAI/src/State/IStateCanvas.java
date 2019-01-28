@@ -79,7 +79,7 @@ public abstract class IStateCanvas extends Canvas  {
 			if(isText) {
 				x1=standardLength+20;
 			}else {
-				x1=standardLength+20;
+				x1=standardLength+6;
 			}
 			int y1=this.lenIn+4;
 			parent.setSize(x1,y1);
@@ -190,11 +190,11 @@ public abstract class IStateCanvas extends Canvas  {
 
 
 	public void addOval(IState state,String cond,int x, int y) {
-		Oval oval=new Oval(this,cond);
-		oval.setLocation(x, y);
-		oval.drawOval();
+	
 		if(parent.getParent() instanceof GraphContent) {
 			GraphContent graphContent=(GraphContent) parent.getParent();
+			Oval oval=new Oval(this,cond);
+			oval.setLocation(x, y);
 			graphContent.getOvalCounter().addSt(oval);
 		}
 	}

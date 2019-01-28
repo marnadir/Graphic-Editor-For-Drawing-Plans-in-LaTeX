@@ -6,13 +6,13 @@ import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
-import java.util.TooManyListenersException;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.custom.CTabItem;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Image;
@@ -20,6 +20,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Event;
@@ -39,6 +40,7 @@ import Dialog.IDialog;
 import GraphPart.GraphContent;
 import GraphPart.LinkCanvas;
 import GraphPart.OrderCondition;
+import GraphPart.Oval;
 import Menu.IMenu;
 import State.GoalState;
 import State.GoalStateCanvas;
@@ -443,7 +445,153 @@ public class PrincipalView {
 		ToolItem toolSetLenght=new ToolItem(t, SWT.PUSH);
 		icon = new Image(shell.getDisplay(), "img/setL.png");
 		toolSetLenght.setImage(icon);
-		
+		toolSetLenght.addListener(SWT.Selection, new Listener() {
+			
+			@Override
+			public void handleEvent(Event event) {
+				IDialog d=new IDialog(shell,SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL | SWT.CENTER) {
+					Combo combo;
+					Text lenghtPrec;
+					Text lenghtEff;
+					@Override
+					public Listener getOkbtnListener() {
+						Listener l;
+						l = new Listener() {
+
+							@Override
+							public void handleEvent(Event event) {
+								if(combo.getText().equalsIgnoreCase("action")) {
+									if(!(lenghtPrec.getText().equals(""))&&!(lenghtPrec.getText().equals(""))) {
+										updateNodeList = contentAction.getActionInPlan();
+										for(Node node:updateNodeList) {
+											ArrayList<Oval> listOval=contentAction.getOvalCounter().getListOval();
+											for(int i=0;i<listOval.size();i++) {
+												if(listOval.get(i).getStateCanvas()!=null) {
+													if(listOval.get(i).getNode()  instanceof Node) {
+														listOval.get(i).dispose();
+														listOval.remove(i);
+														contentAction.getOvalCounter().setListOval(listOval);
+													}
+												}
+											}
+											
+											
+											
+											node.getAction().setLengthPrecFromCm(Double.parseDouble(lenghtPrec.getText()));
+											node.getAction().setStandardLengthPrecFromCm(Double.parseDouble(lenghtPrec.getText()));
+
+											node.getAction().setLengthEffFromCm(Double.parseDouble(lenghtEff.getText()));
+											node.getAction().setStandardLengthEffFromCm(Double.parseDouble(lenghtEff.getText()));
+											node.pack();
+											
+											
+										}
+									}
+								}else {
+									if(!(lenghtPrec.getText().equals(""))) {
+										if(	contentAction.getInitialStateCanvas()!=null) {
+											
+											ArrayList<Oval> listOval=contentAction.getOvalCounter().getListOval();
+											for(int i=0;i<listOval.size();i++) {
+												if(listOval.get(i).getStateCanvas()!=null) {
+													if(listOval.get(i).getStateCanvas()  instanceof InitialStateCanvas) {
+														listOval.get(i).dispose();
+														listOval.remove(i);
+														contentAction.getOvalCounter().setListOval(listOval);
+													}
+												}
+											}
+																						
+											contentAction.getInitialStateCanvas().setLengthFromCm(Double.parseDouble(lenghtPrec.getText()));
+											contentAction.getInitialStateCanvas().setStandardLengthFromCm(Double.parseDouble(lenghtPrec.getText()));
+											contentAction.getInitialStateCanvas().pack();
+										}
+										if(contentAction.getGoalStateCanvas()!=null) {
+											if(	contentAction.getGoalStateCanvas()!=null) {
+												
+												ArrayList<Oval> listOval=contentAction.getOvalCounter().getListOval();
+												for(int i=0;i<listOval.size();i++) {
+													if(listOval.get(i).getStateCanvas()!=null) {
+														if(listOval.get(i).getStateCanvas()  instanceof GoalStateCanvas) {
+															listOval.get(i).dispose();
+															listOval.remove(i);
+															contentAction.getOvalCounter().setListOval(listOval);
+														}
+													}
+												}
+																							
+												contentAction.getGoalStateCanvas().setLengthFromCm(Double.parseDouble(lenghtPrec.getText()));
+												contentAction.getGoalStateCanvas().setStandardLengthFromCm(Double.parseDouble(lenghtPrec.getText()));
+												contentAction.getGoalStateCanvas().pack();
+											}
+										}
+										
+									}
+								}
+							}
+						};
+						return l;
+					}
+					
+					@Override
+					public void createContent() {
+						getLabel().setText("Set global lenght");
+						this.getLabel().pack();
+						Composite c = getComposite();
+						c.setLayout(new GridLayout(1, false));
+						Composite comp1 = new Composite(c, SWT.ALL);
+						comp1.setLayout(new RowLayout(SWT.VERTICAL));
+						Label l=new Label(comp1, SWT.ALL);
+						l.setText("choose: ");
+						combo = new Combo(comp1, SWT.PUSH);
+						combo.setItems("Action","So/Goal State");
+						combo.setText(combo.getItem(0));
+						combo.pack();
+						
+						Composite comp2=new Composite(c, SWT.ALL);
+						comp2.setLayout(new GridLayout(2, false));
+						Label l2=new Label(comp2, SWT.ALL);
+						l2.setText("Prec:");	
+						lenghtPrec=new Text(comp2, SWT.BORDER);
+						
+						
+						Label l3=new Label(comp2, SWT.ALL);
+						l3.setText("Eff:");
+
+						lenghtEff=new Text(comp2, SWT.BORDER);
+						Label l4=new Label(comp2, SWT.ALL);
+						l4.setText("Default value is 1.2cm");
+						
+
+						combo.addSelectionListener(new SelectionAdapter() {
+							  public void widgetSelected(SelectionEvent e) {
+									if(combo.getText().equalsIgnoreCase("action")) {	
+										l3.setVisible(true);
+										lenghtEff.setVisible(true);
+
+										comp2.pack();
+										getDialog().pack();
+
+										
+									}else {
+										l2.setText("Cond:");
+										l3.setVisible(false);
+										lenghtEff.setVisible(false);
+										getDialog().pack();
+
+									}
+							  }
+						});
+						
+						
+						this.getDialog().pack();
+						
+					}
+				};
+				
+				d.createContent();
+			}
+		});
 		
 		
 		ToolItem i = new ToolItem(t, SWT.PUSH);

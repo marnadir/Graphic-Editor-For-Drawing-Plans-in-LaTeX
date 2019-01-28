@@ -16,6 +16,10 @@ import org.eclipse.swt.widgets.Listener;
 import Action.Node;
 import DNDAaction.MyDropActionListener;
 import DataTrasfer.MyTransfer;
+import State.GoalState;
+import State.GoalStateCanvas;
+import State.InitialState;
+import State.InitialStateCanvas;
 import View.TreeActioDomain;
 
 public class GraphContent extends Canvas {
@@ -25,6 +29,8 @@ public class GraphContent extends Canvas {
 	private ArrayList<Node> actionInPlan;
 	private ArrayList<LinkCanvas> link;
 	private ArrayList<OrderCondition> ords;
+	private InitialStateCanvas initialStateCanvas;
+	private GoalStateCanvas goalStateCanvas;
 	
 	public GraphContent(Composite parent, int style) {
 		super(parent, style);
@@ -52,6 +58,25 @@ public class GraphContent extends Canvas {
 
 	public ArrayList<OrderCondition> getOrds() {
 		return ords;
+	}
+
+
+	
+
+	public InitialStateCanvas getInitialStateCanvas() {
+		return initialStateCanvas;
+	}
+
+	public void setInitialStateCanvas(InitialStateCanvas initialStateCanvas) {
+		this.initialStateCanvas = initialStateCanvas;
+	}
+
+	public GoalStateCanvas getGoalStateCanvas() {
+		return goalStateCanvas;
+	}
+
+	public void setGoalStateCanvas(GoalStateCanvas goalStateCanvas) {
+		this.goalStateCanvas = goalStateCanvas;
 	}
 
 	public void addMoveListener(Composite compi) {

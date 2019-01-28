@@ -15,9 +15,11 @@ import Action.Action;
 import Action.Node;
 import DataTrasfer.MyType;
 import GraphPart.GraphContent;
+import State.GoalState;
 import State.GoalStateCanvas;
 import State.IState;
 import State.IStateCanvas;
+import State.InitialState;
 import State.InitialStateCanvas;
 import View.TreeActioDomain;
 
@@ -57,7 +59,8 @@ public class MyDropActionListener extends DropTargetAdapter {
 		if (target.getControl() instanceof Composite) {
 
 			Action action = null;
-			IState state = null;
+			InitialState initialState=null;
+			GoalState goalState=null;
 			graphContent = (GraphContent) target.getControl();
 			Composite comp = new Composite(graphContent, SWT.ALL);
 			comp.setLayoutData(new GridData(GridData.FILL, GridData.FILL, false, false));
@@ -70,15 +73,23 @@ public class MyDropActionListener extends DropTargetAdapter {
 					for (int i = 0; i < myTypes.length; i++) {
 						switch (myTypes[i].getName()) {
 						case "start":
-							state = new IState(myTypes[i].getEff());
-							InitialStateCanvas stateCanvas = new InitialStateCanvas(comp, SWT.ALL, state);
-							stateCanvas.draw();
+							
+							if (graphContent.getInitialStateCanvas()==null) {
+								initialState = new InitialState(myTypes[i].getEff());
+								InitialStateCanvas stateCanvas = new InitialStateCanvas(comp, SWT.ALL, initialState);
+								stateCanvas.draw();
+								graphContent.setInitialStateCanvas((InitialStateCanvas) stateCanvas);
+							}
 							break;
 
 						case "goal":
-							state = new IState(myTypes[i].getEff());
-							IStateCanvas stateCanvas2 = new GoalStateCanvas(comp, SWT.ALL, state);
-							stateCanvas2.draw();
+							if(graphContent.getGoalStateCanvas()==null){
+								goalState = new GoalState(myTypes[i].getEff());
+								IStateCanvas stateCanvas2 = new GoalStateCanvas(comp, SWT.ALL, goalState);
+								stateCanvas2.draw();
+								graphContent.setGoalStateCanvas((GoalStateCanvas)stateCanvas2);
+							}
+						
 							break;
 
 						default:

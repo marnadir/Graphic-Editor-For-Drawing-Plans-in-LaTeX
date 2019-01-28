@@ -236,7 +236,7 @@ public class MenuContentAction implements MenuDetectListener {
 										canvas.getAction().setDefaultValueEffLenght(false);
 										canvas.getAction().setLengthEffFromCm(Double.parseDouble(textWid.getText()));
 									} else {
-										canvas.getAction().setStandardLengthEffFromCM(Double.parseDouble(textWid.getText()));
+										canvas.getAction().setStandardLengthEffFromCm(Double.parseDouble(textWid.getText()));
 
 									}
 									canvas.resizeParent();

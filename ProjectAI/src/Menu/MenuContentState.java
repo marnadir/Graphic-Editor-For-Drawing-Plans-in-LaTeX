@@ -18,7 +18,9 @@ import org.eclipse.swt.widgets.Text;
 
 import Dialog.IDialog;
 import GraphPart.GraphContent;
+import State.GoalStateCanvas;
 import State.IStateCanvas;
+import State.InitialStateCanvas;
 import command.ChangeCondCommand;
 
 public class MenuContentState implements MenuDetectListener {
@@ -42,6 +44,15 @@ public class MenuContentState implements MenuDetectListener {
 			@Override
 			public void handleEvent(Event event) {
 				canvas.clear();
+				if(canvas.getParent().getParent() instanceof GraphContent) {
+					GraphContent content=(GraphContent)canvas.getParent().getParent();
+					if(canvas instanceof InitialStateCanvas) {
+						content.setInitialStateCanvas(null);
+
+					}else if(canvas instanceof GoalStateCanvas){
+						content.setGoalStateCanvas(null);
+					}
+				}
 			}
 		});
 

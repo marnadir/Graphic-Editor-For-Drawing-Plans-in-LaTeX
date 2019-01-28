@@ -236,7 +236,7 @@ public class Action implements Serializable {
 		return angleFormated;
 	}
 
-	public void setStandardLengthEffFromCM(double standardLengthEff) {
+	public void setStandardLengthEffFromCm(double standardLengthEff) {
 		this.standardLengthEff =(int) (standardLengthEff*CM_MEASUREMNT);
 	}
 

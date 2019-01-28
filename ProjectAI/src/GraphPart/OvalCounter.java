@@ -59,12 +59,18 @@ public class OvalCounter {
 		}
 
 		listOval.add(o);
+		o.drawOval();
+		
 	}
 	
 	
 	
 	
 	
+
+	public void setListOval(ArrayList<Oval> listOval) {
+		this.listOval = listOval;
+	}
 
 	public ArrayList<Oval> getListOval() {
 		return listOval;
