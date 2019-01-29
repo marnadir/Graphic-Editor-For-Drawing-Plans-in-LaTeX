@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;
@@ -428,6 +429,19 @@ public class PrincipalView {
 				
 				updateNodeList = contentAction.getActionInPlan();
 				for(Node node:updateNodeList) {
+					ArrayList<Oval> listOval=contentAction.getOvalCounter().getListOval();
+					Iterator<Oval> i = listOval.iterator();
+					while (i.hasNext()) {
+							Oval oval = i.next(); // must be called before you can call i.remove()
+							if(oval!=null) {
+//								if(oval.getNode()  instanceof Node) {
+									oval.dispose();
+									 i.remove();
+									 contentAction.getOvalCounter().setListOval(listOval);
+//								}
+							}
+							
+					}
 					if(toolShow.getSelection()) {
 						node.getAction().setIsShownCond(true);
 						node.pack();
@@ -438,6 +452,28 @@ public class PrincipalView {
 					}
 				}
 				
+				if(toolShow.getSelection()) {
+					if(contentAction.getInitialStateCanvas()!=null) {
+						contentAction.getInitialStateCanvas().setShownCond(true);
+						contentAction.getInitialStateCanvas().pack();
+					}
+					if(contentAction.getGoalStateCanvas()!=null) {
+						contentAction.getGoalStateCanvas().setShownCond(true);
+						contentAction.getGoalStateCanvas().pack();
+					}
+					
+				}else {
+					if(contentAction.getInitialStateCanvas()!=null) {
+						contentAction.getInitialStateCanvas().setShownCond(false);
+						contentAction.getInitialStateCanvas().pack();
+					}
+					if(contentAction.getGoalStateCanvas()!=null) {
+						contentAction.getGoalStateCanvas().setShownCond(false);
+						contentAction.getGoalStateCanvas().pack();
+					}
+				}
+				
+
 			}
 		} );
 		
@@ -461,46 +497,64 @@ public class PrincipalView {
 							@Override
 							public void handleEvent(Event event) {
 								if(combo.getText().equalsIgnoreCase("action")) {
-									if(!(lenghtPrec.getText().equals(""))&&!(lenghtPrec.getText().equals(""))) {
+									if(isNumeric(lenghtPrec.getText())&& isNumeric(lenghtEff.getText())) {
 										updateNodeList = contentAction.getActionInPlan();
-										for(Node node:updateNodeList) {
-											ArrayList<Oval> listOval=contentAction.getOvalCounter().getListOval();
-											for(int i=0;i<listOval.size();i++) {
-												if(listOval.get(i).getStateCanvas()!=null) {
-													if(listOval.get(i).getNode()  instanceof Node) {
-														listOval.get(i).dispose();
-														listOval.remove(i);
-														contentAction.getOvalCounter().setListOval(listOval);
-													}
+										if(updateNodeList !=null) {
+											for(Node node:updateNodeList) {
+												ArrayList<Oval> listOval=contentAction.getOvalCounter().getListOval();
+												Iterator<Oval> i = listOval.iterator();
+												while (i.hasNext()) {
+														Oval oval = i.next(); // must be called before you can call i.remove()
+														if(oval!=null) {
+															if(oval.getNode()  instanceof Node) {
+																oval.dispose();
+																 i.remove();
+																 contentAction.getOvalCounter().setListOval(listOval);
+															}
+														}
+														
 												}
-											}
-											
-											
-											
-											node.getAction().setLengthPrecFromCm(Double.parseDouble(lenghtPrec.getText()));
-											node.getAction().setStandardLengthPrecFromCm(Double.parseDouble(lenghtPrec.getText()));
 
-											node.getAction().setLengthEffFromCm(Double.parseDouble(lenghtEff.getText()));
-											node.getAction().setStandardLengthEffFromCm(Double.parseDouble(lenghtEff.getText()));
-											node.pack();
+												
+												
+												
+												node.getAction().setLengthPrecFromCm(Double.parseDouble(lenghtPrec.getText()));
+												node.getAction().setStandardLengthPrecFromCm(Double.parseDouble(lenghtPrec.getText()));
+
+												node.getAction().setLengthEffFromCm(Double.parseDouble(lenghtEff.getText()));
+												node.getAction().setStandardLengthEffFromCm(Double.parseDouble(lenghtEff.getText()));
+												
+
+												node.pack();
+										}
+										
+											getDialog().dispose();
+
 											
 											
 										}
 									}
 								}else {
-									if(!(lenghtPrec.getText().equals(""))) {
+									if(isNumeric(lenghtPrec.getText())) {
 										if(	contentAction.getInitialStateCanvas()!=null) {
 											
 											ArrayList<Oval> listOval=contentAction.getOvalCounter().getListOval();
-											for(int i=0;i<listOval.size();i++) {
-												if(listOval.get(i).getStateCanvas()!=null) {
-													if(listOval.get(i).getStateCanvas()  instanceof InitialStateCanvas) {
-														listOval.get(i).dispose();
-														listOval.remove(i);
-														contentAction.getOvalCounter().setListOval(listOval);
+											Iterator<Oval> i = listOval.iterator();
+											while (i.hasNext()) {
+													Oval oval = i.next(); // must be called before you can call i.remove()
+													if(oval.getStateCanvas()!=null) {
+														if(oval.getStateCanvas()  instanceof InitialStateCanvas) {
+															oval.dispose();
+															i.remove();
+															contentAction.getOvalCounter().setListOval(listOval);
+														}
 													}
-												}
+													
 											}
+											
+											
+											
+
 																						
 											contentAction.getInitialStateCanvas().setLengthFromCm(Double.parseDouble(lenghtPrec.getText()));
 											contentAction.getInitialStateCanvas().setStandardLengthFromCm(Double.parseDouble(lenghtPrec.getText()));
@@ -525,9 +579,11 @@ public class PrincipalView {
 												contentAction.getGoalStateCanvas().pack();
 											}
 										}
-										
+										getDialog().dispose();
+
 									}
 								}
+
 							}
 						};
 						return l;
@@ -880,7 +936,18 @@ public class PrincipalView {
 	}
 	
 	
-	
+	public boolean isNumeric(String str)  
+	{  
+	  try  
+	  {  
+	    double d = Double.parseDouble(str);  
+	  }  
+	  catch(NumberFormatException nfe)  
+	  {  
+	    return false;  
+	  }  
+	  return true;  
+	}
 	
 	
 	public Shell getShell() {

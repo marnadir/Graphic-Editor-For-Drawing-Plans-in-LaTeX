@@ -25,7 +25,7 @@ public abstract class ICanvasAction extends Canvas {
 
 	public void resizeParent() {
 		if (action.isShownCond()) {
-			int x1 = action.getLengthPrec() + action.getLengthEff() + action.getWidthRect() + 4;
+			int x1 = action.getLengthPrec() + action.getLengthEff() + action.getWidthRect() + 5;
 			int y1 = action.getHeightRect() + 40;
 			parent.setSize(x1, y1);
 
@@ -37,11 +37,10 @@ public abstract class ICanvasAction extends Canvas {
 	}
 
 	public void addOval(Action action, String cond, int x, int y) {
-		Oval oval = new Oval(this, cond);
-		oval.setLocation(x, y);
-		oval.drawOval();
 		if (parent.getParent() instanceof GraphContent) {
 			GraphContent graphContent = (GraphContent) parent.getParent();
+			Oval oval = new Oval(this, cond);
+			oval.setLocation(x, y);
 			graphContent.getOvalCounter().addA(oval);
 		}
 	}

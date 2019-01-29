@@ -78,6 +78,37 @@ public class MenuContentAction implements MenuDetectListener {
 				}
 			});
 
+			MenuItem form = new MenuItem(m, SWT.CASCADE);
+			form.setText("form");
+			Menu subM = new Menu(m);
+			form.setMenu(subM);
+			MenuItem black = new MenuItem(subM, SWT.ALL);
+			black.setText("Black");
+			
+			MenuItem white = new MenuItem(subM, SWT.ALL);
+			white.setText("White");
+			
+			
+			black.addListener(SWT.Selection, new Listener() {
+				
+				@Override
+				public void handleEvent(Event event) {
+					canvas.getAction().setForm(true);
+					canvas.redraw();
+					
+				}
+			});
+			
+			white.addListener(SWT.Selection, new Listener() {
+				
+				@Override
+				public void handleEvent(Event event) {
+					canvas.getAction().setForm(false);
+					canvas.redraw();
+
+				}
+			});
+			
 			MenuItem setSize = new MenuItem(m, SWT.CASCADE);
 			setSize.setText("Set Size...");
 
@@ -101,13 +132,16 @@ public class MenuContentAction implements MenuDetectListener {
 
 								@Override
 								public void handleEvent(Event event) {
-									canvas.getAction().setWidthRectFromCm(Double.parseDouble(textWid.getText()));
-									canvas.getAction().setHeightRectFromCm(Double.parseDouble(textHei.getText()));
-									canvas.getAction().setDefaultValueWid(false);
-									canvas.getAction().setDefaultValueHeig(false);
+									if(isNumeric(textWid.getText())&& isNumeric(textHei.getText())) {
+										canvas.getAction().setWidthRectFromCm(Double.parseDouble(textWid.getText()));
+										canvas.getAction().setHeightRectFromCm(Double.parseDouble(textHei.getText()));
+										canvas.getAction().setDefaultValueWid(false);
+										canvas.getAction().setDefaultValueHeig(false);
 
-									getDialog().setVisible(false);
-									canvas.resizeParent();
+										getDialog().setVisible(false);
+										canvas.resizeParent();
+									}
+								
 
 								}
 							};
@@ -163,14 +197,17 @@ public class MenuContentAction implements MenuDetectListener {
 								@Override
 								public void handleEvent(Event event) {
 
-									if (canvas.getAction().isShownCond()) {
-										canvas.getAction().setDefaultValuePrecLenght(false);
-										canvas.getAction().setLengthPrecFromCm(Double.parseDouble(textWid.getText()));
-									} else {
-										canvas.getAction().setStandardLengthPrecFromCm(Double.parseDouble(textWid.getText()));
+									if(isNumeric(textWid.getText())) {
+										if (canvas.getAction().isShownCond()) {
+											canvas.getAction().setDefaultValuePrecLenght(false);
+											canvas.getAction().setLengthPrecFromCm(Double.parseDouble(textWid.getText()));
+										} else {
+											canvas.getAction().setStandardLengthPrecFromCm(Double.parseDouble(textWid.getText()));
+										}
+										canvas.resizeParent();
+										getDialog().setVisible(false);
 									}
-									canvas.resizeParent();
-									getDialog().setVisible(false);
+									
 
 								}
 							};
@@ -231,18 +268,20 @@ public class MenuContentAction implements MenuDetectListener {
 
 								@Override
 								public void handleEvent(Event event) {
+									if (isNumeric(textWid.getText())) {
+										if (canvas.getAction().isShownCond()) {
+											canvas.getAction().setDefaultValueEffLenght(false);
+											canvas.getAction()
+													.setLengthEffFromCm(Double.parseDouble(textWid.getText()));
+										} else {
+											canvas.getAction()
+													.setStandardLengthEffFromCm(Double.parseDouble(textWid.getText()));
 
-									if (canvas.getAction().isShownCond()) {
-										canvas.getAction().setDefaultValueEffLenght(false);
-										canvas.getAction().setLengthEffFromCm(Double.parseDouble(textWid.getText()));
-									} else {
-										canvas.getAction().setStandardLengthEffFromCm(Double.parseDouble(textWid.getText()));
+										}
+										canvas.resizeParent();
 
+										getDialog().setVisible(false);
 									}
-									canvas.resizeParent();
-
-									getDialog().setVisible(false);
-
 								}
 							};
 						}
@@ -287,5 +326,17 @@ public class MenuContentAction implements MenuDetectListener {
 			});
 		}
 	}
-
+	
+	public boolean isNumeric(String str)  
+	{  
+	  try  
+	  {  
+	    double d = Double.parseDouble(str);  
+	  }  
+	  catch(NumberFormatException nfe)  
+	  {  
+	    return false;  
+	  }  
+	  return true;  
+	}
 }

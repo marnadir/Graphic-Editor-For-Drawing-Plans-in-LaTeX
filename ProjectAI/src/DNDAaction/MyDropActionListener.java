@@ -99,6 +99,10 @@ public class MyDropActionListener extends DropTargetAdapter {
 									if (myTypes[i].getPrec().equals(actionList.get(j).getPrec())
 											&& myTypes[i].getEff().equals(actionList.get(j).getEffect())) {
 										action = actionList.get(j);
+									
+										action=new Action(actionList.get(j).getName(), actionList.get(j).getPrec(),actionList.get(j).getEffect());
+										action.copyAttribute(actionList.get(j));
+										
 
 									}
 								}

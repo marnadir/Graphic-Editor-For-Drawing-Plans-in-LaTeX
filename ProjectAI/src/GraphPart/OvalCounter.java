@@ -12,6 +12,8 @@ public class OvalCounter {
 		// TODO Auto-generated constructor stub
 	}
 
+	
+	/*add oval to the list and represent it,if it isnt drawn*/
 	public void addA(Oval o) {
 		for (int i = 0; i < listOval.size(); i++) {
 			if ((listOval.get(i).getCond().equals(o.getCond()))) {
@@ -36,6 +38,7 @@ public class OvalCounter {
 		}
 
 		listOval.add(o);
+		o.drawOval();
 	}
 	
 	

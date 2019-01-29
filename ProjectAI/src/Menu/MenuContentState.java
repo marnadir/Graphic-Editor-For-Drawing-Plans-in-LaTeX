@@ -184,7 +184,7 @@ public class MenuContentState implements MenuDetectListener {
 			setSize.setMenu(subMenu);
 
 			MenuItem precSize = new MenuItem(subMenu, SWT.ALL);
-			precSize.setText("Size Precondition lines");
+			precSize.setText("Size Condition lines");
 			precSize.addListener(SWT.Selection, new Listener() {
 
 				@Override
@@ -202,12 +202,19 @@ public class MenuContentState implements MenuDetectListener {
 
 									if (canvas.isShownCond()) {
 										canvas.setDefaultValue(false);
-										canvas.setLengthFromCm(Double.parseDouble(textWid.getText()));
+										if(isNumeric(textWid.getText())) {
+											canvas.setLengthFromCm(Double.parseDouble(textWid.getText()));
+											getDialog().setVisible(false);
+
+										}
 									} else {
-										canvas.setStandardLengthFromCm(Double.parseDouble(textWid.getText()));
+										if(isNumeric(textWid.getText())) {
+											canvas.setStandardLengthFromCm(Double.parseDouble(textWid.getText()));
+											getDialog().setVisible(false);
+
+										}
 									}
 									// canvas.resizeParent();
-									getDialog().setVisible(false);
 
 								}
 							};
@@ -254,6 +261,19 @@ public class MenuContentState implements MenuDetectListener {
 
 		}
 
+	}
+	
+	public boolean isNumeric(String str)  
+	{  
+	  try  
+	  {  
+	    double d = Double.parseDouble(str);  
+	  }  
+	  catch(NumberFormatException nfe)  
+	  {  
+	    return false;  
+	  }  
+	  return true;  
 	}
 
 }

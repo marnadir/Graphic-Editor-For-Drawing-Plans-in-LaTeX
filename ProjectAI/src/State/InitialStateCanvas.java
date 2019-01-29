@@ -62,7 +62,7 @@ public class InitialStateCanvas extends IStateCanvas {
 				
 
 				
-				int posY = startY + 15;
+				int posY = startY + 20;
 				for (int i = 0; i < numCond; i++) {
 					String string = state.getConds().get(i);
 

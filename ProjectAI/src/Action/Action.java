@@ -33,6 +33,7 @@ public class Action implements Serializable {
 	int numEff;
 	boolean shownCond = false;
 	boolean shownName = true;
+	boolean form=true;
 	
 	final double PIXEL_MEASUREMNT= 0.026458;
 	final double CM_MEASUREMNT= 37.7957517575025;
@@ -46,6 +47,25 @@ public class Action implements Serializable {
 		this.paintCanvas = paint;
 	}
 
+	
+	public void copyAttribute(Action a) {
+		
+		widthRect=a.widthRect;
+		lengthPrec=a.lengthPrec;
+		lengthEff=a.lengthEff;
+		standardLengthEff=a.standardLengthEff;
+		standardLengthPrec=a.standardLengthPrec;
+		defaultValuePrecLenght=a.defaultValuePrecLenght;
+		defaultValueEffLenght=a.defaultValueEffLenght;
+		defaultValueWid=a.defaultValueWid;
+		shownCond=a.shownCond;
+		shownName=a.shownName;
+		form=a.form;
+		
+		
+		
+	}
+	
 	public Action(String name, ArrayList<String> prec, ArrayList<String> eff) {
 		this.name = name;
 		if(prec != null) {
@@ -107,13 +127,13 @@ public class Action implements Serializable {
 			standardLengthPrec = 0;
 		} 
 		else {
-			standardLengthPrec = 14;
+			//standardLengthPrec = 14;
 		}
 
 		if (numEff == 0) {
 			standardLengthEff = 0;
 		} else {
-			standardLengthEff = 14;
+			//standardLengthEff = 14;
 		}
 		
 		
@@ -357,6 +377,14 @@ public class Action implements Serializable {
 
 	public void negateIsShownName() {
 		shownName=!shownName;
+	}
+
+	public boolean isForm() {
+		return form;
+	}
+
+	public void setForm(boolean form) {
+		this.form = form;
 	}
 	
 	

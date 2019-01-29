@@ -54,13 +54,15 @@ public class Node extends ICanvasAction {
 				if (action.isShownCond()) {
 					rect = new Rectangle((action.getLengthPrec()), y - 5, action.getWidthRect(),
 							action.getHeightRect());
-					e.gc.drawRectangle(rect);
+
 				} else {
 					rect = new Rectangle((action.getStandardLengthPrec()), y - 5, action.getWidthRect(),
 							action.getHeightRect());
-					e.gc.drawRectangle(rect);
 				}
 
+				if (action.isForm()) {
+					e.gc.drawRectangle(rect);
+				}
 				if (action.isShownName()) {
 					int l = rect.x + rect.width / 6;
 					e.gc.drawString(action.getName(), l, rect.y + rect.height / 3);
