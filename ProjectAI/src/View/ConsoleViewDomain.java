@@ -87,6 +87,9 @@ public class ConsoleViewDomain extends Group{
 		
 	}
 	
+	
+	
+	
 	@Override
 	protected void checkSubclass() {
 		

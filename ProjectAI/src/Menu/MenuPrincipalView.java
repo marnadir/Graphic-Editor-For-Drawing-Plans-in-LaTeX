@@ -3,6 +3,7 @@ package Menu;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
@@ -42,6 +43,7 @@ public class MenuPrincipalView extends IMenu{
 	File directory;
 	ArrayList<Action> updateActionListDomain;
 	DomainView domainView;
+	File dirLog;
 
 	public MenuPrincipalView(Decorations parent, int style) {
 		super(parent, style);
@@ -340,8 +342,14 @@ public class MenuPrincipalView extends IMenu{
 	
 	public void createFileLog() {
 		createDirector();
-		String filepath = directory.getAbsolutePath() + "TDP.txt";
-		file = new File(filepath);
+		String filepath = dirLog.getAbsolutePath();
+		file = new File(filepath,"TDP.txt");
+		try {
+			file.createNewFile();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		if (file.exists() && !file.isDirectory()) {
 
 		}
@@ -351,10 +359,10 @@ public class MenuPrincipalView extends IMenu{
 	public void createDirector() {
 		String filepath = System.getProperty("user.home");
 		directory = new File(filepath + "/TDP");
-		File dirLog = new File(filepath + "/TDP" + "/dirLog");
+		dirLog = new File(filepath + "/TDP" + "/dirLog");
 		File dirLatex = new File(filepath + "/TDP" + "/dirLatex");
 
-		// if the directory does not exist, create it
+		// if the directory does n exist, create it
 		if (!directory.exists()) {
 			System.out.println("creating directory: " + directory.getName());
 			boolean result = false;

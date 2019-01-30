@@ -1,9 +1,13 @@
 package View;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -21,6 +25,14 @@ import GraphPart.LinkCanvas;
 import GraphPart.OrderCondition;
 
 public class ConsoleViewPlan extends Group {
+	
+	File directory;
+	GraphContent contentAction;
+	PlanView planView;
+	File dirPlan;
+	File file;
+	Text textPlan;
+	
 
 	public ConsoleViewPlan(Composite parent, int style) {
 		super(parent, style);
@@ -34,7 +46,10 @@ public class ConsoleViewPlan extends Group {
 
 	}
 	
-	public void createContent(GraphContent contentAction,CTabFolder planView) {
+	public void createContent(GraphContent contentAction,PlanView planView) {
+		
+		this.contentAction=contentAction;
+		this.planView=planView;
 
 		ToolBar toolBarPlan = new ToolBar(this, SWT.FLAT | SWT.WRAP | SWT.RIGHT);
 
@@ -42,12 +57,18 @@ public class ConsoleViewPlan extends Group {
 		updateTextPlan.setText("update");
 		Image icon = new Image(getDisplay(), "img/refresh.png");
 		updateTextPlan.setImage(icon);
+		
 		ToolItem clearTextPlan = new ToolItem(toolBarPlan, SWT.PUSH);
 		clearTextPlan.setText("clear");
 		icon = new Image(getDisplay(), "img/clear.ico");
 		clearTextPlan.setImage(icon);
 
-		Text textPlan = new Text(this, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL | SWT.READ_ONLY);
+		ToolItem saveLatex=new ToolItem(toolBarPlan,SWT.PUSH);
+		saveLatex.setText("save");
+		icon = new Image(getDisplay(), "img/save.ico");
+		saveLatex.setImage(icon);
+		
+		textPlan = new Text(this, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL | SWT.READ_ONLY);
 		textPlan.insert("update data...");
 		textPlan.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		textPlan.pack();
@@ -82,6 +103,131 @@ public class ConsoleViewPlan extends Group {
 
 			}
 		});
+		
+		clearTextPlan.addListener(SWT.Selection, new Listener() {
+
+			@Override
+			public void handleEvent(Event event) {
+				textPlan.setText("");
+
+			}
+		});
+		
+		saveLatex.addListener(SWT.Selection, new Listener() {
+			
+			@Override
+			public void handleEvent(Event event) {
+				saveFile();
+				
+				
+			}
+		});
+		
+		
+	}
+	
+	public void saveFile() {
+			createDirector();
+			String filepath = dirPlan.getAbsolutePath();
+			file = new File(filepath,"LatexPlan.tex");
+			try {
+				file.createNewFile();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			if (file.isFile()) {
+				WriteTextToFile(textPlan.getText());
+			}
+
+	}
+	
+	
+	public void createDirector() {
+		String filepath = System.getProperty("user.home");
+		directory = new File(filepath + "/TDP");
+		File dirLatex = new File(filepath + "/TDP" + "/dirLatex");
+		
+		dirPlan=new File(dirLatex.getAbsolutePath()+"/"+planView.getSelection().getText());
+		
+		
+
+		// if the directory does not exist, create it
+		if (!directory.exists()) {
+			System.out.println("creating directory: " + directory.getName());
+			boolean result = false;
+
+			try {
+				directory.mkdir();
+				result = true;
+			} catch (SecurityException se) {
+				// handle it
+			}
+			if (result) {
+				System.out.println("DIR created");
+			}
+		}
+
+		
+		if (!dirPlan.exists()) {
+			System.out.println("creating directory: " + dirPlan.getName());
+			boolean result = false;
+
+			try {
+				dirPlan.mkdir();
+				result = true;
+			} catch (SecurityException se) {
+				// handle it
+			}
+			if (result) {
+				System.out.println("DIR created");
+			}
+		}
+	
+
+		if (!dirLatex.exists()) {
+			System.out.println("creating directory: " + dirLatex.getName());
+			boolean result = false;
+
+			try {
+				dirLatex.mkdir();
+				result = true;
+			} catch (SecurityException se) {
+				// handle it
+			}
+			if (result) {
+				System.out.println("DIR created");
+			}
+		}
+
+	}
+	
+	public void WriteTextToFile(String serObj) {
+
+//		try {
+//			FileOutputStream fileOut = new FileOutputStream(file.getAbsolutePath());
+//			ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
+//			objectOut.writeChars(serObj);
+//			objectOut.close();
+//			System.out.println("The Object  was succesfully written to a file");
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+
+		PrintWriter writer = null;
+		try {
+			writer = new PrintWriter(file.getAbsolutePath(), "UTF-8");
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		writer.println(serObj);
+
+		writer.close();
+		
 		
 	}
 	

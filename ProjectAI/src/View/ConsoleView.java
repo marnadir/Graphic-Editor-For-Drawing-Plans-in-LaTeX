@@ -1,8 +1,6 @@
 package View;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.CTabFolder;
-import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
@@ -23,7 +21,7 @@ public class ConsoleView extends Group{
 
 	}
 	
-	public void createContent(DomainView domainView,GraphContent contentAction,CTabFolder planView) {
+	public void createContent(DomainView domainView,GraphContent contentAction,PlanView planView) {
 		ConsoleViewDomain consoleViewDomain=new ConsoleViewDomain(this, SWT.ALL);
 		consoleViewDomain.setLayout();
 		consoleViewDomain.createContent(domainView);
