@@ -62,7 +62,9 @@ public class ChangeNameCommand implements ICommand {
 									a.setName(textName.getText());
 									actionTree.setText(textName.getText());
 									TreeActioDomain tree=(TreeActioDomain)actionTree.getParent();
-									tree.getContainerAction().redraw();
+									if(tree.getContainerAction()!=null) {
+										tree.getContainerAction().redraw();
+									}
 									d.dispose();
 								}
 

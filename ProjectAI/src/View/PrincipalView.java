@@ -21,6 +21,7 @@ public class PrincipalView {
 	private SashForm sashForm2;
 	private DomainView domainView;
 	private GraphContent contentAction;
+	private ConsoleView consoleView;
 
 	private File directory;
 
@@ -64,10 +65,15 @@ public class PrincipalView {
 		PlanView planView = new PlanView(sashForm2, SWT.PUSH);
 		planView.setLayout();
 		planView.createContent(domainView);
+		
 
-		ConsoleView consoleView = new ConsoleView(sashForm2, SWT.SCROLL_LINE);
+		consoleView = new ConsoleView(sashForm2, SWT.SCROLL_LINE);
 		consoleView.setLayout();
 		consoleView.createContent(domainView, contentAction, planView);
+		
+		
+		
+		planView.setPdfPreView(consoleView);
 
 
 		shell.setMaximized(false);
@@ -127,6 +133,8 @@ public class PrincipalView {
 		}
 
 	}
+
+
 
 
 

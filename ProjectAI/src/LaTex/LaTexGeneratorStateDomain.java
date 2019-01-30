@@ -4,10 +4,10 @@ import java.util.ArrayList;
 
 import State.IStateCanvas;
 
-public class LaTexGeneratorState {
+public class LaTexGeneratorStateDomain {
 	
 
-	public LaTexGeneratorState() {
+	public LaTexGeneratorStateDomain() {
 	}
 	
 	public String getLatexSocode(IStateCanvas stateCanvas) {
@@ -112,11 +112,7 @@ public class LaTexGeneratorState {
 	}
 	
 	
-	
-	
-	
-	
-	
+
 
 	/*take the prec and affect actions and trasform into latex code*/
 	public String getTextPrecEff(ArrayList<String> cond) {

@@ -38,14 +38,7 @@ public class LaTexGeneratorNode {
 	public String getLatexLinkCodePlan(LinkCanvas link) {
 		StringBuilder sb = new StringBuilder();
 		sb.append("/link");
-		
-		Oval o1=link.getOval1();
-		Oval o2=link.getOval2();
-
-		Node n1=link.getOval1().getNode();
-		Node n2=link.getOval2().getNode();
-		
-		
+	
 		sb.append("{"+isStateorAction(link.getOval1())+"/"+isPreOrEff(link.getOval1())+"}");
 		sb.append("{"+isStateorAction(link.getOval2())+"/"+isPreOrEff(link.getOval2())+"}");
 		sb.append("{edge"+getBend(link)+"}"+"\n"+"\n");

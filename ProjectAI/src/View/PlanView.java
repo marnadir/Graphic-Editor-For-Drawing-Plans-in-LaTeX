@@ -30,6 +30,8 @@ import State.GoalStateCanvas;
 import State.InitialStateCanvas;
 
 public class PlanView  extends CTabFolder{
+	
+	ConsoleView consoleView;
 
 	public PlanView(Composite parent, int style) {
 		super(parent, style);
@@ -284,6 +286,24 @@ public class PlanView  extends CTabFolder{
 			}
 		});
 		
+		ToolItem PDFPreview=new ToolItem(t,SWT.PUSH);
+		icon = new Image(getDisplay(), "img/pdf.ico");
+		PDFPreview.setImage(icon);
+		
+		PDFPreview.addListener(SWT.Selection, new Listener() {
+			
+			@Override
+			public void handleEvent(Event event) {
+				ConsoleViewDomain consoleViewDomain=consoleView.getConsoleViewDomain();
+				consoleViewDomain.saveFile();
+				
+				ConsoleViewPlan consoleViewPlan=consoleView.getConsoleViewPlan();
+				consoleViewPlan.saveFile();
+				
+				
+				
+			}
+		});
 		
 		ToolItem i = new ToolItem(t, SWT.PUSH);
 		i.setToolTipText("add a new Plan");
@@ -331,6 +351,11 @@ public class PlanView  extends CTabFolder{
 	public PlanView getCurrentPlanView() {
 		return this;
 	}
+	
+	public void setPdfPreView(ConsoleView consoleView) {
+		this.consoleView=consoleView;
+	}
+	
 	
 	@Override
 	protected void checkSubclass() {

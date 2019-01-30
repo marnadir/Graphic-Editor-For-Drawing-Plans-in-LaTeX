@@ -1,8 +1,8 @@
 package LaTex;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 import Action.Action;
 
@@ -35,7 +35,7 @@ public class LaTexGeneratorAction {
 		sb.append("% PRIMITIVE");
 		sb.append("\n");
 		sb.append("\\scheme");
-		sb.append(getScheme(a.getName()));
+		sb.append(getScheme(a.getName(),false));
 		sb.append("{");
 		sb.append("\n");
 		
@@ -59,13 +59,13 @@ public class LaTexGeneratorAction {
 		sb.append("% PRIMITIVE");
 		sb.append("\n");
 		sb.append("\\scheme");
-		sb.append(getScheme(a.getName()));
+		sb.append(getScheme(a.getName(),true));
 		sb.append("{");
 		sb.append("\n");
 		
 		sb.append(space+"text"+"{/textit"+getText(a.getName())+"},"+"\n");
 		sb.append(space+"pres = {");
-		sb.append(getTextPrecEff(a.getPrec())+"},"+"\n");
+		sb.append(getTextPrecEffE(a.getPrec())+"},"+"\n");
 		sb.append(space+"eff = {");
 		sb.append(getTextPrecEffE(a.getEffect())+"},"+"\n");
 		sb.append(space+"pre length = "+a.getStandardLengthPrecInCm()+"cm,"+"\n");
@@ -77,14 +77,18 @@ public class LaTexGeneratorAction {
 	}
 	
 	
-	public String getScheme(String string) {
+	public String getScheme(String string,boolean E) {
 		String name[]=string.split("\\(");
 		String variable[]=name[1].split("\\)");
 		variable=variable[0].split(",");
 		int num=variable.length;
 		
 		StringBuilder sb=new StringBuilder();
-		sb.append("{"+name[0]+"-E"+"}");
+		sb.append("{"+name[0]);
+		if(E) {
+			sb.append("-E");
+		}
+		sb.append("}");
 		sb.append("{"+num+"}");
 
 		
@@ -96,7 +100,7 @@ public class LaTexGeneratorAction {
 		String variable[]=name[1].split("\\)");
 		variable=variable[0].split(",");
 		int num=variable.length;
-		mapping = new HashMap<>();
+		mapping=new TreeMap<String,String>(String.CASE_INSENSITIVE_ORDER);
 		for(int i=0;i<num;i++) {
 			String key="#"+(i+1);
 			mapping.put( variable[i],key);

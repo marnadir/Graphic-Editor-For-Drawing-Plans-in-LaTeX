@@ -16,7 +16,7 @@ import DNDstate.MyDragStateListener;
 import DataTrasfer.MyTransfer;
 import GraphPart.GraphContent;
 import GraphPart.Oval;
-import LaTex.LaTexGeneratorState;
+import LaTex.LaTexGeneratorStateDomain;
 import Menu.MenuContentState;
 
 public abstract class IStateCanvas extends Canvas  {
@@ -200,7 +200,7 @@ public abstract class IStateCanvas extends Canvas  {
 	}
 	
 	public void generateLatexCode() {
-		LaTexGeneratorState generator=new LaTexGeneratorState();
+		LaTexGeneratorStateDomain generator=new LaTexGeneratorStateDomain();
 
 		if(this instanceof GoalStateCanvas) {
 			latexCode=generator.getLatexGoalcode(this);

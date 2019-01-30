@@ -1,5 +1,10 @@
 package View;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
 import javax.swing.Icon;
@@ -20,6 +25,12 @@ import Action.Action;
 
 public class ConsoleViewDomain extends Group{
 
+	
+	File file;
+	File dirLatex;
+	Text textDomain;
+	DomainView domainView;
+	
 	public ConsoleViewDomain(Composite parent, int style) {
 		super(parent, style);
 		setText("Domain");
@@ -34,13 +45,15 @@ public class ConsoleViewDomain extends Group{
 	
 	public void createContent(DomainView domainView) {
 		
+		this.domainView=domainView;
+		
 		ToolBar toolBarDomain = new ToolBar(this, SWT.FLAT | SWT.WRAP | SWT.RIGHT);
 
 		ToolItem updateTextDomain = new ToolItem(toolBarDomain, SWT.PUSH);
 		updateTextDomain.setText("update");
 		Image icon = new Image(getDisplay(), "img/refresh.png");
 		updateTextDomain.setImage(icon);
-		Text textDomain = new Text(this, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL | SWT.READ_ONLY);
+		textDomain = new Text(this, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL | SWT.READ_ONLY);
 
 		textDomain.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		textDomain.pack();
@@ -50,21 +63,8 @@ public class ConsoleViewDomain extends Group{
 
 			@Override
 			public void handleEvent(Event event) {
-				textDomain.setText("");
-				if (domainView.getInitialState() != null) {
-					domainView.getInitialState().generateLatexCode();
-					textDomain.insert(domainView.getInitialState().getLatexCode());
-				}
-				if (domainView.getGoalState() != null) {
-					domainView.getGoalState().generateLatexCode();
-					textDomain.insert(domainView.getGoalState().getLatexCode());
-				}
-
-				ArrayList<Action> updateActionListDomain = domainView.getTreeAction().getActionList();
-				for (int i = 0; i < updateActionListDomain.size(); i++) {
-					updateActionListDomain.get(i).generateLatexCode();
-					textDomain.insert(updateActionListDomain.get(i).getLatexCode());
-				}
+				updateView();
+				
 
 			}
 		});
@@ -77,7 +77,7 @@ public class ConsoleViewDomain extends Group{
 
 			@Override
 			public void handleEvent(Event event) {
-				textDomain.setText(".....");
+				updateView();
 
 			}
 		});
@@ -86,9 +86,83 @@ public class ConsoleViewDomain extends Group{
 
 		
 	}
+	public void saveFile() {
+		createDirector();
+		for (File directory : dirLatex.listFiles()) {
+			if (directory.isDirectory()) {
+				file = new File(directory, "Domain.tex");
+				try {
+					file.createNewFile();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				if (file.isFile()) {
+					WriteTextToFile(textDomain.getText());
+				}
+			}
+		}
+
+		
+	}
+	public void createDirector() {
+		String filepath = System.getProperty("user.home");
+		 dirLatex = new File(filepath + "/TDP" + "/dirLatex");
+		
+		if (!dirLatex.exists()) {
+			System.out.println("creating directory: " + dirLatex.getName());
+			boolean result = false;
+
+			try {
+				dirLatex.mkdir();
+				result = true;
+			} catch (SecurityException se) {
+				// handle it
+			}
+			if (result) {
+				System.out.println("DIR created");
+			}
+		}
+		
+	}
+	
+	public void WriteTextToFile(String serObj) {
+
+		PrintWriter writer = null;
+		try {
+			writer = new PrintWriter(file.getAbsolutePath(), "UTF-8");
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		writer.println(serObj);
+
+		writer.close();
+		
+		
+	}
 	
 	
-	
+	public void updateView() {
+		textDomain.setText(".....");
+		if (domainView.getInitialState() != null) {
+			domainView.getInitialState().generateLatexCode();
+			textDomain.insert(domainView.getInitialState().getLatexCode());
+		}
+		if (domainView.getGoalState() != null) {
+			domainView.getGoalState().generateLatexCode();
+			textDomain.insert(domainView.getGoalState().getLatexCode());
+		}
+
+		ArrayList<Action> updateActionListDomain = domainView.getTreeAction().getActionList();
+		for (int i = 0; i < updateActionListDomain.size(); i++) {
+			updateActionListDomain.get(i).generateLatexCode();
+			textDomain.insert(updateActionListDomain.get(i).getLatexCode());
+		}
+	}
 	
 	@Override
 	protected void checkSubclass() {

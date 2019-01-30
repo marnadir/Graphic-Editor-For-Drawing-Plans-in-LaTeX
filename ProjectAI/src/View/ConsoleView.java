@@ -9,6 +9,9 @@ import GraphPart.GraphContent;
 
 public class ConsoleView extends Group{
 
+	ConsoleViewDomain consoleViewDomain;
+	ConsoleViewPlan consoleViewPlan;
+	
 	public ConsoleView(Composite parent, int style) {
 		super(parent, style);
 		setText("Console");
@@ -22,17 +25,30 @@ public class ConsoleView extends Group{
 	}
 	
 	public void createContent(DomainView domainView,GraphContent contentAction,PlanView planView) {
-		ConsoleViewDomain consoleViewDomain=new ConsoleViewDomain(this, SWT.ALL);
+		consoleViewDomain=new ConsoleViewDomain(this, SWT.ALL);
 		consoleViewDomain.setLayout();
 		consoleViewDomain.createContent(domainView);
 		
-		ConsoleViewPlan consoleViewPlan=new ConsoleViewPlan(this, SWT.ALL);
+		consoleViewPlan=new ConsoleViewPlan(this, SWT.ALL);
 		consoleViewPlan.setLayout();
 		consoleViewPlan.createContent(contentAction, planView);
 		
 		
 	}
 	
+	
+	
+	
+	public ConsoleViewDomain getConsoleViewDomain() {
+		return consoleViewDomain;
+	}
+
+
+	public ConsoleViewPlan getConsoleViewPlan() {
+		return consoleViewPlan;
+	}
+
+
 	@Override
 	protected void checkSubclass() {
 		

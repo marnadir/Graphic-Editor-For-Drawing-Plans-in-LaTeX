@@ -23,6 +23,7 @@ import Action.Node;
 import GraphPart.GraphContent;
 import GraphPart.LinkCanvas;
 import GraphPart.OrderCondition;
+import LaTex.LaTexGeneratorPlan;
 
 public class ConsoleViewPlan extends Group {
 	
@@ -79,27 +80,9 @@ public class ConsoleViewPlan extends Group {
 
 			@Override
 			public void handleEvent(Event event) {
-				textPlan.setText("");
-
+				updateView();
 				
-				GraphContent contentAction = (GraphContent)planView.getSelection().getControl();
-				ArrayList<Node> updateNodeList = contentAction.getActionInPlan();
-				for (int i = 0; i < updateNodeList.size(); i++) {
-					updateNodeList.get(i).generateLatexCode();
-					textPlan.insert(updateNodeList.get(i).getLatexCode());
-				}
-
-				ArrayList<LinkCanvas> updateLinkList = contentAction.getLink();
-				for (int i = 0; i < updateLinkList.size(); i++) {
-					updateLinkList.get(i).generateLatexCode();
-					textPlan.insert(updateLinkList.get(i).getLatexCode());
-				}
-
-				ArrayList<OrderCondition>updateOrder = contentAction.getOrds();
-				for (int i = 0; i < updateOrder.size(); i++) {
-					updateOrder.get(i).generateLatexCode();
-					textPlan.insert(updateOrder.get(i).getLatexCode());
-				}
+				
 
 			}
 		});
@@ -117,11 +100,16 @@ public class ConsoleViewPlan extends Group {
 			
 			@Override
 			public void handleEvent(Event event) {
+				updateView();
 				saveFile();
 				
 				
 			}
 		});
+		
+		
+		
+		
 		
 		
 	}
@@ -139,6 +127,8 @@ public class ConsoleViewPlan extends Group {
 			if (file.isFile()) {
 				WriteTextToFile(textPlan.getText());
 			}
+			
+			updateView();
 
 	}
 	
@@ -204,16 +194,6 @@ public class ConsoleViewPlan extends Group {
 	
 	public void WriteTextToFile(String serObj) {
 
-//		try {
-//			FileOutputStream fileOut = new FileOutputStream(file.getAbsolutePath());
-//			ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
-//			objectOut.writeChars(serObj);
-//			objectOut.close();
-//			System.out.println("The Object  was succesfully written to a file");
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-
 		PrintWriter writer = null;
 		try {
 			writer = new PrintWriter(file.getAbsolutePath(), "UTF-8");
@@ -231,7 +211,42 @@ public class ConsoleViewPlan extends Group {
 		
 	}
 	
+
+	public void updateView() {
+		textPlan.setText("");
+
+		LaTexGeneratorPlan laTexGeneratorPlan=new LaTexGeneratorPlan();
+		textPlan.insert(laTexGeneratorPlan.getLatexIntro());
+		
+		GraphContent contentAction = (GraphContent)planView.getSelection().getControl();
+		ArrayList<Node> updateNodeList = contentAction.getActionInPlan();
+		for (int i = 0; i < updateNodeList.size(); i++) {
+			updateNodeList.get(i).generateLatexCode();
+			textPlan.insert(updateNodeList.get(i).getLatexCode());
+		}
+
+		ArrayList<LinkCanvas> updateLinkList = contentAction.getLink();
+		for (int i = 0; i < updateLinkList.size(); i++) {
+			updateLinkList.get(i).generateLatexCode();
+			textPlan.insert(updateLinkList.get(i).getLatexCode());
+		}
+
+		ArrayList<OrderCondition>updateOrder = contentAction.getOrds();
+		for (int i = 0; i < updateOrder.size(); i++) {
+			updateOrder.get(i).generateLatexCode();
+			textPlan.insert(updateOrder.get(i).getLatexCode());
+		}
+		
+		contentAction.getInitialStateCanvas().generateLatexCode();
+		
+		textPlan.insert(laTexGeneratorPlan.getLatexEnd());
+
+		
+		
+	}
 	
+
+
 	@Override
 	protected void checkSubclass() {
 		
