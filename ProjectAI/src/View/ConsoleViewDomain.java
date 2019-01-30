@@ -149,12 +149,12 @@ public class ConsoleViewDomain extends Group{
 	public void updateView() {
 		textDomain.setText(".....");
 		if (domainView.getInitialState() != null) {
-			domainView.getInitialState().generateLatexCode();
-			textDomain.insert(domainView.getInitialState().getLatexCode());
+			domainView.getInitialState().generateLatexCodeDomain();
+			textDomain.insert(domainView.getInitialState().getLatexCodeDomain());
 		}
 		if (domainView.getGoalState() != null) {
-			domainView.getGoalState().generateLatexCode();
-			textDomain.insert(domainView.getGoalState().getLatexCode());
+			domainView.getGoalState().generateLatexCodeDomain();
+			textDomain.insert(domainView.getGoalState().getLatexCodeDomain());
 		}
 
 		ArrayList<Action> updateActionListDomain = domainView.getTreeAction().getActionList();

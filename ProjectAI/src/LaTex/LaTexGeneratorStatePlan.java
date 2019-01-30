@@ -1,5 +1,6 @@
 package LaTex;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import GraphPart.GraphContent;
@@ -16,18 +17,25 @@ public class LaTexGeneratorStatePlan {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public String getLatexSocode(GraphContent graphContent) {
+	public String getLatexPlanCode(GraphContent graphContent) {
 		StringBuilder sb = new StringBuilder();
 		InitialStateCanvas initialStateCanvas=graphContent.getInitialStateCanvas();
+		GoalStateCanvas goalStateCanvas=graphContent.getGoalStateCanvas();
 		if(initialStateCanvas.isText()) {
-			generatexTogheter(graphContent);
+			sb.append(generatexTogheter(graphContent));
+		}else {
+			sb.append(generatexSo(initialStateCanvas));
+			sb.append("\n");
+			sb.append(generatexGoal(goalStateCanvas));
+			sb.append("\n");
+
 		}
 		
 		return sb.toString();
 	}
 	
 	
-	public String generatexTogheter(GraphContent graphContent) {
+	private String generatexTogheter(GraphContent graphContent) {
 		StringBuilder sb = new StringBuilder();
 		InitialStateCanvas initialStateCanvas=graphContent.getInitialStateCanvas();
 		GoalStateCanvas goalStateCanvas =graphContent.getGoalStateCanvas();
@@ -44,7 +52,7 @@ public class LaTexGeneratorStatePlan {
 	}
 	
 	
-	public String generatexSo(InitialStateCanvas initialStateCanvas) {
+	private String generatexSo(InitialStateCanvas initialStateCanvas) {
 		StringBuilder sb = new StringBuilder();
 		sb.append("/action{start}{");
 		if(initialStateCanvas.isShownCond()) {
@@ -55,15 +63,32 @@ public class LaTexGeneratorStatePlan {
 		
 		
 		sb.append("body = {fill=black,");
-		
+		sb.append("at={"+getPosition(initialStateCanvas)+"}}}");
 		
 		return sb.toString();
 		
 	} 
 	
 	
+	private String generatexGoal(GoalStateCanvas goalStateCanvas) {
+		StringBuilder sb = new StringBuilder();
+		sb.append("/action{start}{");
+		if(goalStateCanvas.isShownCond()) {
+			sb.append("GOAL,");
+		}else {
+			sb.append("GOALL,");
+		}
+		
+		
+		sb.append("body = {fill=black,");
+		sb.append("at={"+getPosition(goalStateCanvas)+"}}}");
+		
+		return sb.toString();
+		
+	}
 	
-	public String getEffPrec(IStateCanvas iStateCanvas) {
+	
+	private String getEffPrec(IStateCanvas iStateCanvas) {
 		StringBuilder sb = new StringBuilder();
 		if(iStateCanvas.isShownCond()) {
 			sb.append(getTextPrecEff(iStateCanvas.getState().getConds()));
@@ -89,7 +114,7 @@ public class LaTexGeneratorStatePlan {
 
 	}
 	
-	public String getTextPrecEff(ArrayList<String> cond) {
+	private String getTextPrecEff(ArrayList<String> cond) {
 		StringBuilder sb=new StringBuilder();
 		sb.append("{");
 
@@ -106,7 +131,7 @@ public class LaTexGeneratorStatePlan {
 	
 	
 	
-	public String getTextPrecEffE(ArrayList<String> cond) {
+	private String getTextPrecEffE(ArrayList<String> cond) {
 
 		StringBuilder sb=new StringBuilder();
 		sb.append("{");
@@ -118,5 +143,19 @@ public class LaTexGeneratorStatePlan {
 		sb.append("}");
 
 		return sb.toString();
+	}
+	
+	private String getPosition(IStateCanvas iState) {
+		StringBuilder sb=new StringBuilder();		
+		sb.append("("+convertInCm(iState.getParent().getLocation().x)+",");
+		sb.append(convertInCm(iState.getParent().getLocation().y)+")");
+		return sb.toString();
+	}
+	
+	private String convertInCm(int x) {
+		DecimalFormat df = new DecimalFormat("#.00");
+	    String result = df.format(x*PIXEL_MEASUREMNT);
+	    return result;
+	    
 	}
 }

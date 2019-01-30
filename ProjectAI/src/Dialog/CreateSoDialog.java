@@ -46,8 +46,8 @@ public class CreateSoDialog extends IDialogNewState{
 				initialState=new InitialState(listPrec);
 				 initialStateCanvas=new InitialStateCanvas(compCanvas,SWT.ALL,initialState);
 				 initialStateCanvas.addDNDListener();
-				 initialStateCanvas.generateLatexCode();
-				initialStateCanvas.getLatexCode();
+				 initialStateCanvas.generateLatexCodeDomain();
+				initialStateCanvas.getLatexCodeDomain();
 				}
 				if(listPrec != null) {
 					initialState.updateConds(listPrec);

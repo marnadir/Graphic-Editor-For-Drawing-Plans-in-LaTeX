@@ -438,8 +438,8 @@ public class MenuPrincipalView extends IMenu{
 						domainView.getInitStateView().getContainerInitState(), SWT.BORDER, in);
 				initialStateCanvas.draw();
 				initialStateCanvas.addDNDListener();
-				initialStateCanvas.generateLatexCode();
-				initialStateCanvas.getLatexCode();
+				initialStateCanvas.generateLatexCodeDomain();
+				initialStateCanvas.getLatexCodeDomain();
 			}
 			if (data.get(2) != null) {
 				GoalState goal = (GoalState) data.get(2);
@@ -447,8 +447,8 @@ public class MenuPrincipalView extends IMenu{
 						domainView.getGoalStateView().getContainerGoalState(), SWT.BORDER, goal);
 				goalStateCanvas.draw();
 				goalStateCanvas.addDNDListener();
-				goalStateCanvas.generateLatexCode();
-				goalStateCanvas.getLatexCode();
+				goalStateCanvas.generateLatexCodeDomain();
+				goalStateCanvas.getLatexCodeDomain();
 			}
 
 			objectIn.close();

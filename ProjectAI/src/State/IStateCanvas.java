@@ -33,7 +33,7 @@ public abstract class IStateCanvas extends Canvas  {
 	boolean defaultValue;
 	Composite parent;
 	int lenIn;
-	String latexCode;
+	String latexCodeDomain;
 	final double PIXEL_MEASUREMNT= 0.026458;
 	final double CM_MEASUREMNT= 37.7957517575025;
 	boolean isText=false;
@@ -199,23 +199,25 @@ public abstract class IStateCanvas extends Canvas  {
 		}
 	}
 	
-	public void generateLatexCode() {
+	public void generateLatexCodeDomain() {
 		LaTexGeneratorStateDomain generator=new LaTexGeneratorStateDomain();
 
 		if(this instanceof GoalStateCanvas) {
-			latexCode=generator.getLatexGoalcode(this);
+			latexCodeDomain=generator.getLatexGoalcode(this);
 		}else {
-			latexCode=generator.getLatexSocode(this);
+			latexCodeDomain=generator.getLatexSocode(this);
 
 		}
 	
 	}
 	
-	public String getLatexCode() {
-		return latexCode;
+	public String getLatexCodeDomain() {
+		return latexCodeDomain;
 	}
 
 
+	
+	
 
 	public String getText() {
 		return text;

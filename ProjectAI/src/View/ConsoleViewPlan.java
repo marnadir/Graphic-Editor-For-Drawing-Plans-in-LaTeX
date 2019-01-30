@@ -24,6 +24,7 @@ import GraphPart.GraphContent;
 import GraphPart.LinkCanvas;
 import GraphPart.OrderCondition;
 import LaTex.LaTexGeneratorPlan;
+import LaTex.LaTexGeneratorStatePlan;
 
 public class ConsoleViewPlan extends Group {
 	
@@ -237,7 +238,9 @@ public class ConsoleViewPlan extends Group {
 			textPlan.insert(updateOrder.get(i).getLatexCode());
 		}
 		
-		contentAction.getInitialStateCanvas().generateLatexCode();
+
+		LaTexGeneratorStatePlan generatorStatePlan=new LaTexGeneratorStatePlan();
+		textPlan.insert(generatorStatePlan.getLatexPlanCode(contentAction));
 		
 		textPlan.insert(laTexGeneratorPlan.getLatexEnd());
 
