@@ -10,14 +10,14 @@ public class LaTexGeneratorPlan {
 	
 	public String getLatexIntro() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("//beginn{tikzpicture}");
+		sb.append("/beginn{tikzpicture}");
 		sb.append("\n");
 		return sb.toString();
 	}
 	
 	public String getLatexEnd() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("//end{tikzpicture}");
+		sb.append("/end{tikzpicture}");
 		sb.append("\n");
 		return sb.toString();
 	}
