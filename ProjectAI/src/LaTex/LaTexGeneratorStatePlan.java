@@ -3,6 +3,7 @@ package LaTex;
 import java.util.ArrayList;
 
 import GraphPart.GraphContent;
+import State.GoalStateCanvas;
 import State.IStateCanvas;
 import State.InitialStateCanvas;
 
@@ -29,17 +30,36 @@ public class LaTexGeneratorStatePlan {
 	public String generatexTogheter(GraphContent graphContent) {
 		StringBuilder sb = new StringBuilder();
 		InitialStateCanvas initialStateCanvas=graphContent.getInitialStateCanvas();
+		GoalStateCanvas goalStateCanvas =graphContent.getGoalStateCanvas();
 
 		sb.append("//stage{35em}{26em}");
-		sb.append("{effs=");
+		sb.append("{effs="+getEffPrec(initialStateCanvas));
+		sb.append("{pres="+getEffPrec(goalStateCanvas));
 		
+		sb.append("{"+initialStateCanvas.getText()+"}");
+		sb.append("{"+goalStateCanvas.getText()+"}");
+		
+		return sb.toString();
+		
+	}
+	
+	
+	public String generatexSo(InitialStateCanvas initialStateCanvas) {
+		StringBuilder sb = new StringBuilder();
+		sb.append("/action{start}{");
+		if(initialStateCanvas.isShownCond()) {
+			sb.append("START,");
+		}else {
+			sb.append("STARTL,");
+		}
+		
+		
+		sb.append("body = {fill=black,");
 		
 		
 		return sb.toString();
-
-
 		
-	}
+	} 
 	
 	
 	
@@ -58,7 +78,6 @@ public class LaTexGeneratorStatePlan {
 			sb.append(",pre lenght  = ");
 
 		}
-		
 		
 		if(iStateCanvas.isShownCond()) {
 			sb.append(iStateCanvas.getLengthCondInCm()+"em");
