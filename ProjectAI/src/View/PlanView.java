@@ -1,5 +1,6 @@
 package View;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -300,6 +301,17 @@ public class PlanView  extends CTabFolder{
 				ConsoleViewPlan consoleViewPlan=consoleView.getConsoleViewPlan();
 				consoleViewPlan.saveFile();
 				
+//				Process proc;
+//				try {
+//					proc = Runtime.getRuntime().exec("pdflatex "+consoleViewPlan.getFile().getAbsolutePath());
+//					proc.waitFor();
+//
+//				} catch (IOException | InterruptedException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}                        
+			
+				
 				
 				
 			}
@@ -355,6 +367,8 @@ public class PlanView  extends CTabFolder{
 	public void setPdfPreView(ConsoleView consoleView) {
 		this.consoleView=consoleView;
 	}
+	
+	
 	
 	
 	@Override

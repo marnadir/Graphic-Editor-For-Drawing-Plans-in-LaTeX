@@ -90,7 +90,7 @@ public class ConsoleViewDomain extends Group{
 		createDirector();
 		for (File directory : dirLatex.listFiles()) {
 			if (directory.isDirectory()) {
-				file = new File(directory, "Domain.tex");
+				file = new File(directory, "tikzlibrarydomain.code.tex");
 				try {
 					file.createNewFile();
 				} catch (IOException e) {

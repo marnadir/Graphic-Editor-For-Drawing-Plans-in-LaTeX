@@ -1,0 +1,34 @@
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6930) (preloaded format=pdflatex 2019.1.10)  31 JAN 2019 12:58
+entering extended mode
+**/home/nadir/TDP/dirLatex/Plan1/LatexPlan.tex
+(/home/nadir/TDP/dirLatex/Plan1/LatexPlan.tex
+LaTeX2e <2018-12-01>
+
+! LaTeX Error: Missing \begin{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1 u
+     pdate data...
+? 
+! Emergency stop.
+ ...                                              
+                                                  
+l.1 u
+     pdate data...
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+ 
+Here is how much of TeX's memory you used:
+ 8 strings out of 494865
+ 323 string characters out of 3178317
+ 52272 words of memory out of 3000000
+ 3758 multiletter control sequences out of 15000+200000
+ 3640 words of font info for 14 fonts, out of 3000000 for 9000
+ 0 hyphenation exceptions out of 8191
+ 5i,0n,4p,62b,14s stack positions out of 5000i,500n,10000p,200000b,50000s
+!  ==> Fatal error occurred, no output PDF file produced!
+ ==> Fatal error occurred, no output PDF file produced!

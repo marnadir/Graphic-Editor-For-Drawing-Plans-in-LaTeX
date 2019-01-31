@@ -21,15 +21,28 @@ public class LaTexGeneratorStatePlan {
 		StringBuilder sb = new StringBuilder();
 		InitialStateCanvas initialStateCanvas=graphContent.getInitialStateCanvas();
 		GoalStateCanvas goalStateCanvas=graphContent.getGoalStateCanvas();
-		if(initialStateCanvas.isText()) {
-			sb.append(generatexTogheter(graphContent));
-		}else {
-			sb.append(generatexSo(initialStateCanvas));
-			sb.append("\n");
-			sb.append(generatexGoal(goalStateCanvas));
-			sb.append("\n");
+		if(initialStateCanvas!=null) {
+			if(initialStateCanvas.isText()) {
+				sb.append(generatexTogheter(graphContent));
+				return sb.toString();
 
+			}else {
+				sb.append(generatexSo(initialStateCanvas));
+				sb.append("\n");
+				if(goalStateCanvas!=null) {
+					sb.append(generatexGoal(goalStateCanvas));
+					sb.append("\n");
+					return sb.toString();
+				}
+
+			}
+		}else {
+			if(goalStateCanvas!=null) {
+				sb.append(generatexGoal(goalStateCanvas));
+				sb.append("\n");
+			}
 		}
+		
 		
 		return sb.toString();
 	}

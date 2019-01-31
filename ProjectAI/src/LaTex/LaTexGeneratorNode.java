@@ -25,7 +25,7 @@ public class LaTexGeneratorNode {
 	
 	public String getLatexActionCodePlan(Action action,Node node) {
 		StringBuilder sb = new StringBuilder();
-		sb.append("/action");
+		sb.append("\\action");
 		sb.append("{"+node.getID()+"}");//numerare le azioni
 		sb.append("{"+getNameAction(action.getName())+"=");
 		sb.append(getVariable(action.getName())+","+"\n");
