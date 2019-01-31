@@ -272,6 +272,10 @@ public class ConsoleViewPlan extends Group {
 	
 
 
+	public File getDirPlan() {
+		return dirPlan;
+	}
+
 	public File getFile() {
 		return file;
 	}
