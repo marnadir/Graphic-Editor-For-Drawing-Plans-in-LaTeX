@@ -67,7 +67,7 @@ public class LaTexGeneratorStatePlan {
 	
 	private String generatexSo(InitialStateCanvas initialStateCanvas) {
 		StringBuilder sb = new StringBuilder();
-		sb.append("/action{start}{");
+		sb.append("\\action{start}{");
 		if(initialStateCanvas.isShownCond()) {
 			sb.append("START,");
 		}else {
@@ -85,7 +85,7 @@ public class LaTexGeneratorStatePlan {
 	
 	private String generatexGoal(GoalStateCanvas goalStateCanvas) {
 		StringBuilder sb = new StringBuilder();
-		sb.append("/action{goal}{");
+		sb.append("\\action{goal}{");
 		if(goalStateCanvas.isShownCond()) {
 			sb.append("GOAL,");
 		}else {

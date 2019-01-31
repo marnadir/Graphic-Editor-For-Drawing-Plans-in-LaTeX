@@ -98,6 +98,7 @@ public class ConsoleViewDomain extends Group{
 					e.printStackTrace();
 				}
 				if (file.isFile()) {
+					updateView();
 					WriteTextToFile(textDomain.getText());
 				}
 			}
@@ -147,7 +148,7 @@ public class ConsoleViewDomain extends Group{
 	
 	
 	public void updateView() {
-		textDomain.setText(".....");
+		textDomain.setText("");
 		if (domainView.getInitialState() != null) {
 			domainView.getInitialState().generateLatexCodeDomain();
 			textDomain.insert(domainView.getInitialState().getLatexCodeDomain());

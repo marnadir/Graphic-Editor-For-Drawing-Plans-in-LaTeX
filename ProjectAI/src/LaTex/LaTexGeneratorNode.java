@@ -29,7 +29,7 @@ public class LaTexGeneratorNode {
 		sb.append("{"+node.getID()+"}");//numerare le azioni
 		sb.append("{"+getNameAction(action.getName())+"=");
 		sb.append(getVariable(action.getName())+","+"\n");
-		sb.append("  body="+"{at={"+getPosition(node)+"}}}"+"\n"+"\n");
+		sb.append("  body="+"{at={"+getPosition(node)+"}}"+"\n"+"}"+"\n");
 		
 
 		return sb.toString();
@@ -167,9 +167,8 @@ public class LaTexGeneratorNode {
 		
 		String testo="";
 		for(int i=0;i<num;i++) {
-			testo +="{"+variable[i]+"},";
+			testo +="{"+variable[i]+"}";
 		}
-		testo=testo.substring(0, testo.length()-1);
 		
 		StringBuilder sb=new StringBuilder();
 		sb.append(testo);

@@ -10,7 +10,7 @@ public class LaTexGeneratorPlan {
 	
 	public String getLatexIntro() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("\\documentclass{beamer}");
+		sb.append("\\documentclass{beamer}"+"\n");
 		
 		sb.append("\\usepackage[T1]{fontenc}"+"\n");
 		
@@ -28,6 +28,9 @@ public class LaTexGeneratorPlan {
 				"  font issue/.style = {execute at begin picture={#1\\selectfont}}\n" + 
 				"}"+"\n");
 
+		sb.append("\\begin{document}"+"\n");
+
+		
 		sb.append("\\begin{tikzpicture}"+"\n");
 
 	
@@ -36,7 +39,9 @@ public class LaTexGeneratorPlan {
 	
 	public String getLatexEnd() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("\\end{tikzpicture}");
+		sb.append("\n"+"\\end{tikzpicture}");
+		sb.append("\n");
+
 		sb.append("\\end{document}");
 		sb.append("\n");
 		return sb.toString();

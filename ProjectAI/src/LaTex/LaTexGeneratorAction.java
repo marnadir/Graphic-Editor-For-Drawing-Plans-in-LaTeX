@@ -39,10 +39,10 @@ public class LaTexGeneratorAction {
 		sb.append("{");
 		sb.append("\n");
 		
-		sb.append(space+"text="+"{/textit"+getText(a.getName())+"},"+"\n");
+		sb.append(space+"text="+"{\\textbf"+getText(a.getName())+"},"+"\n");
 		sb.append(space+"pres = {");
 		sb.append(getTextPrecEff(a.getPrec())+"},"+"\n");
-		sb.append(space+"eff = {");
+		sb.append(space+"effs = {");
 		sb.append(getTextPrecEff(a.getEffect())+"},"+"\n");
 		sb.append(space+"pre length = "+a.getLengthPrecInCm()+"cm,"+"\n");
 		sb.append(space+"eff length = "+a.getLengthEffInCm()+"cm,"+"\n");
@@ -63,10 +63,10 @@ public class LaTexGeneratorAction {
 		sb.append("{");
 		sb.append("\n");
 		
-		sb.append(space+"text"+"{/textit"+getText(a.getName())+"},"+"\n");
+		sb.append(space+"text"+"{\\textbf"+getText(a.getName())+"},"+"\n");
 		sb.append(space+"pres = {");
 		sb.append(getTextPrecEffE(a.getPrec())+"},"+"\n");
-		sb.append(space+"eff = {");
+		sb.append(space+"effs = {");
 		sb.append(getTextPrecEffE(a.getEffect())+"},"+"\n");
 		sb.append(space+"pre length = "+a.getStandardLengthPrecInCm()+"cm,"+"\n");
 		sb.append(space+"eff length = "+a.getStandardLengthEffInCm()+"cm,"+"\n");
