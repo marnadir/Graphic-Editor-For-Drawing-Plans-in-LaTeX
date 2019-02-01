@@ -53,7 +53,6 @@ public class CreateSoDialog extends IDialogNewState{
 					initialState.updateConds(listPrec);
 					if(listPrec.size()>0) {
 						initialStateCanvas.draw();
-						initialStateCanvas.pack();
 						dialog.setVisible(false);
 					}
 				}

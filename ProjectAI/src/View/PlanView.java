@@ -303,7 +303,7 @@ public class PlanView  extends CTabFolder{
 				
 				Process proc;
 				try {
-					ProcessBuilder pb = new ProcessBuilder("pdflatex "+consoleViewPlan.getFile().getAbsolutePath());
+					ProcessBuilder pb = new ProcessBuilder("xdg-open"+consoleViewPlan.getFile().getAbsolutePath());
 					pb.directory(consoleViewPlan.getDirPlan());
 					pb.start();
 					
