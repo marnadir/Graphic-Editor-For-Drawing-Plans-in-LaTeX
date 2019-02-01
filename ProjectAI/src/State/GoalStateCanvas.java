@@ -5,7 +5,8 @@ import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.Transform;
 import org.eclipse.swt.widgets.Composite;
-import GraphPart.GraphContent;
+
+import PlanPart.PlanContent;
 
 
 
@@ -67,12 +68,12 @@ public class GoalStateCanvas extends IStateCanvas {
 					if(shownCond) {
 						e.gc.drawLine(startX, posY, startX - lengthCond, posY);
 						e.gc.drawString(string, startX+3 - lengthCond, posY - 20, false);
-						if(parent.getParent() instanceof GraphContent) {
+						if(parent.getParent() instanceof PlanContent) {
 							addOval(state,string,1, posY-2);
 						}
 					}else {
 						e.gc.drawLine(startX, posY, startX - standardLength, posY);
-						if(parent.getParent() instanceof GraphContent) {
+						if(parent.getParent() instanceof PlanContent) {
 							addOval(state,string,1, posY-2);
 						}
 					}

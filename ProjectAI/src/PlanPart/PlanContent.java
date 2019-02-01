@@ -1,7 +1,9 @@
-package GraphPart;
+package PlanPart;
 
 
 import java.util.ArrayList;
+
+import javax.swing.text.PlainView;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.dnd.DND;
@@ -20,25 +22,28 @@ import State.GoalState;
 import State.GoalStateCanvas;
 import State.InitialState;
 import State.InitialStateCanvas;
+import View.PlanView;
 import View.TreeActioDomain;
 
-public class GraphContent extends Canvas {
+public class PlanContent extends Canvas {
 
-	private Composite parent;
+	private PlanView parent;
 	private OvalCounter ovalCounter;
 	private ArrayList<Node> actionInPlan;
 	private ArrayList<LinkCanvas> link;
 	private ArrayList<OrderCondition> ords;
 	private InitialStateCanvas initialStateCanvas;
 	private GoalStateCanvas goalStateCanvas;
+	private String text;
 	
-	public GraphContent(Composite parent, int style) {
+	public PlanContent(Composite parent, int style) {
 		super(parent, style);
-		this.parent=parent;
+		this.parent=(PlanView)parent;
 		this.ovalCounter=new OvalCounter();
 		actionInPlan=new ArrayList<>();
 		link=new ArrayList<>();
 		ords=new ArrayList<>();
+		
 
 		
 		// TODO Auto-generated constructor stub
@@ -122,6 +127,11 @@ public class GraphContent extends Canvas {
 		DropTarget target = new DropTarget(this, DND.DROP_MOVE | DND.DROP_COPY);
 		target.setTransfer(new Transfer[] { MyTransfer.getInstance() });
 		target.addDropListener(new MyDropActionListener(parent, target, treeAction));
+	}
+
+	public String getText() {
+		text=this.parent.getSelection().getText();
+		return text;
 	}
 	
 }

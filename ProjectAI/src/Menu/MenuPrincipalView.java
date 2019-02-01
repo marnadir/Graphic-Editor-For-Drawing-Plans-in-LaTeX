@@ -2,11 +2,16 @@ package Menu;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+
+import javax.swing.text.PlainView;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridLayout;
@@ -22,15 +27,19 @@ import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.MessageBox;
 
 import Action.Action;
+import Action.Node;
 import Dialog.IDialog;
-import GraphPart.GraphContent;
-import GraphPart.LinkCanvas;
-import GraphPart.OrderCondition;
+import LaTex.LaTexGeneratorPlan;
+import LaTex.LaTexGeneratorStatePlan;
+import PlanPart.PlanContent;
+import PlanPart.LinkCanvas;
+import PlanPart.OrderCondition;
 import State.GoalState;
 import State.GoalStateCanvas;
 import State.InitialState;
 import State.InitialStateCanvas;
 import View.DomainView;
+import View.PlanView;
 import command.ExitCommand;
 
 
@@ -43,16 +52,20 @@ public class MenuPrincipalView extends IMenu{
 	File directory;
 	ArrayList<Action> updateActionListDomain;
 	DomainView domainView;
+	PlainView plainView;
 	File dirLog;
+	File dirLatex;
+	File dirPlan;
 
 	public MenuPrincipalView(Decorations parent, int style) {
 		super(parent, style);
 		// TODO Auto-generated constructor stub
 	}
 
-	public void fillMenu(DomainView domainView,GraphContent contentAction) {
+	public void fillMenu(DomainView domainView,PlanView planView) {
 		
 		this.domainView=domainView;
+		this.plainView=plainView;
 		
 		MenuItem fileItem = createItem("&File", SWT.CASCADE);
 		IMenu menuFile = new IMenu(getShell(), SWT.DROP_DOWN);
@@ -68,8 +81,6 @@ public class MenuPrincipalView extends IMenu{
 		MenuItem restoreStateDomain = new MenuItem(menuFile, SWT.PUSH);
 		restoreStateDomain.setText("&Reload domain\tCtrl+S");
 
-		MenuItem saveAsItem = new MenuItem(menuFile, SWT.PUSH);
-		saveAsItem.setText("&Save LatexCode");
 
 		MenuItem saveAllItem = new MenuItem(menuFile, SWT.PUSH);
 		saveAllItem.setText("&Save All\tShift+Ctrl+S");
@@ -210,7 +221,7 @@ public class MenuPrincipalView extends IMenu{
 									if (!l1.getText().contains("Select the point")
 											&& !l2.getText().contains("Select the point")) {
 										link.drawLine();
-										contentAction.getLink().add(link);
+										planView.getPlan().getLink().add(link);
 										l1.setText("First Cond. :" + "Select the point");
 										l2.setText("Second Cond. :" + "Select the point");
 										l1.pack();
@@ -222,7 +233,7 @@ public class MenuPrincipalView extends IMenu{
 								} else if (orderCond != null) {
 									if (!l2.getText().contains("null")) {
 										orderCond.drawOrder();
-										contentAction.getOrds().add(orderCond);
+										planView.getPlan().getOrds().add(orderCond);
 										orderCond.pack();
 										c1 = "null";
 										c2 = "null";
@@ -263,6 +274,7 @@ public class MenuPrincipalView extends IMenu{
 						compPoint.setVisible(false);
 
 						archBtn.addListener(SWT.Selection, new Listener() {
+							
 
 							@Override
 							public void handleEvent(Event event) {
@@ -277,7 +289,7 @@ public class MenuPrincipalView extends IMenu{
 								getDialog().pack();
 								compPoint.setVisible(true);
 
-								link = new LinkCanvas(contentAction);
+								link = new LinkCanvas(planView.getPlan());
 								link.addlistener(l1, l2, archBtn);
 
 							}
@@ -298,7 +310,7 @@ public class MenuPrincipalView extends IMenu{
 								getDialog().pack();
 								compPoint.setVisible(true);
 
-								Composite comp = new Composite(contentAction, SWT.ALL);
+								Composite comp = new Composite(planView, SWT.ALL);
 //								comp.setLayoutData(new GridData(GridData.FILL, GridData.FILL, false, false));
 //								comp.setLayout(new FillLayout());
 
@@ -323,6 +335,50 @@ public class MenuPrincipalView extends IMenu{
 			}
 		};
 
+		Listener saveAll=new Listener() {
+			
+			@Override
+			public void handleEvent(Event event) {
+				
+			
+				for(PlanContent contentAction:planView.getAllPlan()) {
+					StringBuilder sb = new StringBuilder();
+					LaTexGeneratorPlan laTexGeneratorPlan=new LaTexGeneratorPlan();
+					sb.append(laTexGeneratorPlan.getLatexIntro());
+					
+					ArrayList<Node> updateNodeList = contentAction.getActionInPlan();
+					for (int i = 0; i < updateNodeList.size(); i++) {
+						updateNodeList.get(i).generateLatexCode();
+						sb.append(updateNodeList.get(i).getLatexCode());
+					}
+
+					ArrayList<LinkCanvas> updateLinkList = contentAction.getLink();
+					for (int i = 0; i < updateLinkList.size(); i++) {
+						updateLinkList.get(i).generateLatexCode();
+						sb.append(updateLinkList.get(i).getLatexCode());
+					}
+
+					ArrayList<OrderCondition>updateOrder = contentAction.getOrds();
+					for (int i = 0; i < updateOrder.size(); i++) {
+						updateOrder.get(i).generateLatexCode();
+						sb.append(updateOrder.get(i).getLatexCode());
+					}
+					
+
+					LaTexGeneratorStatePlan generatorStatePlan=new LaTexGeneratorStatePlan();
+					sb.append(generatorStatePlan.getLatexPlanCode(contentAction));
+					
+					sb.append(laTexGeneratorPlan.getLatexEnd());
+					
+					saveFile(contentAction,sb.toString());
+					
+				}
+				
+				
+			}
+		};
+		
+		saveAllItem.addListener(SWT.Selection,saveAll );
 		showCond.addListener(SWT.Selection, listenerShow);
 		restoreStateDomain.addListener(SWT.Selection, listenerRestoreDomain);
 		storeStateDomain.addListener(SWT.Selection, listenerStoreDomain);
@@ -356,11 +412,50 @@ public class MenuPrincipalView extends IMenu{
 
 	}
 
+	public void createDirPlan(PlanContent contentAction) {
+		dirPlan = new File(dirLatex.getAbsolutePath() + "/" + contentAction.getText());
+		// if the directory does n exist, create it
+		if (!dirPlan.exists()) {
+			System.out.println("creating directory: " + directory.getName());
+			boolean result = false;
+
+			try {
+				dirPlan.mkdir();
+				result = true;
+			} catch (SecurityException se) {
+				// handle it
+			}
+			if (result) {
+				System.out.println("DIR created");
+			}
+		}
+		
+		
+	}
+	
+	public void saveFile(PlanContent contentAction,String string) {
+		createDirector();
+		createDirPlan(contentAction);
+		String filepath = dirPlan.getAbsolutePath();
+		file = new File(filepath,"LatexPlan.tex");
+		try {
+			file.createNewFile();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		if (file.isFile()) {
+			WriteTextToFile(string);
+		}
+		
+}
+	
 	public void createDirector() {
 		String filepath = System.getProperty("user.home");
 		directory = new File(filepath + "/TDP");
 		dirLog = new File(filepath + "/TDP" + "/dirLog");
-		File dirLatex = new File(filepath + "/TDP" + "/dirLatex");
+		dirLatex = new File(filepath + "/TDP" + "/dirLatex");
+
 
 		// if the directory does n exist, create it
 		if (!directory.exists()) {
@@ -409,6 +504,26 @@ public class MenuPrincipalView extends IMenu{
 		}
 
 	}
+	
+	public void WriteTextToFile(String serObj) {
+
+		PrintWriter writer = null;
+		try {
+			writer = new PrintWriter(file.getAbsolutePath(), "UTF-8");
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		writer.println(serObj);
+
+		writer.close();
+		
+		
+	}
+	
 	
 	public void WriteObjectToFile(Object serObj) {
 
@@ -459,5 +574,11 @@ public class MenuPrincipalView extends IMenu{
 		}
 
 	}
+
+	public PlainView getPlainView() {
+		return plainView;
+	}
+	
+	
 	
 }

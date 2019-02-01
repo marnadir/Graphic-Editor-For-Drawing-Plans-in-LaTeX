@@ -1,4 +1,4 @@
-package GraphPart;
+package PlanPart;
 
 public class ToolbarPlan {
 

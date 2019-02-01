@@ -7,7 +7,7 @@ import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.Transform;
 import org.eclipse.swt.widgets.Composite;
 
-import GraphPart.GraphContent;
+import PlanPart.PlanContent;
 
 public class InitialStateCanvas extends IStateCanvas {
 
@@ -69,12 +69,12 @@ public class InitialStateCanvas extends IStateCanvas {
 					if(shownCond) {
 						e.gc.drawLine(startX, posY, startX + lengthCond, posY);
 						e.gc.drawString(string, startX + 5, posY - 20, false);
-						if(parent.getParent() instanceof GraphContent) {
+						if(parent.getParent() instanceof PlanContent) {
 							addOval(state,string,startX+lengthCond, posY-2);
 						}
 					}else {
 						e.gc.drawLine(startX, posY, startX + standardLength, posY);
-						if(parent.getParent() instanceof GraphContent) {
+						if(parent.getParent() instanceof PlanContent) {
 							addOval(state,string,startX+standardLength, posY-2);
 						}
 					}

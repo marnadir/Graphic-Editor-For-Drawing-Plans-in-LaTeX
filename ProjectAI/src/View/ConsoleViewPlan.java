@@ -22,16 +22,16 @@ import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 
 import Action.Node;
-import GraphPart.GraphContent;
-import GraphPart.LinkCanvas;
-import GraphPart.OrderCondition;
 import LaTex.LaTexGeneratorPlan;
 import LaTex.LaTexGeneratorStatePlan;
+import PlanPart.PlanContent;
+import PlanPart.LinkCanvas;
+import PlanPart.OrderCondition;
 
 public class ConsoleViewPlan extends Group {
 	
 	File directory;
-	GraphContent contentAction;
+	PlanContent contentAction;
 	PlanView planView;
 	File dirPlan;
 	File file;
@@ -50,9 +50,8 @@ public class ConsoleViewPlan extends Group {
 
 	}
 	
-	public void createContent(GraphContent contentAction,PlanView planView) {
+	public void createContent(PlanView planView) {
 		
-		this.contentAction=contentAction;
 		this.planView=planView;
 
 		ToolBar toolBarPlan = new ToolBar(this, SWT.FLAT | SWT.WRAP | SWT.RIGHT);
@@ -241,7 +240,7 @@ public class ConsoleViewPlan extends Group {
 		LaTexGeneratorPlan laTexGeneratorPlan=new LaTexGeneratorPlan();
 		textPlan.insert(laTexGeneratorPlan.getLatexIntro());
 		
-		GraphContent contentAction = (GraphContent)planView.getSelection().getControl();
+		PlanContent contentAction = (PlanContent)planView.getSelection().getControl();
 		ArrayList<Node> updateNodeList = contentAction.getActionInPlan();
 		for (int i = 0; i < updateNodeList.size(); i++) {
 			updateNodeList.get(i).generateLatexCode();

@@ -17,7 +17,7 @@ import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Text;
 
 import Dialog.IDialog;
-import GraphPart.GraphContent;
+import PlanPart.PlanContent;
 import State.GoalStateCanvas;
 import State.IStateCanvas;
 import State.InitialStateCanvas;
@@ -44,8 +44,8 @@ public class MenuContentState implements MenuDetectListener {
 			@Override
 			public void handleEvent(Event event) {
 				canvas.clear();
-				if(canvas.getParent().getParent() instanceof GraphContent) {
-					GraphContent content=(GraphContent)canvas.getParent().getParent();
+				if(canvas.getParent().getParent() instanceof PlanContent) {
+					PlanContent content=(PlanContent)canvas.getParent().getParent();
 					if(canvas instanceof InitialStateCanvas) {
 						content.setInitialStateCanvas(null);
 
@@ -57,7 +57,7 @@ public class MenuContentState implements MenuDetectListener {
 		});
 
 		
-		if (!(canvas.getParent().getParent() instanceof GraphContent)) {
+		if (!(canvas.getParent().getParent() instanceof PlanContent)) {
 			MenuItem vs = new MenuItem(m, SWT.ALL);
 			vs.setText("Line vs Text");
 			vs.addListener(SWT.Selection, new Listener() {
@@ -151,7 +151,7 @@ public class MenuContentState implements MenuDetectListener {
 
 		}
 		
-		if (!(canvas.getParent().getParent() instanceof GraphContent)) {
+		if (!(canvas.getParent().getParent() instanceof PlanContent)) {
 
 			MenuItem showC = new MenuItem(m, SWT.ALL);
 			showC.setText("Show/Hide Cond...");

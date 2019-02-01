@@ -14,10 +14,10 @@ import org.eclipse.swt.widgets.Composite;
 
 import DNDstate.MyDragStateListener;
 import DataTrasfer.MyTransfer;
-import GraphPart.GraphContent;
-import GraphPart.Oval;
 import LaTex.LaTexGeneratorStateDomain;
 import Menu.MenuContentState;
+import PlanPart.PlanContent;
+import PlanPart.Oval;
 
 public abstract class IStateCanvas extends Canvas  {
 
@@ -65,7 +65,7 @@ public abstract class IStateCanvas extends Canvas  {
 		if(shownCond) {
 			int x1;
 			if(isText) {
-				 x1=(int)lengthCond+20;
+				 x1=(int)lengthCond+22;
 
 			}else {
 				 x1=(int)lengthCond+6;
@@ -77,7 +77,7 @@ public abstract class IStateCanvas extends Canvas  {
 		}else {
 			int x1;
 			if(isText) {
-				x1=standardLength+20;
+				x1=standardLength+22;
 			}else {
 				x1=standardLength+6;
 			}
@@ -191,8 +191,8 @@ public abstract class IStateCanvas extends Canvas  {
 
 	public void addOval(IState state,String cond,int x, int y) {
 	
-		if(parent.getParent() instanceof GraphContent) {
-			GraphContent graphContent=(GraphContent) parent.getParent();
+		if(parent.getParent() instanceof PlanContent) {
+			PlanContent graphContent=(PlanContent) parent.getParent();
 			Oval oval=new Oval(this,cond);
 			oval.setLocation(x, y);
 			graphContent.getOvalCounter().addSt(oval);

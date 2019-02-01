@@ -17,7 +17,7 @@ import org.eclipse.swt.widgets.Text;
 import Action.ICanvasAction;
 import Action.Node;
 import Dialog.IDialog;
-import GraphPart.GraphContent;
+import PlanPart.PlanContent;
 
 public class MenuContentAction implements MenuDetectListener {
 
@@ -40,8 +40,8 @@ public class MenuContentAction implements MenuDetectListener {
 			@Override
 			public void handleEvent(Event event) {
 				if(canvas instanceof Node) {
-					if(canvas.getParent().getParent() instanceof GraphContent) {
-						GraphContent contentAction=(GraphContent)canvas.getParent().getParent();
+					if(canvas.getParent().getParent() instanceof PlanContent) {
+						PlanContent contentAction=(PlanContent)canvas.getParent().getParent();
 						contentAction.getActionInPlan().remove(canvas);
 						canvas.getParent().setVisible(false);
 						canvas.clearDisplay();
@@ -52,7 +52,7 @@ public class MenuContentAction implements MenuDetectListener {
 			}
 		});
 
-		if (!(canvas.getParent().getParent() instanceof GraphContent)) {
+		if (!(canvas.getParent().getParent() instanceof PlanContent)) {
 
 			MenuItem showC = new MenuItem(m, SWT.ALL);
 			showC.setText("Show/Hide Cond...");

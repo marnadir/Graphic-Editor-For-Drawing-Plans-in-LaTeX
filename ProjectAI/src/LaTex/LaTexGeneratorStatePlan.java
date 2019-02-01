@@ -3,7 +3,7 @@ package LaTex;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
-import GraphPart.GraphContent;
+import PlanPart.PlanContent;
 import State.GoalStateCanvas;
 import State.IStateCanvas;
 import State.InitialStateCanvas;
@@ -17,7 +17,7 @@ public class LaTexGeneratorStatePlan {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public String getLatexPlanCode(GraphContent graphContent) {
+	public String getLatexPlanCode(PlanContent graphContent) {
 		StringBuilder sb = new StringBuilder();
 		InitialStateCanvas initialStateCanvas=graphContent.getInitialStateCanvas();
 		GoalStateCanvas goalStateCanvas=graphContent.getGoalStateCanvas();
@@ -48,7 +48,7 @@ public class LaTexGeneratorStatePlan {
 	}
 	
 	
-	private String generatexTogheter(GraphContent graphContent) {
+	private String generatexTogheter(PlanContent graphContent) {
 		StringBuilder sb = new StringBuilder();
 		InitialStateCanvas initialStateCanvas=graphContent.getInitialStateCanvas();
 		GoalStateCanvas goalStateCanvas =graphContent.getGoalStateCanvas();

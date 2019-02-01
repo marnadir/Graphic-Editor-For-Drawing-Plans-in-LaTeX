@@ -16,6 +16,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
@@ -25,8 +26,8 @@ import org.eclipse.swt.widgets.ToolItem;
 
 import Action.Node;
 import Dialog.IDialog;
-import GraphPart.GraphContent;
-import GraphPart.Oval;
+import PlanPart.PlanContent;
+import PlanPart.Oval;
 import State.GoalStateCanvas;
 import State.InitialStateCanvas;
 
@@ -48,11 +49,11 @@ public class PlanView  extends CTabFolder{
 	
 	public void createContent(DomainView domainView) {
 		CTabItem item = new CTabItem(this, SWT.CLOSE);
-		GraphContent contentAction = new GraphContent(this, SWT.ALL);
+		PlanContent contentAction = new PlanContent(this, SWT.ALL);
 		contentAction.addDndListener(domainView.getTreeAction());
 		item.setControl(contentAction);
 		setSelection(item);
-		ArrayList<GraphContent> listOfPlan = new ArrayList<>();
+		ArrayList<PlanContent> listOfPlan = new ArrayList<>();
 		listOfPlan.add(contentAction);
 		item.setText("Plan" + listOfPlan.size());
 
@@ -333,8 +334,8 @@ public class PlanView  extends CTabFolder{
 			@Override
 			public void widgetSelected(SelectionEvent var1) {
 
-				CTabItem item2 = new CTabItem(getCurrentPlanView(), SWT.CLOSE);
-				GraphContent contentAction = new GraphContent(getCurrentPlanView(), SWT.ALL);
+				CTabItem item2 = new CTabItem(getPlanView(), SWT.CLOSE);
+				PlanContent contentAction = new PlanContent(getPlanView(), SWT.ALL);
 				item2.setControl(contentAction);
 				listOfPlan.add(contentAction);
 				item2.setText("Plan" + listOfPlan.size());
@@ -367,7 +368,7 @@ public class PlanView  extends CTabFolder{
 	  return true;  
 	}
 	
-	public PlanView getCurrentPlanView() {
+	public PlanView getPlanView() {
 		return this;
 	}
 	
@@ -375,8 +376,23 @@ public class PlanView  extends CTabFolder{
 		this.consoleView=consoleView;
 	}
 	
+	public ArrayList<PlanContent> getAllPlan() {
+		ArrayList<PlanContent> child=new ArrayList<>();
+		Control[] control=getChildren();
+		for(Control c:control) {
+			if(c instanceof PlanContent) {
+				child.add((PlanContent)c);
+				
+			}
+		}
+		return child;
+	}
 	
-	
+	public PlanContent getPlan() {
+		PlanContent planContent=(PlanContent) getSelection().getControl();
+		return planContent;
+		
+	}
 	
 	@Override
 	protected void checkSubclass() {

@@ -14,7 +14,7 @@ import org.eclipse.swt.widgets.Composite;
 import Action.Action;
 import Action.Node;
 import DataTrasfer.MyType;
-import GraphPart.GraphContent;
+import PlanPart.PlanContent;
 import State.GoalState;
 import State.GoalStateCanvas;
 import State.IState;
@@ -28,7 +28,7 @@ public class MyDropActionListener extends DropTargetAdapter {
 	private DropTarget target;
 	private TreeActioDomain treeAction;
 	private ArrayList<Action> actionList;
-	private GraphContent graphContent;
+	private PlanContent graphContent;
 	private Node node;
 
 	/**
@@ -61,7 +61,7 @@ public class MyDropActionListener extends DropTargetAdapter {
 			Action action = null;
 			InitialState initialState=null;
 			GoalState goalState=null;
-			graphContent = (GraphContent) target.getControl();
+			graphContent = (PlanContent) target.getControl();
 			Composite comp = new Composite(graphContent, SWT.ALL);
 			comp.setLayoutData(new GridData(GridData.FILL, GridData.FILL, false, false));
 			comp.setLayout(new FillLayout());

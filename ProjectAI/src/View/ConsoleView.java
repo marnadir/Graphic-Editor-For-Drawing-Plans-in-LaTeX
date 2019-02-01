@@ -5,7 +5,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 
-import GraphPart.GraphContent;
+import PlanPart.PlanContent;
 
 public class ConsoleView extends Group{
 
@@ -24,14 +24,14 @@ public class ConsoleView extends Group{
 
 	}
 	
-	public void createContent(DomainView domainView,GraphContent contentAction,PlanView planView) {
+	public void createContent(DomainView domainView,PlanView planView) {
 		consoleViewDomain=new ConsoleViewDomain(this, SWT.ALL);
 		consoleViewDomain.setLayout();
 		consoleViewDomain.createContent(domainView);
 		
 		consoleViewPlan=new ConsoleViewPlan(this, SWT.ALL);
 		consoleViewPlan.setLayout();
-		consoleViewPlan.createContent(contentAction, planView);
+		consoleViewPlan.createContent(planView);
 		
 		
 	}

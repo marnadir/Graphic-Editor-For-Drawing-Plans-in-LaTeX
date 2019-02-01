@@ -3,8 +3,8 @@ package Action;
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
 
-import GraphPart.GraphContent;
-import GraphPart.Oval;
+import PlanPart.PlanContent;
+import PlanPart.Oval;
 
 public abstract class ICanvasAction extends Canvas {
 
@@ -37,8 +37,8 @@ public abstract class ICanvasAction extends Canvas {
 	}
 
 	public void addOval(Action action, String cond, int x, int y) {
-		if (parent.getParent() instanceof GraphContent) {
-			GraphContent graphContent = (GraphContent) parent.getParent();
+		if (parent.getParent() instanceof PlanContent) {
+			PlanContent graphContent = (PlanContent) parent.getParent();
 			Oval oval = new Oval(this, cond);
 			oval.setLocation(x, y);
 			graphContent.getOvalCounter().addA(oval);

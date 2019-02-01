@@ -1,4 +1,4 @@
-package GraphPart;
+package PlanPart;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.PaintEvent;
@@ -25,13 +25,13 @@ public class LinkCanvas  {
 	Composite c1;
 	Composite c2;
 	
-	GraphContent canvasContainer;
+	PlanContent canvasContainer;
 	Color black;
 	
 	String latexCode;
 
 	
-	public LinkCanvas(GraphContent parent) {
+	public LinkCanvas(PlanContent parent) {
 		this.canvasContainer=parent;
 	    black=parent.getDisplay().getSystemColor(SWT.COLOR_BLACK);
 

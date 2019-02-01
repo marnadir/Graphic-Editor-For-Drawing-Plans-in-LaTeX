@@ -1,4 +1,4 @@
-package GraphPart;
+package PlanPart;
 
 
 
@@ -26,7 +26,7 @@ import LaTex.LaTexGeneratorNode;
 
 public class OrderCondition extends Canvas{
  
-	GraphContent canvasContainer;
+	PlanContent canvasContainer;
 	Node nod1=null;
 	Node nod2=null;
 	Composite c1;
@@ -37,7 +37,7 @@ public class OrderCondition extends Canvas{
 	
 	public OrderCondition(Composite parent) {
 		super(parent, SWT.ALL);
-		this.canvasContainer=(GraphContent)parent.getParent();
+		this.canvasContainer=(PlanContent)parent.getParent();
 		this.parent=parent;
 
 		//parent.pack();

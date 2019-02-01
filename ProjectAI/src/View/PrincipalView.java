@@ -10,8 +10,8 @@ import org.eclipse.swt.layout.GridLayout;
 
 import org.eclipse.swt.widgets.Shell;
 
-import GraphPart.GraphContent;
 import Menu.MenuPrincipalView;
+import PlanPart.PlanContent;
 
 public class PrincipalView {
 
@@ -20,8 +20,9 @@ public class PrincipalView {
 	private SashForm sashForm;
 	private SashForm sashForm2;
 	private DomainView domainView;
-	private GraphContent contentAction;
+	private PlanContent contentAction;
 	private ConsoleView consoleView;
+	PlanView planView;
 
 	private File directory;
 
@@ -40,7 +41,7 @@ public class PrincipalView {
 	public void createMenuWindow() {
 
 		MenuPrincipalView menuBar=new MenuPrincipalView(shell, SWT.BAR);
-		menuBar.fillMenu(domainView, contentAction);
+		menuBar.fillMenu(domainView, planView);
 		
 	}
 
@@ -62,14 +63,14 @@ public class PrincipalView {
 		sashForm2 = new SashForm(sashForm, SWT.VERTICAL);
 		sashForm.setWeights(new int[] { 1, 3 });
 
-		PlanView planView = new PlanView(sashForm2, SWT.PUSH);
+		planView = new PlanView(sashForm2, SWT.PUSH);
 		planView.setLayout();
 		planView.createContent(domainView);
 		
 
 		consoleView = new ConsoleView(sashForm2, SWT.SCROLL_LINE);
 		consoleView.setLayout();
-		consoleView.createContent(domainView, contentAction, planView);
+		consoleView.createContent(domainView, planView);
 		
 		
 		
