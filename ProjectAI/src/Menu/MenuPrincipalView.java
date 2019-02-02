@@ -346,6 +346,10 @@ public class MenuPrincipalView extends IMenu{
 					LaTexGeneratorPlan laTexGeneratorPlan=new LaTexGeneratorPlan();
 					sb.append(laTexGeneratorPlan.getLatexIntro());
 					
+
+					LaTexGeneratorStatePlan generatorStatePlan=new LaTexGeneratorStatePlan();
+					sb.append(generatorStatePlan.getLatexPlanCode(contentAction));
+					
 					ArrayList<Node> updateNodeList = contentAction.getActionInPlan();
 					for (int i = 0; i < updateNodeList.size(); i++) {
 						updateNodeList.get(i).generateLatexCode();
@@ -365,8 +369,6 @@ public class MenuPrincipalView extends IMenu{
 					}
 					
 
-					LaTexGeneratorStatePlan generatorStatePlan=new LaTexGeneratorStatePlan();
-					sb.append(generatorStatePlan.getLatexPlanCode(contentAction));
 					
 					sb.append(laTexGeneratorPlan.getLatexEnd());
 					

@@ -301,12 +301,12 @@ public class PlanView  extends CTabFolder{
 				
 				ConsoleViewPlan consoleViewPlan=consoleView.getConsoleViewPlan();
 				consoleViewPlan.saveFile();
-				
-				Process proc;
-				try {
-					ProcessBuilder pb = new ProcessBuilder("xdg-open"+consoleViewPlan.getFile().getAbsolutePath());
-					pb.directory(consoleViewPlan.getDirPlan());
-					pb.start();
+//				
+//				Process proc;
+//				try {
+//					ProcessBuilder pb = new ProcessBuilder("xdg-open"+consoleViewPlan.getFile().getAbsolutePath());
+//					pb.directory(consoleViewPlan.getDirPlan());
+//					pb.start();
 					
 //					String cmd1="cd "+consoleViewPlan.getDirPlan().getAbsolutePath();
 //					System.out.println(cmd1);
@@ -314,10 +314,10 @@ public class PlanView  extends CTabFolder{
 //					proc = Runtime.getRuntime().exec("pdflatex "+consoleViewPlan.getFile().getName());
 //					proc.waitFor();
 
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}                        
+//				} catch (IOException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}                        
 			
 				
 				

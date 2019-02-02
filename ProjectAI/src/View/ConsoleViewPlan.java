@@ -241,6 +241,11 @@ public class ConsoleViewPlan extends Group {
 		textPlan.insert(laTexGeneratorPlan.getLatexIntro());
 		
 		PlanContent contentAction = (PlanContent)planView.getSelection().getControl();
+		
+		
+		LaTexGeneratorStatePlan generatorStatePlan=new LaTexGeneratorStatePlan();
+		textPlan.insert(generatorStatePlan.getLatexPlanCode(contentAction));
+		
 		ArrayList<Node> updateNodeList = contentAction.getActionInPlan();
 		for (int i = 0; i < updateNodeList.size(); i++) {
 			updateNodeList.get(i).generateLatexCode();
@@ -260,8 +265,7 @@ public class ConsoleViewPlan extends Group {
 		}
 		
 
-		LaTexGeneratorStatePlan generatorStatePlan=new LaTexGeneratorStatePlan();
-		textPlan.insert(generatorStatePlan.getLatexPlanCode(contentAction));
+		
 		
 		textPlan.insert(laTexGeneratorPlan.getLatexEnd());
 

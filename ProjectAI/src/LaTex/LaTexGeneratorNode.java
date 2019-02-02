@@ -37,7 +37,7 @@ public class LaTexGeneratorNode {
 	
 	public String getLatexLinkCodePlan(LinkCanvas link) {
 		StringBuilder sb = new StringBuilder();
-		sb.append("/link");
+		sb.append("\\link");
 	
 		sb.append("{"+isStateorAction(link.getOval1())+"/"+isPreOrEff(link.getOval1())+"}");
 		sb.append("{"+isStateorAction(link.getOval2())+"/"+isPreOrEff(link.getOval2())+"}");
@@ -48,7 +48,7 @@ public class LaTexGeneratorNode {
 	
 	public String getLatexOrderCodePlan(OrderCondition order) {
 		StringBuilder sb = new StringBuilder();
-		sb.append("/ordering");
+		sb.append("\\ordering");
 		sb.append("{[yshift=.65cm,xshift=.2cm]"+order.getCond1().getID()+".east}");
 		sb.append("{[yshift=.65cm,xshift=.2cm]"+order.getCond2().getID()+".west}"+"\n"+"\n");
 		return sb.toString();

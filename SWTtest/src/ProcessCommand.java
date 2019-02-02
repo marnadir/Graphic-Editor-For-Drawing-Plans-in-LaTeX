@@ -5,7 +5,7 @@ import java.io.InputStreamReader;
 
 public class ProcessCommand {
 	public static void main(String[] args) {
-		Process process;
+//		Process process;
 //		ProcessBuilder pb = new ProcessBuilder("cd ");
 //		pb.directory(new File("/home/nadir/Desktop/"));
 //
@@ -15,9 +15,11 @@ public class ProcessCommand {
 		try {
 
 
-			String[] cmd1 =new String[] {"pdflatex test.tex"};
-			process=Runtime.getRuntime().exec(cmd1, null, new File("/home/nadir/Desktop/Test"));
-			process.waitFor();
+			//String[] cmd1 =new String[] {"pdflatex test.tex"};
+			Process process = Runtime.getRuntime().exec(new String[]{"bash","-c","pdflatex /home/nadir/Desktop/Test/test.tex"});
+
+			//process=Runtime.getRuntime().exec(cmd1, null, new File(""));
+			//process.waitFor();
 
 			BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
 			StringBuilder builder = new StringBuilder();
@@ -33,9 +35,7 @@ public class ProcessCommand {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			System.out.println(e.getMessage());
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		
 		}
 
 	}

@@ -79,10 +79,10 @@ public class LaTexGeneratorStateDomain {
 		sb.append("{");
 		sb.append("\n");
 		
-		sb.append(space+"text"+"{\\hspace*"+"{-2mm}"+"},"+"\n");
-		sb.append(space+"pres = {},"+"\n");
-		sb.append(space+"effs = {");
+		sb.append(space+"text="+"{\\hspace*"+"{-2mm}"+"},"+"\n");
+		sb.append(space+"pres = {");
 		sb.append(getTextPrecEffL(stateCanvas.getState().getConds())+"},"+"\n");
+		sb.append(space+"effs = {},"+"\n");
 		sb.append(space+"eff length =  "+stateCanvas.getStandardLengthInCm()+"cm,"+"\n");
 		sb.append(space+"height = 5.5cm"+","+"\n");
 		sb.append(space+"width = 1mm"+""+"\n"+"}"+"\n");
@@ -100,10 +100,10 @@ public class LaTexGeneratorStateDomain {
 		sb.append("{");
 		sb.append("\n");
 		
-		sb.append(space+"text"+"{\\hspace*"+"{-2mm}"+"},"+"\n");
-		sb.append(space+"pres = {},"+"\n");
-		sb.append(space+"effs = {");
+		sb.append(space+"text="+"{\\hspace*"+"{-2mm}"+"},"+"\n");
+		sb.append(space+"pres = {");
 		sb.append(getTextPrecEff(stateCanvas.getState().getConds())+"},"+"\n");
+		sb.append(space+"effs = {},"+"\n");
 		sb.append(space+"eff length =  "+stateCanvas.getStandardLengthInCm()+"cm,"+"\n");
 		sb.append(space+"height = 5.5cm"+","+"\n");
 		sb.append(space+"width = 1mm"+""+"\n"+"}"+"\n");
