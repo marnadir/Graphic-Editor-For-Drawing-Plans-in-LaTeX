@@ -24,7 +24,6 @@ public class CreateSoDialog extends IDialogNewState{
 	public CreateSoDialog(Composite compCanvas) {
 		super(compCanvas.getShell(),SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL | SWT.CENTER);
 		this.compCanvas=compCanvas;
-		listPrec=this.getCond();
 		
 		
 	}
@@ -35,32 +34,33 @@ public class CreateSoDialog extends IDialogNewState{
 		this.getLabel().setText("Create a new initial state");
 		
 	}
-	
+
 	@Override
 	public Listener getOkbtnListener() {
-		Listener btn=new Listener() {
-			
+		Listener btn = new Listener() {
+
 			@Override
 			public void handleEvent(Event event) {
-				if(initialStateCanvas == null) {
-				initialState=new InitialState(listPrec);
-				 initialStateCanvas=new InitialStateCanvas(compCanvas,SWT.ALL,initialState);
-				 initialStateCanvas.addDNDListener();
-				 initialStateCanvas.generateLatexCodeDomain();
-				initialStateCanvas.getLatexCodeDomain();
+				listPrec=getCond();
+				if (initialStateCanvas == null) {
+					initialState = new InitialState(listPrec);
+					initialStateCanvas = new InitialStateCanvas(compCanvas, SWT.ALL, initialState);
+					initialStateCanvas.addDNDListener();
+					initialStateCanvas.generateLatexCodeDomain();
+					initialStateCanvas.getLatexCodeDomain();
 				}
-				if(listPrec != null) {
+				if (listPrec != null) {
 					initialState.updateConds(listPrec);
-					if(listPrec.size()>0) {
+					if (listPrec.size() > 0) {
 						initialStateCanvas.draw();
+						//initialStateCanvas.pack();
 						dialog.setVisible(false);
 					}
 				}
-				
-				
+
 			}
 		};
-		
+
 		return btn;
 	}
 

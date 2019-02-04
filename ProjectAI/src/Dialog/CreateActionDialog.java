@@ -232,7 +232,6 @@ public class CreateActionDialog extends IDialog {
 						actions.add(action);
 						
 						dialog.setVisible(false);
-						System.out.println(treeActions.getItemCount());
 						treeActions.pack();
 				}
 			}

@@ -43,7 +43,6 @@ public class MenuContentState implements MenuDetectListener {
 
 			@Override
 			public void handleEvent(Event event) {
-				canvas.clear();
 				if(canvas.getParent().getParent() instanceof PlanContent) {
 					PlanContent content=(PlanContent)canvas.getParent().getParent();
 					if(canvas instanceof InitialStateCanvas) {
@@ -53,6 +52,7 @@ public class MenuContentState implements MenuDetectListener {
 						content.setGoalStateCanvas(null);
 					}
 				}
+				canvas.clear();
 			}
 		});
 

@@ -22,6 +22,9 @@ public class LinkCanvas  {
 	Oval oval1=null;
 	Oval oval2=null;
 	
+	Label l1;
+	Label l2;
+	
 	Composite c1;
 	Composite c2;
 	
@@ -44,11 +47,13 @@ public class LinkCanvas  {
 	}
 	
 	public void addlistener(Label l1,Label l2, Button btn) {
+		this.l1=l1;
+		this.l2=l2;
 
 		for(int i=0;i<canvasContainer.getChildren().length;i++) {
 			Composite comp=(Composite)canvasContainer.getChildren()[i];
 			comp.setEnabled(true);
-			comp.getChildren()[0].addListener(SWT.MouseDoubleClick, addLink(l1,l2,comp,btn));
+			comp.getChildren()[0].addListener(SWT.MouseDoubleClick, addLink(comp,btn));
 		
 		}
 	}
@@ -58,14 +63,14 @@ public class LinkCanvas  {
 		for(int i=0;i<canvasContainer.getChildren().length;i++) {
 			Composite comp=(Composite)canvasContainer.getChildren()[i];
 			comp.setEnabled(true);
-			comp.getChildren()[0].addListener(SWT.MouseDoubleClick, addLink(l1,l2,comp,btn));
-			comp.getChildren()[0].removeListener(SWT.MouseDoubleClick, addLink(l1,l2,comp,btn));
+			comp.getChildren()[0].addListener(SWT.MouseDoubleClick, addLink(comp,btn));
+			comp.getChildren()[0].removeListener(SWT.MouseDoubleClick, addLink(comp,btn));
 		}
 	}
 	
 	
 	
-	public Listener addLink(Label l1,Label l2,Composite comp, Button btn) {
+	public Listener addLink(Composite comp, Button btn) {
 		Listener l;
 		l=new Listener() {
 			

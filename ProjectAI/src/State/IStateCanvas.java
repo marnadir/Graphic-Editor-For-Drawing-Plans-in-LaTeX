@@ -97,7 +97,7 @@ public abstract class IStateCanvas extends Canvas  {
 	public void clear() {
 //		canvasSo.redraw();
 //		canvasSo.layout();
-		this.dispose();
+		dispose();
 		state.removeConds();
 	}
 

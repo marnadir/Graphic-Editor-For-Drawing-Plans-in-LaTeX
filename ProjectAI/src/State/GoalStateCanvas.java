@@ -82,6 +82,10 @@ public class GoalStateCanvas extends IStateCanvas {
 				}
 			
 				resizeParent();
+				computeSize(getParent().getSize().x,getParent().getSize().y);
+				if(state.getConds().size()==1) {
+					pack();
+				}
 
 			}
 		});

@@ -81,8 +81,12 @@ public class InitialStateCanvas extends IStateCanvas {
 					posY = posY + 30;
 
 				}
+				
 				resizeParent();
-				//pack();
+				computeSize(getParent().getSize().x,getParent().getSize().y);
+				if(state.getConds().size()==1) {
+					pack();
+				}
 				// e.gc.drawRectangle(r);
 			}
 		});

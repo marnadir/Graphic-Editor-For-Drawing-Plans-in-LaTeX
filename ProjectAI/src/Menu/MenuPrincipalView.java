@@ -9,11 +9,17 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.nio.file.Files;
+import java.nio.file.attribute.BasicFileAttributes;
+import java.nio.file.attribute.FileTime;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import javax.swing.text.PlainView;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Button;
@@ -28,6 +34,7 @@ import org.eclipse.swt.widgets.MessageBox;
 
 import Action.Action;
 import Action.Node;
+import Dialog.DialogAreUsure;
 import Dialog.IDialog;
 import LaTex.LaTexGeneratorPlan;
 import LaTex.LaTexGeneratorStatePlan;
@@ -110,20 +117,88 @@ public class MenuPrincipalView extends IMenu{
 
 			@Override
 			public void handleEvent(Event event) {
-				createFileLog();
-				ArrayList<Object> data = new ArrayList<Object>();
-				data.add(updateActionListDomain);
-				if (domainView.getInitialState() != null) {
-					data.add(domainView.getInitialState().getState());
-				} else {
-					data.add(null);
-				}
-				if (domainView.getGoalState() != null) {
-					data.add(domainView.getGoalState().getState());
-				} else {
-					data.add(null);
-				}
-				WriteObjectToFile(data);
+				
+				IDialog dialog=new IDialog(getShell(),SWT.DIALOG_TRIM| SWT.APPLICATION_MODAL | SWT.CENTER) {
+					
+					Composite composite;
+					@Override
+					public Listener getOkbtnListener() {
+						Listener l=new Listener() {
+							
+							@Override
+							public void handleEvent(Event event) {
+								createFileLog();
+								ArrayList<Object> data = new ArrayList<Object>();
+								data.add(updateActionListDomain);
+								if (domainView.getInitialState() != null) {
+									data.add(domainView.getInitialState().getState());
+								} else {
+									data.add(null);
+								}
+								if (domainView.getGoalState() != null) {
+									data.add(domainView.getGoalState().getState());
+								} else {
+									data.add(null);
+								}
+								WriteObjectToFile(data);
+								getDialog().dispose();
+								
+							}
+						};
+						return l;
+					}
+					
+					@Override
+					public void createContent() {
+						getLabel().setText("");
+						composite = this.getComposite();
+						composite.setLayout(new GridLayout(1, false));
+						
+						Label l1=new Label(composite, SWT.ALL);
+						FontData defaultFont = new FontData("Arial", 15, SWT.BOLD);
+						
+						l1.setFont(new org.eclipse.swt.graphics.Font(l1.getDisplay(), defaultFont));
+						l1.setText("Store Domain already exits. Do you want to replace it?");
+						
+						BasicFileAttributes attr;
+						try {
+							attr = Files.readAttributes(file.toPath(), BasicFileAttributes.class);
+							FileTime fileTime=attr.lastModifiedTime();
+							
+							DateFormat df = new SimpleDateFormat("MM/dd/yy");
+							String dateCreated = df.format(fileTime.toMillis());
+
+							df=new SimpleDateFormat("HH:mm:ss");
+							String dateCreated2 = df.format(fileTime.toMillis());
+							
+							Label ltest=new Label(composite, SWT.ALL);
+							String text="Last version: "+dateCreated+" "+dateCreated2;
+							ltest.setText(text);
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+						
+						
+						
+						
+						this.getDialog().pack();
+						
+					}
+				};
+				
+				
+					
+		
+				dialog.createContent();
+					
+					
+					
+					
+			
+		
+				
+				
+			
 			}
 		};
 
@@ -131,9 +206,13 @@ public class MenuPrincipalView extends IMenu{
 
 			@Override
 			public void handleEvent(Event event) {
-				createFileLog();
-				ReadObjectToFile();
-				domainView.restoreActionList(updateActionListDomain);
+				DialogAreUsure dialog=new DialogAreUsure(getShell(),"Are you sure?");
+				if(dialog.getResult(event)) {
+					createFileLog();
+					ReadObjectToFile();
+					domainView.restoreActionList(updateActionListDomain);
+				}
+				
 			}
 		};
 
@@ -141,7 +220,7 @@ public class MenuPrincipalView extends IMenu{
 
 			@Override
 			public void handleEvent(Event event) {
-				IDialog dialog = new IDialog(getShell(), SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL | SWT.CENTER) {
+				IDialog dialog = new IDialog(getShell(),  SWT.APPLICATION_MODAL | SWT.CENTER) {
 					Composite compButton;
 
 					@Override
@@ -280,7 +359,7 @@ public class MenuPrincipalView extends IMenu{
 							public void handleEvent(Event event) {
 
 								orderCond = null;
-
+								
 								l1.setText("First Cond. :" + "Select the point");
 								l1.pack();
 								l2.setText("Second Cond. :" + "Select the point");
@@ -551,8 +630,11 @@ public class MenuPrincipalView extends IMenu{
 
 			if (data.get(1) != null) {
 				InitialState in = (InitialState) data.get(1);
+				if(domainView.getInitStateView().getContainerInitState().getChildren().length>0) {
+					domainView.getInitStateView().getContainerInitState().getChildren()[0].dispose();
+				}
 				InitialStateCanvas initialStateCanvas = new InitialStateCanvas(
-						domainView.getInitStateView().getContainerInitState(), SWT.BORDER, in);
+						domainView.getInitStateView().getContainerInitState(), SWT.ALL, in);
 				initialStateCanvas.draw();
 				initialStateCanvas.addDNDListener();
 				initialStateCanvas.generateLatexCodeDomain();
@@ -560,8 +642,11 @@ public class MenuPrincipalView extends IMenu{
 			}
 			if (data.get(2) != null) {
 				GoalState goal = (GoalState) data.get(2);
+				if(domainView.getGoalStateView().getContainerGoalState().getChildren().length>0) {
+					domainView.getGoalStateView().getContainerGoalState().getChildren()[0].dispose();
+				}
 				GoalStateCanvas goalStateCanvas = new GoalStateCanvas(
-						domainView.getGoalStateView().getContainerGoalState(), SWT.BORDER, goal);
+						domainView.getGoalStateView().getContainerGoalState(), SWT.ALL, goal);
 				goalStateCanvas.draw();
 				goalStateCanvas.addDNDListener();
 				goalStateCanvas.generateLatexCodeDomain();
