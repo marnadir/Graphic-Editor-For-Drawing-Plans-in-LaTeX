@@ -16,7 +16,6 @@ public class InitialStateCanvas extends IStateCanvas {
 	
 	public InitialStateCanvas(Composite parent, int style, IState state) {
 		super(parent, style, state);
-		name="start";
 	}
 
 	// TODO method allow to draw the initial state
@@ -29,25 +28,27 @@ public class InitialStateCanvas extends IStateCanvas {
 			public void paintControl(PaintEvent e) {
 
 				int avergWidth = (int) e.gc.getFontMetrics().getAverageCharacterWidth();
-				lengthCond=getLenght(state.getConds())*avergWidth+6;
+				state.setLengthCond(getLenght(state.getConds())*avergWidth+10);
+				
+				
 
 				
 				int startX = 0;
 				int startY =0;
 				
 				int numCond = state.getConds().size();
-				lenIn=numCond*30;
-				if(isText) {
+				state.setLenIn(numCond*30);
+				if(state.isText) {
 					int val=getTextPosition(avergWidth);
 
-					e.gc.drawRectangle(startX, startY, startX+20, startY + lenIn);
+					e.gc.drawRectangle(startX, startY, 20, startY + state.getLenIn());
 				  
 					Transform t=new Transform(getDisplay());
 					t.rotate(90);
 					
 					e.gc.setTransform(t);
 					
-					e.gc.drawString(text, val, -20);
+					e.gc.drawString(state.getText(), val, -20);
 					startX=20;
 					
 					t.rotate(-90);
@@ -56,7 +57,7 @@ public class InitialStateCanvas extends IStateCanvas {
 					
 				}else {
 					e.gc.setLineWidth(6);
-					e.gc.drawLine(startX, startY, startX, startY + lenIn);
+					e.gc.drawLine(startX, startY, startX, startY + state.getLenIn());
 					e.gc.setLineWidth(1);
 				}
 				
@@ -66,16 +67,16 @@ public class InitialStateCanvas extends IStateCanvas {
 				for (int i = 0; i < numCond; i++) {
 					String string = state.getConds().get(i);
 
-					if(shownCond) {
-						e.gc.drawLine(startX, posY, startX + lengthCond, posY);
+					if(state.isShownCond()) {
+						e.gc.drawLine(startX, posY, startX + state.getLengthCond(), posY);
 						e.gc.drawString(string, startX + 5, posY - 20, false);
 						if(parent.getParent() instanceof PlanContent) {
-							addOval(state,string,startX+lengthCond, posY-2);
+							addOval(state,string,startX+state.getLengthCond(), posY-2);
 						}
 					}else {
-						e.gc.drawLine(startX, posY, startX + standardLength, posY);
+						e.gc.drawLine(startX, posY, startX + state.getStandardLength(), posY);
 						if(parent.getParent() instanceof PlanContent) {
-							addOval(state,string,startX+standardLength, posY-2);
+							addOval(state,string,startX+state.getStandardLength(), posY-2);
 						}
 					}
 					posY = posY + 30;
@@ -94,15 +95,17 @@ public class InitialStateCanvas extends IStateCanvas {
     
     public  int getTextPosition(int avergWidth) {
     	  int i = 5;
-    	  int stringLenght=text.length()*avergWidth+6;
-    	  if(stringLenght>lenIn) {
-    		  lenIn=stringLenght;
+    	  int stringLenght=state.getText().length()*avergWidth+6;
+    	  if(stringLenght>state.getLenIn()) {
+       		  state.setLenIn(stringLenght);
     		  return i;
     	  }else {
-    		  i=(lenIn-stringLenght)/2;
+    		  i=(state.getLenIn()-stringLenght)/2;
     		  return i;
     	  }
     	  
     }
+    
+  
 
 }

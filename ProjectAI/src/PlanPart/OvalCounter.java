@@ -52,7 +52,7 @@ public class OvalCounter {
 				 */
 
 				if (listOval.get(i).getStateCanvas() != null) {
-					if (listOval.get(i).getStateCanvas().getName().equals(o.getStateCanvas().getName())) {
+					if (listOval.get(i).getStateCanvas().getState().getName().equals(o.getStateCanvas().getState().getName())) {
 						return;
 					}
 				}

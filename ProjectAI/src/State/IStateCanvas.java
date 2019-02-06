@@ -24,20 +24,14 @@ public abstract class IStateCanvas extends Canvas  {
 	/**
 	 * 
 	 */
-	String name;
+
 	IState state;
 	Composite contentCanvas;
-	boolean shownCond = false;
-	int lengthCond;
-	int standardLength=53;
-	boolean defaultValue;
 	Composite parent;
-	int lenIn;
-	String latexCodeDomain;
 	final double PIXEL_MEASUREMNT= 0.026458;
 	final double CM_MEASUREMNT= 37.7957517575025;
-	boolean isText=false;
-	String text;
+
+
 
 
 	public IStateCanvas(Composite parent, int style, IState state) {
@@ -55,33 +49,33 @@ public abstract class IStateCanvas extends Canvas  {
 
 		this.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		int numCond = state.getConds().size();
-		lenIn=numCond*30;
+		state.setLenIn(numCond*30);
 		this.addMenuDetectListener(new MenuContentState(this));
 		resizeParent();
 		
 	}
 
 	public void resizeParent() {
-		if(shownCond) {
+		if(state.isShownCond()) {
 			int x1;
-			if(isText) {
-				 x1=(int)lengthCond+22;
+			if(state.isText()) {
+				 x1=(int)state.getLengthCond()+27;
 
 			}else {
-				 x1=(int)lengthCond+6;
+				 x1=(int)state.getLengthCond()+6;
 
 			}
-			int y1=lenIn+4;
+			int y1=state.getLenIn()+4;
 			parent.setSize(x1,y1);
 			
 		}else {
 			int x1;
-			if(isText) {
-				x1=standardLength+22;
+			if(state.isText()) {
+				x1=state.getStandardLength()+22;
 			}else {
-				x1=standardLength+6;
+				x1=state.getStandardLength()+6;
 			}
-			int y1=this.lenIn+4;
+			int y1=state.getLenIn()+4;
 			parent.setSize(x1,y1);
 
 		}
@@ -103,64 +97,7 @@ public abstract class IStateCanvas extends Canvas  {
 
 
 
-	public boolean isShownCond() {
-		return shownCond;
-	}
-
-
-
-	public void setShownCond(boolean shownCond) {
-		this.shownCond = shownCond;
-	}
-
-
-
-	public int getLengthCond() {
-		return lengthCond;
-	}
-
-	public String getLengthCondInCm() {
-		DecimalFormat df = new DecimalFormat("#.00");
-	    String angleFormated = df.format(lengthCond*PIXEL_MEASUREMNT);
-		return angleFormated;
-	}
-
-
-	public void setLengthFromCm(double d) {
-		this.lengthCond = (int)(d*CM_MEASUREMNT);
-	}
-
-
-
-	public int getStandardLength() {
-		return standardLength;
-	}
-
-	public String getStandardLengthInCm() {
-		DecimalFormat df = new DecimalFormat("#.00");
-	    String angleFormated = df.format(standardLength*PIXEL_MEASUREMNT);
-		return angleFormated;
-	}
-
-	public void setStandardLengthFromCm(double standardLengthPrec) {
-		this.standardLength = (int)(standardLengthPrec*CM_MEASUREMNT);
-	}
-
-
-
-	public boolean isDefaultValuePrec() {
-		return defaultValue;
-	}
-
-
-
-	public void setDefaultValue(boolean defaultValuePrec) {
-		this.defaultValue = defaultValuePrec;
-	}
 	
-	public void negateIsShownCond() {
-		shownCond=!shownCond;
-	}
 	
 	public int getLenght(ArrayList<String> conds) {
 
@@ -178,14 +115,12 @@ public abstract class IStateCanvas extends Canvas  {
 		return lenght;
 	}
 	
-	public String getName() {
-		return name;
-	}
+	
 	
 	public void addDNDListener() {
 		DragSource source =new DragSource(this, DND.DROP_NONE);
 	    source.setTransfer(new Transfer[] { MyTransfer.getInstance() });
-	    source.addDragListener(new MyDragStateListener(source,name));
+	    source.addDragListener(new MyDragStateListener(source,state.getName()));
 	}
 
 
@@ -199,45 +134,13 @@ public abstract class IStateCanvas extends Canvas  {
 		}
 	}
 	
-	public void generateLatexCodeDomain() {
-		LaTexGeneratorStateDomain generator=new LaTexGeneratorStateDomain();
 
-		if(this instanceof GoalStateCanvas) {
-			latexCodeDomain=generator.getLatexGoalcode(this);
-		}else {
-			latexCodeDomain=generator.getLatexSocode(this);
-
-		}
-	
-	}
-	
-	public String getLatexCodeDomain() {
-		return latexCodeDomain;
-	}
 
 
 	
 	
 
-	public String getText() {
-		return text;
-	}
 
-
-
-	public void setText(String text) {
-		this.text = text;
-	}
-
-
-
-	public boolean isText() {
-		return isText;
-	}
-	
-	public void setIsText(boolean isText) {
-		this.isText=isText;
-	}
 	
 	
 }

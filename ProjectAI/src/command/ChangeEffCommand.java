@@ -53,7 +53,7 @@ public class ChangeEffCommand  implements ICommand{
 							public void handleEvent(Event event) {
 								updateEff(getList());
 								updateTree();
-								getDialog().dispose();
+								dispose();
 							}
 						};
 					}

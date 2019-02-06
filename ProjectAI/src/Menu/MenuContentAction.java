@@ -138,7 +138,7 @@ public class MenuContentAction implements MenuDetectListener {
 										canvas.getAction().setDefaultValueWid(false);
 										canvas.getAction().setDefaultValueHeig(false);
 
-										getDialog().setVisible(false);
+										setVisible(false);
 										canvas.resizeParent();
 									}
 								
@@ -172,7 +172,7 @@ public class MenuContentAction implements MenuDetectListener {
 							GridData gridData = new GridData(GridData.CENTER, GridData.CENTER, false, false);
 							gridData.horizontalSpan = 2;
 							info.setLayoutData(gridData);
-							this.getDialog().pack();
+							pack();
 
 						}
 					};
@@ -205,7 +205,7 @@ public class MenuContentAction implements MenuDetectListener {
 											canvas.getAction().setStandardLengthPrecFromCm(Double.parseDouble(textWid.getText()));
 										}
 										canvas.resizeParent();
-										getDialog().setVisible(false);
+										setVisible(false);
 									}
 									
 
@@ -244,7 +244,7 @@ public class MenuContentAction implements MenuDetectListener {
 
 							}
 
-							this.getDialog().pack();
+							pack();
 
 						}
 					};
@@ -280,7 +280,7 @@ public class MenuContentAction implements MenuDetectListener {
 										}
 										canvas.resizeParent();
 
-										getDialog().setVisible(false);
+										setVisible(false);
 									}
 								}
 							};
@@ -317,7 +317,7 @@ public class MenuContentAction implements MenuDetectListener {
 
 							}
 
-							this.getDialog().pack();
+							pack();
 
 						}
 					};

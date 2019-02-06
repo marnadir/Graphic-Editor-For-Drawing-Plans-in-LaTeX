@@ -11,9 +11,8 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 
-public abstract class IDialog {
+public abstract class IDialog  extends Shell{
 	private Shell shell;
-	private Shell dialog;
 	private Label label;
 	private Composite composite;
 	int style;
@@ -23,6 +22,7 @@ public abstract class IDialog {
 	
 
 	public IDialog(Shell shell,int style) {
+		super(shell, style);
 		this.shell = shell;
 		this.style=style;
 		this.createDialog();
@@ -30,22 +30,22 @@ public abstract class IDialog {
 	}
 
 	public void createDialog() {
-		dialog = new Shell(shell, style);
+		
 
-		okButton = new Button(dialog, SWT.PUSH);
+		okButton = new Button(this, SWT.PUSH);
 		okButton.setText("&OK");
 		okButton.addListener(SWT.Selection, getOkbtnListener());
 		
-		cancelButton = new Button(dialog, SWT.PUSH);
+		cancelButton = new Button(this, SWT.PUSH);
 		cancelButton.setText("&Cancel");
 		cancelButton.addListener(SWT.Selection, getCancListener());
 
-		this.label = new Label (dialog, SWT.NONE);
-		this.composite=new Composite(dialog, SWT.ALL);
+		this.label = new Label (this, SWT.NONE);
+		this.composite=new Composite(this, SWT.ALL);
 		
 		FormLayout form = new FormLayout ();
 		form.marginWidth = form.marginHeight = 8;
-		dialog.setLayout (form);
+		setLayout (form);
 		
 		FormData compositeData = new FormData ();
 		compositeData.top = new FormAttachment (label, 8);
@@ -60,9 +60,9 @@ public abstract class IDialog {
 		cancelData.top = new FormAttachment (okButton, 0, SWT.TOP);
 		cancelButton.setLayoutData (cancelData);
 
-		dialog.setDefaultButton (okButton);
-		dialog.pack ();
-		dialog.open ();
+		setDefaultButton (okButton);
+		pack ();
+		open ();
 	}
 	
 	public abstract void createContent();	
@@ -71,9 +71,7 @@ public abstract class IDialog {
 		return this.label;
 	}
 	
-	public Shell getDialog() {
-		return this.dialog;
-	}
+
 	
 	
 	
@@ -94,7 +92,7 @@ public abstract class IDialog {
 
 			@Override
 			public void handleEvent(Event event) {
-				dialog.close();
+				dispose();
 			}
 		};
 
@@ -103,4 +101,9 @@ public abstract class IDialog {
 	}
 	
 	public abstract Listener getOkbtnListener() ;
+	
+	@Override
+	protected void checkSubclass() {
+		
+	}
 }

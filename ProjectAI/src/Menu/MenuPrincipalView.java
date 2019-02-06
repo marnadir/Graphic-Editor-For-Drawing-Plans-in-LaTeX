@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import javax.swing.text.PlainView;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.RowLayout;
@@ -31,6 +32,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.MessageBox;
+import org.eclipse.swt.widgets.Shell;
 
 import Action.Action;
 import Action.Node;
@@ -119,86 +121,73 @@ public class MenuPrincipalView extends IMenu{
 			public void handleEvent(Event event) {
 				
 				IDialog dialog=new IDialog(getShell(),SWT.DIALOG_TRIM| SWT.APPLICATION_MODAL | SWT.CENTER) {
-					
+
 					Composite composite;
+
 					@Override
 					public Listener getOkbtnListener() {
-						Listener l=new Listener() {
-							
+						Listener l = new Listener() {
+
 							@Override
 							public void handleEvent(Event event) {
 								createFileLog();
 								ArrayList<Object> data = new ArrayList<Object>();
 								data.add(updateActionListDomain);
-								if (domainView.getInitialState() != null) {
-									data.add(domainView.getInitialState().getState());
+								if (domainView.getInitialStateCanvas() != null) {
+									data.add(domainView.getInitialStateCanvas().getState());
 								} else {
 									data.add(null);
 								}
-								if (domainView.getGoalState() != null) {
-									data.add(domainView.getGoalState().getState());
+								if (domainView.getGoalStateCanvas() != null) {
+									data.add(domainView.getGoalStateCanvas().getState());
 								} else {
 									data.add(null);
 								}
 								WriteObjectToFile(data);
-								getDialog().dispose();
-								
+								dispose();
+
 							}
 						};
 						return l;
 					}
-					
+
 					@Override
 					public void createContent() {
 						getLabel().setText("");
 						composite = this.getComposite();
 						composite.setLayout(new GridLayout(1, false));
-						
-						Label l1=new Label(composite, SWT.ALL);
+
+						Label l1 = new Label(composite, SWT.ALL);
 						FontData defaultFont = new FontData("Arial", 15, SWT.BOLD);
-						
+
 						l1.setFont(new org.eclipse.swt.graphics.Font(l1.getDisplay(), defaultFont));
 						l1.setText("Store Domain already exits. Do you want to replace it?");
-						
+
 						BasicFileAttributes attr;
 						try {
 							attr = Files.readAttributes(file.toPath(), BasicFileAttributes.class);
-							FileTime fileTime=attr.lastModifiedTime();
-							
+							FileTime fileTime = attr.lastModifiedTime();
+
 							DateFormat df = new SimpleDateFormat("MM/dd/yy");
 							String dateCreated = df.format(fileTime.toMillis());
 
-							df=new SimpleDateFormat("HH:mm:ss");
+							df = new SimpleDateFormat("HH:mm:ss");
 							String dateCreated2 = df.format(fileTime.toMillis());
-							
-							Label ltest=new Label(composite, SWT.ALL);
-							String text="Last version: "+dateCreated+" "+dateCreated2;
+
+							Label ltest = new Label(composite, SWT.ALL);
+							String text = "Last version: " + dateCreated + " " + dateCreated2;
 							ltest.setText(text);
 						} catch (IOException e) {
 							e.printStackTrace();
 						}
-						
-						
-						
-						
-						this.getDialog().pack();
-						
+
+						pack();
+
 					}
 				};
-				
-				
-					
-		
+
 				dialog.createContent();
-					
-					
-					
-					
-			
-		
-				
-				
-			
+
 			}
 		};
 
@@ -206,13 +195,13 @@ public class MenuPrincipalView extends IMenu{
 
 			@Override
 			public void handleEvent(Event event) {
-				DialogAreUsure dialog=new DialogAreUsure(getShell(),"Are you sure?");
-				if(dialog.getResult(event)) {
+				DialogAreUsure dialog = new DialogAreUsure(getShell(), "Are you sure?");
+				if (dialog.getResult(event)) {
 					createFileLog();
 					ReadObjectToFile();
 					domainView.restoreActionList(updateActionListDomain);
 				}
-				
+
 			}
 		};
 
@@ -220,7 +209,7 @@ public class MenuPrincipalView extends IMenu{
 
 			@Override
 			public void handleEvent(Event event) {
-				IDialog dialog = new IDialog(getShell(),  SWT.APPLICATION_MODAL | SWT.CENTER) {
+				IDialog dialog = new IDialog(getShell(), SWT.APPLICATION_MODAL | SWT.CENTER) {
 					Composite compButton;
 
 					@Override
@@ -235,7 +224,7 @@ public class MenuPrincipalView extends IMenu{
 									Button btn = (Button) child[i];
 									if (btn.getSelection()) {
 										System.out.println(btn.getText());
-										getDialog().setVisible(false);
+										setVisible(false);
 									}
 								}
 
@@ -262,7 +251,7 @@ public class MenuPrincipalView extends IMenu{
 						Button choiceUserBtn = new Button(compButton, SWT.RADIO);
 						choiceUserBtn.setText("Depending on Choice");
 
-						this.getDialog().pack();
+						pack();
 
 					}
 				};
@@ -271,6 +260,8 @@ public class MenuPrincipalView extends IMenu{
 			}
 		};
 
+		
+		
 		Listener listenerLink = new Listener() {
 			Composite compButton;
 			private Composite compPoint;
@@ -278,15 +269,73 @@ public class MenuPrincipalView extends IMenu{
 			private LinkCanvas link;
 			private OrderCondition orderCond;
 			Label l1 = null;
-
 			Label l2 = null;
 			String c1 = "....";
 			String c2 = "....";
+			IDialog dialog = null;
+
+			Button archBtn;
+
+			public Listener getArchBtnList() {
+
+				Listener archBtnList = new Listener() {
+
+					@Override
+					public void handleEvent(Event event) {
+
+						orderCond = null;
+
+						l1.setText("First Cond. :" + "Select the point");
+						l1.pack();
+						l2.setText("Second Cond. :" + "Select the point");
+						l2.pack();
+						compPoint.pack();
+						dialog.pack();
+						compPoint.setVisible(true);
+
+						link = new LinkCanvas(planView.getPlan());
+						link.addlistener(l1, l2, archBtn);
+
+					}
+				};
+
+				return archBtnList;
+			}
+
+			public Listener getOrdBtnList() {
+				Listener ordBtnList = new Listener() {
+
+					@Override
+					public void handleEvent(Event event) {
+
+						link = null;
+						c1 = "null";
+						c2 = "null";
+						l1.setText("ordering of actions");
+						l2.setText(c1 + "<" + c2);
+						l2.pack();
+						compPoint.pack();
+						dialog.pack();
+						compPoint.setVisible(true);
+
+						Composite comp = new Composite(planView, SWT.ALL);
+
+						// sulla definizione di cio, ce qualcosa che mi turba!!
+						comp.setSize(50, 50);
+						comp.setLocation(20, 30);
+
+						orderCond = new OrderCondition(comp);
+						orderCond.addlistener(l1, l2);
+					}
+				};
+
+				return ordBtnList;
+			}
 
 			@Override
 			public void handleEvent(Event event) {
 
-				IDialog dialog = new IDialog(getShell(), SWT.DIALOG_TRIM) {
+				dialog = new IDialog(getShell(), SWT.DIALOG_TRIM) {
 
 					@Override
 					public Listener getOkbtnListener() {
@@ -331,6 +380,18 @@ public class MenuPrincipalView extends IMenu{
 					}
 
 					@Override
+					public void dispose() {
+
+						link.removelistener(l1, l2, archBtn);
+						archBtn.removeListener(SWT.MouseDoubleClick, getArchBtnList());
+						removeListener(SWT.MouseDoubleClick, getArchBtnList());
+						link=null;
+
+						super.dispose();
+
+					}
+
+					@Override
 					public void createContent() {
 
 						getLabel().setText("Create Connection");
@@ -340,7 +401,7 @@ public class MenuPrincipalView extends IMenu{
 						compButton = new Composite(c, SWT.ALL);
 						compButton.setLayout(new RowLayout(SWT.VERTICAL));
 
-						Button archBtn = new Button(compButton, SWT.PUSH);
+						archBtn = new Button(compButton, SWT.PUSH);
 						archBtn.setText("draw arch");
 
 						Button ordBtn = new Button(compButton, SWT.PUSH);
@@ -352,59 +413,11 @@ public class MenuPrincipalView extends IMenu{
 						l2 = new Label(compPoint, SWT.ALL);
 						compPoint.setVisible(false);
 
-						archBtn.addListener(SWT.Selection, new Listener() {
-							
+						ordBtn.addListener(SWT.Selection, getOrdBtnList());
+						archBtn.addListener(SWT.Selection, getArchBtnList());
 
-							@Override
-							public void handleEvent(Event event) {
-
-								orderCond = null;
-								
-								l1.setText("First Cond. :" + "Select the point");
-								l1.pack();
-								l2.setText("Second Cond. :" + "Select the point");
-								l2.pack();
-								compPoint.pack();
-								getDialog().pack();
-								compPoint.setVisible(true);
-
-								link = new LinkCanvas(planView.getPlan());
-								link.addlistener(l1, l2, archBtn);
-
-							}
-						});
-
-						ordBtn.addListener(SWT.Selection, new Listener() {
-
-							@Override
-							public void handleEvent(Event event) {
-
-								link = null;
-								c1 = "null";
-								c2 = "null";
-								l1.setText("ordering of actions");
-								l2.setText(c1 + "<" + c2);
-								l2.pack();
-								compPoint.pack();
-								getDialog().pack();
-								compPoint.setVisible(true);
-
-								Composite comp = new Composite(planView, SWT.ALL);
-//								comp.setLayoutData(new GridData(GridData.FILL, GridData.FILL, false, false));
-//								comp.setLayout(new FillLayout());
-
-								// sulla definizione di cio, ce qualcosa che mi turba!!
-								comp.setSize(50, 50);
-								comp.setLocation(20, 30);
-								// comp.setBackground(comp.getDisplay().getSystemColor(SWT.COLOR_RED));
-
-								orderCond = new OrderCondition(comp);
-								orderCond.addlistener(l1, l2);
-
-							}
-						});
-
-						this.getDialog().pack();
+						
+						dialog.pack();
 
 					}
 
@@ -414,21 +427,19 @@ public class MenuPrincipalView extends IMenu{
 			}
 		};
 
-		Listener saveAll=new Listener() {
-			
+		Listener saveAll = new Listener() {
+
 			@Override
 			public void handleEvent(Event event) {
-				
-			
-				for(PlanContent contentAction:planView.getAllPlan()) {
-					StringBuilder sb = new StringBuilder();
-					LaTexGeneratorPlan laTexGeneratorPlan=new LaTexGeneratorPlan();
-					sb.append(laTexGeneratorPlan.getLatexIntro());
-					
 
-					LaTexGeneratorStatePlan generatorStatePlan=new LaTexGeneratorStatePlan();
+				for (PlanContent contentAction : planView.getAllPlan()) {
+					StringBuilder sb = new StringBuilder();
+					LaTexGeneratorPlan laTexGeneratorPlan = new LaTexGeneratorPlan();
+					sb.append(laTexGeneratorPlan.getLatexIntro());
+
+					LaTexGeneratorStatePlan generatorStatePlan = new LaTexGeneratorStatePlan();
 					sb.append(generatorStatePlan.getLatexPlanCode(contentAction));
-					
+
 					ArrayList<Node> updateNodeList = contentAction.getActionInPlan();
 					for (int i = 0; i < updateNodeList.size(); i++) {
 						updateNodeList.get(i).generateLatexCode();
@@ -441,25 +452,22 @@ public class MenuPrincipalView extends IMenu{
 						sb.append(updateLinkList.get(i).getLatexCode());
 					}
 
-					ArrayList<OrderCondition>updateOrder = contentAction.getOrds();
+					ArrayList<OrderCondition> updateOrder = contentAction.getOrds();
 					for (int i = 0; i < updateOrder.size(); i++) {
 						updateOrder.get(i).generateLatexCode();
 						sb.append(updateOrder.get(i).getLatexCode());
 					}
-					
 
-					
 					sb.append(laTexGeneratorPlan.getLatexEnd());
-					
-					saveFile(contentAction,sb.toString());
-					
+
+					saveFile(contentAction, sb.toString());
+
 				}
-				
-				
+
 			}
 		};
-		
-		saveAllItem.addListener(SWT.Selection,saveAll );
+
+		saveAllItem.addListener(SWT.Selection, saveAll);
 		showCond.addListener(SWT.Selection, listenerShow);
 		restoreStateDomain.addListener(SWT.Selection, listenerRestoreDomain);
 		storeStateDomain.addListener(SWT.Selection, listenerStoreDomain);
@@ -476,11 +484,11 @@ public class MenuPrincipalView extends IMenu{
 			}
 		});
 	}
-	
+
 	public void createFileLog() {
 		createDirector();
 		String filepath = dirLog.getAbsolutePath();
-		file = new File(filepath,"TDP.txt");
+		file = new File(filepath, "TDP.txt");
 		try {
 			file.createNewFile();
 		} catch (IOException e) {
@@ -510,15 +518,14 @@ public class MenuPrincipalView extends IMenu{
 				System.out.println("DIR created");
 			}
 		}
-		
-		
+
 	}
-	
-	public void saveFile(PlanContent contentAction,String string) {
+
+	public void saveFile(PlanContent contentAction, String string) {
 		createDirector();
 		createDirPlan(contentAction);
 		String filepath = dirPlan.getAbsolutePath();
-		file = new File(filepath,"LatexPlan.tex");
+		file = new File(filepath, "LatexPlan.tex");
 		try {
 			file.createNewFile();
 		} catch (IOException e) {
@@ -528,15 +535,14 @@ public class MenuPrincipalView extends IMenu{
 		if (file.isFile()) {
 			WriteTextToFile(string);
 		}
-		
-}
-	
+
+	}
+
 	public void createDirector() {
 		String filepath = System.getProperty("user.home");
 		directory = new File(filepath + "/TDP");
 		dirLog = new File(filepath + "/TDP" + "/dirLog");
 		dirLatex = new File(filepath + "/TDP" + "/dirLatex");
-
 
 		// if the directory does n exist, create it
 		if (!directory.exists()) {
@@ -585,7 +591,7 @@ public class MenuPrincipalView extends IMenu{
 		}
 
 	}
-	
+
 	public void WriteTextToFile(String serObj) {
 
 		PrintWriter writer = null;
@@ -601,11 +607,9 @@ public class MenuPrincipalView extends IMenu{
 		writer.println(serObj);
 
 		writer.close();
-		
-		
+
 	}
-	
-	
+
 	public void WriteObjectToFile(Object serObj) {
 
 		try {
@@ -630,27 +634,27 @@ public class MenuPrincipalView extends IMenu{
 
 			if (data.get(1) != null) {
 				InitialState in = (InitialState) data.get(1);
-				if(domainView.getInitStateView().getContainerInitState().getChildren().length>0) {
+				if (domainView.getInitStateView().getContainerInitState().getChildren().length > 0) {
 					domainView.getInitStateView().getContainerInitState().getChildren()[0].dispose();
 				}
 				InitialStateCanvas initialStateCanvas = new InitialStateCanvas(
 						domainView.getInitStateView().getContainerInitState(), SWT.ALL, in);
 				initialStateCanvas.draw();
 				initialStateCanvas.addDNDListener();
-				initialStateCanvas.generateLatexCodeDomain();
-				initialStateCanvas.getLatexCodeDomain();
+				in.generateLatexCodeDomain();
+				in.getLatexCodeDomain();
 			}
 			if (data.get(2) != null) {
 				GoalState goal = (GoalState) data.get(2);
-				if(domainView.getGoalStateView().getContainerGoalState().getChildren().length>0) {
+				if (domainView.getGoalStateView().getContainerGoalState().getChildren().length > 0) {
 					domainView.getGoalStateView().getContainerGoalState().getChildren()[0].dispose();
 				}
 				GoalStateCanvas goalStateCanvas = new GoalStateCanvas(
 						domainView.getGoalStateView().getContainerGoalState(), SWT.ALL, goal);
 				goalStateCanvas.draw();
 				goalStateCanvas.addDNDListener();
-				goalStateCanvas.generateLatexCodeDomain();
-				goalStateCanvas.getLatexCodeDomain();
+				goal.generateLatexCodeDomain();
+				goal.getLatexCodeDomain();
 			}
 
 			objectIn.close();
@@ -665,7 +669,5 @@ public class MenuPrincipalView extends IMenu{
 	public PlainView getPlainView() {
 		return plainView;
 	}
-	
-	
 	
 }

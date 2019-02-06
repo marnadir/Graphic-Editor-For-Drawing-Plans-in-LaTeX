@@ -3,6 +3,7 @@ package State;
 
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
+import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.graphics.Transform;
 import org.eclipse.swt.widgets.Composite;
 
@@ -17,7 +18,6 @@ public class GoalStateCanvas extends IStateCanvas {
 	
 	public GoalStateCanvas(Composite parent, int style, IState state) {
 		super(parent, style, state);
-		name="goal";
 	}
 
 	
@@ -31,32 +31,38 @@ public class GoalStateCanvas extends IStateCanvas {
 			public void paintControl(PaintEvent e) {
 			
 				int avergWidth = (int) e.gc.getFontMetrics().getAverageCharacterWidth();
-				lengthCond=getLenght(state.getConds())*avergWidth+10;
+				
+				state.setLengthCond(getLenght(state.getConds())*avergWidth+10);
+				
 				int numCond = state.getConds().size();
 
 				int startX = parent.getClientArea().width;
 				int startY = 0;
 
-				lenIn=numCond*30;
-				if(isText) {
+				state.setLenIn(numCond*30);
+
+				if(state.isText()) {
 					int val=getTextPosition(avergWidth);
 
-					e.gc.drawRectangle(startX-20, startY, startX, startY + lenIn);	  
+					Rectangle r=new Rectangle(startX-22, startY,20, startY + state.getLenIn());
+					
+					e.gc.drawRectangle(r);	  
 					Transform t=new Transform(getDisplay());
 					t.rotate(90);
 					
 					e.gc.setTransform(t);
 					
-					e.gc.drawString(text, val, -startX);
+					e.gc.drawString(state.getText(), val, -startX+2);
 					
 					
 					t.rotate(-90);
 					e.gc.setTransform(t);
 					
-					startX=parent.getClientArea().width-20;
+					startX=parent.getClientArea().width-22;
+					
 				}else {
 					e.gc.setLineWidth(6);
-					e.gc.drawLine(startX-2, startY, startX-2, startY + lenIn);
+					e.gc.drawLine(startX-2, startY, startX-2, startY + state.getLenIn());
 					e.gc.setLineWidth(1);
 				}
 				
@@ -65,14 +71,14 @@ public class GoalStateCanvas extends IStateCanvas {
 				for (int i = 0; i < numCond; i++) {
 					String string = state.getConds().get(i);
 
-					if(shownCond) {
-						e.gc.drawLine(startX, posY, startX - lengthCond, posY);
-						e.gc.drawString(string, startX+3 - lengthCond, posY - 20, false);
+					if(state.isShownCond()) {
+						e.gc.drawLine(startX, posY, startX - state.getLengthCond(), posY);
+						e.gc.drawString(string, startX+3 - state.getLengthCond(), posY - 20, false);
 						if(parent.getParent() instanceof PlanContent) {
 							addOval(state,string,1, posY-2);
 						}
 					}else {
-						e.gc.drawLine(startX, posY, startX - standardLength, posY);
+						e.gc.drawLine(startX, posY, startX - state.getStandardLength(), posY);
 						if(parent.getParent() instanceof PlanContent) {
 							addOval(state,string,1, posY-2);
 						}
@@ -84,9 +90,10 @@ public class GoalStateCanvas extends IStateCanvas {
 				resizeParent();
 				computeSize(getParent().getSize().x,getParent().getSize().y);
 				if(state.getConds().size()==1) {
-					pack();
+					//pack();
+					computeSize(getParent().getSize().x,getParent().getSize().y);
 				}
-
+				
 			}
 		});
 
@@ -95,12 +102,12 @@ public class GoalStateCanvas extends IStateCanvas {
 
 	 public  int getTextPosition(int avergWidth) {
    	  int i = 5;
-   	  int stringLenght=text.length()*avergWidth+6;
-   	  if(stringLenght>lenIn) {
-   		  lenIn=stringLenght;
+   	  int stringLenght=state.getText().length()*avergWidth+6;
+   	  if(stringLenght>state.getLenIn()) {
+   		  state.setLenIn(stringLenght);
    		  return i;
    	  }else {
-   		  i=(lenIn-stringLenght)/2;
+   		  i=(state.getLenIn()-stringLenght)/2;
    		  return i;
    	  }
    	  

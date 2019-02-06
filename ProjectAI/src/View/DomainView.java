@@ -145,7 +145,7 @@ public class DomainView {
 		}
 	}
 	
-	public IStateCanvas getInitialState() {
+	public IStateCanvas getInitialStateCanvas() {
 		Control[] child=initStateView.getContainerInitState().getChildren();
 		for(int i=0;i<child.length;i++) {
 			if(child[i] instanceof IStateCanvas) {
@@ -155,7 +155,7 @@ public class DomainView {
 		}
 		return null;
 	}
-	public IStateCanvas getGoalState() {
+	public IStateCanvas getGoalStateCanvas() {
 		Control[] child=goalStateView.getContainerGoalState().getChildren();
 		for(int i=0;i<child.length;i++) {
 			if(child[i] instanceof IStateCanvas) {

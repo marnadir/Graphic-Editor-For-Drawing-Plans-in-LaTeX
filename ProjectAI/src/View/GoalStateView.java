@@ -20,7 +20,7 @@ public class GoalStateView extends Composite{
 	}
 
 	public void createContent() {
-		containerGoalState=new Composite(this, SWT.ALL);
+		containerGoalState=new Composite(this, SWT.BORDER);
 		containerGoalState.setLayoutData(new GridData(GridData.FILL, GridData.FILL, false, false));
 		containerGoalState.setLayout(new FillLayout());
 		containerGoalState.setLocation(70,80);

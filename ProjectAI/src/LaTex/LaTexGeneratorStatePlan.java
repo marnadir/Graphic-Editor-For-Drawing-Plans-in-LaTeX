@@ -5,7 +5,9 @@ import java.util.ArrayList;
 
 import PlanPart.PlanContent;
 import State.GoalStateCanvas;
+import State.IState;
 import State.IStateCanvas;
+import State.InitialState;
 import State.InitialStateCanvas;
 
 public class LaTexGeneratorStatePlan {
@@ -22,7 +24,7 @@ public class LaTexGeneratorStatePlan {
 		InitialStateCanvas initialStateCanvas=graphContent.getInitialStateCanvas();
 		GoalStateCanvas goalStateCanvas=graphContent.getGoalStateCanvas();
 		if(initialStateCanvas!=null) {
-			if(initialStateCanvas.isText()) {
+			if(initialStateCanvas.getState().isText()) {
 				sb.append(generatexTogheter(graphContent));
 				return sb.toString();
 
@@ -54,11 +56,11 @@ public class LaTexGeneratorStatePlan {
 		GoalStateCanvas goalStateCanvas =graphContent.getGoalStateCanvas();
 
 		sb.append("//stage{35em}{26em}");
-		sb.append("{effs="+getEffPrec(initialStateCanvas));
-		sb.append("{pres="+getEffPrec(goalStateCanvas));
+		sb.append("{effs="+getEffPrec(initialStateCanvas.getState()));
+		sb.append("{pres="+getEffPrec(goalStateCanvas.getState()));
 		
-		sb.append("{"+initialStateCanvas.getText()+"}");
-		sb.append("{"+goalStateCanvas.getText()+"}");
+		sb.append("{"+initialStateCanvas.getState().getText()+"}");
+		sb.append("{"+goalStateCanvas.getState().getText()+"}");
 		
 		return sb.toString();
 		
@@ -68,7 +70,7 @@ public class LaTexGeneratorStatePlan {
 	private String generatexSo(InitialStateCanvas initialStateCanvas) {
 		StringBuilder sb = new StringBuilder();
 		sb.append("\\action{start}{");
-		if(initialStateCanvas.isShownCond()) {
+		if(initialStateCanvas.getState().isShownCond()) {
 			sb.append("START,");
 		}else {
 			sb.append("STARTL,");
@@ -86,7 +88,7 @@ public class LaTexGeneratorStatePlan {
 	private String generatexGoal(GoalStateCanvas goalStateCanvas) {
 		StringBuilder sb = new StringBuilder();
 		sb.append("\\action{goal}{");
-		if(goalStateCanvas.isShownCond()) {
+		if(goalStateCanvas.getState().isShownCond()) {
 			sb.append("GOAL,");
 		}else {
 			sb.append("GOALL,");
@@ -101,15 +103,15 @@ public class LaTexGeneratorStatePlan {
 	}
 	
 	
-	private String getEffPrec(IStateCanvas iStateCanvas) {
+	private String getEffPrec(IState iState) {
 		StringBuilder sb = new StringBuilder();
-		if(iStateCanvas.isShownCond()) {
-			sb.append(getTextPrecEff(iStateCanvas.getState().getConds()));
+		if(iState.isShownCond()) {
+			sb.append(getTextPrecEff(iState.getConds()));
 
 		}else {
-			sb.append(getTextPrecEffE(iStateCanvas.getState().getConds()));
+			sb.append(getTextPrecEffE(iState.getConds()));
 		}
-		if(iStateCanvas instanceof InitialStateCanvas) {
+		if(iState instanceof InitialState) {
 			sb.append(",eff lenght  = ");
 
 		}else {
@@ -117,10 +119,10 @@ public class LaTexGeneratorStatePlan {
 
 		}
 		
-		if(iStateCanvas.isShownCond()) {
-			sb.append(iStateCanvas.getLengthCondInCm()+"em");
+		if(iState.isShownCond()) {
+			sb.append(iState.getLengthCondInCm()+"em");
 		}else {
-			sb.append(iStateCanvas.getStandardLengthInCm()+"em");
+			sb.append(iState.getStandardLengthInCm()+"em");
 		}
 		
 		return sb.toString();

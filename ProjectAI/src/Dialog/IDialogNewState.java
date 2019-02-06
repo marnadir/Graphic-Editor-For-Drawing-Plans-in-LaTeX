@@ -56,7 +56,7 @@ public abstract class IDialogNewState extends IDialog{
 		btnDeletePrec.addListener(SWT.Selection, getDelListener());
 		
 
-		this.getDialog().pack();
+		pack();
 	}
 
 	

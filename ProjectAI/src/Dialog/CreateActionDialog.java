@@ -23,7 +23,7 @@ import Action.Action;
 
 public class CreateActionDialog extends IDialog {
 
-	Shell dialog = this.getDialog();
+
 	Composite compCanvas;
 	Composite composite;
 	List listPrec;
@@ -118,7 +118,7 @@ public class CreateActionDialog extends IDialog {
 		btnDeleteEff.setImage(icon);
 		btnDeleteEff.addListener(SWT.Selection, getDelEffListener());
 
-		this.getDialog().pack();
+		pack();
 	}
 
 	public Listener getDelPrecListener() {
@@ -231,7 +231,7 @@ public class CreateActionDialog extends IDialog {
 	
 						actions.add(action);
 						
-						dialog.setVisible(false);
+						setVisible(false);
 						treeActions.pack();
 				}
 			}

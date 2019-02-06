@@ -19,6 +19,7 @@ import org.eclipse.swt.widgets.Text;
 import Dialog.IDialog;
 import PlanPart.PlanContent;
 import State.GoalStateCanvas;
+import State.IState;
 import State.IStateCanvas;
 import State.InitialStateCanvas;
 import command.ChangeCondCommand;
@@ -26,10 +27,12 @@ import command.ChangeCondCommand;
 public class MenuContentState implements MenuDetectListener {
 
 	IStateCanvas canvas;
+	IState state;
 	
 
 	public MenuContentState(IStateCanvas canvas) {
 		this.canvas = canvas;
+		this.state=canvas.getState();
 	}
 
 	@Override
@@ -52,6 +55,7 @@ public class MenuContentState implements MenuDetectListener {
 						content.setGoalStateCanvas(null);
 					}
 				}
+				canvas.getParent().setVisible(false);
 				canvas.clear();
 			}
 		});
@@ -80,13 +84,14 @@ public class MenuContentState implements MenuDetectListener {
 								@Override
 								public void handleEvent(Event event) {
 									if (btnText.getSelection()) {
-										canvas.setText(text.getText());
-										canvas.setIsText(true);
+										state.setText(text.getText());
+										
+										state.setIsText(true);
 									} else {
-										canvas.setIsText(false);
+										state.setIsText(false);
 									}
 
-									getDialog().dispose();
+									dispose();
 								}
 							};
 							return l;
@@ -108,14 +113,23 @@ public class MenuContentState implements MenuDetectListener {
 							btnLine.setText("Line");
 
 							textButton = new Composite(c, SWT.ALL);
-							textButton.setLayout(new RowLayout(SWT.HORIZONTAL));
+							textButton.setLayout(new GridLayout(2, false));
 
 							Label l = new Label(textButton, SWT.ALL);
-							l.setText("set the text:");
+							l.setText("Name of state:");
 
 							text = new Text(textButton, SWT.BORDER);
-							text.setText("init");
+							text.setText("state");
 							text.setSize(20, 10);
+							
+//							Label l2 = new Label(textButton, SWT.ALL);
+//							l2.setText("Name of Goal:");
+//
+//							text = new Text(textButton, SWT.BORDER);
+//							text.setText("goal");
+//							text.setSize(20, 10);
+							
+							
 
 							btnText.setSelection(true);
 
@@ -139,7 +153,7 @@ public class MenuContentState implements MenuDetectListener {
 								}
 							});
 
-							this.getDialog().pack();
+							pack();
 
 						}
 					};
@@ -159,7 +173,7 @@ public class MenuContentState implements MenuDetectListener {
 
 				@Override
 				public void handleEvent(Event event) {
-					canvas.negateIsShownCond();
+					state.negateIsShownCond();
 					canvas.redraw();
 
 				}
@@ -200,17 +214,17 @@ public class MenuContentState implements MenuDetectListener {
 								@Override
 								public void handleEvent(Event event) {
 
-									if (canvas.isShownCond()) {
-										canvas.setDefaultValue(false);
+									if (state.isShownCond()) {
+										state.setDefaultValue(false);
 										if(isNumeric(textWid.getText())) {
-											canvas.setLengthFromCm(Double.parseDouble(textWid.getText()));
-											getDialog().setVisible(false);
+											state.setLengthFromCm(Double.parseDouble(textWid.getText()));
+											setVisible(false);
 
 										}
 									} else {
 										if(isNumeric(textWid.getText())) {
-											canvas.setStandardLengthFromCm(Double.parseDouble(textWid.getText()));
-											getDialog().setVisible(false);
+											state.setStandardLengthFromCm(Double.parseDouble(textWid.getText()));
+											setVisible(false);
 
 										}
 									}
@@ -227,13 +241,13 @@ public class MenuContentState implements MenuDetectListener {
 							Composite c = getComposite();
 							c.setLayout(new GridLayout(2, false));
 
-							if (canvas.isShownCond()) {
+							if (state.isShownCond()) {
 								Label lWidth = new Label(c, SWT.ALL);
 								lWidth.setText("Lenght in cm: ");
 								textWid = new Text(c, SWT.BORDER);
-								textWid.setText(canvas.getLengthCondInCm());
+								textWid.setText(state.getLengthCondInCm());
 								Label info = new Label(c, SWT.BORDER);
-								info.setText("the minimum lenght is: " + canvas.getLengthCondInCm()+"cm");
+								info.setText("the minimum lenght is: " + state.getLengthCondInCm()+"cm");
 								GridData gridData = new GridData(GridData.CENTER, GridData.CENTER, false, false);
 								gridData.horizontalSpan = 2;
 								info.setLayoutData(gridData);
@@ -242,7 +256,7 @@ public class MenuContentState implements MenuDetectListener {
 								lWidth.setText("Lenght in cm: ");
 								textWid = new Text(c, SWT.BORDER);
 							
-								textWid.setText((canvas.getLengthCondInCm()));
+								textWid.setText((state.getLengthCondInCm()));
 								Label info = new Label(c, SWT.BORDER);
 								info.setText("the default lenght is: " + "1.4cm");
 								GridData gridData = new GridData(GridData.CENTER, GridData.CENTER, false, false);
@@ -251,7 +265,7 @@ public class MenuContentState implements MenuDetectListener {
 
 							}
 
-							this.getDialog().pack();
+							pack();
 
 						}
 					};

@@ -8,6 +8,7 @@ import javax.swing.text.PlainView;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.dnd.DND;
 import org.eclipse.swt.dnd.DropTarget;
+import org.eclipse.swt.dnd.DropTargetListener;
 import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
@@ -17,6 +18,7 @@ import org.eclipse.swt.widgets.Listener;
 
 import Action.Node;
 import DNDAaction.MyDropActionListener;
+import DNDstate.myDropStateListener;
 import DataTrasfer.MyTransfer;
 import State.GoalState;
 import State.GoalStateCanvas;
@@ -91,6 +93,7 @@ public class PlanContent extends Canvas {
 		Listener listener = event -> {
 		    comp.setEnabled(false);
 			switch (event.type) {
+
 			case SWT.MouseDown:
 					Rectangle rect = comp.getBounds();
 					int x = event.x;
@@ -127,6 +130,8 @@ public class PlanContent extends Canvas {
 		DropTarget target = new DropTarget(this, DND.DROP_MOVE | DND.DROP_COPY);
 		target.setTransfer(new Transfer[] { MyTransfer.getInstance() });
 		target.addDropListener(new MyDropActionListener(parent, target, treeAction));
+		
+		target.addDropListener(new myDropStateListener(parent, target,parent.getDomainView()));
 	}
 
 	public String getText() {

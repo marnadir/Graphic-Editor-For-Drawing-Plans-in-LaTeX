@@ -46,8 +46,8 @@ public class ChangeNameCommand implements ICommand {
 				
 						
 						
-						d=this.getDialog();
-						d.pack();
+					
+						pack();
 						
 
 					}

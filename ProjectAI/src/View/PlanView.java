@@ -34,6 +34,7 @@ import State.InitialStateCanvas;
 public class PlanView  extends CTabFolder{
 	
 	ConsoleView consoleView;
+	DomainView domainView;
 
 	public PlanView(Composite parent, int style) {
 		super(parent, style);
@@ -48,6 +49,7 @@ public class PlanView  extends CTabFolder{
 	}
 	
 	public void createContent(DomainView domainView) {
+		this.domainView=domainView;
 		CTabItem item = new CTabItem(this, SWT.CLOSE);
 		PlanContent contentAction = new PlanContent(this, SWT.ALL);
 		contentAction.addDndListener(domainView.getTreeAction());
@@ -93,21 +95,21 @@ public class PlanView  extends CTabFolder{
 				
 				if(toolShow.getSelection()) {
 					if(contentAction.getInitialStateCanvas()!=null) {
-						contentAction.getInitialStateCanvas().setShownCond(true);
+						contentAction.getInitialStateCanvas().getState().setShownCond(true);
 						contentAction.getInitialStateCanvas().pack();
 					}
 					if(contentAction.getGoalStateCanvas()!=null) {
-						contentAction.getGoalStateCanvas().setShownCond(true);
+						contentAction.getGoalStateCanvas().getState().setShownCond(true);
 						contentAction.getGoalStateCanvas().pack();
 					}
 					
 				}else {
 					if(contentAction.getInitialStateCanvas()!=null) {
-						contentAction.getInitialStateCanvas().setShownCond(false);
+						contentAction.getInitialStateCanvas().getState().setShownCond(false);
 						contentAction.getInitialStateCanvas().pack();
 					}
 					if(contentAction.getGoalStateCanvas()!=null) {
-						contentAction.getGoalStateCanvas().setShownCond(false);
+						contentAction.getGoalStateCanvas().getState().setShownCond(false);
 						contentAction.getGoalStateCanvas().pack();
 					}
 				}
@@ -167,7 +169,7 @@ public class PlanView  extends CTabFolder{
 												node.pack();
 										}
 										
-											getDialog().dispose();
+											dispose();
 
 											
 											
@@ -195,8 +197,8 @@ public class PlanView  extends CTabFolder{
 											
 
 																						
-											contentAction.getInitialStateCanvas().setLengthFromCm(Double.parseDouble(lenghtPrec.getText()));
-											contentAction.getInitialStateCanvas().setStandardLengthFromCm(Double.parseDouble(lenghtPrec.getText()));
+											contentAction.getInitialStateCanvas().getState().setLengthFromCm(Double.parseDouble(lenghtPrec.getText()));
+											contentAction.getInitialStateCanvas().getState().setStandardLengthFromCm(Double.parseDouble(lenghtPrec.getText()));
 											contentAction.getInitialStateCanvas().pack();
 										}
 										if(contentAction.getGoalStateCanvas()!=null) {
@@ -213,12 +215,12 @@ public class PlanView  extends CTabFolder{
 													}
 												}
 																							
-												contentAction.getGoalStateCanvas().setLengthFromCm(Double.parseDouble(lenghtPrec.getText()));
-												contentAction.getGoalStateCanvas().setStandardLengthFromCm(Double.parseDouble(lenghtPrec.getText()));
+												contentAction.getGoalStateCanvas().getState().setLengthFromCm(Double.parseDouble(lenghtPrec.getText()));
+												contentAction.getGoalStateCanvas().getState().setStandardLengthFromCm(Double.parseDouble(lenghtPrec.getText()));
 												contentAction.getGoalStateCanvas().pack();
 											}
 										}
-										getDialog().dispose();
+										dispose();
 
 									}
 								}
@@ -265,21 +267,21 @@ public class PlanView  extends CTabFolder{
 										lenghtEff.setVisible(true);
 
 										comp2.pack();
-										getDialog().pack();
+										pack();
 
 										
 									}else {
 										l2.setText("Cond:");
 										l3.setVisible(false);
 										lenghtEff.setVisible(false);
-										getDialog().pack();
+										pack();
 
 									}
 							  }
 						});
 						
 						
-						this.getDialog().pack();
+						pack();
 						
 					}
 				};
@@ -394,6 +396,13 @@ public class PlanView  extends CTabFolder{
 		
 	}
 	
+	
+	
+	
+	public DomainView getDomainView() {
+		return domainView;
+	}
+
 	@Override
 	protected void checkSubclass() {
 		

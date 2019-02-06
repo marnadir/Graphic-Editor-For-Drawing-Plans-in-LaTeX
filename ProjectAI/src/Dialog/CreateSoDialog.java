@@ -17,7 +17,6 @@ public class CreateSoDialog extends IDialogNewState{
 
 	Composite compCanvas;
 	ArrayList<String> listPrec;
-	Shell dialog=this.getDialog();
 	InitialStateCanvas initialStateCanvas;
 	IState initialState;
 	
@@ -46,15 +45,15 @@ public class CreateSoDialog extends IDialogNewState{
 					initialState = new InitialState(listPrec);
 					initialStateCanvas = new InitialStateCanvas(compCanvas, SWT.ALL, initialState);
 					initialStateCanvas.addDNDListener();
-					initialStateCanvas.generateLatexCodeDomain();
-					initialStateCanvas.getLatexCodeDomain();
+					initialStateCanvas.getState().generateLatexCodeDomain();
+					initialStateCanvas.getState().getLatexCodeDomain();
 				}
 				if (listPrec != null) {
 					initialState.updateConds(listPrec);
 					if (listPrec.size() > 0) {
 						initialStateCanvas.draw();
 						//initialStateCanvas.pack();
-						dialog.setVisible(false);
+						setVisible(false);
 					}
 				}
 

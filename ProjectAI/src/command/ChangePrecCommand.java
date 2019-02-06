@@ -54,7 +54,7 @@ public class ChangePrecCommand implements ICommand {
 							public void handleEvent(Event event) {
 								updatePrec(getList());
 								updateTree();
-								getDialog().dispose();
+								dispose();
 							}
 						};
 					}

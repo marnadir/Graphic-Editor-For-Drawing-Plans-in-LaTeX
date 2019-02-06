@@ -15,12 +15,7 @@ import Action.Action;
 import Action.Node;
 import DataTrasfer.MyType;
 import PlanPart.PlanContent;
-import State.GoalState;
-import State.GoalStateCanvas;
-import State.IState;
-import State.IStateCanvas;
-import State.InitialState;
-import State.InitialStateCanvas;
+
 import View.TreeActioDomain;
 
 public class MyDropActionListener extends DropTargetAdapter {
@@ -59,71 +54,51 @@ public class MyDropActionListener extends DropTargetAdapter {
 		if (target.getControl() instanceof Composite) {
 
 			Action action = null;
-			InitialState initialState=null;
-			GoalState goalState=null;
 			graphContent = (PlanContent) target.getControl();
-			Composite comp = new Composite(graphContent, SWT.ALL);
-			comp.setLayoutData(new GridData(GridData.FILL, GridData.FILL, false, false));
-			comp.setLayout(new FillLayout());
-			comp.setLocation(comp.toControl(event.x, event.y));
 
 			if (event.data != null) {
 				MyType[] myTypes = (MyType[]) event.data;
 				if (myTypes != null) {
 					for (int i = 0; i < myTypes.length; i++) {
-						switch (myTypes[i].getName()) {
-						case "start":
-							
-							if (graphContent.getInitialStateCanvas()==null) {
-								initialState = new InitialState(myTypes[i].getEff());
-								InitialStateCanvas stateCanvas = new InitialStateCanvas(comp, SWT.ALL, initialState);
-								stateCanvas.draw();
-								graphContent.setInitialStateCanvas((InitialStateCanvas) stateCanvas);
-							}
-							break;
 
-						case "goal":
-							if(graphContent.getGoalStateCanvas()==null){
-								goalState = new GoalState(myTypes[i].getEff());
-								IStateCanvas stateCanvas2 = new GoalStateCanvas(comp, SWT.ALL, goalState);
-								stateCanvas2.draw();
-								graphContent.setGoalStateCanvas((GoalStateCanvas)stateCanvas2);
-							}
-						
-							break;
+						actionList = treeAction.getActionList();
+						for (int j = 0; j < actionList.size(); j++) {
+							if (myTypes[i].getName().equals(actionList.get(j).getName())) {
+								if (myTypes[i].getPrec().equals(actionList.get(j).getPrec())
+										&& myTypes[i].getEff().equals(actionList.get(j).getEffect())) {
+									action = actionList.get(j);
 
-						default:
-							actionList=treeAction.getActionList();
-							for (int j = 0; j < actionList.size(); j++) {
-								if (myTypes[i].getName().equals(actionList.get(j).getName())) {
-									if (myTypes[i].getPrec().equals(actionList.get(j).getPrec())
-											&& myTypes[i].getEff().equals(actionList.get(j).getEffect())) {
-										action = actionList.get(j);
-									
-										action=new Action(actionList.get(j).getName(), actionList.get(j).getPrec(),actionList.get(j).getEffect());
-										action.copyAttribute(actionList.get(j));
-										
+									action = new Action(actionList.get(j).getName(), actionList.get(j).getPrec(),
+											actionList.get(j).getEffect());
+									action.copyAttribute(actionList.get(j));
 
-									}
 								}
 							}
+						}
 
+						if (action != null) {
+							Composite comp = new Composite(graphContent, SWT.BORDER);
+							comp.setLayoutData(new GridData(GridData.FILL, GridData.FILL, false, false));
+							comp.setLayout(new FillLayout());
+							comp.setLocation(comp.toControl(event.x, event.y));
 							node = new Node(comp, SWT.ALL, action);
 							node.draw();
 							node.pack();
 							comp.pack();
 							graphContent.getActionInPlan().add(node);
 							setNodeID();
-							break;
+							graphContent.addMoveListener(comp);
 						}
 
+						break;
 					}
 
 				}
+
 			}
 
-			graphContent.addMoveListener(comp);
 		}
+
 	}
 
 	public void setNodeID() {
@@ -134,7 +109,6 @@ public class MyDropActionListener extends DropTargetAdapter {
 				if (graphContent.getActionInPlan().get(i).getID().equals(ID)) {
 					t++;
 					ID = getNameAction(node.getAction().getName()) + "-" + t;
-					;
 					i = 0;
 				}
 			}

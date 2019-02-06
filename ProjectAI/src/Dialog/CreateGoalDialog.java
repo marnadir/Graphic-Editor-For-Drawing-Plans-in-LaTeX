@@ -20,7 +20,6 @@ public class CreateGoalDialog extends IDialogNewState{
 
 	Composite compCanvas;
 	ArrayList<String> listEff;
-	Shell dialog=this.getDialog();
 	Combo CombOption;
 	GoalStateCanvas goalStateCanvas;
 	IState goalState;
@@ -37,7 +36,7 @@ public class CreateGoalDialog extends IDialogNewState{
 	public void createContent() {
 		super.createContent();
 		this.getLabel().setText("Create a new goal state");
-		dialog.pack();
+		pack();
 		
 	}
 	
@@ -52,14 +51,14 @@ public class CreateGoalDialog extends IDialogNewState{
 					
 					goalStateCanvas=new GoalStateCanvas(compCanvas,SWT.ALL,goalState);
 					goalStateCanvas.addDNDListener();
-					goalStateCanvas.generateLatexCodeDomain();
-					goalStateCanvas.getLatexCodeDomain();
+					goalStateCanvas.getState().generateLatexCodeDomain();
+					goalStateCanvas.getState().getLatexCodeDomain();
 				}
 				if(listEff != null) {
 					goalState.updateConds(listEff);
 					if(listEff.size()>0) {
 						goalStateCanvas.draw();
-						dialog.setVisible(false);
+						setVisible(false);
 					}
 				}
 			}

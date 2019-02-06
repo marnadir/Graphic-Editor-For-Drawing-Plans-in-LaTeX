@@ -61,7 +61,7 @@ public class LaTexGeneratorNode {
 		if(o.getNode()!= null) {
 			sb.append(o.getNode().getID());
 		}else if(o.getStateCanvas()!=null) {
-			sb.append(o.getStateCanvas().getName());
+			sb.append(o.getStateCanvas().getState().getName());
 		}
 		
 		

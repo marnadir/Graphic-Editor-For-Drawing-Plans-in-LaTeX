@@ -60,7 +60,7 @@ public class ChangeCondCommand implements ICommand {
 							public void handleEvent(Event event) {
 								if(getList().getItemCount()>0) {
 								updatePrec(getList());
-								getDialog().dispose();
+								dispose();
 								}
 							}
 						};
