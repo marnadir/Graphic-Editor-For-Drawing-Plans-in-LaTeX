@@ -55,12 +55,12 @@ public class LaTexGeneratorStatePlan {
 		InitialStateCanvas initialStateCanvas=graphContent.getInitialStateCanvas();
 		GoalStateCanvas goalStateCanvas =graphContent.getGoalStateCanvas();
 
-		sb.append("//stage{35em}{26em}");
-		sb.append("{effs="+getEffPrec(initialStateCanvas.getState()));
-		sb.append("{pres="+getEffPrec(goalStateCanvas.getState()));
+		sb.append("\\stage{35em}{26em}"+"\n");
+		sb.append("{effs="+getEffPrec(initialStateCanvas.getState())+"}"+"\n");
+		sb.append("{pres="+getEffPrec(goalStateCanvas.getState())+"}"+"\n");
 		
 		sb.append("{"+initialStateCanvas.getState().getText()+"}");
-		sb.append("{"+goalStateCanvas.getState().getText()+"}");
+		sb.append("{"+goalStateCanvas.getState().getText()+"}"+"\n");
 		
 		return sb.toString();
 		
@@ -112,10 +112,10 @@ public class LaTexGeneratorStatePlan {
 			sb.append(getTextPrecEffE(iState.getConds()));
 		}
 		if(iState instanceof InitialState) {
-			sb.append(",eff lenght  = ");
+			sb.append(",eff length  = ");
 
 		}else {
-			sb.append(",pre lenght  = ");
+			sb.append(",pre length  = ");
 
 		}
 		

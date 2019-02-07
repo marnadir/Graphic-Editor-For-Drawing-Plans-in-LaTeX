@@ -5,21 +5,14 @@ import java.io.InputStreamReader;
 
 public class ProcessCommand {
 	public static void main(String[] args) {
-//		Process process;
-//		ProcessBuilder pb = new ProcessBuilder("cd ");
-//		pb.directory(new File("/home/nadir/Desktop/"));
-//
-//		process = pb.start();
-//		process.waitFor();
-		
+
+
 		try {
 
+			Process process = Runtime.getRuntime().exec(new String[] { "bash", "-c",
+					"cd /home/nadir/Desktop/Test/ && pdflatex test\\ .tex  -synctex=1 -interaction=nonstopmode" });
 
-			//String[] cmd1 =new String[] {"pdflatex test.tex"};
-			Process process = Runtime.getRuntime().exec(new String[]{"bash","-c","pdflatex /home/nadir/Desktop/Test/test.tex"});
-
-			//process=Runtime.getRuntime().exec(cmd1, null, new File(""));
-			//process.waitFor();
+			process.waitFor();
 
 			BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
 			StringBuilder builder = new StringBuilder();
@@ -30,12 +23,12 @@ public class ProcessCommand {
 			}
 			String result = builder.toString();
 			System.out.println(result);
-			
-			
-		} catch (IOException e) {
+
+		} catch (IOException | InterruptedException e) {
 			// TODO Auto-generated catch block
+			e.printStackTrace();
 			System.out.println(e.getMessage());
-		
+
 		}
 
 	}

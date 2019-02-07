@@ -25,7 +25,7 @@ public class OptionView extends Group{
 
 	Composite containerInitState;
 	Composite containerGoalState;
-	TreeActioDomain treeAction;
+	TreeActioDomainView treeAction;
 	
 	
 	public OptionView(Composite parent, int style,String name) {
@@ -49,7 +49,7 @@ public class OptionView extends Group{
 	
 	
 	
-	public void setTreeAction(TreeActioDomain treeAction) {
+	public void setTreeAction(TreeActioDomainView treeAction) {
 		this.treeAction = treeAction;
 	}
 

@@ -3,12 +3,10 @@ package PlanPart;
 
 import java.util.ArrayList;
 
-import javax.swing.text.PlainView;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.dnd.DND;
 import org.eclipse.swt.dnd.DropTarget;
-import org.eclipse.swt.dnd.DropTargetListener;
 import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
@@ -18,14 +16,12 @@ import org.eclipse.swt.widgets.Listener;
 
 import Action.Node;
 import DNDAaction.MyDropActionListener;
-import DNDstate.myDropStateListener;
+import DNDstate.MyDropStateListener;
 import DataTrasfer.MyTransfer;
-import State.GoalState;
 import State.GoalStateCanvas;
-import State.InitialState;
 import State.InitialStateCanvas;
 import View.PlanView;
-import View.TreeActioDomain;
+import View.TreeActioDomainView;
 
 public class PlanContent extends Canvas {
 
@@ -126,12 +122,12 @@ public class PlanContent extends Canvas {
         this.addListener(SWT.MouseMove, listener);
 	}
 
-	public void addDndListener(TreeActioDomain treeAction) {
+	public void addDndListener(TreeActioDomainView treeAction) {
 		DropTarget target = new DropTarget(this, DND.DROP_MOVE | DND.DROP_COPY);
 		target.setTransfer(new Transfer[] { MyTransfer.getInstance() });
 		target.addDropListener(new MyDropActionListener(parent, target, treeAction));
 		
-		target.addDropListener(new myDropStateListener(parent, target,parent.getDomainView()));
+		target.addDropListener(new MyDropStateListener(parent, target,parent.getDomainView()));
 	}
 
 	public String getText() {

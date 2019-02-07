@@ -16,12 +16,12 @@ import Action.Node;
 import DataTrasfer.MyType;
 import PlanPart.PlanContent;
 
-import View.TreeActioDomain;
+import View.TreeActioDomainView;
 
 public class MyDropActionListener extends DropTargetAdapter {
 	private Composite parentComposite;
 	private DropTarget target;
-	private TreeActioDomain treeAction;
+	private TreeActioDomainView treeAction;
 	private ArrayList<Action> actionList;
 	private PlanContent graphContent;
 	private Node node;
@@ -30,7 +30,7 @@ public class MyDropActionListener extends DropTargetAdapter {
 	 * @param parentComposite - the composite that holds all pictures
 	 * @param target          - the drop target
 	 */
-	public MyDropActionListener(Composite parentComposite, DropTarget target, TreeActioDomain treeAction) {
+	public MyDropActionListener(Composite parentComposite, DropTarget target, TreeActioDomainView treeAction) {
 		this.parentComposite = parentComposite;
 		this.target = target;
 		this.treeAction = treeAction;

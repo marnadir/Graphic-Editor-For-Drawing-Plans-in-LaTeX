@@ -1,6 +1,8 @@
 package View;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -303,23 +305,52 @@ public class PlanView  extends CTabFolder{
 				
 				ConsoleViewPlan consoleViewPlan=consoleView.getConsoleViewPlan();
 				consoleViewPlan.saveFile();
-//				
-//				Process proc;
+				
+				Process proc;
 //				try {
 //					ProcessBuilder pb = new ProcessBuilder("xdg-open"+consoleViewPlan.getFile().getAbsolutePath());
 //					pb.directory(consoleViewPlan.getDirPlan());
 //					pb.start();
-					
+//					
 //					String cmd1="cd "+consoleViewPlan.getDirPlan().getAbsolutePath();
 //					System.out.println(cmd1);
 //					proc=Runtime.getRuntime().exec(consoleViewPlan.getDirPlan().getAbsolutePath());
 //					proc = Runtime.getRuntime().exec("pdflatex "+consoleViewPlan.getFile().getName());
 //					proc.waitFor();
+//
+//				} 
+				
+				try {
 
-//				} catch (IOException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				}                        
+					String cmd1="cd "+consoleViewPlan.getDirPlan().getAbsolutePath();
+					String cmd2="pdflatex LatexPlan\\ .tex  -synctex=1 -interaction=nonstopmode";
+					String cmd3="xdg-open LatexPlan.pdf";
+							
+					Process process = Runtime.getRuntime().exec(new String[] { "bash", "-c",
+							cmd1+" && "+cmd2+" && "+cmd3 });
+
+					process.waitFor();
+
+					BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+					StringBuilder builder = new StringBuilder();
+					String line = null;
+					while ((line = reader.readLine()) != null) {
+						builder.append(line);
+						builder.append(System.getProperty("line.separator"));
+					}
+					String result = builder.toString();
+					System.out.println(result);
+
+				}
+				
+				
+				
+				catch (IOException | InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					System.out.println(e.getMessage());
+
+				}                       
 			
 				
 				

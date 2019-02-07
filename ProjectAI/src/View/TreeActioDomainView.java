@@ -20,7 +20,7 @@ import command.ChangeEffCommand;
 import command.ChangeNameCommand;
 import command.ChangePrecCommand;
 
-public class TreeActioDomain extends Tree {
+public class TreeActioDomainView extends Tree {
 
 	
 	MenuItem drawAction;
@@ -33,7 +33,7 @@ public class TreeActioDomain extends Tree {
 	Composite domainViewAction;
 	
 	
-	public TreeActioDomain(ScrolledComposite parent, int style,Composite domainViewAction) {
+	public TreeActioDomainView(ScrolledComposite parent, int style,Composite domainViewAction) {
 		super(parent, style);
 		this.parent=parent;
 		actionList=new ArrayList<>();

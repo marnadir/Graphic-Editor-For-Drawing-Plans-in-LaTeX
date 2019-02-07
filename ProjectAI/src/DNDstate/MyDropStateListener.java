@@ -1,7 +1,6 @@
 package DNDstate;
 
 
-import java.util.ArrayList;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.dnd.DND;
@@ -12,20 +11,16 @@ import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 
-import Action.Action;
-import Action.Node;
 import DataTrasfer.MyType;
 import PlanPart.PlanContent;
 import State.GoalState;
 import State.GoalStateCanvas;
-import State.IState;
 import State.IStateCanvas;
 import State.InitialState;
 import State.InitialStateCanvas;
 import View.DomainView;
-import View.TreeActioDomain;
 
-public class myDropStateListener extends DropTargetAdapter {
+public class MyDropStateListener extends DropTargetAdapter {
 	private Composite parentComposite;
 	private DropTarget target;
 
@@ -38,7 +33,7 @@ public class myDropStateListener extends DropTargetAdapter {
 	 * @param parentComposite - the composite that holds all pictures
 	 * @param target          - the drop target
 	 */
-	public myDropStateListener(Composite parentComposite, DropTarget target,DomainView domain) {
+	public MyDropStateListener(Composite parentComposite, DropTarget target,DomainView domain) {
 		this.parentComposite = parentComposite;
 		this.target = target;
 		this.domainView=domain;
@@ -62,16 +57,12 @@ public class myDropStateListener extends DropTargetAdapter {
 
 		if (target.getControl() instanceof Composite) {
 
-			InitialState initialState=null;
-			GoalState goalState=null;
+		
 			InitialState inState=null;
-			GoalState goal=null;
+			GoalState goalState=null;
 			
 			graphContent = (PlanContent) target.getControl();
-			Composite comp = new Composite(graphContent, SWT.ALL);
-			comp.setLayoutData(new GridData(GridData.FILL, GridData.FILL, false, false));
-			comp.setLayout(new FillLayout());
-			comp.setLocation(comp.toControl(event.x, event.y));
+		
 
 			if (event.data != null) {
 				MyType[] myTypes = (MyType[]) event.data;
@@ -81,9 +72,9 @@ public class myDropStateListener extends DropTargetAdapter {
 						case "start":
 							
 							if (graphContent.getInitialStateCanvas()==null) {
-								initialState = new InitialState(myTypes[i].getEff());
-								inState=(InitialState)domainView.getInitialStateCanvas().getState();
-								initialState.copyAttribute(inState);
+								inState = new InitialState(myTypes[i].getEff());
+								InitialState initialState=(InitialState)domainView.getInitialStateCanvas().getState();
+								inState.copyAttribute(initialState);
 //								InitialStateCanvas stateCanvas = new InitialStateCanvas(comp, SWT.ALL, initialState);
 //								stateCanvas.draw();
 //								
@@ -94,7 +85,7 @@ public class myDropStateListener extends DropTargetAdapter {
 						case "goal":
 							if(graphContent.getGoalStateCanvas()==null){
 								goalState = new GoalState(myTypes[i].getEff());
-								goal=(GoalState)domainView.getGoalStateCanvas().getState();
+								GoalState goal=(GoalState)domainView.getGoalStateCanvas().getState();
 								goalState.copyAttribute(goal);
 //								IStateCanvas stateCanvas2 = new GoalStateCanvas(comp, SWT.ALL, goalState);
 //								stateCanvas2.draw();
@@ -107,11 +98,20 @@ public class myDropStateListener extends DropTargetAdapter {
 						}
 						
 					}
-					if(inState!=null && goal!= null) {
-						InitialStateCanvas stateCanvas = new InitialStateCanvas(comp, SWT.ALL, initialState);
+					if(inState!=null && goalState!= null) {
+						
+						Composite comp = new Composite(graphContent, SWT.ALL);
+						comp.setLayoutData(new GridData(GridData.FILL, GridData.FILL, false, false));
+						comp.setLayout(new FillLayout());
+						comp.setLocation(comp.toControl(event.x, event.y));
+						
+						
+						InitialStateCanvas stateCanvas = new InitialStateCanvas(comp, SWT.ALL, inState);
 						stateCanvas.draw();
 						graphContent.setInitialStateCanvas((InitialStateCanvas) stateCanvas);
 
+						
+						
 						Composite comp2 = new Composite(graphContent, SWT.ALL);
 						comp2.setLayoutData(new GridData(GridData.FILL, GridData.FILL, false, false));
 						comp2.setLayout(new FillLayout());
@@ -119,20 +119,36 @@ public class myDropStateListener extends DropTargetAdapter {
 						int x=graphContent.getClientArea().width;
 						x=x-(comp.getLocation().x*2);
 						comp2.setLocation(comp.getLocation().x+x, comp.getLocation().y);
+						if(!goalState.isText()) {
+							goalState.setIsText(true);
+							goalState.setText("goal");
+						}
 						IStateCanvas stateCanvas2 = new GoalStateCanvas(comp2, SWT.ALL, goalState);
 						stateCanvas2.draw();
 						graphContent.setGoalStateCanvas((GoalStateCanvas)stateCanvas2);
 
 						
 					}else {
-						if(initialState!=null) {
-							InitialStateCanvas stateCanvas = new InitialStateCanvas(comp, SWT.ALL, initialState);
+						if(inState!=null) {
+							Composite comp = new Composite(graphContent, SWT.ALL);
+							comp.setLayoutData(new GridData(GridData.FILL, GridData.FILL, false, false));
+							comp.setLayout(new FillLayout());
+							comp.setLocation(comp.toControl(event.x, event.y));
+							
+							
+							InitialStateCanvas stateCanvas = new InitialStateCanvas(comp, SWT.ALL, inState);
 							stateCanvas.draw();
 							graphContent.setInitialStateCanvas((InitialStateCanvas) stateCanvas);
 							graphContent.addMoveListener(comp);
 
 							
-						}else if(goal!=null) {
+						}else if(goalState!=null) {
+							
+							Composite comp = new Composite(graphContent, SWT.ALL);
+							comp.setLayoutData(new GridData(GridData.FILL, GridData.FILL, false, false));
+							comp.setLayout(new FillLayout());
+							comp.setLocation(comp.toControl(event.x, event.y));
+							
 							IStateCanvas stateCanvas2 = new GoalStateCanvas(comp, SWT.ALL, goalState);
 							stateCanvas2.draw();
 							graphContent.setGoalStateCanvas((GoalStateCanvas)stateCanvas2);

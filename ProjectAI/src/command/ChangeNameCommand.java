@@ -12,7 +12,7 @@ import org.eclipse.swt.widgets.TreeItem;
 
 import Action.Action;
 import Dialog.IDialog;
-import View.TreeActioDomain;
+import View.TreeActioDomainView;
 
 public class ChangeNameCommand implements ICommand {
 
@@ -61,7 +61,7 @@ public class ChangeNameCommand implements ICommand {
 								if (!textName.getText().equals("")) {
 									a.setName(textName.getText());
 									actionTree.setText(textName.getText());
-									TreeActioDomain tree=(TreeActioDomain)actionTree.getParent();
+									TreeActioDomainView tree=(TreeActioDomainView)actionTree.getParent();
 									if(tree.getContainerAction()!=null) {
 										tree.getContainerAction().redraw();
 									}

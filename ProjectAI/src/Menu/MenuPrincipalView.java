@@ -19,7 +19,6 @@ import java.util.ArrayList;
 import javax.swing.text.PlainView;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.RowLayout;
@@ -32,7 +31,6 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.MessageBox;
-import org.eclipse.swt.widgets.Shell;
 
 import Action.Action;
 import Action.Node;
@@ -74,7 +72,6 @@ public class MenuPrincipalView extends IMenu{
 	public void fillMenu(DomainView domainView,PlanView planView) {
 		
 		this.domainView=domainView;
-		this.plainView=plainView;
 		
 		MenuItem fileItem = createItem("&File", SWT.CASCADE);
 		IMenu menuFile = new IMenu(getShell(), SWT.DROP_DOWN);
@@ -629,7 +626,7 @@ public class MenuPrincipalView extends IMenu{
 		try {
 			FileInputStream fileIn = new FileInputStream(file.getAbsolutePath());
 			ObjectInputStream objectIn = new ObjectInputStream(fileIn);
-			ArrayList<Object> data = (ArrayList<Object>) objectIn.readObject();
+			ArrayList<Object> data =  (ArrayList<Object>) objectIn.readObject();
 			updateActionListDomain = (ArrayList<Action>) data.get(0);
 
 			if (data.get(1) != null) {

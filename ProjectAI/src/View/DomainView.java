@@ -32,7 +32,7 @@ public class DomainView {
 	Composite part2;
 	Composite contentGoalState;
 	ActionView actionView;
-	TreeActioDomain treeAction;
+	TreeActioDomainView treeAction;
 
 
 
@@ -105,7 +105,7 @@ public class DomainView {
 		actionView = new ActionView(part2, SWT.BORDER);
 		
 		
-		treeAction=new TreeActioDomain(scrolledComposite, SWT.BORDER, actionView);
+		treeAction=new TreeActioDomainView(scrolledComposite, SWT.BORDER, actionView);
 		subOption.setTreeAction(treeAction);
 		
 		scrolledComposite.setContent(treeAction);
@@ -166,7 +166,7 @@ public class DomainView {
 		return null;
 	}
 
-	public TreeActioDomain getTreeAction() {
+	public TreeActioDomainView getTreeAction() {
 		return treeAction;
 	}
 

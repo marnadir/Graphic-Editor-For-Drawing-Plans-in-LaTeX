@@ -8,14 +8,11 @@ import org.eclipse.swt.dnd.DragSourceEvent;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 
-import Action.Action;
-import Action.CanvasAction;
 import DataTrasfer.MyType;
 import State.GoalStateCanvas;
 import State.IState;
 import State.IStateCanvas;
 import State.InitialStateCanvas;
-import View.DomainView;
 import View.GoalStateView;
 
 
