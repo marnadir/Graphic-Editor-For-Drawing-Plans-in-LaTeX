@@ -70,17 +70,28 @@ public class LinkCanvas  {
 				// TODO Auto-generated method stub
 				e.gc.setLineWidth(1);
 				e.gc.setForeground(black);
-				Path path=new Path(canvasContainer.getDisplay());
-			    path.moveTo((float)(p1.x), (float)(p1.y));
-			    if(p1.y>p2.y) {
-			    	path.quadTo(p1.y, p2.x, p2.x, p2.y);
-			    }else {
-				    path.quadTo(p2.x, p1.y, p2.x, p2.y);
+				Path path = new Path(canvasContainer.getDisplay());
+				path.moveTo((float) (p1.x), (float) (p1.y));
+				Point temp1=p1;
+				Point temp2=p2;
+				
+				
+				if (p1.y > p2.y) {
+					Point temp = null;
+					temp = temp1;
+					temp1 = temp2;
+					temp2 = temp;
+					//path.quadTo(temp1.y, temp2.x, temp2.x, temp2.y);
+					path.quadTo(temp1.x, temp2.y, temp1.x, temp1.y);
 
-			    }
-			    
+					//path.quadTo(p2.x, p1.y, p2.x, p2.y);
+
+				} else {
+					path.quadTo(temp2.x, temp1.y, temp2.x, temp2.y);
+				}
+
 				e.gc.drawPath(path);
-
+				e.gc.dispose();
 //				int arrowLength=5;
 //				int arrowAngle=240;
 //				

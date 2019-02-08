@@ -1,7 +1,6 @@
 package State;
 
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import org.eclipse.swt.SWT;
@@ -14,7 +13,6 @@ import org.eclipse.swt.widgets.Composite;
 
 import DNDstate.MyDragStateListener;
 import DataTrasfer.MyTransfer;
-import LaTex.LaTexGeneratorStateDomain;
 import Menu.MenuContentState;
 import PlanPart.PlanContent;
 import PlanPart.Oval;

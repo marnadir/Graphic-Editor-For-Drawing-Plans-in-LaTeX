@@ -6,7 +6,10 @@ import java.beans.PropertyChangeListener;
 
 import org.eclipse.draw2d.*;
 import org.eclipse.draw2d.geometry.*;
+import org.eclipse.draw2d.graph.Edge;
+import org.eclipse.draw2d.graph.Node;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.internal.cairo.cairo_path_data_t;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Canvas;
@@ -59,41 +62,19 @@ public class test1
 		IFigure andy = createPersonFigure("Andy");
 		root.add(andy);
 		layout.setConstraint(andy, new Rectangle(new Point(10, 10), andy.getPreferredSize()));
-		andy.addPropertyChangeListener(new PropertyChangeListener() {
-			@Override
-			public void propertyChange(PropertyChangeEvent evt) {
-				System.out.println("ciao");
-			}
-		});
+		
+		IFigure betty = createPersonFigure("Betty");
+		root.add(betty);
+		layout.setConstraint(betty,
+		new Rectangle(new Point(230, 10), betty.getPreferredSize()));
 		
 		
-		andy.addMouseListener(new MouseListener() {
-			
-			@Override
-			public void mouseReleased(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void mousePressed(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void mouseDoubleClicked(MouseEvent arg0) {
-				andy.setSize(20, 20);
-				
-			}
-		});
+		
+		
 	   
 
 //	   // Add the mother "Betty"
-//	   IFigure betty = createPersonFigure("Betty");
-//	   root.add(betty);
-//	   layout.setConstraint(betty,
-//	      new Rectangle(new Point(230, 10), betty.getPreferredSize()));
+
 //
 //	   // Add the son "Carl"
 //	   IFigure carl = createPersonFigure("Carl");
@@ -149,6 +130,7 @@ public class test1
    
    private Connection connect(IFigure figure1, IFigure figure2) {
 	   PolylineConnection connection = new PolylineConnection();
+	   
 	   connection.setSourceAnchor(new ChopboxAnchor(figure1));
 	   connection.setTargetAnchor(new ChopboxAnchor(figure2));
 	   return connection;

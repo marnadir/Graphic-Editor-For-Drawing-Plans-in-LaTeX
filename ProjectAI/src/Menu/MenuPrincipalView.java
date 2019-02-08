@@ -315,7 +315,7 @@ public class MenuPrincipalView extends IMenu{
 						dialog.pack();
 						compPoint.setVisible(true);
 
-						Composite comp = new Composite(planView, SWT.ALL);
+						Composite comp = new Composite(planView.getPlan(), SWT.ALL);
 
 						// sulla definizione di cio, ce qualcosa che mi turba!!
 						comp.setSize(50, 50);

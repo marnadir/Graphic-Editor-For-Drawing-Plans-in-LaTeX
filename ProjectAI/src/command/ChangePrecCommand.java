@@ -67,6 +67,9 @@ public class ChangePrecCommand implements ICommand {
 	}
 
 	public void updatePrec(List l) {
+		if(a.getPrec().size()>0 && a.getStandardLengthPrec()==0) {
+			a.setStandardLengthPrec(14);
+		}
 		a.setPrec(new ArrayList<>());
 		for(int i=0;i<l.getItemCount();i++) {
 			a.getPrec().add(l.getItem(i));

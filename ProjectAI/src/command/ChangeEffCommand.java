@@ -66,6 +66,9 @@ public class ChangeEffCommand  implements ICommand{
 	}
 
 	public void updateEff(List l) {
+		if(a.getEffect().size()>0 && a.getStandardLengthEff()==0) {
+			a.setStandardLengthEff(14);
+		}
 		a.setEffect(new ArrayList<>());
 		for(int i=0;i<l.getItemCount();i++) {
 			a.getEffect().add(l.getItem(i));

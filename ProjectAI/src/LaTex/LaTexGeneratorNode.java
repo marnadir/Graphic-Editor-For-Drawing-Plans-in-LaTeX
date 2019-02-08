@@ -61,7 +61,16 @@ public class LaTexGeneratorNode {
 		if(o.getNode()!= null) {
 			sb.append(o.getNode().getID());
 		}else if(o.getStateCanvas()!=null) {
-			sb.append(o.getStateCanvas().getState().getName());
+			if(o.getStateCanvas() instanceof InitialStateCanvas) {
+				if(o.getStateCanvas().getState().isText()) {
+					sb.append("init");
+				}else {
+					sb.append("start");
+				}
+			}else if(o.getStateCanvas() instanceof GoalStateCanvas)  {
+					sb.append("goal");
+			
+			}
 		}
 		
 		

@@ -17,7 +17,7 @@ import View.TreeActioDomainView;
 public class ChangeNameCommand implements ICommand {
 
 	Text textName;
-	Shell d;
+	Shell shell;
 	
 
 	@Override
@@ -65,7 +65,7 @@ public class ChangeNameCommand implements ICommand {
 									if(tree.getContainerAction()!=null) {
 										tree.getContainerAction().redraw();
 									}
-									d.dispose();
+									//shell.dispose();
 								}
 
 							}

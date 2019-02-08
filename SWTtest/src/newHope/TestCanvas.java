@@ -24,7 +24,7 @@ public static void main(String[] args) {
 	LinkCanvas lineConstructer=new LinkCanvas(container,counter);
 	lineConstructer.addlistener();
 	
-	Oval canvas1=new Oval(container,50, 200);
+	Oval canvas1=new Oval(container,50,200 );
 	canvas1.drawO();
 
 	Oval canvas2 =new Oval(container,200, 150);
