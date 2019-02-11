@@ -4,6 +4,9 @@ import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Color;
+
 import LaTex.LaTexGeneratorAction;
 
 public class Action implements Serializable {
@@ -34,6 +37,8 @@ public class Action implements Serializable {
 	boolean shownCond = false;
 	boolean shownName = true;
 	boolean form=true;
+	boolean isFillColor=false;
+	Color color;
 	
 	final double PIXEL_MEASUREMNT= 0.026458;
 	final double CM_MEASUREMNT= 37.7957517575025;
@@ -61,6 +66,8 @@ public class Action implements Serializable {
 		shownCond=a.shownCond;
 		shownName=a.shownName;
 		form=a.form;
+		isFillColor=a.isFillColor;
+		color=a.color;
 		
 		
 		
@@ -385,6 +392,36 @@ public class Action implements Serializable {
 
 	public void setForm(boolean form) {
 		this.form = form;
+	}
+
+	public boolean isFillColor() {
+		return isFillColor;
+	}
+
+	public void setIsFillColor(boolean isFillColor) {
+		this.isFillColor = isFillColor;
+	}
+
+	public Color getColor() {
+		return color;
+	}
+	
+	
+	public String getColorAsString() {
+
+		Color theColor = getColor();
+		String colorName = null;
+		if (color.getDevice().getSystemColor(SWT.COLOR_CYAN).equals(theColor)) {
+			colorName = "cyan";
+		} else if (color.getDevice().getSystemColor(SWT.COLOR_YELLOW).equals(theColor)) {
+			colorName = "yellow";
+		}
+
+		return colorName;
+	}
+
+	public void setColor(Color color) {
+		this.color = color;
 	}
 	
 	

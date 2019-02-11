@@ -110,51 +110,17 @@ public class OrderCondition extends Canvas{
 	}
 	
 	public void drawOrder() {
-		this.addPaintListener(new PaintListener() {
 
-			@Override
-			public void paintControl(PaintEvent e) {
-				// TODO Auto-generated method stub
-				e.gc.setLineWidth(1);
+		Point p = new Point(nod1.getBounds().x + nod1.getBounds().width, nod1.getBounds().y - 20);
+		Point p1 = c1.getParent().toControl(c1.toDisplay(p.x, p.y));
 
-				Point p = new Point(nod1.getBounds().x + nod1.getBounds().width, nod1.getBounds().y - 20);
-				Point p1 = c1.getParent().toControl(c1.toDisplay(p.x, p.y));
-
-				p = new Point(nod2.getBounds().x, nod2.getBounds().y - 20);
-				Point p2 = c2.getParent().toControl(c2.toDisplay(p.x, p.y));
-
-//				Path path = new Path(canvasContainer.getDisplay());
-//				path.moveTo((float) (p1.x), (float) (p1.y));
-//				if (p1.y > p2.y) {
-//					path.quadTo(p1.y, p2.x, p2.x, p2.y);
-//				} else {
-//					path.quadTo(p2.x, p1.y, p2.x, p2.y);
-//
-//				}
-//				path.quadTo(p2.x, p1.y, p2.x, p2.y);
-//				e.gc.drawPath(path);
-
-				//parent.setSize(p2.x - p1.x, 40);
-				parent.setLocation(p1.x, p1.y - 30);
-				
-				Image img = new Image(parent.getDisplay(), "img/ord.png");
-//				img.setBackground(canvasContainer.getDisplay().getSystemColor(SWT.COLOR_DARK_GRAY));
-				//e.gc.drawImage(img, 0, 0);
-				e.gc.drawImage(img, 0, 0, img.getImageData().width, img.getImageData().height, 0, 0, p2.x- p1.x, 40);
-				
-			
-			    img.dispose();
-
-				
-				//parent.layout();
-			    //parent.pack();
-				
-			    
-			    
-			}
-		});
-	
+		p = new Point(nod2.getBounds().x, nod2.getBounds().y - 20);
+		Point p2 = c2.getParent().toControl(c2.toDisplay(p.x, p.y));
 		
+		setLocation(p1.x,p1.y+30);
+		setSize(p2.x-p1.x,30);
+		Contrain c=new Contrain(this, SWT.ALL);
+		c.draw();
 		
 
 	}

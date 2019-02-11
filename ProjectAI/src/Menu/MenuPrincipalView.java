@@ -202,60 +202,7 @@ public class MenuPrincipalView extends IMenu{
 			}
 		};
 
-		Listener listenerShow = new Listener() {
-
-			@Override
-			public void handleEvent(Event event) {
-				IDialog dialog = new IDialog(getShell(), SWT.APPLICATION_MODAL | SWT.CENTER) {
-					Composite compButton;
-
-					@Override
-					public Listener getOkbtnListener() {
-						Listener l;
-						l = new Listener() {
-
-							@Override
-							public void handleEvent(Event event) {
-								Control[] child = compButton.getChildren();
-								for (int i = 0; i < child.length; i++) {
-									Button btn = (Button) child[i];
-									if (btn.getSelection()) {
-										System.out.println(btn.getText());
-										setVisible(false);
-									}
-								}
-
-							}
-						};
-						return l;
-					}
-
-					@Override
-					public void createContent() {
-						getLabel().setText("Choice for Showing/Hiding conditions");
-						this.getLabel().pack();
-						Composite c = getComposite();
-						c.setLayout(new GridLayout(1, false));
-						compButton = new Composite(c, SWT.ALL);
-						compButton.setLayout(new RowLayout(SWT.HORIZONTAL));
-
-						Button showAllBtn = new Button(compButton, SWT.RADIO);
-						showAllBtn.setText("ShowAll Conditions");
-
-						Button hideAllBtn = new Button(compButton, SWT.RADIO);
-						hideAllBtn.setText("HideAll Conditions");
-
-						Button choiceUserBtn = new Button(compButton, SWT.RADIO);
-						choiceUserBtn.setText("Depending on Choice");
-
-						pack();
-
-					}
-				};
-
-				dialog.createContent();
-			}
-		};
+		
 
 		
 		
@@ -465,7 +412,6 @@ public class MenuPrincipalView extends IMenu{
 		};
 
 		saveAllItem.addListener(SWT.Selection, saveAll);
-		showCond.addListener(SWT.Selection, listenerShow);
 		restoreStateDomain.addListener(SWT.Selection, listenerRestoreDomain);
 		storeStateDomain.addListener(SWT.Selection, listenerStoreDomain);
 		exitItem.addListener(SWT.Selection, listenerExit);

@@ -61,7 +61,13 @@ public class Node extends ICanvasAction {
 				}
 
 				if (action.isForm()) {
-					e.gc.drawRectangle(rect);
+					if(action.isFillColor()) {
+						e.gc.setBackground(action.getColor());
+						e.gc.fillRoundRectangle(rect.x, rect.y, rect.width, rect.height, 10, 10);
+					}else {
+						e.gc.drawRoundRectangle(rect.x, rect.y, rect.width, rect.height, 10, 10);
+
+					}
 				}
 				if (action.isShownName()) {
 					int l = rect.x + rect.width / 6;

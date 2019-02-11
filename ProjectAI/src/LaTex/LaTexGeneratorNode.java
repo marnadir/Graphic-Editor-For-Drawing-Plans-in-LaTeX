@@ -29,7 +29,7 @@ public class LaTexGeneratorNode {
 		sb.append("{"+node.getID()+"}");//numerare le azioni
 		sb.append("{"+getNameAction(action.getName())+"=");
 		sb.append(getVariable(action.getName())+","+"\n");
-		sb.append("  body="+"{at={"+getPosition(node)+"}}"+"\n"+"}"+"\n");
+		sb.append("  body="+"{"+isFillColor(action)+"at={"+getPosition(node)+"}}"+"\n"+"}"+"\n");
 		
 
 		return sb.toString();
@@ -54,7 +54,13 @@ public class LaTexGeneratorNode {
 		return sb.toString();
 	}
 	
-	
+	public String isFillColor(Action a) {
+		StringBuilder sb=new StringBuilder();
+		if(a.isFillColor()) {
+			sb.append("fill="+a.getColorAsString()+",");
+		}
+		return sb.toString();
+	}
 	
 	public String isStateorAction(Oval o) {
 		StringBuilder sb = new StringBuilder();

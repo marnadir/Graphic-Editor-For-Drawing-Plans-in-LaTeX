@@ -78,6 +78,63 @@ public class MenuContentAction implements MenuDetectListener {
 				}
 			});
 
+			
+			MenuItem fillColor= new MenuItem(m, SWT.CASCADE);
+			fillColor.setText("fillColor");
+			
+			Menu subMe = new Menu(m);
+			fillColor.setMenu(subMe);
+			
+			MenuItem cyan=new MenuItem(subMe, SWT.ALL);
+			cyan.setText("Cyan");
+			
+			
+			cyan.addListener(SWT.Selection, new Listener() {
+				
+				@Override
+				public void handleEvent(Event event) {
+					canvas.getAction().setIsFillColor(true);	
+					canvas.getAction().setColor(canvas.getDisplay().getSystemColor(SWT.COLOR_CYAN));
+					canvas.redraw();
+
+				}
+			});
+			
+		
+			
+			MenuItem yellow=new MenuItem(subMe, SWT.ALL);
+			yellow.setText("Yellow");
+			
+			yellow.addListener(SWT.Selection, new Listener() {
+				
+				@Override
+				public void handleEvent(Event event) {
+					canvas.getAction().setIsFillColor(true);	
+					canvas.getAction().setColor(canvas.getDisplay().getSystemColor(SWT.COLOR_YELLOW));
+					canvas.redraw();
+
+				}
+			});
+			
+			
+			
+			MenuItem none=new MenuItem(subMe, SWT.ALL);
+			none.setText("None");
+			
+			none.addListener(SWT.Selection, new Listener() {
+				
+				@Override
+				public void handleEvent(Event event) {
+					canvas.getAction().setIsFillColor(false);
+					canvas.redraw();
+
+				}
+			});
+			
+			
+			
+			
+			
 			MenuItem form = new MenuItem(m, SWT.CASCADE);
 			form.setText("form");
 			Menu subM = new Menu(m);

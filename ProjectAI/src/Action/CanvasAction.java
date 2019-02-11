@@ -2,7 +2,7 @@ package Action;
 
 import java.util.ArrayList;
 
-
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.dnd.DND;
 import org.eclipse.swt.dnd.DragSource;
 import org.eclipse.swt.dnd.Transfer;
@@ -88,7 +88,14 @@ public class CanvasAction  extends ICanvasAction{
 				}
 
 				if (action.isForm()) {
-					e.gc.drawRectangle(rect);
+					if(action.isFillColor()) {
+						e.gc.setBackground(action.getColor());
+						e.gc.fillRoundRectangle(rect.x, rect.y, rect.width, rect.height, 10, 10);
+					}else {
+						//e.gc.drawRectangle(rect);
+						e.gc.drawRoundRectangle(rect.x, rect.y, rect.width, rect.height, 10, 10);
+
+					}
 				}
 				
 				if (action.isShownName()) {
