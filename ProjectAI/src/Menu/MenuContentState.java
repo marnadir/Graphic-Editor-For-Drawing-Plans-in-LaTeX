@@ -1,6 +1,8 @@
 package Menu;
 
  
+import java.util.ArrayList;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MenuDetectEvent;
 import org.eclipse.swt.events.MenuDetectListener;
@@ -17,6 +19,7 @@ import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Text;
 
 import Dialog.IDialog;
+import PlanPart.Oval;
 import PlanPart.PlanContent;
 import State.GoalStateCanvas;
 import State.IState;
@@ -54,6 +57,16 @@ public class MenuContentState implements MenuDetectListener {
 					}else if(canvas instanceof GoalStateCanvas){
 						content.setGoalStateCanvas(null);
 					}
+
+					
+					for (Oval oval : canvas.getOvalList()) {
+						content.getOvalCounter().getListOval().remove(oval);
+						oval.dispose();
+
+					}
+					canvas.setOvalList(new ArrayList<>());
+				
+					
 				}
 				canvas.getParent().setVisible(false);
 				canvas.clear();

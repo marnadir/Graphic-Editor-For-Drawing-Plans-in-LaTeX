@@ -38,7 +38,7 @@ public class Action implements Serializable {
 	boolean shownName = true;
 	boolean form=true;
 	boolean isFillColor=false;
-	Color color;
+	String colorString;
 	
 	final double PIXEL_MEASUREMNT= 0.026458;
 	final double CM_MEASUREMNT= 37.7957517575025;
@@ -67,7 +67,7 @@ public class Action implements Serializable {
 		shownName=a.shownName;
 		form=a.form;
 		isFillColor=a.isFillColor;
-		color=a.color;
+		colorString=a.colorString;
 		
 		
 		
@@ -402,27 +402,22 @@ public class Action implements Serializable {
 		this.isFillColor = isFillColor;
 	}
 
-	public Color getColor() {
-		return color;
+	
+	
+	
+	
+
+	
+
+	public String getColorString() {
+		return colorString;
+	}
+
+	public void setColorString(String colorString) {
+		this.colorString = colorString;
 	}
 	
 	
-	public String getColorAsString() {
-
-		Color theColor = getColor();
-		String colorName = null;
-		if (color.getDevice().getSystemColor(SWT.COLOR_CYAN).equals(theColor)) {
-			colorName = "cyan";
-		} else if (color.getDevice().getSystemColor(SWT.COLOR_YELLOW).equals(theColor)) {
-			colorName = "yellow";
-		}
-
-		return colorName;
-	}
-
-	public void setColor(Color color) {
-		this.color = color;
-	}
 	
 	
 	

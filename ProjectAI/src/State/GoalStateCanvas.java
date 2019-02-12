@@ -72,15 +72,15 @@ public class GoalStateCanvas extends IStateCanvas {
 					String string = state.getConds().get(i);
 
 					if(state.isShownCond()) {
-						e.gc.drawLine(startX, posY, startX - state.getLengthCond(), posY);
+						e.gc.drawLine(startX, posY, -2+startX - state.getLengthCond(), posY);
 						e.gc.drawString(string, startX+3 - state.getLengthCond(), posY - 20, false);
 						if(parent.getParent() instanceof PlanContent) {
-							addOval(state,string,1, posY-2);
+							addOval(state,string,parent.getLocation().x-6, parent.getLocation().y+ posY-2);
 						}
 					}else {
-						e.gc.drawLine(startX, posY, startX - state.getStandardLength(), posY);
+						e.gc.drawLine(startX, posY, -2+startX - state.getStandardLength(), posY);
 						if(parent.getParent() instanceof PlanContent) {
-							addOval(state,string,1, posY-2);
+							addOval(state,string,parent.getLocation().x-6, parent.getLocation().y+ posY-2);
 						}
 					}
 					posY = posY + 30;

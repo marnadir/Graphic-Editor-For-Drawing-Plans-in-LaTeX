@@ -24,19 +24,19 @@ public abstract class IStateCanvas extends Canvas  {
 	 */
 
 	IState state;
-	Composite contentCanvas;
 	Composite parent;
 	final double PIXEL_MEASUREMNT= 0.026458;
 	final double CM_MEASUREMNT= 37.7957517575025;
+	ArrayList<Oval> ovalList;
 
 
 
 
 	public IStateCanvas(Composite parent, int style, IState state) {
 		super(parent, style);
-		this.parent=parent;
 		this.state = state;
-		this.contentCanvas = parent;
+		this.parent = parent;
+		ovalList=new ArrayList<>();
 
 		// TODO Auto-generated constructor stub
 	}
@@ -57,10 +57,10 @@ public abstract class IStateCanvas extends Canvas  {
 		if(state.isShownCond()) {
 			int x1;
 			if(state.isText()) {
-				 x1=(int)state.getLengthCond()+27;
+				 x1=(int)state.getLengthCond()+22;
 
 			}else {
-				 x1=(int)state.getLengthCond()+6;
+				 x1=(int)state.getLengthCond()+3;
 
 			}
 			int y1=state.getLenIn()+4;
@@ -71,7 +71,7 @@ public abstract class IStateCanvas extends Canvas  {
 			if(state.isText()) {
 				x1=state.getStandardLength()+22;
 			}else {
-				x1=state.getStandardLength()+6;
+				x1=state.getStandardLength()+3;
 			}
 			int y1=state.getLenIn()+4;
 			parent.setSize(x1,y1);
@@ -126,10 +126,34 @@ public abstract class IStateCanvas extends Canvas  {
 	
 		if(parent.getParent() instanceof PlanContent) {
 			PlanContent graphContent=(PlanContent) parent.getParent();
-			Oval oval=new Oval(this,cond);
-			oval.setLocation(x, y);
+//			Oval oval=new Oval(this,cond);
+//			oval.setLocation(x, y);
+			for(Oval oval:ovalList) {
+				if(oval.getCond().equals(cond)) {
+					if(oval.getP().x != x || oval.getP().y != y) {
+						oval.setLocation(x, y);
+						return;
+					}
+					return;
+				}
+			}
+			Oval oval=new Oval(graphContent,cond,this);
+			oval.setLocation(x, y);	
+			ovalList.add(oval);
 			graphContent.getOvalCounter().addSt(oval);
 		}
+	}
+
+
+
+	public ArrayList<Oval> getOvalList() {
+		return ovalList;
+	}
+
+
+
+	public void setOvalList(ArrayList<Oval> ovalList) {
+		this.ovalList = ovalList;
 	}
 	
 

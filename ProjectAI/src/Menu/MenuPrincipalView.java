@@ -262,7 +262,7 @@ public class MenuPrincipalView extends IMenu{
 						dialog.pack();
 						compPoint.setVisible(true);
 
-						Composite comp = new Composite(planView.getPlan(), SWT.ALL);
+						Composite comp = new Composite(planView.getPlan(), SWT.BORDER);
 
 						// sulla definizione di cio, ce qualcosa che mi turba!!
 						comp.setSize(50, 50);
@@ -306,7 +306,6 @@ public class MenuPrincipalView extends IMenu{
 									if (!l2.getText().contains("null")) {
 										orderCond.drawOrder();
 										planView.getPlan().getOrds().add(orderCond);
-										orderCond.pack();
 										c1 = "null";
 										c2 = "null";
 										l1.setText("ordering of actions");
@@ -326,11 +325,11 @@ public class MenuPrincipalView extends IMenu{
 					@Override
 					public void dispose() {
 
-						link.removelistener(l1, l2, archBtn);
-						archBtn.removeListener(SWT.MouseDoubleClick, getArchBtnList());
-						removeListener(SWT.MouseDoubleClick, getArchBtnList());
-						link=null;
-
+//						link.removelistener(l1, l2, archBtn);
+//						archBtn.removeListener(SWT.MouseDoubleClick, getArchBtnList());
+//						removeListener(SWT.MouseDoubleClick, getArchBtnList());
+//						link=null;
+//
 						super.dispose();
 
 					}

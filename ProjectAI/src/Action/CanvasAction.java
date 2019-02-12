@@ -8,6 +8,7 @@ import org.eclipse.swt.dnd.DragSource;
 import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Composite;
 import DNDAaction.MyDragActionListener;
@@ -89,7 +90,7 @@ public class CanvasAction  extends ICanvasAction{
 
 				if (action.isForm()) {
 					if(action.isFillColor()) {
-						e.gc.setBackground(action.getColor());
+						e.gc.setBackground(getColorSWT());
 						e.gc.fillRoundRectangle(rect.x, rect.y, rect.width, rect.height, 10, 10);
 					}else {
 						//e.gc.drawRectangle(rect);
@@ -161,7 +162,7 @@ public class CanvasAction  extends ICanvasAction{
 		return lenght;
 	}
 	
-	
+
 	
 	public void addDNDListener() {
 		DragSource source =new DragSource(this, DND.DROP_NONE);

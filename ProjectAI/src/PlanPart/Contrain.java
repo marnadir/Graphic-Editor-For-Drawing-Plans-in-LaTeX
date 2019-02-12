@@ -1,39 +1,61 @@
 package PlanPart;
 
+
+
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Path;
-import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Listener;
 
 public class Contrain extends Canvas{
 
+	public static Composite parent;
+	private static float scale = 1;
+
+	
 	public Contrain(Composite parent, int style) {
 		super(parent, style);
-		
+		this.parent=parent;
 	}
-	
+	//have to be improved, working just with constant, should be dynamically
 	public void draw() {
 		
 		addPaintListener(getListener());
+		 this.addListener(SWT.MouseWheel, new Listener()
+		    {
+		        @Override
+		        public void handleEvent(Event event)
+		        {
+		            if (event.count > 0)
+		                scale += .2f;
+		            else
+		                scale -= .2f;
+
+		            scale = Math.max(scale, 0);
+
+		            redraw();
+		        }
+		    });
 	}
 	
 	
 	public static PaintListener getListener() {
 		PaintListener p;
+		
 
 		p = new PaintListener() {
 
 			@Override
 			public void paintControl(PaintEvent e) {
 
+				System.out.println(parent.getBounds().width);
+				System.out.println(parent.getBounds().height);
 
-			   // e.gc.drawArc(25, 25, 120, 120, 45, 270);
-//				e.gc.drawArc(x, y, width, height, startAngle, arcAngle);
-				Rectangle r=new Rectangle(25, 25, 80, 20);
-				//e.gc.drawRectangle(r);
 				
 			    e.gc.drawArc(0, 25,80, 35, 0, 180);
 			    drawArrow(e.gc, 60, 0, 82, 44, 8, Math.toRadians(45));
@@ -49,7 +71,7 @@ public class Contrain extends Canvas{
 
 	}
 	
-	public static void drawArrow(GC gc, int x1, int y1, int x2, int y2, double arrowLength, double arrowAngle) {
+	public static  void drawArrow(GC gc, int x1, int y1, int x2, int y2, double arrowLength, double arrowAngle) {
 	    double theta = Math.atan2(y2 - y1, x2 - x1);
 	    double offset = (arrowLength - 2) * Math.cos(arrowAngle);
 
@@ -65,7 +87,7 @@ public class Contrain extends Canvas{
 	    path.dispose();
 	}
 	
-	public static void drawArrowE(GC gc, int x1, int y1, int x2, int y2, double arrowLength, double arrowAngle) {
+	public static  void drawArrowE(GC gc, int x1, int y1, int x2, int y2, double arrowLength, double arrowAngle) {
 	    double theta = Math.atan2(y2 - y1, x2 - x1);
 	    double offset = (arrowLength - 2) * Math.cos(arrowAngle);
 
@@ -81,4 +103,8 @@ public class Contrain extends Canvas{
 	    path.dispose();
 	}
 
+
+
+	
+	
 }

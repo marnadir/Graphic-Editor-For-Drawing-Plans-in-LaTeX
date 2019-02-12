@@ -25,16 +25,16 @@ public class Oval extends Canvas{
 	boolean select = false;
 	Composite container;
 
-	public Oval(Composite container,String cond) {
+	public Oval(Composite container,String cond,Composite referenceComposite) {
 		super(container, SWT.ALL);
 		this.container=container;
 		red = container.getDisplay().getSystemColor(SWT.COLOR_RED);
 		black = container.getDisplay().getSystemColor(SWT.COLOR_BLACK);
 		this.cond=cond;
-		if(container instanceof Node ) {
-			this.node=(Node)container;
+		if(referenceComposite instanceof Node ) {
+			this.node=(Node)referenceComposite;
 		}else {
-			this.state=(IStateCanvas)container;
+			this.state=(IStateCanvas)referenceComposite;
 		}
 	}
 
@@ -66,10 +66,12 @@ public class Oval extends Canvas{
 			public void paintControl(PaintEvent e) {
 
 				//e.gc=new GC(canvasContainer);
-				if(!isDisposed()) {
+				if(!isDisposed() && !e.gc.isDisposed()) {
 					e.gc.setForeground(black);
 					e.gc.setLineWidth(2);
-					e.gc.drawOval(p.x, p.y, 5, 5);
+					e.gc.drawOval(getP().x, getP().y, 5, 5);
+					
+					//e.gc.dispose();
 				}
 			
 				

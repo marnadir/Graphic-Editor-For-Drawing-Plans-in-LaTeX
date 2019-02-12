@@ -3,28 +3,17 @@ package PlanPart;
 
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.PaintEvent;
-import org.eclipse.swt.events.PaintListener;
-import org.eclipse.swt.graphics.GC;
-import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.graphics.ImageData;
-import org.eclipse.swt.graphics.Path;
 import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.layout.FillLayout;
-import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 
 import Action.Node;
-import LaTex.LaTexGeneratorAction;
 import LaTex.LaTexGeneratorNode;
 
-public class OrderCondition extends Canvas{
+public class OrderCondition{
  
 	PlanContent canvasContainer;
 	Node nod1=null;
@@ -36,7 +25,6 @@ public class OrderCondition extends Canvas{
 
 	
 	public OrderCondition(Composite parent) {
-		super(parent, SWT.ALL);
 		this.canvasContainer=(PlanContent)parent.getParent();
 		this.parent=parent;
 
@@ -48,7 +36,10 @@ public class OrderCondition extends Canvas{
 		for(int i=0;i<canvasContainer.getChildren().length;i++) {
 			Composite comp=(Composite)canvasContainer.getChildren()[i];
 			comp.setEnabled(true);
-			comp.getChildren()[0].addListener(SWT.MouseDoubleClick, addOrdCond(l1,l2,comp));
+			if(comp.getChildren().length>0) {
+				comp.getChildren()[0].addListener(SWT.MouseDoubleClick, addOrdCond(l1,l2,comp));
+
+			}
 			
 		}
 	}
@@ -117,11 +108,16 @@ public class OrderCondition extends Canvas{
 		p = new Point(nod2.getBounds().x, nod2.getBounds().y - 20);
 		Point p2 = c2.getParent().toControl(c2.toDisplay(p.x, p.y));
 		
-		setLocation(p1.x,p1.y+30);
-		setSize(p2.x-p1.x,30);
-		Contrain c=new Contrain(this, SWT.ALL);
-		c.draw();
 		
+		parent.setSize(90,60);
+		
+		parent.setLocation(p1.x+((p2.x-p1.x-parent.getBounds().width)/2), p1.y - 30);
+
+		
+		Contrain c=new Contrain(parent, SWT.BORDER);
+		c.draw();
+		c.pack();
+		c.setSize(parent.getSize().x,parent.getSize().y);
 
 	}
 

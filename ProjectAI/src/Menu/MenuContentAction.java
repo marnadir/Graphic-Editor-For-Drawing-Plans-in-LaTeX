@@ -1,6 +1,8 @@
 package Menu;
 
 
+import java.util.ArrayList;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MenuDetectEvent;
 import org.eclipse.swt.events.MenuDetectListener;
@@ -17,6 +19,7 @@ import org.eclipse.swt.widgets.Text;
 import Action.ICanvasAction;
 import Action.Node;
 import Dialog.IDialog;
+import PlanPart.Oval;
 import PlanPart.PlanContent;
 
 public class MenuContentAction implements MenuDetectListener {
@@ -44,6 +47,12 @@ public class MenuContentAction implements MenuDetectListener {
 						PlanContent contentAction=(PlanContent)canvas.getParent().getParent();
 						contentAction.getActionInPlan().remove(canvas);
 						canvas.getParent().setVisible(false);
+						for (Oval oval : canvas.getOvalList()) {
+							contentAction.getOvalCounter().getListOval().remove(oval);
+							oval.dispose();
+
+						}
+						canvas.setOvalList(new ArrayList<>());
 						canvas.clearDisplay();
 						return;
 					}
@@ -94,7 +103,7 @@ public class MenuContentAction implements MenuDetectListener {
 				@Override
 				public void handleEvent(Event event) {
 					canvas.getAction().setIsFillColor(true);	
-					canvas.getAction().setColor(canvas.getDisplay().getSystemColor(SWT.COLOR_CYAN));
+					canvas.getAction().setColorString("cyan");;
 					canvas.redraw();
 
 				}
@@ -110,7 +119,7 @@ public class MenuContentAction implements MenuDetectListener {
 				@Override
 				public void handleEvent(Event event) {
 					canvas.getAction().setIsFillColor(true);	
-					canvas.getAction().setColor(canvas.getDisplay().getSystemColor(SWT.COLOR_YELLOW));
+					canvas.getAction().setColorString("yellow");;
 					canvas.redraw();
 
 				}

@@ -2,6 +2,7 @@ package State;
 
 
 
+
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.Transform;
@@ -12,7 +13,7 @@ import PlanPart.PlanContent;
 public class InitialStateCanvas extends IStateCanvas {
 
 	
-	
+
 	
 	public InitialStateCanvas(Composite parent, int style, IState state) {
 		super(parent, style, state);
@@ -71,12 +72,12 @@ public class InitialStateCanvas extends IStateCanvas {
 						e.gc.drawLine(startX, posY, startX + state.getLengthCond(), posY);
 						e.gc.drawString(string, startX + 5, posY - 20, false);
 						if(parent.getParent() instanceof PlanContent) {
-							addOval(state,string,startX+state.getLengthCond(), posY-2);
+							addOval(state,string,parent.getLocation().x+parent.getBounds().width+1,parent.getLocation().y+ posY-1);
 						}
 					}else {
 						e.gc.drawLine(startX, posY, startX + state.getStandardLength(), posY);
 						if(parent.getParent() instanceof PlanContent) {
-							addOval(state,string,startX+state.getStandardLength(), posY-2);
+							addOval(state,string,parent.getLocation().x+parent.getBounds().width+1,parent.getLocation().y+ posY-1);
 						}
 					}
 					posY = posY + 30;

@@ -38,11 +38,11 @@ public class Node extends ICanvasAction {
 					if (action.isShownCond()) {
 						e.gc.drawLine(0, posY, (action.getLengthPrec()), posY);
 						e.gc.drawString(string, 2, posY - 20, false);
-						addOval(action, string, 1, posY - 2);
+						addOval(action, string,parent.getLocation().x-6, parent.getLocation().y+ posY-1);
 
 					} else {
 						e.gc.drawLine(0, posY, action.getStandardLengthPrec(), posY);
-						addOval(action, string, 1, posY - 2);
+						addOval(action, string,parent.getLocation().x-6, parent.getLocation().y+ posY-1);
 
 					}
 
@@ -62,7 +62,7 @@ public class Node extends ICanvasAction {
 
 				if (action.isForm()) {
 					if(action.isFillColor()) {
-						e.gc.setBackground(action.getColor());
+						e.gc.setBackground(getColorSWT());
 						e.gc.fillRoundRectangle(rect.x, rect.y, rect.width, rect.height, 10, 10);
 					}else {
 						e.gc.drawRoundRectangle(rect.x, rect.y, rect.width, rect.height, 10, 10);
@@ -75,7 +75,7 @@ public class Node extends ICanvasAction {
 				}
 
 				posY = rect.y + 10;
-
+				resizeParent();
 				for (int i = 0; i < action.getEffect().size(); i++) {
 					int x = rect.x + rect.width;
 					String string = action.getEffect().get(i);
@@ -83,14 +83,12 @@ public class Node extends ICanvasAction {
 					if (action.isShownCond()) {
 						e.gc.drawLine(x, posY, x + action.getLengthEff(), posY);
 						e.gc.drawString(string, x + 2, posY - 20, false);
-
-						addOval(action, string, x + action.getLengthEff(), posY - 2);
-						// e.gc.drawOval(x + (16 + lengthEff), posY-2, 5, 5);
+						addOval(action,string,parent.getLocation().x+parent.getBounds().width+1,parent.getLocation().y+ posY-1);
 
 					} else {
 
 						e.gc.drawLine(x, posY, x + action.getStandardLengthEff(), posY);
-						addOval(action, string, x + action.getStandardLengthEff() - 3, posY - 2);
+						addOval(action,string,parent.getLocation().x+parent.getBounds().width+1,parent.getLocation().y+ posY-1);
 
 					}
 
@@ -98,6 +96,7 @@ public class Node extends ICanvasAction {
 
 				}
 				resizeParent();
+				redraw();
 			}
 		});
 

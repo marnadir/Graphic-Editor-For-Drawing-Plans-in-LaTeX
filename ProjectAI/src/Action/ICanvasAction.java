@@ -1,5 +1,9 @@
 package Action;
 
+import java.util.ArrayList;
+
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
 
@@ -13,11 +17,15 @@ public abstract class ICanvasAction extends Canvas {
 	String latexCode;
 	final double PIXEL_MEASUREMNT = 0.026458;
 	final double CM_MEASUREMNT = 37.7957517575025;
+	ArrayList<Oval> ovalList;
+
 
 	public ICanvasAction(Composite parent, int style, Action a) {
 		super(parent, style);
 		this.parent = parent;
 		this.action = a;
+		ovalList=new ArrayList<>();
+
 
 	}
 
@@ -39,10 +47,21 @@ public abstract class ICanvasAction extends Canvas {
 	public void addOval(Action action, String cond, int x, int y) {
 		if (parent.getParent() instanceof PlanContent) {
 			PlanContent graphContent = (PlanContent) parent.getParent();
-			Oval oval = new Oval(this, cond);
+			for (Oval oval : ovalList) {
+				if (oval.getCond().equals(cond)) {
+					if (oval.getP().x != x || oval.getP().y != y) {
+						oval.setLocation(x, y);
+						return;
+					}
+					return;
+				}
+			}
+			Oval oval = new Oval(graphContent, cond, this);
 			oval.setLocation(x, y);
-			graphContent.getOvalCounter().addA(oval);
+			ovalList.add(oval);
+			graphContent.getOvalCounter().addSt(oval);
 		}
+
 	}
 
 	public void clearDisplay() {
@@ -55,4 +74,22 @@ public abstract class ICanvasAction extends Canvas {
 		return this.action;
 	}
 
+	public ArrayList<Oval> getOvalList() {
+		return ovalList;
+	}
+
+	public void setOvalList(ArrayList<Oval> ovalList) {
+		this.ovalList = ovalList;
+	}
+
+	public Color getColorSWT() {
+		if (action.getColorString().equals("cyan")) {
+			return getDisplay().getSystemColor(SWT.COLOR_CYAN);
+		} else if (action.getColorString().equals("yellow")) {
+			return getDisplay().getSystemColor(SWT.COLOR_YELLOW);
+		}
+
+		return getDisplay().getSystemColor(SWT.COLOR_WHITE);
+	}
+	
 }

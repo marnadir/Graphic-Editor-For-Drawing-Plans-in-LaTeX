@@ -130,7 +130,7 @@ public class MyDropStateListener extends DropTargetAdapter {
 						
 					}else {
 						if(inState!=null) {
-							Composite comp = new Composite(graphContent, SWT.ALL);
+							Composite comp = new Composite(graphContent, SWT.DRAW_TRANSPARENT);
 							comp.setLayoutData(new GridData(GridData.FILL, GridData.FILL, false, false));
 							comp.setLayout(new FillLayout());
 							comp.setLocation(comp.toControl(event.x, event.y));

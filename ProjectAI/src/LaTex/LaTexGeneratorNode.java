@@ -57,7 +57,7 @@ public class LaTexGeneratorNode {
 	public String isFillColor(Action a) {
 		StringBuilder sb=new StringBuilder();
 		if(a.isFillColor()) {
-			sb.append("fill="+a.getColorAsString()+",");
+			sb.append("fill="+a.getColorString()+",");
 		}
 		return sb.toString();
 	}
