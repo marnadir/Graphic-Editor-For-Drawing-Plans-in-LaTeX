@@ -9,6 +9,8 @@ import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Listener;
 
 import Action.Node;
 import State.IStateCanvas;
@@ -43,10 +45,7 @@ public class Oval extends Canvas{
 		//canvasContainer.removePaintListener(getListener());
 	}
 
-	public void fillOval() {
-		container.addPaintListener(getListenerFill());
 
-	}
 	
 	
 	public void setLocation(int x, int y) {
@@ -67,7 +66,7 @@ public class Oval extends Canvas{
 
 				//e.gc=new GC(canvasContainer);
 				if(!isDisposed() && !e.gc.isDisposed()) {
-					e.gc.setForeground(black);
+				e.gc.setForeground(black);
 					e.gc.setLineWidth(2);
 					e.gc.drawOval(getP().x, getP().y, 5, 5);
 					
@@ -82,22 +81,16 @@ public class Oval extends Canvas{
 		return l;
 	}
 	
-	public PaintListener getListenerFill() {
-		PaintListener l;
+	public Listener selectionLister() {
+		Listener l;
 		
-		l=new PaintListener() {
-
+		l=new Listener() {
+			
 			@Override
-			public void paintControl(PaintEvent e) {
-
-				//e.gc=new GC(canvasContainer);
-				
-				e.gc.setForeground(red);
-				e.gc.setLineWidth(2);
-				e.gc.drawOval(p.x, p.y, 5, 5);
+			public void handleEvent(Event event) {
+				System.out.println("volareee");
 				
 			}
-			
 		};
 		
 		return l;

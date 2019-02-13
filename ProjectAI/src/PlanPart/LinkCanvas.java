@@ -1,11 +1,14 @@
 package PlanPart;
 
+import java.awt.geom.Arc2D;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Path;
 import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.graphics.Transform;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
@@ -46,21 +49,31 @@ public class LinkCanvas {
 		for (int i = 0; i < canvasContainer.getChildren().length; i++) {
 			Composite comp = (Composite) canvasContainer.getChildren()[i];
 			comp.setEnabled(true);
-			comp.getChildren()[0].addListener(SWT.MouseDoubleClick, addLink(l1, l2, comp, btn));
+			if(comp instanceof Oval) {
+				//comp.addListener(SWT.Selection, addLink(l1, l2, comp, btn));
+				Oval oval=(Oval) comp;
+				
+
+			}
+			
 
 		}
+		canvasContainer.addListener(SWT.MouseDoubleClick, addLink(l1, l2, btn));
 	}
 
-	public void removelistener(Label l1, Label l2, Button btn) {
+/*	public void removelistener(Label l1, Label l2, Button btn) {
 
 		for (int i = 0; i < canvasContainer.getChildren().length; i++) {
 			Composite comp = (Composite) canvasContainer.getChildren()[i];
 			comp.setEnabled(true);
-			comp.getChildren()[0].removeListener(SWT.MouseDoubleClick, addLink(l1, l2, comp, btn));
-		}
-	}
+			if (comp instanceof Oval) {
+				comp.removeListener(SWT.MouseDoubleClick, addLink(l1, l2, comp, btn));
 
-	public Listener addLink(Label l1, Label l2, Composite comp, Button btn) {
+			}
+		}
+	}*/
+
+	public Listener addLink(Label l1, Label l2, Button btn) {
 		Listener l;
 		l = new Listener() {
 
@@ -79,7 +92,7 @@ public class LinkCanvas {
 									&& (p.y - 11 < event.y && event.y < p.y + 11)) {
 
 								oval1 = canvasContainer.getOvalCounter().getListOval().get(i);
-								c1 = comp;
+//								c1 = comp;
 								l1.setText("First Cond. :" + oval1.getCond());
 								l1.pack();
 
@@ -93,7 +106,7 @@ public class LinkCanvas {
 								if (canvasContainer.getOvalCounter().getListOval().get(i).getNode() != oval1
 										.getNode()) {
 									oval2 = canvasContainer.getOvalCounter().getListOval().get(i);
-									c2 = comp;
+//									c2 = comp;
 									l2.setText("Second Cond. :" + oval2.getCond());
 									l2.pack();
 								}
@@ -125,23 +138,17 @@ public class LinkCanvas {
 			@Override
 			public void paintControl(PaintEvent e) {
 				// TODO Auto-generated method stub
-				e.gc.setLineWidth(1);
-				e.gc.setForeground(black);
-
+//				e.gc.setLineWidth(1);
+//				e.gc.setForeground(black);
+//
 				Point p = oval1.getP();
-				p1 = c1.getParent().toControl(c1.toDisplay(p.x, p.y));
+				p1=p;
 
 				p = oval2.getP();
-				p2 = c2.getParent().toControl(c2.toDisplay(p.x, p.y));
-
-				Path path = new Path(canvasContainer.getDisplay());
-//				if (p1.y > p2.y) {
-//					path.quadTo(p1.y, p2.x, p2.x, p2.y);
-//				} else {
-//					path.quadTo(p2.x, p1.y, p2.x, p2.y);
+				p2=p;
 //
-//				}
-
+//				Path path = new Path(canvasContainer.getDisplay());
+//				path.moveTo((float) (p1.x), (float) (p1.y));
 //				Point temp1=p1;
 //				Point temp2=p2;
 //				
@@ -151,48 +158,41 @@ public class LinkCanvas {
 //					temp = temp1;
 //					temp1 = temp2;
 //					temp2 = temp;
-//					//path.quadTo(temp1.y, temp2.x, temp2.x, temp2.y);
-//					path.moveTo((float) (p2.x), (float) (p2.y));
-//
 //					path.quadTo(temp1.x, temp2.y, temp1.x, temp1.y);
 //
-//					//path.quadTo(p2.x, p1.y, p2.x, p2.y);
 //
 //				} else {
-//					path.moveTo((float) (p1.x), (float) (p1.y));
 //					path.quadTo(temp2.x, temp1.y, temp2.x, temp2.y);
 //				}
-//				
-//				
+//
+			    
 //				e.gc.drawPath(path);
-				
-				
-				path.moveTo((float) (p1.x), (float) (p1.y));
-				Point temp1=p1;
-				Point temp2=p2;
-				
-				
-				if (p1.y > p2.y) {
-					Point temp = null;
-					temp = temp1;
-					temp1 = temp2;
-					temp2 = temp;
-					//path.quadTo(temp1.y, temp2.x, temp2.x, temp2.y);
-					path.quadTo(temp1.x, temp2.y, temp1.x, temp1.y);
+//			    e.gc.drawArc(0, 50,80, 35, 0, 180);
+//			    e.gc.drawRectangle(0, 50, 80, 35/2);
+			    
+			    double theta = Math.atan2(p2.y - p1.y, p2.x - p1.x);
+			    Transform t=new Transform(canvasContainer.getDisplay());
+			    
+			    float angle = (float) Math.toDegrees(Math.atan2(p2.y - p1.y, p2.x - p1.x));
 
-					//path.quadTo(p2.x, p1.y, p2.x, p2.y);
-
-				} else {
-					path.quadTo(temp2.x, temp1.y, temp2.x, temp2.y);
-				}
-
-				e.gc.drawPath(path);
-				//e.gc.dispose();
-				
-				
-				
+			    if(angle < 0){
+			        angle += 360;
+			    }
+			    
+			    
+				t.rotate((int)angle);
+				System.out.println(Math.toRadians(angle));
+				e.gc.setTransform(t);
+				int distance = (int) Math.sqrt((p2.x-p1.x)*(p2.x-p1.x) + (p2.y-p1.y)*(p2.y-p1.y));
 				
 
+				e.gc.drawArc(p1.x, p1.y-25, distance, 50, 0, 180);
+				
+				
+				t.rotate(-90);
+				e.gc.setTransform(t);
+
+			    
 			}
 
 		};

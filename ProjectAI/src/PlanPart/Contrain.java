@@ -53,10 +53,7 @@ public class Contrain extends Canvas{
 			@Override
 			public void paintControl(PaintEvent e) {
 
-				System.out.println(parent.getBounds().width);
-				System.out.println(parent.getBounds().height);
-
-				
+			
 			    e.gc.drawArc(0, 25,80, 35, 0, 180);
 			    drawArrow(e.gc, 60, 0, 82, 44, 8, Math.toRadians(45));
 			    

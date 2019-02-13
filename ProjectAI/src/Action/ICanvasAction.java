@@ -3,6 +3,8 @@ package Action;
 import java.util.ArrayList;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
@@ -59,6 +61,26 @@ public abstract class ICanvasAction extends Canvas {
 			Oval oval = new Oval(graphContent, cond, this);
 			oval.setLocation(x, y);
 			ovalList.add(oval);
+			oval.addMouseListener(new MouseListener() {
+				
+				@Override
+				public void mouseUp(MouseEvent e) {
+					System.out.println("daadfv");
+					
+				}
+				
+				@Override
+				public void mouseDown(MouseEvent e) {
+					System.out.println("daadfv");
+					
+				}
+				
+				@Override
+				public void mouseDoubleClick(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+			});;
 			graphContent.getOvalCounter().addSt(oval);
 		}
 
