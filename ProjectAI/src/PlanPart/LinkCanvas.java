@@ -139,14 +139,7 @@ public class LinkCanvas {
 			public void paintControl(PaintEvent e) {
 				// TODO Auto-generated method stub
 //				e.gc.setLineWidth(1);
-//				e.gc.setForeground(black);
-//
-				Point p = oval1.getP();
-				p1=p;
-
-				p = oval2.getP();
-				p2=p;
-//
+//				e.gc.setForeground(black);//
 //				Path path = new Path(canvasContainer.getDisplay());
 //				path.moveTo((float) (p1.x), (float) (p1.y));
 //				Point temp1=p1;
@@ -169,6 +162,12 @@ public class LinkCanvas {
 //				e.gc.drawPath(path);
 //			    e.gc.drawArc(0, 50,80, 35, 0, 180);
 //			    e.gc.drawRectangle(0, 50, 80, 35/2);
+//
+				Point p = oval1.getP();
+				p1=p;
+				p = oval2.getP();
+				p2=p;
+
 			    
 			    double theta = Math.atan2(p2.y - p1.y, p2.x - p1.x);
 			    Transform t=new Transform(canvasContainer.getDisplay());
@@ -178,21 +177,19 @@ public class LinkCanvas {
 			    if(angle < 0){
 			        angle += 360;
 			    }
-			    
-			    
-				t.rotate((int)angle);
-				System.out.println(Math.toRadians(angle));
-				e.gc.setTransform(t);
+
 				int distance = (int) Math.sqrt((p2.x-p1.x)*(p2.x-p1.x) + (p2.y-p1.y)*(p2.y-p1.y));
-				
+				t.rotate((float) angle);
+				t.translate((float) (theta*250),- (float) (theta*100));
+
+				e.gc.setTransform(t);
 
 				e.gc.drawArc(p1.x, p1.y-25, distance, 50, 0, 180);
-				
-				
-				t.rotate(-90);
+			
+				t.rotate(0);
 				e.gc.setTransform(t);
 
-			    
+			   
 			}
 
 		};
