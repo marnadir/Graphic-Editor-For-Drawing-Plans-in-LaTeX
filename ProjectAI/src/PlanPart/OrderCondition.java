@@ -72,6 +72,7 @@ public class OrderCondition{
 								nod1 = canvasContainer.getActionInPlan().get(i);
 								l2.setText(nod1.getAction().getName() + "<" + ".....");
 								l2.pack();
+								break;
 
 							}
 						}

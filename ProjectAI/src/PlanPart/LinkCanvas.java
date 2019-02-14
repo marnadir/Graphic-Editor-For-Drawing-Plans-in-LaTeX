@@ -1,6 +1,5 @@
 package PlanPart;
 
-import java.awt.geom.Arc2D;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.PaintEvent;
@@ -23,6 +22,8 @@ public class LinkCanvas {
 
 	Oval oval1 = null;
 	Oval oval2 = null;
+	
+	boolean isRight;
 
 	Composite c1;
 	Composite c2;
@@ -137,59 +138,69 @@ public class LinkCanvas {
 
 			@Override
 			public void paintControl(PaintEvent e) {
-				// TODO Auto-generated method stub
-//				e.gc.setLineWidth(1);
-//				e.gc.setForeground(black);//
-//				Path path = new Path(canvasContainer.getDisplay());
-//				path.moveTo((float) (p1.x), (float) (p1.y));
-//				Point temp1=p1;
-//				Point temp2=p2;
-//				
-//				
-//				if (p1.y > p2.y) {
-//					Point temp = null;
-//					temp = temp1;
-//					temp1 = temp2;
-//					temp2 = temp;
-//					path.quadTo(temp1.x, temp2.y, temp1.x, temp1.y);
-//
-//
-//				} else {
-//					path.quadTo(temp2.x, temp1.y, temp2.x, temp2.y);
-//				}
-//
-			    
-//				e.gc.drawPath(path);
-//			    e.gc.drawArc(0, 50,80, 35, 0, 180);
-//			    e.gc.drawRectangle(0, 50, 80, 35/2);
-//
+
+				e.gc.setLineWidth(1);
+
 				Point p = oval1.getP();
-				p1=p;
+				p1 = p;
 				p = oval2.getP();
-				p2=p;
+				p2 = p;
 
-			    
-			    double theta = Math.atan2(p2.y - p1.y, p2.x - p1.x);
-			    Transform t=new Transform(canvasContainer.getDisplay());
-			    
-			    float angle = (float) Math.toDegrees(Math.atan2(p2.y - p1.y, p2.x - p1.x));
+				if (p1.y < p2.y + 7 && p1.y > p2.y + 1) {
 
-			    if(angle < 0){
-			        angle += 360;
-			    }
+					int distance = (int) Math.sqrt((p2.x - p1.x) * (p2.x - p1.x) + (p2.y - p1.y) * (p2.y - p1.y));
 
-				int distance = (int) Math.sqrt((p2.x-p1.x)*(p2.x-p1.x) + (p2.y-p1.y)*(p2.y-p1.y));
-				t.rotate((float) angle);
-				t.translate((float) (theta*250),- (float) (theta*100));
+//			    	 double theta = Math.atan2(p2.y - p1.y, p2.x - p1.x);
+//					    Transform t=new Transform(canvasContainer.getDisplay());
+//					    float angle = (float) Math.toDegrees(Math.atan2(p2.y - p1.y, p2.x - p1.x));
+//
+//					    if(angle < 0){
+//					        angle += 360;
+//					    }
+//						t.rotate((float) angle);
+//						t.translate((float) (theta*250),- (float) (theta*100));
+//
+//						e.gc.setTransform(t);
+//					t.rotate(0);
+//					e.gc.setTransform(t);
 
-				e.gc.setTransform(t);
+					e.gc.drawArc(p1.x, p1.y - (distance / 6), distance, distance / 3, 0, 180);
+					isRight=false;
 
-				e.gc.drawArc(p1.x, p1.y-25, distance, 50, 0, 180);
-			
-				t.rotate(0);
-				e.gc.setTransform(t);
 
-			   
+				} else if (p1.y < p2.y - 1 && p1.y > p2.y - 7) {
+					
+					int distance = (int) Math.sqrt((p2.x - p1.x) * (p2.x - p1.x) + (p2.y - p1.y) * (p2.y - p1.y));
+					e.gc.drawArc(p1.x, p1.y - (distance / 6), distance, distance / 3, 0, -180);
+					isRight=true;
+
+				} else {
+					e.gc.setLineWidth(1);
+					e.gc.setForeground(black);//
+					Path path = new Path(canvasContainer.getDisplay());
+					path.moveTo((float) (p1.x), (float) (p1.y));
+					Point temp1 = p1;
+					Point temp2 = p2;
+
+					if (p1.y > p2.y) {
+						Point temp = null;
+						temp = temp1;
+						temp1 = temp2;
+						temp2 = temp;
+						path.quadTo(temp1.x, temp2.y, temp1.x, temp1.y);
+						isRight=true;
+
+
+					} else {
+						path.quadTo(temp2.x, temp1.y, temp2.x, temp2.y);
+						isRight=false;
+
+					}
+
+					e.gc.drawPath(path);
+
+				}
+
 			}
 
 		};
@@ -212,6 +223,10 @@ public class LinkCanvas {
 
 	public String getLatexCode() {
 		return latexCode;
+	}
+
+	public boolean isRight() {
+		return isRight;
 	}
 
 }

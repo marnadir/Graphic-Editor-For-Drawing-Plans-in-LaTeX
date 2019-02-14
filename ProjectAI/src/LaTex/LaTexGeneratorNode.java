@@ -158,7 +158,7 @@ public class LaTexGeneratorNode {
 		sb.append("[bend ");
 		
 		//ask if is left o right
-		if(link.getOval1().getP().y>link.getOval2().getP().y) {
+		if(link.isRight()) {
 			sb.append("right,");
 		}else {
 			sb.append("left,");
