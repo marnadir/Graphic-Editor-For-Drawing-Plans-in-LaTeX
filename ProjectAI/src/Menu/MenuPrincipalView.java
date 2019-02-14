@@ -83,20 +83,21 @@ public class MenuPrincipalView extends IMenu{
 
 		MenuItem storeStateDomain = new MenuItem(menuFile, SWT.PUSH);
 		storeStateDomain.setText("&Save Domain\tCtrl+S");
+		storeStateDomain.setAccelerator( SWT.CONTROL + 'S');
+
 
 		MenuItem restoreStateDomain = new MenuItem(menuFile, SWT.PUSH);
-		restoreStateDomain.setText("&Reload domain\tCtrl+S");
+		restoreStateDomain.setText("&Reload domain\tCtrl+R");
+		restoreStateDomain.setAccelerator( SWT.CONTROL + 'R');
 
 
 		MenuItem saveAllItem = new MenuItem(menuFile, SWT.PUSH);
-		saveAllItem.setText("&Save All\tShift+Ctrl+S");
-		saveAllItem.setAccelerator(SWT.SHIFT + SWT.CONTROL + 'S');
+		saveAllItem.setText("&Save All Plans\t");
 
 		MenuItem exitItem = new MenuItem(menuFile, SWT.PUSH);
 		exitItem.setText("&Exit");
 
-		MenuItem showCond = new MenuItem(menuOption, SWT.PUSH);
-		showCond.setText("Conditions in the Plan");
+
 
 		MenuItem menuLines = new MenuItem(menuOption, SWT.PUSH);
 		menuLines.setText("Create Connection");
@@ -570,37 +571,52 @@ public class MenuPrincipalView extends IMenu{
 
 		try {
 			FileInputStream fileIn = new FileInputStream(file.getAbsolutePath());
-			ObjectInputStream objectIn = new ObjectInputStream(fileIn);
-			ArrayList<Object> data =  (ArrayList<Object>) objectIn.readObject();
-			updateActionListDomain = (ArrayList<Action>) data.get(0);
 
-			if (data.get(1) != null) {
-				InitialState in = (InitialState) data.get(1);
-				if (domainView.getInitStateView().getContainerInitState().getChildren().length > 0) {
-					domainView.getInitStateView().getContainerInitState().getChildren()[0].dispose();
-				}
-				InitialStateCanvas initialStateCanvas = new InitialStateCanvas(
-						domainView.getInitStateView().getContainerInitState(), SWT.ALL, in);
-				initialStateCanvas.draw();
-				initialStateCanvas.addDNDListener();
-				in.generateLatexCodeDomain();
-				in.getLatexCodeDomain();
-			}
-			if (data.get(2) != null) {
-				GoalState goal = (GoalState) data.get(2);
-				if (domainView.getGoalStateView().getContainerGoalState().getChildren().length > 0) {
-					domainView.getGoalStateView().getContainerGoalState().getChildren()[0].dispose();
-				}
-				GoalStateCanvas goalStateCanvas = new GoalStateCanvas(
-						domainView.getGoalStateView().getContainerGoalState(), SWT.ALL, goal);
-				goalStateCanvas.draw();
-				goalStateCanvas.addDNDListener();
-				goal.generateLatexCodeDomain();
-				goal.getLatexCodeDomain();
-			}
+			if (file.length()>0) {
+				
+				ObjectInputStream objectIn = new ObjectInputStream(fileIn);
+				ArrayList<Object> data = (ArrayList<Object>) objectIn.readObject();
+				updateActionListDomain = (ArrayList<Action>) data.get(0);
 
-			objectIn.close();
-			System.out.println("The Object  was succesfully read from a file");
+				if (data.get(1) != null) {
+					InitialState in = (InitialState) data.get(1);
+					if (domainView.getInitStateView().getContainerInitState().getChildren().length > 0) {
+						domainView.getInitStateView().getContainerInitState().getChildren()[0].dispose();
+					}
+					InitialStateCanvas initialStateCanvas = new InitialStateCanvas(
+							domainView.getInitStateView().getContainerInitState(), SWT.ALL, in);
+					domainView.getInitStateView().getContainerInitState().setVisible(true);
+					initialStateCanvas.draw();
+					initialStateCanvas.addDNDListener();
+					in.generateLatexCodeDomain();
+					in.getLatexCodeDomain();
+				}
+				if (data.get(2) != null) {
+					GoalState goal = (GoalState) data.get(2);
+					if (domainView.getGoalStateView().getContainerGoalState().getChildren().length > 0) {
+						domainView.getGoalStateView().getContainerGoalState().getChildren()[0].dispose();
+					}
+					GoalStateCanvas goalStateCanvas = new GoalStateCanvas(
+							domainView.getGoalStateView().getContainerGoalState(), SWT.ALL, goal);
+					domainView.getGoalStateView().getContainerGoalState().setVisible(true);
+					goalStateCanvas.draw();
+					goalStateCanvas.pack();
+					goalStateCanvas.addDNDListener();
+					goal.generateLatexCodeDomain();
+					goal.getLatexCodeDomain();
+				}
+				objectIn.close();
+				System.out.println("The Object  was succesfully read from a file");
+
+
+			}else {
+				MessageBox messageBox = new MessageBox(getShell(),
+						SWT.ICON_WARNING |  SWT.OK);
+
+				messageBox.setText("Warning");
+				messageBox.setMessage("There are no stored information");
+				messageBox.open();
+			}
 
 		} catch (Exception e) {
 			e.printStackTrace();

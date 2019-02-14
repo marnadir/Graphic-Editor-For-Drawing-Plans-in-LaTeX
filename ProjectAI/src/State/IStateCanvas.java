@@ -37,8 +37,6 @@ public abstract class IStateCanvas extends Canvas  {
 		this.state = state;
 		this.parent = parent;
 		ovalList=new ArrayList<>();
-
-		// TODO Auto-generated constructor stub
 	}
 
 	
@@ -48,6 +46,7 @@ public abstract class IStateCanvas extends Canvas  {
 		this.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		int numCond = state.getConds().size();
 		state.setLenIn(numCond*30);
+		state.setLengthCond(getLenght(state.getConds())*7+10);
 		this.addMenuDetectListener(new MenuContentState(this));
 		resizeParent();
 		
@@ -87,8 +86,6 @@ public abstract class IStateCanvas extends Canvas  {
 
 
 	public void clear() {
-//		canvasSo.redraw();
-//		canvasSo.layout();
 		dispose();
 		state.removeConds();
 	}
@@ -126,8 +123,6 @@ public abstract class IStateCanvas extends Canvas  {
 	
 		if(parent.getParent() instanceof PlanContent) {
 			PlanContent graphContent=(PlanContent) parent.getParent();
-//			Oval oval=new Oval(this,cond);
-//			oval.setLocation(x, y);
 			for(Oval oval:ovalList) {
 				if(oval.getCond().equals(cond)) {
 					if(oval.getP().x != x || oval.getP().y != y) {

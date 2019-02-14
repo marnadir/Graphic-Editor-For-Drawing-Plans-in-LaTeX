@@ -29,11 +29,6 @@ public class InitialStateCanvas extends IStateCanvas {
 			public void paintControl(PaintEvent e) {
 
 				int avergWidth = (int) e.gc.getFontMetrics().getAverageCharacterWidth();
-				state.setLengthCond(getLenght(state.getConds())*avergWidth+10);
-				
-				
-
-				
 				int startX = 0;
 				int startY =0;
 				

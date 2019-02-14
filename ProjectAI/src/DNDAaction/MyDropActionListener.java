@@ -77,6 +77,11 @@ public class MyDropActionListener extends DropTargetAdapter {
 						}
 
 						if (action != null) {
+							InitializationVariableDialog dialog=new InitializationVariableDialog(graphContent.getShell(), SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL | SWT.CENTER);
+							dialog.setAction(action);
+							dialog.createContent();
+							dialog.pack();
+							 
 							Composite comp = new Composite(graphContent, SWT.BORDER);
 							comp.setLayoutData(new GridData(GridData.FILL, GridData.FILL, false, false));
 							comp.setLayout(new FillLayout());

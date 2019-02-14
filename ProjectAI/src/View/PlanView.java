@@ -53,12 +53,12 @@ public class PlanView  extends CTabFolder{
 	public void createContent(DomainView domainView) {
 		this.domainView=domainView;
 		CTabItem item = new CTabItem(this, SWT.CLOSE);
-		PlanContent contentAction = new PlanContent(this, SWT.ALL);
-		contentAction.addDndListener(domainView.getTreeAction());
-		item.setControl(contentAction);
+		PlanContent contentPlan = new PlanContent(this, SWT.ALL);
+		contentPlan.addDndListener(domainView.getTreeAction());
+		item.setControl(contentPlan);
 		setSelection(item);
 		ArrayList<PlanContent> listOfPlan = new ArrayList<>();
-		listOfPlan.add(contentAction);
+		listOfPlan.add(contentPlan);
 		item.setText("Plan" + listOfPlan.size());
 
 		ToolBar t = new ToolBar(this, SWT.ALL);
@@ -70,51 +70,59 @@ public class PlanView  extends CTabFolder{
 			@Override
 			public void handleEvent(Event event) {
 				
-				ArrayList<Node> updateNodeList = contentAction.getActionInPlan();
+				ArrayList<Node> updateNodeList = contentPlan.getActionInPlan();
 				for(Node node:updateNodeList) {
-					ArrayList<Oval> listOval=contentAction.getOvalCounter().getListOval();
-					Iterator<Oval> i = listOval.iterator();
-					while (i.hasNext()) {
-							Oval oval = i.next(); // must be called before you can call i.remove()
-							if(oval!=null) {
-//								if(oval.getNode()  instanceof Node) {
-									oval.dispose();
-									 i.remove();
-									 contentAction.getOvalCounter().setListOval(listOval);
-//								}
-							}
-							
-					}
+					ArrayList<Oval> listOval=contentPlan.getOvalCounter().getListOval();
+//					Iterator<Oval> i = listOval.iterator();
+//					while (i.hasNext()) {
+//							Oval oval = i.next(); // must be called before you can call i.remove()
+//							if(oval!=null) {
+////								if(oval.getNode()  instanceof Node) {
+//									oval.dispose();
+//									 i.remove();
+//									 contentAction.getOvalCounter().setListOval(listOval);
+////								}
+//							}
+//							
+//					}
 					if(toolShow.getSelection()) {
 						node.getAction().setIsShownCond(true);
 						node.pack();
+						node.redraw();
 
 					}else {
 						node.getAction().setIsShownCond(false);
 						node.pack();
+						node.redraw();
 					}
+					contentPlan.redraw();
+
+				
 				}
+
 				
 				if(toolShow.getSelection()) {
-					if(contentAction.getInitialStateCanvas()!=null) {
-						contentAction.getInitialStateCanvas().getState().setShownCond(true);
-						contentAction.getInitialStateCanvas().pack();
+					if(contentPlan.getInitialStateCanvas()!=null) {
+						contentPlan.getInitialStateCanvas().getState().setShownCond(true);
+						contentPlan.getInitialStateCanvas().pack();
 					}
-					if(contentAction.getGoalStateCanvas()!=null) {
-						contentAction.getGoalStateCanvas().getState().setShownCond(true);
-						contentAction.getGoalStateCanvas().pack();
+					if(contentPlan.getGoalStateCanvas()!=null) {
+						contentPlan.getGoalStateCanvas().getState().setShownCond(true);
+						contentPlan.getGoalStateCanvas().pack();
 					}
 					
 				}else {
-					if(contentAction.getInitialStateCanvas()!=null) {
-						contentAction.getInitialStateCanvas().getState().setShownCond(false);
-						contentAction.getInitialStateCanvas().pack();
+					if(contentPlan.getInitialStateCanvas()!=null) {
+						contentPlan.getInitialStateCanvas().getState().setShownCond(false);
+						contentPlan.getInitialStateCanvas().pack();
 					}
-					if(contentAction.getGoalStateCanvas()!=null) {
-						contentAction.getGoalStateCanvas().getState().setShownCond(false);
-						contentAction.getGoalStateCanvas().pack();
+					if(contentPlan.getGoalStateCanvas()!=null) {
+						contentPlan.getGoalStateCanvas().getState().setShownCond(false);
+						contentPlan.getGoalStateCanvas().pack();
 					}
 				}
+				
+				
 				
 
 			}
@@ -141,10 +149,10 @@ public class PlanView  extends CTabFolder{
 							public void handleEvent(Event event) {
 								if(combo.getText().equalsIgnoreCase("action")) {
 									if(isNumeric(lenghtPrec.getText())&& isNumeric(lenghtEff.getText())) {
-										ArrayList<Node> updateNodeList = contentAction.getActionInPlan();
+										ArrayList<Node> updateNodeList = contentPlan.getActionInPlan();
 										if(updateNodeList !=null) {
 											for(Node node:updateNodeList) {
-												ArrayList<Oval> listOval=contentAction.getOvalCounter().getListOval();
+												ArrayList<Oval> listOval=contentPlan.getOvalCounter().getListOval();
 												Iterator<Oval> i = listOval.iterator();
 												while (i.hasNext()) {
 														Oval oval = i.next(); // must be called before you can call i.remove()
@@ -152,7 +160,7 @@ public class PlanView  extends CTabFolder{
 															if(oval.getNode()  instanceof Node) {
 																oval.dispose();
 																 i.remove();
-																 contentAction.getOvalCounter().setListOval(listOval);
+																 contentPlan.getOvalCounter().setListOval(listOval);
 															}
 														}
 														
@@ -179,9 +187,9 @@ public class PlanView  extends CTabFolder{
 									}
 								}else {
 									if(isNumeric(lenghtPrec.getText())) {
-										if(	contentAction.getInitialStateCanvas()!=null) {
+										if(	contentPlan.getInitialStateCanvas()!=null) {
 											
-											ArrayList<Oval> listOval=contentAction.getOvalCounter().getListOval();
+											ArrayList<Oval> listOval=contentPlan.getOvalCounter().getListOval();
 											Iterator<Oval> i = listOval.iterator();
 											while (i.hasNext()) {
 													Oval oval = i.next(); // must be called before you can call i.remove()
@@ -189,7 +197,7 @@ public class PlanView  extends CTabFolder{
 														if(oval.getStateCanvas()  instanceof InitialStateCanvas) {
 															oval.dispose();
 															i.remove();
-															contentAction.getOvalCounter().setListOval(listOval);
+															contentPlan.getOvalCounter().setListOval(listOval);
 														}
 													}
 													
@@ -199,27 +207,27 @@ public class PlanView  extends CTabFolder{
 											
 
 																						
-											contentAction.getInitialStateCanvas().getState().setLengthFromCm(Double.parseDouble(lenghtPrec.getText()));
-											contentAction.getInitialStateCanvas().getState().setStandardLengthFromCm(Double.parseDouble(lenghtPrec.getText()));
-											contentAction.getInitialStateCanvas().pack();
+											contentPlan.getInitialStateCanvas().getState().setLengthFromCm(Double.parseDouble(lenghtPrec.getText()));
+											contentPlan.getInitialStateCanvas().getState().setStandardLengthFromCm(Double.parseDouble(lenghtPrec.getText()));
+											contentPlan.getInitialStateCanvas().pack();
 										}
-										if(contentAction.getGoalStateCanvas()!=null) {
-											if(	contentAction.getGoalStateCanvas()!=null) {
+										if(contentPlan.getGoalStateCanvas()!=null) {
+											if(	contentPlan.getGoalStateCanvas()!=null) {
 												
-												ArrayList<Oval> listOval=contentAction.getOvalCounter().getListOval();
+												ArrayList<Oval> listOval=contentPlan.getOvalCounter().getListOval();
 												for(int i=0;i<listOval.size();i++) {
 													if(listOval.get(i).getStateCanvas()!=null) {
 														if(listOval.get(i).getStateCanvas()  instanceof GoalStateCanvas) {
 															listOval.get(i).dispose();
 															listOval.remove(i);
-															contentAction.getOvalCounter().setListOval(listOval);
+															contentPlan.getOvalCounter().setListOval(listOval);
 														}
 													}
 												}
 																							
-												contentAction.getGoalStateCanvas().getState().setLengthFromCm(Double.parseDouble(lenghtPrec.getText()));
-												contentAction.getGoalStateCanvas().getState().setStandardLengthFromCm(Double.parseDouble(lenghtPrec.getText()));
-												contentAction.getGoalStateCanvas().pack();
+												contentPlan.getGoalStateCanvas().getState().setLengthFromCm(Double.parseDouble(lenghtPrec.getText()));
+												contentPlan.getGoalStateCanvas().getState().setStandardLengthFromCm(Double.parseDouble(lenghtPrec.getText()));
+												contentPlan.getGoalStateCanvas().pack();
 											}
 										}
 										dispose();
