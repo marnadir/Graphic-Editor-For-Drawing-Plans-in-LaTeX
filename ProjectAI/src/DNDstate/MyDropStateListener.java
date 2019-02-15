@@ -19,6 +19,7 @@ import State.IStateCanvas;
 import State.InitialState;
 import State.InitialStateCanvas;
 import View.DomainView;
+import View.PlanView;
 
 public class MyDropStateListener extends DropTargetAdapter {
 	private Composite parentComposite;
@@ -75,10 +76,7 @@ public class MyDropStateListener extends DropTargetAdapter {
 								inState = new InitialState(myTypes[i].getEff());
 								InitialState initialState=(InitialState)domainView.getInitialStateCanvas().getState();
 								inState.copyAttribute(initialState);
-//								InitialStateCanvas stateCanvas = new InitialStateCanvas(comp, SWT.ALL, initialState);
-//								stateCanvas.draw();
-//								
-//								graphContent.setInitialStateCanvas((InitialStateCanvas) stateCanvas);
+
 							}
 							break;
 
@@ -87,9 +85,7 @@ public class MyDropStateListener extends DropTargetAdapter {
 								goalState = new GoalState(myTypes[i].getEff());
 								GoalState goal=(GoalState)domainView.getGoalStateCanvas().getState();
 								goalState.copyAttribute(goal);
-//								IStateCanvas stateCanvas2 = new GoalStateCanvas(comp, SWT.ALL, goalState);
-//								stateCanvas2.draw();
-//								graphContent.setGoalStateCanvas((GoalStateCanvas)stateCanvas2);
+
 							}
 						
 							break;
@@ -98,8 +94,16 @@ public class MyDropStateListener extends DropTargetAdapter {
 						}
 						
 					}
-					if(inState!=null && goalState!= null) {
-						
+					if (inState != null && goalState != null) {
+						if (graphContent.getParent() instanceof PlanView) {
+							PlanView planView = (PlanView) graphContent.getParent();
+							if (planView.isShowConditionSelecte()) {
+
+								inState.setShownCond(true);
+								goalState.setShownCond(true);
+							}
+						}
+
 						Composite comp = new Composite(graphContent, SWT.ALL);
 						comp.setLayoutData(new GridData(GridData.FILL, GridData.FILL, false, false));
 						comp.setLayout(new FillLayout());
@@ -130,6 +134,15 @@ public class MyDropStateListener extends DropTargetAdapter {
 						
 					}else {
 						if(inState!=null) {
+							if (graphContent.getParent() instanceof PlanView) {
+								PlanView planView = (PlanView) graphContent.getParent();
+								if (planView.isShowConditionSelecte()) {
+
+									inState.setShownCond(true);
+								}
+							}
+							
+							
 							Composite comp = new Composite(graphContent, SWT.DRAW_TRANSPARENT);
 							comp.setLayoutData(new GridData(GridData.FILL, GridData.FILL, false, false));
 							comp.setLayout(new FillLayout());
@@ -143,6 +156,15 @@ public class MyDropStateListener extends DropTargetAdapter {
 
 							
 						}else if(goalState!=null) {
+							
+							
+							if (graphContent.getParent() instanceof PlanView) {
+								PlanView planView = (PlanView) graphContent.getParent();
+								if (planView.isShowConditionSelecte()) {
+
+									goalState.setShownCond(true);
+								}
+							}
 							
 							Composite comp = new Composite(graphContent, SWT.ALL);
 							comp.setLayoutData(new GridData(GridData.FILL, GridData.FILL, false, false));

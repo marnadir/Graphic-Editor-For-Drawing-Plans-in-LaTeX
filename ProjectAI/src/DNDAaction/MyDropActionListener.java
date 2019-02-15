@@ -15,7 +15,7 @@ import Action.Action;
 import Action.Node;
 import DataTrasfer.MyType;
 import PlanPart.PlanContent;
-
+import View.PlanView;
 import View.TreeActioDomainView;
 
 public class MyDropActionListener extends DropTargetAdapter {
@@ -81,8 +81,17 @@ public class MyDropActionListener extends DropTargetAdapter {
 							dialog.setAction(action);
 							dialog.createContent();
 							dialog.pack();
+							
+							if(graphContent.getParent() instanceof PlanView) {
+								PlanView planView=(PlanView) graphContent.getParent();
+								if(planView.isShowConditionSelecte()) {
+									
+									action.setIsShownCond(true);
+								}
+							}
+							
 							 
-							Composite comp = new Composite(graphContent, SWT.BORDER);
+							Composite comp = new Composite(graphContent, SWT.ALL);
 							comp.setLayoutData(new GridData(GridData.FILL, GridData.FILL, false, false));
 							comp.setLayout(new FillLayout());
 							comp.setLocation(comp.toControl(event.x, event.y));

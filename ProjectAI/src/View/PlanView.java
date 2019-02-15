@@ -37,7 +37,8 @@ public class PlanView  extends CTabFolder{
 	
 	ConsoleView consoleView;
 	DomainView domainView;
-
+	ToolItem showCondition;
+	
 	public PlanView(Composite parent, int style) {
 		super(parent, style);
 		// TODO Auto-generated constructor stub
@@ -62,17 +63,17 @@ public class PlanView  extends CTabFolder{
 		item.setText("Plan" + listOfPlan.size());
 
 		ToolBar t = new ToolBar(this, SWT.ALL);
-		ToolItem toolShow=new ToolItem(t, SWT.CHECK);
+		showCondition=new ToolItem(t, SWT.CHECK);
 		Image icon = new Image(getDisplay(), "img/eye.png");
-		toolShow.setImage(icon);
-		toolShow.addListener(SWT.Selection,new Listener() {
+		showCondition.setImage(icon);
+		showCondition.addListener(SWT.Selection,new Listener() {
 			
 			@Override
 			public void handleEvent(Event event) {
 				
+
 				ArrayList<Node> updateNodeList = contentPlan.getActionInPlan();
 				for(Node node:updateNodeList) {
-					ArrayList<Oval> listOval=contentPlan.getOvalCounter().getListOval();
 //					Iterator<Oval> i = listOval.iterator();
 //					while (i.hasNext()) {
 //							Oval oval = i.next(); // must be called before you can call i.remove()
@@ -85,26 +86,33 @@ public class PlanView  extends CTabFolder{
 //							}
 //							
 //					}
-					if(toolShow.getSelection()) {
+					if(showCondition.getSelection()) {
 						node.getAction().setIsShownCond(true);
-						node.pack();
+						//node.pack();
 						node.redraw();
+					
+
 
 					}else {
 						node.getAction().setIsShownCond(false);
-						node.pack();
-						node.redraw();
+						//node.pack();
+						node.redraw();					
 					}
-					contentPlan.redraw();
+					
 
 				
 				}
 
+			
 				
-				if(toolShow.getSelection()) {
+				
+				if(showCondition.getSelection()) {
 					if(contentPlan.getInitialStateCanvas()!=null) {
 						contentPlan.getInitialStateCanvas().getState().setShownCond(true);
 						contentPlan.getInitialStateCanvas().pack();
+				
+
+						
 					}
 					if(contentPlan.getGoalStateCanvas()!=null) {
 						contentPlan.getGoalStateCanvas().getState().setShownCond(true);
@@ -115,6 +123,7 @@ public class PlanView  extends CTabFolder{
 					if(contentPlan.getInitialStateCanvas()!=null) {
 						contentPlan.getInitialStateCanvas().getState().setShownCond(false);
 						contentPlan.getInitialStateCanvas().pack();
+
 					}
 					if(contentPlan.getGoalStateCanvas()!=null) {
 						contentPlan.getGoalStateCanvas().getState().setShownCond(false);
@@ -356,7 +365,6 @@ public class PlanView  extends CTabFolder{
 				catch (IOException | InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
-					System.out.println(e.getMessage());
 
 				}                       
 			
@@ -446,4 +454,10 @@ public class PlanView  extends CTabFolder{
 	protected void checkSubclass() {
 		
 	}
+	
+	
+	public boolean isShowConditionSelecte() {
+		return showCondition.getSelection();
+	}
+	
 }
