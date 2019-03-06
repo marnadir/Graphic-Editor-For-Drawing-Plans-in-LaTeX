@@ -27,10 +27,6 @@ Package: ifpdf 2018/09/07 v3.3 Provides the ifpdf switch
 \headdp=\dimen102
 \footheight=\dimen103
 \sidebarheight=\dimen104
-\beamer@tempdim=\dimen105
-\beamer@finalheight=\dimen106
-\beamer@animht=\dimen107
-\beamer@animdp=\dimen108
 \beamer@animwd=\dimen109
 \beamer@leftmargin=\dimen110
 \beamer@rightmargin=\dimen111
