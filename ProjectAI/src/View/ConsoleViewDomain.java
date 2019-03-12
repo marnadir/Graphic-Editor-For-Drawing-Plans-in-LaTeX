@@ -30,6 +30,8 @@ public class ConsoleViewDomain extends Group{
 	File dirLatex;
 	Text textDomain;
 	DomainView domainView;
+	File directory;
+
 	
 	public ConsoleViewDomain(Composite parent, int style) {
 		super(parent, style);
@@ -108,8 +110,29 @@ public class ConsoleViewDomain extends Group{
 	}
 	public void createDirector() {
 		String filepath = System.getProperty("user.home");
+		directory = new File(filepath + "/TDP");
+
+		
 		 dirLatex = new File(filepath + "/TDP" + "/dirLatex");
 		
+		 if (!directory.exists()) {
+				System.out.println("creating directory: " + directory.getName());
+				boolean result = false;
+
+				try {
+					directory.mkdir();
+					result = true;
+				} catch (SecurityException se) {
+					// handle it
+				}
+				if (result) {
+					System.out.println("DIR created");
+				}
+			}
+
+		 
+		 
+		 
 		if (!dirLatex.exists()) {
 			System.out.println("creating directory: " + dirLatex.getName());
 			boolean result = false;

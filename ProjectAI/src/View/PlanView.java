@@ -317,14 +317,11 @@ public class PlanView  extends CTabFolder{
 			
 			@Override
 			public void handleEvent(Event event) {
-				ConsoleViewDomain consoleViewDomain=consoleView.getConsoleViewDomain();
-				consoleViewDomain.saveFile();
 				
-				ConsoleViewPlan consoleViewPlan=consoleView.getConsoleViewPlan();
-				consoleViewPlan.saveFile();
 				
-				Process proc;
 //				try {
+//				Process proc;
+
 //					ProcessBuilder pb = new ProcessBuilder("xdg-open"+consoleViewPlan.getFile().getAbsolutePath());
 //					pb.directory(consoleViewPlan.getDirPlan());
 //					pb.start();
@@ -337,16 +334,34 @@ public class PlanView  extends CTabFolder{
 //
 //				} 
 				
+				
+				ConsoleViewPlan consoleViewPlan=consoleView.getConsoleViewPlan();
+				consoleViewPlan.createDirector();
+				
+				consoleViewPlan.saveFile();
+				
+				
+				ConsoleViewDomain consoleViewDomain=consoleView.getConsoleViewDomain();
+				consoleViewDomain.saveFile();
+				
+				
+				try {
+					Thread.sleep(5000);
+				} catch (InterruptedException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+
+				
 				try {
 
 					String cmd1="cd "+consoleViewPlan.getDirPlan().getAbsolutePath();
-					String cmd2="pdflatex LatexPlan\\ .tex  -synctex=1 -interaction=nonstopmode";
+					String cmd2="pdflatex LatexPlan\\.tex  -synctex=1 -interaction=nonstopmode";
 					String cmd3="xdg-open LatexPlan.pdf";
 							
 					Process process = Runtime.getRuntime().exec(new String[] { "bash", "-c",
-							cmd1+" && "+cmd2+" && "+cmd3 });
+							cmd1+" && "+cmd2+" && "+cmd3});
 
-					process.waitFor();
 
 					BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
 					StringBuilder builder = new StringBuilder();
@@ -357,12 +372,14 @@ public class PlanView  extends CTabFolder{
 					}
 					String result = builder.toString();
 					System.out.println(result);
+					
+					//process.waitFor();
 
 				}
 				
 				
 				
-				catch (IOException | InterruptedException e) {
+				catch (IOException  e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 
