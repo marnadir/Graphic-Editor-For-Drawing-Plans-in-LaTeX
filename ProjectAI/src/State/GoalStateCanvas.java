@@ -30,7 +30,8 @@ public class GoalStateCanvas extends IStateCanvas {
 			@Override
 			public void paintControl(PaintEvent e) {
 			
-				int avergWidth = (int) e.gc.getFontMetrics().getAverageCharacterWidth();				
+				int avergWidth = 7;	
+				//int avergWidth =e.gc.getFontMetrics().getAverageCharacterWidth();
 				int numCond = state.getConds().size();
 
 				int startX = parent.getClientArea().width;

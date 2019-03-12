@@ -28,7 +28,9 @@ public class InitialStateCanvas extends IStateCanvas {
 			@Override
 			public void paintControl(PaintEvent e) {
 
-				int avergWidth = (int) e.gc.getFontMetrics().getAverageCharacterWidth();
+				int avergWidth = 7;
+				//int avergWidth =e.gc.getFontMetrics().getAverageCharacterWidth();
+
 				int startX = 0;
 				int startY =0;
 				
