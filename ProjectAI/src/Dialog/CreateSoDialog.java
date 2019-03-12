@@ -57,8 +57,9 @@ public class CreateSoDialog extends IDialogNewState{
 				}
 
 			}
+			
+			
 		};
-
 		return btn;
 	}
 
