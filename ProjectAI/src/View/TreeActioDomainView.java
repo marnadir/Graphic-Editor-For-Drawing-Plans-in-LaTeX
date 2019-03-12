@@ -23,7 +23,6 @@ import command.ChangePrecCommand;
 public class TreeActioDomainView extends Tree {
 
 	
-	MenuItem drawAction;
 	MenuItem showActionW;
 	MenuItem elimAction;
 	MenuItem modifAction;
@@ -33,13 +32,16 @@ public class TreeActioDomainView extends Tree {
 	Composite domainViewAction;
 	
 	
+
+	
 	public TreeActioDomainView(ScrolledComposite parent, int style,Composite domainViewAction) {
 		super(parent, style);
 		this.parent=parent;
 		actionList=new ArrayList<>();
 		this.domainViewAction=domainViewAction;
 		createMenu();
-		// TODO Auto-generated constructor stub
+		addListener(SWT.MouseDoubleClick, getListenerList());
+		
 	}
 
 	public void createMenu() {
@@ -51,8 +53,7 @@ public class TreeActioDomainView extends Tree {
 		for (int i = 0; i < items.length; i++) {
 			items[i].dispose();
 		}
-		drawAction = new MenuItem(menu, SWT.PUSH);
-		drawAction.setText("Draw Action");
+		
 
 		elimAction = new MenuItem(menu, SWT.PUSH);
 		elimAction.setText("Eliminate Action");
@@ -72,15 +73,7 @@ public class TreeActioDomainView extends Tree {
 		MenuItem modifEff = new MenuItem(subMenu, SWT.PUSH);
 		modifEff.setText("Effects");
 
-//		parent.setContent(this);
-//		parent.setExpandHorizontal(true);
-//		parent.setExpandVertical(true);
-//		parent.setAlwaysShowScrollBars(true);
-//		parent.setMinSize(this.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 
-		
-		
-		drawAction.addListener(SWT.Selection, getListenerDrawAction());
 
 		elimAction.addListener(SWT.Selection, getListenerElimAction());
 
@@ -90,11 +83,31 @@ public class TreeActioDomainView extends Tree {
 
 		modifEff.addListener(SWT.Selection, getListenerModifEff());
 	}
-	
-	
-	
-	public Listener getListenerDrawAction() {
+		
+
+	public Listener getListenerElimAction() {
 		Listener l = new Listener() {
+			@Override
+			public void handleEvent(Event event) {
+				TreeItem[] actions = getSelection();
+				if (actions.length > 0) {
+
+					TreeItem actionItem = getRoot(actions[0]);
+					Action action = findAction(actionItem.getText());
+					actionItem.dispose();
+					actionList.remove(action);
+				}
+
+			}
+		};
+		
+		
+		return l;
+	}
+	
+	private Listener getListenerList() {
+		Listener l = new Listener() {
+
 			@Override
 			public void handleEvent(Event event) {
 				TreeItem[] actions =getSelection();
@@ -114,28 +127,6 @@ public class TreeActioDomainView extends Tree {
 					canvasAction.draw();
 					canvasAction.addDNDListener();
 
-				}
-
-			}
-		};
-			
-		return l;
-	}
-	
-	
-	
-
-	public Listener getListenerElimAction() {
-		Listener l = new Listener() {
-			@Override
-			public void handleEvent(Event event) {
-				TreeItem[] actions = getSelection();
-				if (actions.length > 0) {
-
-					TreeItem actionItem = getRoot(actions[0]);
-					Action action = findAction(actionItem.getText());
-					actionItem.dispose();
-					actionList.remove(action);
 				}
 
 			}

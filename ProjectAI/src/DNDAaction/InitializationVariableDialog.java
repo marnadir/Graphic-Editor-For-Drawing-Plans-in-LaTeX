@@ -106,6 +106,9 @@ public class InitializationVariableDialog extends IDialog{
 				String[] variable2=getVariable(action.getName());
 				mapping=new TreeMap<String,String>(String.CASE_INSENSITIVE_ORDER);
 				for(int i=0;i<variable2.length;i++) {
+					if(textList.get(i).getText().equals("")) {
+						textList.get(i).setText(variable2[i]);
+					}
 					mapping.put(variable2[i],textList.get(i).getText());
 				}
 				

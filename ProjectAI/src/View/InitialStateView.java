@@ -20,7 +20,7 @@ public class InitialStateView extends Composite{
 	}
 
 	public void createContent() {
-		containerInitState=new Composite(this, SWT.BORDER);
+		containerInitState=new Composite(this, SWT.ALL);
 		containerInitState.setLayoutData(new GridData(GridData.FILL, GridData.FILL, false, false));
 		containerInitState.setLayout(new FillLayout());
 		containerInitState.setLocation(30,80);

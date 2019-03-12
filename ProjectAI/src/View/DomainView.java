@@ -85,6 +85,7 @@ public class DomainView {
 		fillLayout = new FillLayout();
 		fillLayout.type = SWT.HORIZONTAL;
 		part1.setLayout(fillLayout);
+		
 
 		initStateView=new InitialStateView(part1, SWT.BORDER);
 		initStateView.createContent();

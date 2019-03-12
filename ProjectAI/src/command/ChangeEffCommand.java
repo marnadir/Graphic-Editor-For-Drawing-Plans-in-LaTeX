@@ -34,6 +34,8 @@ public class ChangeEffCommand  implements ICommand{
 					public void createContent() {
 						// TODO Auto-generated method stub
 						super.createContent();
+						btnEdit.setVisible(true);
+						newCond.setVisible(true);
 						getLabel().setText("Modify the Effect of " + a.getName());
 						getLabel().pack();
 						List l = getList();
