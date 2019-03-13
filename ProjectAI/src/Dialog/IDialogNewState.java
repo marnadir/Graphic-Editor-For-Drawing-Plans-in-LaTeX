@@ -46,8 +46,8 @@ public abstract class IDialogNewState extends IDialog{
 	@Override
 	public void createContent() {
 		// TODO Auto-generated method stub
-		this.getLabel().setText("Create a new  state");
-		compositeDialog = this.getComposite();
+		label.setText("Create a new  state");
+		compositeDialog = composite;
 		compositeDialog.setLayout(new GridLayout(3, false));
 
 		

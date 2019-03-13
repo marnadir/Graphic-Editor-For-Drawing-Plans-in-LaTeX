@@ -38,7 +38,7 @@ public class ChangePrecCommand implements ICommand {
 						super.createContent();
 						btnEdit.setVisible(true);
 						newCond.setVisible(true);
-						getLabel().setText("Modify the precondition of " + a.getName());
+					    label.setText("Modify the precondition of " + a.getName());
 						List l = getList();
 
 						for (int i = 0; i < a.getPrec().size(); i++) {

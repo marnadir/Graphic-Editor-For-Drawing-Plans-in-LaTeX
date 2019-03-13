@@ -14,6 +14,7 @@ import org.eclipse.swt.widgets.Composite;
 import Action.Action;
 import Action.Node;
 import DataTrasfer.MyType;
+import Dialog.InitializationVariableDialog;
 import PlanPart.PlanContent;
 import View.PlanView;
 import View.TreeActioDomainView;

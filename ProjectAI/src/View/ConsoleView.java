@@ -3,18 +3,15 @@ package View;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Group;
 
-import PlanPart.PlanContent;
 
-public class ConsoleView extends Group{
+public class ConsoleView extends Composite{
 
 	ConsoleViewDomain consoleViewDomain;
 	ConsoleViewPlan consoleViewPlan;
 	
 	public ConsoleView(Composite parent, int style) {
 		super(parent, style);
-		setText("Console");
 		// TODO Auto-generated constructor stub
 	}
 	

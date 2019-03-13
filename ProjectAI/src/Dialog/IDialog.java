@@ -12,9 +12,8 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 
 public abstract class IDialog  extends Shell{
-	private Shell shell;
-	private Label label;
-	private Composite composite;
+	protected Label label;
+	protected Composite composite;
 	int style;
 	Button okButton ;
 	Button cancelButton;
@@ -23,7 +22,6 @@ public abstract class IDialog  extends Shell{
 
 	public IDialog(Shell shell,int style) {
 		super(shell, style);
-		this.shell = shell;
 		this.style=style;
 		this.createDialog();
 		
@@ -66,15 +64,9 @@ public abstract class IDialog  extends Shell{
 	}
 	
 	public abstract void createContent();	
-	
-	public Label getLabel() {
-		return this.label;
-	}
-	
 
 	
-	
-	
+
 	public Button getOkButton() {
 		return okButton;
 	}
@@ -83,9 +75,7 @@ public abstract class IDialog  extends Shell{
 		return cancelButton;
 	}
 
-	public Composite getComposite() {
-		return this.composite;
-	}
+
 	
 	public Listener getCancListener() {
 		Listener buttonListener = new Listener() {

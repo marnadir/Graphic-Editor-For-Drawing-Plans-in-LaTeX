@@ -251,9 +251,9 @@ public class PlanView  extends CTabFolder{
 					
 					@Override
 					public void createContent() {
-						getLabel().setText("Set global lenght");
-						this.getLabel().pack();
-						Composite c = getComposite();
+						label.setText("Set global lenght");
+						this.label.pack();
+						Composite c = composite;
 						c.setLayout(new GridLayout(1, false));
 						Composite comp1 = new Composite(c, SWT.ALL);
 						comp1.setLayout(new RowLayout(SWT.VERTICAL));

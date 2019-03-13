@@ -35,7 +35,7 @@ public class CreateGoalDialog extends IDialogNewState{
 	@Override
 	public void createContent() {
 		super.createContent();
-		this.getLabel().setText("Create a new goal state");
+		label.setText("Create a new goal state");
 		pack();
 		
 	}

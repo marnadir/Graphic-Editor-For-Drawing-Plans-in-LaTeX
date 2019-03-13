@@ -112,11 +112,10 @@ public class MenuContentState implements MenuDetectListener {
 
 						@Override
 						public void createContent() {
-							getLabel().setText("Line vs Text");
-							this.getLabel().pack();
-							Composite c = getComposite();
-							c.setLayout(new GridLayout(1, false));
-							compButton = new Composite(c, SWT.ALL);
+							label.setText("Line vs Text");
+							this.label.pack();
+							composite.setLayout(new GridLayout(1, false));
+							compButton = new Composite(composite, SWT.ALL);
 							compButton.setLayout(new RowLayout(SWT.HORIZONTAL));
 
 							btnText = new Button(compButton, SWT.RADIO);
@@ -125,7 +124,7 @@ public class MenuContentState implements MenuDetectListener {
 							Button btnLine = new Button(compButton, SWT.RADIO);
 							btnLine.setText("Line");
 
-							textButton = new Composite(c, SWT.ALL);
+							textButton = new Composite(composite, SWT.ALL);
 							textButton.setLayout(new GridLayout(2, false));
 
 							Label l = new Label(textButton, SWT.ALL);
@@ -249,28 +248,27 @@ public class MenuContentState implements MenuDetectListener {
 
 						@Override
 						public void createContent() {
-							this.getLabel().setText("set the PrecLine-size of the So ");
-							this.getLabel().pack();
-							Composite c = getComposite();
-							c.setLayout(new GridLayout(2, false));
+							this.label.setText("set the PrecLine-size of the So ");
+							this.label.pack();
+							composite.setLayout(new GridLayout(2, false));
 
 							if (state.isShownCond()) {
-								Label lWidth = new Label(c, SWT.ALL);
+								Label lWidth = new Label(composite, SWT.ALL);
 								lWidth.setText("Lenght in cm: ");
-								textWid = new Text(c, SWT.BORDER);
+								textWid = new Text(composite, SWT.BORDER);
 								textWid.setText(state.getLengthCondInCm());
-								Label info = new Label(c, SWT.BORDER);
+								Label info = new Label(composite, SWT.BORDER);
 								info.setText("the minimum lenght is: " + state.getLengthCondInCm()+"cm");
 								GridData gridData = new GridData(GridData.CENTER, GridData.CENTER, false, false);
 								gridData.horizontalSpan = 2;
 								info.setLayoutData(gridData);
 							} else {
-								Label lWidth = new Label(c, SWT.ALL);
+								Label lWidth = new Label(composite, SWT.ALL);
 								lWidth.setText("Lenght in cm: ");
-								textWid = new Text(c, SWT.BORDER);
+								textWid = new Text(composite, SWT.BORDER);
 							
 								textWid.setText((state.getLengthCondInCm()));
-								Label info = new Label(c, SWT.BORDER);
+								Label info = new Label(composite, SWT.BORDER);
 								info.setText("the default lenght is: " + "1.4cm");
 								GridData gridData = new GridData(GridData.CENTER, GridData.CENTER, false, false);
 								gridData.horizontalSpan = 2;

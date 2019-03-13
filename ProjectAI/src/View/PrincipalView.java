@@ -3,6 +3,8 @@ package View;
 import java.io.File;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.CTabFolder;
+import org.eclipse.swt.custom.CTabItem;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.layout.GridData;
@@ -68,11 +70,28 @@ public class PrincipalView {
 		planView.setLayout();
 		planView.createContent(domainView);
 		
-
-		consoleView = new ConsoleView(sashForm2, SWT.SCROLL_LINE);
+		CTabFolder folder=new CTabFolder(sashForm2, SWT.ALL);
+		CTabItem item = new CTabItem(folder, SWT.NONE);
+		
+		consoleView = new ConsoleView(folder, SWT.SCROLL_LINE);
 		consoleView.setLayout();
 		consoleView.createContent(domainView, planView);
+		item.setText("Console");
+		item.setControl(consoleView);
+		folder.setSelection(item);
 		
+		
+		CTabItem itemGlobal = new CTabItem(folder, SWT.NONE);
+		GlobalOptionView globalOptionView=new GlobalOptionView(folder, SWT.SCROLL_LINE);
+		globalOptionView.setLayout();
+		globalOptionView.createContent();
+		itemGlobal.setText("Global Option");
+		itemGlobal.setControl(globalOptionView);
+		folder.setSelection(itemGlobal);
+		
+		CTabItem viewOption = new CTabItem(folder, SWT.NONE);
+		viewOption.setText("View Option");
+		folder.setSelection(viewOption);
 		
 		
 		planView.setPdfPreView(consoleView);

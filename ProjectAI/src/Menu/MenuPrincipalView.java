@@ -151,8 +151,7 @@ public class MenuPrincipalView extends IMenu{
 
 					@Override
 					public void createContent() {
-						getLabel().setText("");
-						composite = this.getComposite();
+						label.setText("");
 						composite.setLayout(new GridLayout(1, false));
 
 						Label l1 = new Label(composite, SWT.ALL);
@@ -338,11 +337,10 @@ public class MenuPrincipalView extends IMenu{
 					@Override
 					public void createContent() {
 
-						getLabel().setText("Create Connection");
-						this.getLabel().pack();
-						Composite c = getComposite();
-						c.setLayout(new GridLayout(1, false));
-						compButton = new Composite(c, SWT.ALL);
+						label.setText("Create Connection");
+						this.label.pack();
+						composite.setLayout(new GridLayout(1, false));
+						compButton = new Composite(composite, SWT.ALL);
 						compButton.setLayout(new RowLayout(SWT.VERTICAL));
 
 						archBtn = new Button(compButton, SWT.PUSH);
@@ -351,7 +349,7 @@ public class MenuPrincipalView extends IMenu{
 						Button ordBtn = new Button(compButton, SWT.PUSH);
 						ordBtn.setText("draw Ord");
 
-						compPoint = new Composite(c, SWT.ALL);
+						compPoint = new Composite(composite, SWT.ALL);
 						compPoint.setLayout(new GridLayout());
 						l1 = new Label(compPoint, SWT.ALL);
 						l2 = new Label(compPoint, SWT.ALL);

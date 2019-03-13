@@ -37,8 +37,7 @@ public class ChangeNameCommand implements ICommand {
 					@Override
 					public void createContent() {
 
-						this.getLabel().setText("Modificy name action: " + a.getName());
-						Composite composite = this.getComposite();
+						label.setText("Modificy name action: " + a.getName());
 						composite.setLayout(new GridLayout(1, true));
 						textName = new Text(composite, SWT.BORDER);
 						textName.setText(a.getName());

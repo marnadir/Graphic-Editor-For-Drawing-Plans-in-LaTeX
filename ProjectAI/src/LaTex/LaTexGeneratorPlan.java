@@ -10,7 +10,7 @@ public class LaTexGeneratorPlan {
 	
 	public String getLatexIntro() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("\\documentclass{beamer}"+"\n");
+		sb.append("\\documentclass{standalone}"+"\n");
 		
 		sb.append("\\usepackage[T1]{fontenc}"+"\n");
 		

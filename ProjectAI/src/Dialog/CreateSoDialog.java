@@ -29,7 +29,7 @@ public class CreateSoDialog extends IDialogNewState{
 	@Override
 	public void createContent() {
 		super.createContent();
-		this.getLabel().setText("Create a new initial state");
+		label.setText("Create a new initial state");
 		
 	}
 

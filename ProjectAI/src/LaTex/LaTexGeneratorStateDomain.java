@@ -3,7 +3,6 @@ package LaTex;
 import java.util.ArrayList;
 
 import State.IState;
-import State.IStateCanvas;
 
 public class LaTexGeneratorStateDomain {
 	
@@ -28,6 +27,10 @@ public class LaTexGeneratorStateDomain {
 	}
 	
 	/*1cm=37,7957517575025 pixel*/
+	
+	/*
+	 * get the source code for STARTL, which represents  conditions 
+	 */
 	public String getSoCodeL(IState stateCanvas) {
 		StringBuilder sb = new StringBuilder();
 		String space="  ";
@@ -49,6 +52,9 @@ public class LaTexGeneratorStateDomain {
 		return sb.toString();
 	}
 	
+	/*
+	 * get the source code for STARTL, which represents  just the empty conditions 
+	 */
 	public String getSoCode(IState stateCanvas) {
 		StringBuilder sb = new StringBuilder();
 		String space="  ";
@@ -145,7 +151,9 @@ public class LaTexGeneratorStateDomain {
 				text=text.replaceAll("¬", "");
 				text= "{$\\neg$}"+text;
 			}
+			text=text.replace("(", "($");
 			
+			text=text.replace(")","$))");
 			sb.append(text+"}}");
 			//cond.get(i)+"}}"
 			if(i<cond.size()-1) {

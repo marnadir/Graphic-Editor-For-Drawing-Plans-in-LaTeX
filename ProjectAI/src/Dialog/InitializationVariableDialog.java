@@ -1,4 +1,4 @@
-package DNDAaction;
+package Dialog;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -15,7 +15,6 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
 import Action.Action;
-import Dialog.IDialog;
 
 public class InitializationVariableDialog extends IDialog{
 	
@@ -37,8 +36,7 @@ public class InitializationVariableDialog extends IDialog{
 	
 	@Override
 	public void createContent() {
-		getLabel().setText("Set the name of variables");
-		composite = this.getComposite();	
+		label.setText("Set the name of variables");
 		composite.setLayout(new GridLayout(2, false));
 		String[] variable2=getVariable(action.getName());
 		

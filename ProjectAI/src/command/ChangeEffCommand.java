@@ -36,8 +36,8 @@ public class ChangeEffCommand  implements ICommand{
 						super.createContent();
 						btnEdit.setVisible(true);
 						newCond.setVisible(true);
-						getLabel().setText("Modify the Effect of " + a.getName());
-						getLabel().pack();
+						label.setText("Modify the Effect of " + a.getName());
+						label.pack();
 						List l = getList();
 
 						for (int i = 0; i < a.getEffect().size(); i++) {

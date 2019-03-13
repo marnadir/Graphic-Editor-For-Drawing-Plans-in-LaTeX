@@ -182,7 +182,7 @@ public class LaTexGeneratorNode {
 		
 		String testo="";
 		for(int i=0;i<num;i++) {
-			testo +="{"+variable[i]+"}";
+			testo +="{$"+variable[i]+"$}";
 		}
 		
 		StringBuilder sb=new StringBuilder();

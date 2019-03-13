@@ -25,7 +25,6 @@ public class CreateActionDialog extends IDialog {
 
 
 	Composite compCanvas;
-	Composite composite;
 	List listPrec;
 	List listEff;
 	Text newPrec;
@@ -62,8 +61,7 @@ public class CreateActionDialog extends IDialog {
 
 	@Override
 	public void createContent() {
-		this.getLabel().setText("Create a new action");
-		composite = this.getComposite();
+		label.setText("Create a new action");
 		composite.setLayout(new GridLayout(2, false));
 
 		Label lNameAct = new Label(composite, SWT.ALL);

@@ -28,7 +28,9 @@ public class LaTexGeneratorAction {
 		return sb.toString();
 	}
 	
-	
+	/*
+	 * action with preconditions and effects representation 
+	 */
 	public String generatAction(Action a) {
 		StringBuilder sb = new StringBuilder();
 		String space="  ";

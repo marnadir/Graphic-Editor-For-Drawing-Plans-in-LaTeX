@@ -215,24 +215,23 @@ public class MenuContentAction implements MenuDetectListener {
 
 						@Override
 						public void createContent() {
-							this.getLabel().setText("set the Box-size: " + canvas.getAction().getName());
-							this.getLabel().pack();
-							Composite c = getComposite();
-							c.setLayout(new GridLayout(2, false));
+							label.setText("set the Box-size: " + canvas.getAction().getName());
+							label.pack();
+							composite.setLayout(new GridLayout(2, false));
 
-							Label lWidth = new Label(c, SWT.ALL);
+							Label lWidth = new Label(composite, SWT.ALL);
 							lWidth.setText("Width in cm: ");
-							textWid = new Text(c, SWT.BORDER);
+							textWid = new Text(composite, SWT.BORDER);
 							textWid.setText(canvas.getAction().getWidthRectInCm());
 							textWid.setLayoutData(new GridData(40, 20));
 
-							Label lHeight = new Label(c, SWT.ALL);
+							Label lHeight = new Label(composite, SWT.ALL);
 							lHeight.setText("Height in cm: ");
-							textHei = new Text(c, SWT.BORDER);
+							textHei = new Text(composite, SWT.BORDER);
 						    textHei.setText(canvas.getAction().getHeightRectInCm());
 							textHei.setLayoutData(new GridData(40, 20));
 
-							Label info = new Label(c, SWT.BORDER);
+							Label info = new Label(composite, SWT.BORDER);
 							info.setText(
 									"the default size is: " + canvas.getAction().getWidthRectInCm() + "cm x" + canvas.getAction().getHeightRectInCm()+"cm");
 							GridData gridData = new GridData(GridData.CENTER, GridData.CENTER, false, false);
@@ -281,28 +280,27 @@ public class MenuContentAction implements MenuDetectListener {
 
 						@Override
 						public void createContent() {
-							this.getLabel()
+							label
 									.setText("set the PrecLine-size of the action: " + canvas.getAction().getName());
-							this.getLabel().pack();
-							Composite c = getComposite();
-							c.setLayout(new GridLayout(2, false));
+							label.pack();
+							composite.setLayout(new GridLayout(2, false));
 
 							if (canvas.getAction().isShownCond()) {
-								Label lWidth = new Label(c, SWT.ALL);
+								Label lWidth = new Label(composite, SWT.ALL);
 								lWidth.setText("Lenght in cm: ");
-								textWid = new Text(c, SWT.BORDER);
+								textWid = new Text(composite, SWT.BORDER);
 								textWid.setText(canvas.getAction().getLengthPrecInCm());
-								Label info = new Label(c, SWT.BORDER);
+								Label info = new Label(composite, SWT.BORDER);
 								info.setText("the minimum lenght is: " + canvas.getAction().getLengthPrecInCm()+"cm");
 								GridData gridData = new GridData(GridData.CENTER, GridData.CENTER, false, false);
 								gridData.horizontalSpan = 2;
 								info.setLayoutData(gridData);
 							} else {
-								Label lWidth = new Label(c, SWT.ALL);
+								Label lWidth = new Label(composite, SWT.ALL);
 								lWidth.setText("Lenght in cm: ");
-								textWid = new Text(c, SWT.BORDER);
+								textWid = new Text(composite, SWT.BORDER);
 								textWid.setText(canvas.getAction().getStandardLengthPrecInCm());
-								Label info = new Label(c, SWT.BORDER);
+								Label info = new Label(composite, SWT.BORDER);
 								info.setText("the default lenght is: " + canvas.getAction().getStandardLengthPrecInCm()+"cm");
 								GridData gridData = new GridData(GridData.CENTER, GridData.CENTER, false, false);
 								gridData.horizontalSpan = 2;
@@ -354,10 +352,10 @@ public class MenuContentAction implements MenuDetectListener {
 
 						@Override
 						public void createContent() {
-							this.getLabel()
+							label
 									.setText("set the EffectLine-size of the action: " + canvas.getAction().getName());
-							this.getLabel().pack();
-							Composite c = getComposite();
+							label.pack();
+							Composite c = composite;
 							c.setLayout(new GridLayout(2, false));
 
 							if (canvas.getAction().isShownCond()) {
