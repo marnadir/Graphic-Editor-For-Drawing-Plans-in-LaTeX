@@ -46,10 +46,10 @@ public class LaTexGeneratorAction {
 		sb.append(getTextPrecEff(a.getPrec())+"},"+"\n");
 		sb.append(space+"effs = {");
 		sb.append(getTextPrecEff(a.getEffect())+"},"+"\n");
-		sb.append(space+"pre length = "+a.getLengthPrecInCm()+"cm,"+"\n");
-		sb.append(space+"eff length = "+a.getLengthEffInCm()+"cm,"+"\n");
-		sb.append(space+"height = "+a.getHeightRectInCm()+"cm,"+"\n");
-		sb.append(space+"width = "+a.getWidthRectInCm()+"cm"+"\n"+"}"+"\n");
+		sb.append(space+"pre length = "+getLenghtPrecs(a)+"cm,"+"\n");
+		sb.append(space+"eff length = "+getLenghtEffs(a)+"\n");
+		sb.append(space+"height = "+getHeigthRect(a)+"\n");
+		sb.append(space+"width = "+getWidthRect(a)+"\n"+"}"+"\n");
 
 		return sb.toString();
 	}
@@ -73,10 +73,11 @@ public class LaTexGeneratorAction {
 		sb.append(space+"pre length = "+a.getStandardLengthPrecInCm()+"cm,"+"\n");
 		sb.append(space+"eff length = "+a.getStandardLengthEffInCm()+"cm,"+"\n");
 		sb.append(space+"height = "+a.getHeightRectInCm()+"cm,"+"\n");
-		sb.append(space+"width = "+a.getWidthRectInCm()+"cm"+"\n"+"}"+"\n");
+		sb.append(space+"width = "+getWidthRect(a)+"\n"+"}"+"\n");
 
 		return sb.toString();
 	}
+	
 	
 	
 	public String getScheme(String string,boolean E) {
@@ -188,8 +189,50 @@ public class LaTexGeneratorAction {
 	}
 
 	
+	public String getWidthRect(Action a) {
+		
+		StringBuilder sb=new StringBuilder();
+		if(a.isGlobalWid()) {
+			sb.append("\\WidthOfActions");
+		}else {
+			sb.append(a.getWidthRectInCm()+"cm");
+		}
+		return sb.toString();
+	}
+	
+	public String getHeigthRect(Action a) {
+		
+		StringBuilder sb=new StringBuilder();
+		if(a.isGlobalWid()) {
+			sb.append("\\HeightOfActions");
+		}else {
+			sb.append(a.getHeightRectInCm()+"cm");
+		}
+		return sb.toString();		
+	}
+	
+	public String getLenghtPrecs(Action a) {
+		
+		StringBuilder sb=new StringBuilder();
+		if(a.isGlobalWid()) {
+			sb.append("\\LenghtOfPrecs");
+		}else {
+			sb.append(a.getLengthPrecInCm()+"cm");
+		}
+		return sb.toString();		
+	}
+	
+	public String getLenghtEffs(Action a) {
+		
+		StringBuilder sb=new StringBuilder();
+		if(a.isGlobalWid()) {
+			sb.append("\\LenghtOfEffs");
+		}else {
+			sb.append(a.getLengthEffInCm()+"cm");
+		}
+		return sb.toString();		
+	}
+	
 
-	
-	
 	
 }

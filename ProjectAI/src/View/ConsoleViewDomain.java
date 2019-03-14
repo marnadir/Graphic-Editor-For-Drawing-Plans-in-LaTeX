@@ -22,6 +22,7 @@ import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 
 import Action.Action;
+import LaTex.LatexGeneratorGlobalSize;
 
 public class ConsoleViewDomain extends Group{
 
@@ -172,6 +173,8 @@ public class ConsoleViewDomain extends Group{
 	
 	public void updateView() {
 		textDomain.setText("");
+		LatexGeneratorGlobalSize latexGeneratorGlobalSize=new LatexGeneratorGlobalSize();
+		textDomain.insert(latexGeneratorGlobalSize.getLatex());
 		if (domainView.getInitialStateCanvas() != null) {
 			domainView.getInitialStateCanvas().getState().generateLatexCodeDomain();
 			textDomain.insert(domainView.getInitialStateCanvas().getState().getLatexCodeDomain());

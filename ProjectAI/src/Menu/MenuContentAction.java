@@ -8,6 +8,7 @@ import org.eclipse.swt.events.MenuDetectEvent;
 import org.eclipse.swt.events.MenuDetectListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
@@ -16,6 +17,7 @@ import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Text;
 
+import Action.GlobalValue;
 import Action.ICanvasAction;
 import Action.Node;
 import Dialog.IDialog;
@@ -217,19 +219,80 @@ public class MenuContentAction implements MenuDetectListener {
 						public void createContent() {
 							label.setText("set the Box-size: " + canvas.getAction().getName());
 							label.pack();
-							composite.setLayout(new GridLayout(2, false));
+							composite.setLayout(new GridLayout(3, false));
 
 							Label lWidth = new Label(composite, SWT.ALL);
 							lWidth.setText("Width in cm: ");
+							
 							textWid = new Text(composite, SWT.BORDER);
 							textWid.setText(canvas.getAction().getWidthRectInCm());
 							textWid.setLayoutData(new GridData(40, 20));
+							
+
+							Button btnWidth=new Button(composite, SWT.CHECK);
+							btnWidth.setText("global");
+							btnWidth.setVisible(false);
+							
+
+							
+							if(GlobalValue.isWidthOfAction) {
+								btnWidth.setVisible(true);
+								
+							}
+							
+							btnWidth.addListener(SWT.Selection, new Listener() {
+								
+								@Override
+								public void handleEvent(Event event) {
+									if(btnWidth.getSelection()) {
+										textWid.setText(GlobalValue.widthOfAction);
+										textWid.setEditable(false);
+										canvas.getAction().setGlobalWid(true);
+									}else {
+										textWid.setEditable(true);
+										canvas.getAction().setGlobalWid(false);
+
+									}
+									
+								}
+							});
+							
 
 							Label lHeight = new Label(composite, SWT.ALL);
 							lHeight.setText("Height in cm: ");
 							textHei = new Text(composite, SWT.BORDER);
 						    textHei.setText(canvas.getAction().getHeightRectInCm());
 							textHei.setLayoutData(new GridData(40, 20));
+							
+							Button btnHeight=new Button(composite, SWT.CHECK);
+							btnHeight.setText("global");
+							btnHeight.setVisible(false);
+							
+
+							
+							if(GlobalValue.isHeightOfAction) {
+								btnHeight.setVisible(true);
+								
+							}
+							
+							btnHeight.addListener(SWT.Selection, new Listener() {
+								
+								@Override
+								public void handleEvent(Event event) {
+									if(btnHeight.getSelection()) {
+										textHei.setText(GlobalValue.heightOfAction);
+										textHei.setEditable(false);
+										canvas.getAction().setGlobalHeight(true);
+									}else {
+										textHei.setEditable(true);
+										canvas.getAction().setGlobalHeight(true);
+
+									}
+									
+								}
+							});
+							
+							
 
 							Label info = new Label(composite, SWT.BORDER);
 							info.setText(

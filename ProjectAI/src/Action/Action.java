@@ -28,10 +28,18 @@ public class Action implements Serializable {
 	int heightRect = 30;
 	int standardLengthEff=14; //Standard lenght of effect line 
 	int standardLengthPrec=14;
+	//??default wtf means?
 	boolean defaultValuePrecLenght=true;
 	boolean defaultValueEffLenght=true;
 	boolean defaultValueWid=true;
 	boolean defaultValueHeig=true;
+	
+	boolean isGlobalWidth;
+	boolean isGlobalHeight;
+	boolean isGlobalPrec;
+	boolean isGlobalEff;
+	
+	
 	int numPrec;
 	int numEff;
 	boolean shownCond = false;
@@ -63,6 +71,7 @@ public class Action implements Serializable {
 		defaultValuePrecLenght=a.defaultValuePrecLenght;
 		defaultValueEffLenght=a.defaultValueEffLenght;
 		defaultValueWid=a.defaultValueWid;
+
 		shownCond=a.shownCond;
 		shownName=a.shownName;
 		form=a.form;
@@ -243,9 +252,12 @@ public class Action implements Serializable {
 
 	public String getHeightRectInCm() {
 		DecimalFormat df = new DecimalFormat("#.00");
-	    String angleFormated = df.format(heightRect*PIXEL_MEASUREMNT);
+		String angleFormated = df.format(heightRect * PIXEL_MEASUREMNT);
 		return angleFormated;
+
 	}
+	
+	
 
 	public void setHeightRectFromCm(double heightRect) {
 		this.heightRect =(int)( heightRect*CM_MEASUREMNT);
@@ -403,11 +415,14 @@ public class Action implements Serializable {
 	}
 
 	
-	
-	
-	
 
-	
+	public boolean isGlobalWid() {
+		return isGlobalWidth;
+	}
+
+	public void setGlobalWid(boolean isGlobalWid) {
+		this.isGlobalWidth = isGlobalWid;
+	}
 
 	public String getColorString() {
 		return colorString;
@@ -415,6 +430,38 @@ public class Action implements Serializable {
 
 	public void setColorString(String colorString) {
 		this.colorString = colorString;
+	}
+
+	public boolean isGlobalWidth() {
+		return isGlobalWidth;
+	}
+
+	public void setGlobalWidth(boolean isGlobalWidth) {
+		this.isGlobalWidth = isGlobalWidth;
+	}
+
+	public boolean isGlobalHeight() {
+		return isGlobalHeight;
+	}
+
+	public void setGlobalHeight(boolean isGlobalHeight) {
+		this.isGlobalHeight = isGlobalHeight;
+	}
+
+	public boolean isGlobalPrec() {
+		return isGlobalPrec;
+	}
+
+	public void setGlobalPrec(boolean isGlobalPrec) {
+		this.isGlobalPrec = isGlobalPrec;
+	}
+
+	public boolean isGlobalEff() {
+		return isGlobalEff;
+	}
+
+	public void setGlobalEff(boolean isGlobalEff) {
+		this.isGlobalEff = isGlobalEff;
 	}
 	
 	
