@@ -7,6 +7,10 @@ import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
+import java.nio.file.attribute.BasicFileAttributes;
+import java.nio.file.attribute.FileTime;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import org.eclipse.swt.SWT;
@@ -16,6 +20,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Group;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.ToolBar;
@@ -160,7 +165,24 @@ public class ConsoleViewPlan extends Group {
 		directory = new File(filepath + "/TDP");
 		File dirLatex = new File(filepath + "/TDP" + "/dirLatex");
 		
-		dirPlan=new File(dirLatex.getAbsolutePath()+"/"+planView.getSelection().getText());
+		BasicFileAttributes attr;
+		String text = null;
+		try {
+			attr = Files.readAttributes(file.toPath(), BasicFileAttributes.class);
+			FileTime fileTime = attr.lastModifiedTime();
+
+			DateFormat df = new SimpleDateFormat("MM/dd/yy");
+			String dateCreated = df.format(fileTime.toMillis());
+
+			df = new SimpleDateFormat("HH:mm:ss");
+			String dateCreated2 = df.format(fileTime.toMillis());
+
+			text =  dateCreated + " " + dateCreated2;
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		dirPlan=new File(dirLatex.getAbsolutePath()+"/"+planView.getSelection().getText()+text);
 		copyTikzLibrary();
 		
 
