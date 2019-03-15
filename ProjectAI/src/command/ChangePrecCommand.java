@@ -11,6 +11,7 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.TreeItem;
 
 import Action.Action;
+import Action.GlobalValue;
 import Dialog.IDialog;
 import Dialog.IDialogNewState;
 
@@ -18,6 +19,8 @@ public class ChangePrecCommand implements ICommand {
 
 	Action a;
 	TreeItem itemRoot;
+	final double CM_MEASUREMNT= 37.7957517575025;
+
 	
 	@Override
 	public boolean canExecute(Object var1, Object var2) {
@@ -70,7 +73,7 @@ public class ChangePrecCommand implements ICommand {
 
 	public void updatePrec(List l) {
 		if(a.getPrec().size()>0 && a.getStandardLengthPrec()==0) {
-			a.setStandardLengthPrec(14);
+			a.setStandardLengthPrec((int) (CM_MEASUREMNT*Double.parseDouble(GlobalValue.lengthsOfEffs)));
 		}
 		a.setPrec(new ArrayList<>());
 		for(int i=0;i<l.getItemCount();i++) {

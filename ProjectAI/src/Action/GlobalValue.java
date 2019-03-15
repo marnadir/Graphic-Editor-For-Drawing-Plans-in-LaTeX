@@ -7,7 +7,7 @@ public class GlobalValue {
 	public static boolean isWidthOfAction;
 	public static String widthOfAction;
 	public static boolean isLengthsOfEmptyTasks;
-	public static String lengthsOfEmptyTasks;	
+	public static String lengthsOfEmptyTasks=".35";	
 	public static boolean isLengthsOfPrecs;
 	public static String lengthsOfPrecs;
 	public static boolean isLengthsOfEffs;

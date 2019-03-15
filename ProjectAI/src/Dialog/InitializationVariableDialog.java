@@ -1,13 +1,11 @@
 package Dialog;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Map;
 import java.util.TreeMap;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
@@ -18,7 +16,6 @@ import Action.Action;
 
 public class InitializationVariableDialog extends IDialog{
 	
-	Composite composite;
 	Action action;
 	Map<String, String> mapping;
 	ArrayList<Text> textList;

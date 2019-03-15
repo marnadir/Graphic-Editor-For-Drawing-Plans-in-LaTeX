@@ -237,6 +237,10 @@ public class MenuContentAction implements MenuDetectListener {
 							
 							if(GlobalValue.isWidthOfAction) {
 								btnWidth.setVisible(true);
+								textWid.setEditable(false);
+								if(canvas.getAction().isGlobalWid()) {
+									btnWidth.setSelection(true);
+								}
 								
 							}
 							
@@ -249,8 +253,8 @@ public class MenuContentAction implements MenuDetectListener {
 										textWid.setEditable(false);
 										canvas.getAction().setGlobalWid(true);
 									}else {
-										textWid.setEditable(true);
 										canvas.getAction().setGlobalWid(false);
+										textWid.setEditable(true);
 
 									}
 									
@@ -272,6 +276,10 @@ public class MenuContentAction implements MenuDetectListener {
 							
 							if(GlobalValue.isHeightOfAction) {
 								btnHeight.setVisible(true);
+								textHei.setEditable(false);
+								if(canvas.getAction().isGlobalHeight()) {
+									btnHeight.setSelection(true);
+								}
 								
 							}
 							
@@ -285,7 +293,7 @@ public class MenuContentAction implements MenuDetectListener {
 										canvas.getAction().setGlobalHeight(true);
 									}else {
 										textHei.setEditable(true);
-										canvas.getAction().setGlobalHeight(true);
+										canvas.getAction().setGlobalHeight(false);
 
 									}
 									
@@ -316,7 +324,7 @@ public class MenuContentAction implements MenuDetectListener {
 				public void handleEvent(Event event) {
 					IDialog dialog = new IDialog(boxSize.getParent().getShell(),SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL | SWT.CENTER) {
 
-						Text textWid;
+						Text textPrec;
 
 						@Override
 						public Listener getOkbtnListener() {
@@ -325,12 +333,12 @@ public class MenuContentAction implements MenuDetectListener {
 								@Override
 								public void handleEvent(Event event) {
 
-									if(isNumeric(textWid.getText())) {
+									if(isNumeric(textPrec.getText())) {
 										if (canvas.getAction().isShownCond()) {
 											canvas.getAction().setDefaultValuePrecLenght(false);
-											canvas.getAction().setLengthPrecFromCm(Double.parseDouble(textWid.getText()));
+											canvas.getAction().setLengthPrecFromCm(Double.parseDouble(textPrec.getText()));
 										} else {
-											canvas.getAction().setStandardLengthPrecFromCm(Double.parseDouble(textWid.getText()));
+											canvas.getAction().setStandardLengthPrecFromCm(Double.parseDouble(textPrec.getText()));
 										}
 										canvas.resizeParent();
 										setVisible(false);
@@ -343,16 +351,20 @@ public class MenuContentAction implements MenuDetectListener {
 
 						@Override
 						public void createContent() {
-							label
-									.setText("set the PrecLine-size of the action: " + canvas.getAction().getName());
+							label.setText("set the PrecLine-size of the action: " + canvas.getAction().getName());
 							label.pack();
-							composite.setLayout(new GridLayout(2, false));
+							composite.setLayout(new GridLayout(3, false));
 
+							Button btnPrec;
+							
 							if (canvas.getAction().isShownCond()) {
 								Label lWidth = new Label(composite, SWT.ALL);
 								lWidth.setText("Lenght in cm: ");
-								textWid = new Text(composite, SWT.BORDER);
-								textWid.setText(canvas.getAction().getLengthPrecInCm());
+								textPrec = new Text(composite, SWT.BORDER);
+								textPrec.setText(canvas.getAction().getLengthPrecInCm());
+								btnPrec=new Button(composite, SWT.CHECK);
+								btnPrec.setText("global");
+								btnPrec.setVisible(false);
 								Label info = new Label(composite, SWT.BORDER);
 								info.setText("the minimum lenght is: " + canvas.getAction().getLengthPrecInCm()+"cm");
 								GridData gridData = new GridData(GridData.CENTER, GridData.CENTER, false, false);
@@ -361,8 +373,11 @@ public class MenuContentAction implements MenuDetectListener {
 							} else {
 								Label lWidth = new Label(composite, SWT.ALL);
 								lWidth.setText("Lenght in cm: ");
-								textWid = new Text(composite, SWT.BORDER);
-								textWid.setText(canvas.getAction().getStandardLengthPrecInCm());
+								textPrec = new Text(composite, SWT.BORDER);
+								textPrec.setText(canvas.getAction().getStandardLengthPrecInCm());
+								btnPrec=new Button(composite, SWT.CHECK);
+								btnPrec.setText("global");
+								btnPrec.setVisible(false);
 								Label info = new Label(composite, SWT.BORDER);
 								info.setText("the default lenght is: " + canvas.getAction().getStandardLengthPrecInCm()+"cm");
 								GridData gridData = new GridData(GridData.CENTER, GridData.CENTER, false, false);
@@ -370,7 +385,57 @@ public class MenuContentAction implements MenuDetectListener {
 								info.setLayoutData(gridData);
 
 							}
+							
+							if(canvas.getAction().isShownCond()) {
+								if(GlobalValue.isLengthsOfPrecs) {
+									btnPrec.setVisible(true);
+									textPrec.setEditable(false);
+									if(canvas.getAction().isGlobalPrec()) {
+										btnPrec.setSelection(true);
+									}
+									
+								}
+							}else {
+								btnPrec.setVisible(true);
+								if(canvas.getAction().isGlobalEmptyPrec()) {
+									btnPrec.setSelection(true);
+									textPrec.setEditable(false);
 
+								}
+							}
+							
+							
+							btnPrec.addListener(SWT.Selection, new Listener() {
+								
+								@Override
+								public void handleEvent(Event event) {
+									if(btnPrec.getSelection()) {
+										if(canvas.getAction().isShownCond()) {
+											textPrec.setText(GlobalValue.lengthsOfPrecs);
+											textPrec.setEditable(false);
+											canvas.getAction().setGlobalPrec(true);
+										}else {
+											textPrec.setText(GlobalValue.lengthsOfEmptyTasks);
+											textPrec.setEditable(false);
+											canvas.getAction().setGlobalEmptyPrec(true);;
+											
+										}
+										
+									}else {
+										if(canvas.getAction().isShownCond()) {
+											textPrec.setEditable(true);
+											canvas.getAction().setGlobalPrec(false);
+										}else {
+											textPrec.setEditable(true);
+											canvas.getAction().setGlobalEmptyPrec(false);
+										}
+										
+
+									}
+									
+								}
+							});
+							
 							pack();
 
 						}
@@ -387,7 +452,7 @@ public class MenuContentAction implements MenuDetectListener {
 				public void handleEvent(Event event) {
 					IDialog dialog = new IDialog(boxSize.getParent().getShell(),SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL | SWT.CENTER) {
 
-						Text textWid;
+						Text textEff;
 
 						@Override
 						public Listener getOkbtnListener() {
@@ -395,14 +460,14 @@ public class MenuContentAction implements MenuDetectListener {
 
 								@Override
 								public void handleEvent(Event event) {
-									if (isNumeric(textWid.getText())) {
+									if (isNumeric(textEff.getText())) {
 										if (canvas.getAction().isShownCond()) {
 											canvas.getAction().setDefaultValueEffLenght(false);
 											canvas.getAction()
-													.setLengthEffFromCm(Double.parseDouble(textWid.getText()));
+													.setLengthEffFromCm(Double.parseDouble(textEff.getText()));
 										} else {
 											canvas.getAction()
-													.setStandardLengthEffFromCm(Double.parseDouble(textWid.getText()));
+													.setStandardLengthEffFromCm(Double.parseDouble(textEff.getText()));
 
 										}
 										canvas.resizeParent();
@@ -418,14 +483,18 @@ public class MenuContentAction implements MenuDetectListener {
 							label
 									.setText("set the EffectLine-size of the action: " + canvas.getAction().getName());
 							label.pack();
+							Button btnEff;
 							Composite c = composite;
-							c.setLayout(new GridLayout(2, false));
+							c.setLayout(new GridLayout(3, false));
 
 							if (canvas.getAction().isShownCond()) {
 								Label lWidth = new Label(c, SWT.ALL);
 								lWidth.setText("Lenght in cm: ");
-								textWid = new Text(c, SWT.BORDER);
-								textWid.setText(canvas.getAction().getLengthEffInCm());
+								textEff = new Text(c, SWT.BORDER);
+								textEff.setText(canvas.getAction().getLengthEffInCm());
+								btnEff=new Button(composite, SWT.CHECK);
+								btnEff.setText("global");
+								btnEff.setVisible(false);
 								Label info = new Label(c, SWT.BORDER);
 								info.setText("the minimum lenght is: " + canvas.getAction().getLengthEffInCm()+"cm");
 								GridData gridData = new GridData(GridData.CENTER, GridData.CENTER, false, false);
@@ -434,8 +503,11 @@ public class MenuContentAction implements MenuDetectListener {
 							} else {
 								Label lWidth = new Label(c, SWT.ALL);
 								lWidth.setText("Lenght in cm: ");
-								textWid = new Text(c, SWT.BORDER);
-								textWid.setText(canvas.getAction().getStandardLengthEffInCm());
+								textEff = new Text(c, SWT.BORDER);
+								textEff.setText(canvas.getAction().getStandardLengthEffInCm());
+								btnEff=new Button(composite, SWT.CHECK);
+								btnEff.setText("global");
+								btnEff.setVisible(false);
 								Label info = new Label(c, SWT.BORDER);
 								info.setText("the default lenght is: " +canvas.getAction().getStandardLengthEffInCm()+"cm");
 								GridData gridData = new GridData(GridData.CENTER, GridData.CENTER, false, false);
@@ -443,6 +515,57 @@ public class MenuContentAction implements MenuDetectListener {
 								info.setLayoutData(gridData);
 
 							}
+							
+							if(canvas.getAction().isShownCond()) {
+								if(GlobalValue.isLengthsOfEffs) {
+									btnEff.setVisible(true);
+									textEff.setEditable(false);
+									if(canvas.getAction().isGlobalEff()) {
+										btnEff.setSelection(true);
+									}
+									
+								}
+							}else {
+								btnEff.setVisible(true);
+								if(canvas.getAction().isGlobalEmptyEff()) {
+									btnEff.setSelection(true);
+									textEff.setEditable(false);
+
+								}
+							}
+							
+							
+							btnEff.addListener(SWT.Selection, new Listener() {
+								
+								@Override
+								public void handleEvent(Event event) {
+									if(btnEff.getSelection()) {
+										if(canvas.getAction().isShownCond()) {
+											textEff.setText(GlobalValue.lengthsOfEffs);
+											textEff.setEditable(false);
+											canvas.getAction().setGlobalEff(true);	
+										}else {
+											textEff.setText(GlobalValue.lengthsOfEmptyTasks);
+											textEff.setEditable(false);
+											canvas.getAction().setGlobalEmptyEff(true);;
+										}
+									}else {
+										if(canvas.getAction().isShownCond()) {
+											
+											textEff.setEditable(true);
+											canvas.getAction().setGlobalEff(false);
+										}else {
+											textEff.setEditable(true);
+											canvas.getAction().setGlobalEmptyEff(true);
+										}
+									
+
+
+									}
+									
+								}
+							});
+							
 
 							pack();
 

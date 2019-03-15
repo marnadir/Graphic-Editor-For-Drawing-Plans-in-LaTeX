@@ -9,6 +9,7 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.TreeItem;
 
 import Action.Action;
+import Action.GlobalValue;
 import Dialog.IDialogNewState;
 
 public class ChangeEffCommand  implements ICommand{
@@ -16,6 +17,8 @@ public class ChangeEffCommand  implements ICommand{
 
 	Action a;
 	TreeItem itemRoot;
+	final double CM_MEASUREMNT= 37.7957517575025;
+
 	
 	@Override
 	public boolean canExecute(Object var1, Object var2) {
@@ -69,7 +72,7 @@ public class ChangeEffCommand  implements ICommand{
 
 	public void updateEff(List l) {
 		if(a.getEffect().size()>0 && a.getStandardLengthEff()==0) {
-			a.setStandardLengthEff(14);
+			a.setStandardLengthEff((int) (CM_MEASUREMNT*Double.parseDouble(GlobalValue.lengthsOfEffs)));
 		}
 		a.setEffect(new ArrayList<>());
 		for(int i=0;i<l.getItemCount();i++) {

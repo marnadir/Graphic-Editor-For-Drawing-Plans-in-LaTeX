@@ -120,7 +120,6 @@ public class MenuPrincipalView extends IMenu{
 				
 				IDialog dialog=new IDialog(getShell(),SWT.DIALOG_TRIM| SWT.APPLICATION_MODAL | SWT.CENTER) {
 
-					Composite composite;
 
 					@Override
 					public Listener getOkbtnListener() {

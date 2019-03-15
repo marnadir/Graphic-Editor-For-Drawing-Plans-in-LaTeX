@@ -179,6 +179,10 @@ public class DomainView {
 		return goalStateView;
 	}
 
+	public Composite getContentCanvas() {
+		return contentCanvas;
+	}
+
 
 
 	

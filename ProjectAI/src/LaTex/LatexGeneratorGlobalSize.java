@@ -9,6 +9,14 @@ public class LatexGeneratorGlobalSize {
 		
 	public String getLatex() {
 		StringBuilder sb = new StringBuilder();
+		
+		
+		sb.append("\\newcommand{\\LengthsOfEmptyTasks}   "+"{"+GlobalValue.lengthsOfEmptyTasks+"cm}");
+		sb.append("\n");
+
+	
+		
+		
 		if(GlobalValue.isWidthOfAction) {
 			sb.append("\\newcommand{\\WidthOfActions}   "+"{"+GlobalValue.widthOfAction+"cm}");
 			sb.append("\n");
@@ -20,15 +28,11 @@ public class LatexGeneratorGlobalSize {
 			sb.append("\n");
 
 		}
-		
-		if(GlobalValue.isLengthsOfEmptyTasks) {
-			sb.append("\\newcommand{\\LengthsOfEmptyTasks}   "+"{"+GlobalValue.lengthsOfEmptyTasks+"cm}");
-			sb.append("\n");
 
-		}
-		
 		if(GlobalValue.isLengthsOfPrecs) {
 			sb.append("\\newcommand{\\LengthsOfPrecs}   "+"{"+GlobalValue.lengthsOfPrecs+"cm}");
+			sb.append("\n");
+
 		}
 		
 		if(GlobalValue.isLengthsOfEffs) {

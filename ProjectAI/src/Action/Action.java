@@ -4,8 +4,6 @@ import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.Color;
 
 import LaTex.LaTexGeneratorAction;
 
@@ -15,6 +13,10 @@ public class Action implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	final double PIXEL_MEASUREMNT= 0.026458;
+	final double CM_MEASUREMNT= 37.7957517575025;
+	
+	
 	String name;
 	ArrayList<String> prec;
 	ArrayList<String> effect;
@@ -26,20 +28,26 @@ public class Action implements Serializable {
 	int lengthPrec;
 	int lengthEff;
 	int heightRect = 30;
-	int standardLengthEff=14; //Standard lenght of effect line 
-	int standardLengthPrec=14;
+	int standardLengthEff=(int) (CM_MEASUREMNT*Double.parseDouble(GlobalValue.lengthsOfEmptyTasks)); //Standard lenght of effect line 
+	int standardLengthPrec=(int) (CM_MEASUREMNT*Double.parseDouble(GlobalValue.lengthsOfEmptyTasks));
 	//??default wtf means?
 	boolean defaultValuePrecLenght=true;
 	boolean defaultValueEffLenght=true;
 	boolean defaultValueWid=true;
 	boolean defaultValueHeig=true;
 	
-	boolean isGlobalWidth;
-	boolean isGlobalHeight;
-	boolean isGlobalPrec;
-	boolean isGlobalEff;
+	boolean globalWidth;
+	boolean globalHeight;
+	boolean globalPrec;
+	boolean globalEff;
+	boolean globalEmptyPrec;
+	boolean globalEmptyEff;
+
 	
 	
+	
+
+
 	int numPrec;
 	int numEff;
 	boolean shownCond = false;
@@ -48,8 +56,7 @@ public class Action implements Serializable {
 	boolean isFillColor=false;
 	String colorString;
 	
-	final double PIXEL_MEASUREMNT= 0.026458;
-	final double CM_MEASUREMNT= 37.7957517575025;
+
 	
 
 	public CanvasAction getPaint() {
@@ -117,7 +124,6 @@ public class Action implements Serializable {
 		int max;
 		if(defaultValueWid) {
 			widthRect = name.length() * 12;
-
 		}
 		numPrec = prec.size();
 		numEff= effect.size();
@@ -142,15 +148,11 @@ public class Action implements Serializable {
 		if (numPrec == 0) {
 			standardLengthPrec = 0;
 		} 
-		else {
-			//standardLengthPrec = 14;
-		}
+		
 
 		if (numEff == 0) {
 			standardLengthEff = 0;
-		} else {
-			//standardLengthEff = 14;
-		}
+		} 
 		
 		
 		
@@ -198,6 +200,9 @@ public class Action implements Serializable {
 	}
 	
 	public int getWidthRect() {
+		if(globalWidth) {
+			setWidthRectFromCm( Double.parseDouble(GlobalValue.widthOfAction));
+		}
 		return widthRect;
 	}
 
@@ -215,6 +220,9 @@ public class Action implements Serializable {
 
 
 	public int getLengthPrec() {
+		if(isGlobalPrec()) {
+			setLengthPrecFromCm(Double.parseDouble(GlobalValue.lengthsOfPrecs));
+		}
 		return lengthPrec;
 	}
 
@@ -231,6 +239,9 @@ public class Action implements Serializable {
 
 
 	public int getLengthEff() {
+		if(globalEff) {
+			setLengthEffFromCm(Double.parseDouble(GlobalValue.lengthsOfEffs));
+		}
 		return lengthEff;
 	}
 
@@ -247,6 +258,9 @@ public class Action implements Serializable {
 
 
 	public int getHeightRect() {
+		if(globalHeight) {
+			setHeightRectFromCm( Double.parseDouble(GlobalValue.heightOfAction));
+		}
 		return heightRect;
 	}
 
@@ -266,6 +280,10 @@ public class Action implements Serializable {
 
 
 	public int getStandardLengthEff() {
+	
+		if(globalEmptyEff) {
+			setStandardLengthEffFromCm( Double.parseDouble(GlobalValue.lengthsOfEmptyTasks));
+		}
 		return standardLengthEff;
 	}
 
@@ -276,14 +294,11 @@ public class Action implements Serializable {
 	}
 
 	public void setStandardLengthEffFromCm(double standardLengthEff) {
+		
 		this.standardLengthEff =(int) (standardLengthEff*CM_MEASUREMNT);
 	}
 
 
-
-	public int getStandardLengthPrec() {
-		return standardLengthPrec;
-	}
 
 	public String getStandardLengthPrecInCm() {
 		DecimalFormat df = new DecimalFormat("#.00");
@@ -291,7 +306,14 @@ public class Action implements Serializable {
 		return angleFormated;
 	}
 
-
+	public int getStandardLengthPrec() {
+		if(globalEmptyPrec) {
+			setStandardLengthPrecFromCm( Double.parseDouble(GlobalValue.lengthsOfEmptyTasks));
+		}
+		return standardLengthPrec;
+	}
+	
+	
 	public void setStandardLengthPrecFromCm(double standardLengthPrec) {
 		this.standardLengthPrec = (int)(standardLengthPrec*CM_MEASUREMNT);
 	}
@@ -307,14 +329,6 @@ public class Action implements Serializable {
 	public void setDefaultValuePrecLenght(boolean defaultValuePrecLenght) {
 		this.defaultValuePrecLenght = defaultValuePrecLenght;
 	}
-
-
-
-	public boolean isDefaultValueEffLenght() {
-		return defaultValueEffLenght;
-	}
-
-
 
 	public void setDefaultValueEffLenght(boolean defaultValueEffLenght) {
 		this.defaultValueEffLenght = defaultValueEffLenght;
@@ -417,11 +431,11 @@ public class Action implements Serializable {
 	
 
 	public boolean isGlobalWid() {
-		return isGlobalWidth;
+		return globalWidth;
 	}
 
 	public void setGlobalWid(boolean isGlobalWid) {
-		this.isGlobalWidth = isGlobalWid;
+		this.globalWidth = isGlobalWid;
 	}
 
 	public String getColorString() {
@@ -433,35 +447,51 @@ public class Action implements Serializable {
 	}
 
 	public boolean isGlobalWidth() {
-		return isGlobalWidth;
+		return globalWidth;
 	}
 
 	public void setGlobalWidth(boolean isGlobalWidth) {
-		this.isGlobalWidth = isGlobalWidth;
+		this.globalWidth = isGlobalWidth;
 	}
 
 	public boolean isGlobalHeight() {
-		return isGlobalHeight;
+		return globalHeight;
 	}
 
 	public void setGlobalHeight(boolean isGlobalHeight) {
-		this.isGlobalHeight = isGlobalHeight;
+		this.globalHeight = isGlobalHeight;
 	}
 
 	public boolean isGlobalPrec() {
-		return isGlobalPrec;
+		return globalPrec;
 	}
 
 	public void setGlobalPrec(boolean isGlobalPrec) {
-		this.isGlobalPrec = isGlobalPrec;
+		this.globalPrec = isGlobalPrec;
 	}
 
 	public boolean isGlobalEff() {
-		return isGlobalEff;
+		return globalEff;
 	}
 
 	public void setGlobalEff(boolean isGlobalEff) {
-		this.isGlobalEff = isGlobalEff;
+		this.globalEff = isGlobalEff;
+	}
+
+	public boolean isGlobalEmptyPrec() {
+		return globalEmptyPrec;
+	}
+
+	public void setGlobalEmptyPrec(boolean globalEmptyPrec) {
+		this.globalEmptyPrec = globalEmptyPrec;
+	}
+
+	public boolean isGlobalEmptyEff() {
+		return globalEmptyEff;
+	}
+
+	public void setGlobalEmptyEff(boolean globalEmptyEff) {
+		this.globalEmptyEff = globalEmptyEff;
 	}
 	
 	

@@ -20,6 +20,8 @@ public class GlobalOptionView extends Composite{
 	Text tWidth,tHeight,tLenEff,tLenPre,tLenEmpty;
 	Label confermW,confermH,confermP,confermE,confermEmtpy;
 	
+	DomainView domainView;
+	
 	public GlobalOptionView(Composite parent, int style) {
 		super(parent, style);
 		// TODO Auto-generated constructor stub
@@ -102,7 +104,7 @@ public class GlobalOptionView extends Composite{
 		Label lEmpty=new Label(compListdetail, SWT.ALL);
 		lEmpty.setText("Lenght of Empty Tssks");
 		tLenEmpty=new Text(compListdetail, SWT.BORDER );
-		tLenEmpty.setText("0.00");
+		tLenEmpty.setText(GlobalValue.lengthsOfEmptyTasks);
 		Button btnOkEmpty1=new Button(compListdetail, SWT.ALL);
 		btnOkEmpty1.setText("ok");
 		btnOkEmpty1.addListener(SWT.Selection, getOkBtnEmptyListener());
@@ -152,7 +154,7 @@ public class GlobalOptionView extends Composite{
 					GlobalValue.isWidthOfAction=true;
 					GlobalValue.widthOfAction=tWidth.getText();
 					confermW.setText("Update successfully");
-					
+					domainView.getContentCanvas().pack();
 				}
 				
 			}
@@ -202,6 +204,8 @@ public class GlobalOptionView extends Composite{
 					GlobalValue.isHeightOfAction=true;
 					GlobalValue.heightOfAction=tHeight.getText();
 					confermH.setText("Update successfully");
+					domainView.getContentCanvas().pack();
+
 					
 				}
 				
@@ -253,8 +257,9 @@ public class GlobalOptionView extends Composite{
 				if(tLenPre.getEditable()) {
 					GlobalValue.isLengthsOfPrecs=true;
 					GlobalValue.lengthsOfPrecs=tLenPre.getText();
-					confermH.setText("Update successfully");
-					
+					confermP.setText("Update successfully");
+					domainView.getContentCanvas().pack();
+
 				}
 				
 			}
@@ -304,9 +309,10 @@ public class GlobalOptionView extends Composite{
 				//CHECK IF TEXT IS NUMERIC
 				if(tLenEff.getEditable()) {
 					GlobalValue.isLengthsOfEffs=true;
-					GlobalValue.lengthsOfPrecs=tLenEff.getText();
+					GlobalValue.lengthsOfEffs=tLenEff.getText();
 					confermE.setText("Update successfully");
-					
+					domainView.getContentCanvas().pack();
+
 				}
 				
 			}
@@ -326,12 +332,17 @@ public class GlobalOptionView extends Composite{
 				// CHECK IF TEXT IS NUMERIC
 
 				GlobalValue.lengthsOfEmptyTasks= tLenEmpty.getText();
-				confermEmtpy.setText("Update successfully");
+				confermEmtpy.setText("Update successfully");	
+				domainView.getContentCanvas().pack();
 
 			}
 		};
 
 		return l;
+	}
+
+	public void setDomainView(DomainView domainView) {
+		this.domainView = domainView;
 	}
 	
 	

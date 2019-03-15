@@ -46,7 +46,7 @@ public class LaTexGeneratorAction {
 		sb.append(getTextPrecEff(a.getPrec())+"},"+"\n");
 		sb.append(space+"effs = {");
 		sb.append(getTextPrecEff(a.getEffect())+"},"+"\n");
-		sb.append(space+"pre length = "+getLenghtPrecs(a)+"cm,"+"\n");
+		sb.append(space+"pre length = "+getLenghtPrecs(a)+"\n");
 		sb.append(space+"eff length = "+getLenghtEffs(a)+"\n");
 		sb.append(space+"height = "+getHeigthRect(a)+"\n");
 		sb.append(space+"width = "+getWidthRect(a)+"\n"+"}"+"\n");
@@ -70,9 +70,9 @@ public class LaTexGeneratorAction {
 		sb.append(getTextPrecEffE(a.getPrec())+"},"+"\n");
 		sb.append(space+"effs = {");
 		sb.append(getTextPrecEffE(a.getEffect())+"},"+"\n");
-		sb.append(space+"pre length = "+a.getStandardLengthPrecInCm()+"cm,"+"\n");
-		sb.append(space+"eff length = "+a.getStandardLengthEffInCm()+"cm,"+"\n");
-		sb.append(space+"height = "+a.getHeightRectInCm()+"cm,"+"\n");
+		sb.append(space+"pre length = "+getLenghtPrecsE(a)+"\n");
+		sb.append(space+"eff length = "+getLenghtEffsE(a)+"\n");
+		sb.append(space+"height = "+getHeigthRect(a)+"\n");
 		sb.append(space+"width = "+getWidthRect(a)+"\n"+"}"+"\n");
 
 		return sb.toString();
@@ -203,7 +203,7 @@ public class LaTexGeneratorAction {
 	public String getHeigthRect(Action a) {
 		
 		StringBuilder sb=new StringBuilder();
-		if(a.isGlobalWid()) {
+		if(a.isGlobalHeight()) {
 			sb.append("\\HeightOfActions");
 		}else {
 			sb.append(a.getHeightRectInCm()+"cm");
@@ -213,26 +213,54 @@ public class LaTexGeneratorAction {
 	
 	public String getLenghtPrecs(Action a) {
 		
-		StringBuilder sb=new StringBuilder();
-		if(a.isGlobalWid()) {
+		StringBuilder sb = new StringBuilder();
+
+		if (a.isGlobalPrec()) {
 			sb.append("\\LenghtOfPrecs");
-		}else {
-			sb.append(a.getLengthPrecInCm()+"cm");
+		} else {
+			sb.append(a.getLengthPrecInCm() + "cm");
 		}
+
+		return sb.toString();		
+	}
+	
+	public String getLenghtPrecsE(Action a) {
+		
+		StringBuilder sb=new StringBuilder();
+		
+			if(a.isGlobalEmptyPrec()) {
+				sb.append("\\LengthsOfEmptyTasks");
+			}else {
+				sb.append(a.getLengthPrecInCm()+"cm");
+			}
+		
 		return sb.toString();		
 	}
 	
 	public String getLenghtEffs(Action a) {
-		
-		StringBuilder sb=new StringBuilder();
-		if(a.isGlobalWid()) {
+
+		StringBuilder sb = new StringBuilder();
+
+		if (a.isGlobalEff()) {
 			sb.append("\\LenghtOfEffs");
-		}else {
-			sb.append(a.getLengthEffInCm()+"cm");
+		} else {
+			sb.append(a.getLengthEffInCm() + "cm");
 		}
-		return sb.toString();		
+
+		return sb.toString();
 	}
 	
+	public String getLenghtEffsE(Action a) {
 
-	
+		StringBuilder sb = new StringBuilder();
+
+		if (a.isGlobalEmptyEff()) {
+			sb.append("\\LengthsOfEmptyTasks");
+		} else {
+			sb.append(a.getLengthEffInCm() + "cm");
+		}
+
+		return sb.toString();
+	}
+
 }
