@@ -3,6 +3,8 @@ package State;
 
 
 
+import java.io.Serializable;
+
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.Transform;
@@ -10,7 +12,7 @@ import org.eclipse.swt.widgets.Composite;
 
 import PlanPart.PlanContent;
 
-public class InitialStateCanvas extends IStateCanvas {
+public class InitialStateCanvas extends IStateCanvas implements Serializable {
 
 	
 

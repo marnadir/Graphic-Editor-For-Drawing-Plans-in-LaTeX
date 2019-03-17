@@ -35,6 +35,8 @@ import Action.Action;
 import Action.Node;
 import Dialog.DialogAreUsure;
 import Dialog.IDialog;
+import Dialog.LoadFileLocationDialog;
+import Dialog.SaveFileLocationDialog;
 import LaTex.LaTexGeneratorPlan;
 import LaTex.LaTexGeneratorStatePlan;
 import PlanPart.PlanContent;
@@ -117,72 +119,80 @@ public class MenuPrincipalView extends IMenu{
 			@Override
 			public void handleEvent(Event event) {
 				
-				IDialog dialog=new IDialog(getShell(),SWT.DIALOG_TRIM| SWT.APPLICATION_MODAL | SWT.CENTER) {
-
-
-					@Override
-					public Listener getOkbtnListener() {
-						Listener l = new Listener() {
-
-							@Override
-							public void handleEvent(Event event) {
-								createFileLog();
-								ArrayList<Object> data = new ArrayList<Object>();
-								data.add(updateActionListDomain);
-								if (domainView.getInitialStateCanvas() != null) {
-									data.add(domainView.getInitialStateCanvas().getState());
-								} else {
-									data.add(null);
-								}
-								if (domainView.getGoalStateCanvas() != null) {
-									data.add(domainView.getGoalStateCanvas().getState());
-								} else {
-									data.add(null);
-								}
-								WriteObjectToFile(data);
-								dispose();
-
-							}
-						};
-						return l;
-					}
-
-					@Override
-					public void createContent() {
-						label.setText("");
-						composite.setLayout(new GridLayout(1, false));
-
-						Label l1 = new Label(composite, SWT.ALL);
-						FontData defaultFont = new FontData("Arial", 15, SWT.BOLD);
-
-						l1.setFont(new org.eclipse.swt.graphics.Font(l1.getDisplay(), defaultFont));
-						l1.setText("Store Domain already exits. Do you want to replace it?");
-
-						BasicFileAttributes attr;
-						try {
-							attr = Files.readAttributes(file.toPath(), BasicFileAttributes.class);
-							FileTime fileTime = attr.lastModifiedTime();
-
-							DateFormat df = new SimpleDateFormat("MM/dd/yy");
-							String dateCreated = df.format(fileTime.toMillis());
-
-							df = new SimpleDateFormat("HH:mm:ss");
-							String dateCreated2 = df.format(fileTime.toMillis());
-
-							Label ltest = new Label(composite, SWT.ALL);
-							String text = "Last version: " + dateCreated + " " + dateCreated2;
-							ltest.setText(text);
-						} catch (IOException e) {
-							e.printStackTrace();
-						}
-
-						pack();
-
-					}
-				};
-
+				SaveFileLocationDialog dialog=new SaveFileLocationDialog(getShell(), SWT.SAVE);
+				dialog.setDomainView(domainView);
+				dialog.setUpdateActionListDomain(updateActionListDomain);
 				dialog.createContent();
-
+//				createFileLog();
+//				WriteObjectToFile(data);
+				
+				
+//				IDialog dialog=new IDialog(getShell(),SWT.DIALOG_TRIM| SWT.APPLICATION_MODAL | SWT.CENTER) {
+//
+//
+//					@Override
+//					public Listener getOkbtnListener() {
+//						Listener l = new Listener() {
+//
+//							@Override
+//							public void handleEvent(Event event) {
+//								createFileLog();
+//								ArrayList<Object> data = new ArrayList<Object>();
+//								data.add(updateActionListDomain);
+//								if (domainView.getInitialStateCanvas() != null) {
+//									data.add(domainView.getInitialStateCanvas().getState());
+//								} else {
+//									data.add(null);
+//								}
+//								if (domainView.getGoalStateCanvas() != null) {
+//									data.add(domainView.getGoalStateCanvas().getState());
+//								} else {
+//									data.add(null);
+//								}
+//								WriteObjectToFile(data);
+//								dispose();
+//
+//							}
+//						};
+//						return l;
+//					}
+//
+//					@Override
+//					public void createContent() {
+//						label.setText("");
+//						composite.setLayout(new GridLayout(1, false));
+//
+//						Label l1 = new Label(composite, SWT.ALL);
+//						FontData defaultFont = new FontData("Arial", 15, SWT.BOLD);
+//
+//						l1.setFont(new org.eclipse.swt.graphics.Font(l1.getDisplay(), defaultFont));
+//						l1.setText("Store Domain already exits. Do you want to replace it?");
+//
+//						BasicFileAttributes attr;
+//						try {
+//							attr = Files.readAttributes(file.toPath(), BasicFileAttributes.class);
+//							FileTime fileTime = attr.lastModifiedTime();
+//
+//							DateFormat df = new SimpleDateFormat("MM/dd/yy");
+//							String dateCreated = df.format(fileTime.toMillis());
+//
+//							df = new SimpleDateFormat("HH:mm:ss");
+//							String dateCreated2 = df.format(fileTime.toMillis());
+//
+//							Label ltest = new Label(composite, SWT.ALL);
+//							String text = "Last version: " + dateCreated + " " + dateCreated2;
+//							ltest.setText(text);
+//						} catch (IOException e) {
+//							e.printStackTrace();
+//						}
+//
+//						pack();
+//
+//					}
+//				};
+//
+//				dialog.createContent();
+//
 			}
 		};
 
@@ -190,12 +200,18 @@ public class MenuPrincipalView extends IMenu{
 
 			@Override
 			public void handleEvent(Event event) {
-				DialogAreUsure dialog = new DialogAreUsure(getShell(), "Are you sure?");
-				if (dialog.getResult(event)) {
-					createFileLog();
-					ReadObjectToFile();
-					domainView.restoreActionList(updateActionListDomain);
-				}
+//				DialogAreUsure dialog = new DialogAreUsure(getShell(), "Are you sure?");
+//				if (dialog.getResult(event)) {
+//					createFileLog();
+//					ReadObjectToFile();
+//					domainView.restoreActionList(updateActionListDomain);
+//					df
+//				}
+				
+				LoadFileLocationDialog dialog=new LoadFileLocationDialog(getShell(), SWT.MULTI);
+				dialog.setDomainView(domainView);
+				dialog.createContent();
+				
 
 			}
 		};
@@ -549,76 +565,76 @@ public class MenuPrincipalView extends IMenu{
 
 	}
 
-	public void WriteObjectToFile(Object serObj) {
+//	public void WriteObjectToFile(Object serObj) {
+//
+//		try {
+//			FileOutputStream fileOut = new FileOutputStream(file.getAbsolutePath());
+//			ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
+//			objectOut.writeObject(serObj);
+//			objectOut.close();
+//			System.out.println("The Object  was succesfully written to a file");
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//
+//	}
 
-		try {
-			FileOutputStream fileOut = new FileOutputStream(file.getAbsolutePath());
-			ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
-			objectOut.writeObject(serObj);
-			objectOut.close();
-			System.out.println("The Object  was succesfully written to a file");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-	}
-
-	public void ReadObjectToFile() {
-
-		try {
-			FileInputStream fileIn = new FileInputStream(file.getAbsolutePath());
-
-			if (file.length()>0) {
-				
-				ObjectInputStream objectIn = new ObjectInputStream(fileIn);
-				ArrayList<Object> data = (ArrayList<Object>) objectIn.readObject();
-				updateActionListDomain = (ArrayList<Action>) data.get(0);
-
-				if (data.get(1) != null) {
-					InitialState in = (InitialState) data.get(1);
-					if (domainView.getInitStateView().getContainerInitState().getChildren().length > 0) {
-						domainView.getInitStateView().getContainerInitState().getChildren()[0].dispose();
-					}
-					InitialStateCanvas initialStateCanvas = new InitialStateCanvas(
-							domainView.getInitStateView().getContainerInitState(), SWT.ALL, in);
-					domainView.getInitStateView().getContainerInitState().setVisible(true);
-					initialStateCanvas.draw();
-					initialStateCanvas.addDNDListener();
-					in.generateLatexCodeDomain();
-					in.getLatexCodeDomain();
-				}
-				if (data.get(2) != null) {
-					GoalState goal = (GoalState) data.get(2);
-					if (domainView.getGoalStateView().getContainerGoalState().getChildren().length > 0) {
-						domainView.getGoalStateView().getContainerGoalState().getChildren()[0].dispose();
-					}
-					GoalStateCanvas goalStateCanvas = new GoalStateCanvas(
-							domainView.getGoalStateView().getContainerGoalState(), SWT.ALL, goal);
-					domainView.getGoalStateView().getContainerGoalState().setVisible(true);
-					goalStateCanvas.draw();
-					goalStateCanvas.pack();
-					goalStateCanvas.addDNDListener();
-					goal.generateLatexCodeDomain();
-					goal.getLatexCodeDomain();
-				}
-				objectIn.close();
-				System.out.println("The Object  was succesfully read from a file");
-
-
-			}else {
-				MessageBox messageBox = new MessageBox(getShell(),
-						SWT.ICON_WARNING |  SWT.OK);
-
-				messageBox.setText("Warning");
-				messageBox.setMessage("There are no stored information");
-				messageBox.open();
-			}
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-	}
+//	public void ReadObjectToFile() {
+//
+//		try {
+//			FileInputStream fileIn = new FileInputStream(file.getAbsolutePath());
+//
+//			if (file.length()>0) {
+//				
+//				ObjectInputStream objectIn = new ObjectInputStream(fileIn);
+//				ArrayList<Object> data = (ArrayList<Object>) objectIn.readObject();
+//				updateActionListDomain = (ArrayList<Action>) data.get(0);
+//
+//				if (data.get(1) != null) {
+//					InitialState in = (InitialState) data.get(1);
+//					if (domainView.getInitStateView().getContainerInitState().getChildren().length > 0) {
+//						domainView.getInitStateView().getContainerInitState().getChildren()[0].dispose();
+//					}
+//					InitialStateCanvas initialStateCanvas = new InitialStateCanvas(
+//							domainView.getInitStateView().getContainerInitState(), SWT.ALL, in);
+//					domainView.getInitStateView().getContainerInitState().setVisible(true);
+//					initialStateCanvas.draw();
+//					initialStateCanvas.addDNDListener();
+//					in.generateLatexCodeDomain();
+//					in.getLatexCodeDomain();
+//				}
+//				if (data.get(2) != null) {
+//					GoalState goal = (GoalState) data.get(2);
+//					if (domainView.getGoalStateView().getContainerGoalState().getChildren().length > 0) {
+//						domainView.getGoalStateView().getContainerGoalState().getChildren()[0].dispose();
+//					}
+//					GoalStateCanvas goalStateCanvas = new GoalStateCanvas(
+//							domainView.getGoalStateView().getContainerGoalState(), SWT.ALL, goal);
+//					domainView.getGoalStateView().getContainerGoalState().setVisible(true);
+//					goalStateCanvas.draw();
+//					goalStateCanvas.pack();
+//					goalStateCanvas.addDNDListener();
+//					goal.generateLatexCodeDomain();
+//					goal.getLatexCodeDomain();
+//				}
+//				objectIn.close();
+//				System.out.println("The Object  was succesfully read from a file");
+//
+//
+//			}else {
+//				MessageBox messageBox = new MessageBox(getShell(),
+//						SWT.ICON_WARNING |  SWT.OK);
+//
+//				messageBox.setText("Warning");
+//				messageBox.setMessage("There are no stored information");
+//				messageBox.open();
+//			}
+//
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//
+//	}
 
 	public PlainView getPlainView() {
 		return plainView;
