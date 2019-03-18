@@ -1,6 +1,7 @@
 package State;
 
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import org.eclipse.swt.SWT;
@@ -17,8 +18,12 @@ import Menu.MenuContentState;
 import PlanPart.PlanContent;
 import PlanPart.Oval;
 
-public abstract class IStateCanvas extends Canvas  {
+public abstract class IStateCanvas extends Canvas implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6825167812272984674L;
 	/**
 	 * 
 	 */
@@ -30,7 +35,7 @@ public abstract class IStateCanvas extends Canvas  {
 	ArrayList<Oval> ovalList;
 
 
-
+	
 
 	public IStateCanvas(Composite parent, int style, IState state) {
 		super(parent, style);
@@ -39,7 +44,7 @@ public abstract class IStateCanvas extends Canvas  {
 		ovalList=new ArrayList<>();
 	}
 
-	
+
 
 	public void draw() {
 

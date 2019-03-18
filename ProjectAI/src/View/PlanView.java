@@ -9,35 +9,27 @@ import java.util.Iterator;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.custom.CTabItem;
-import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.layout.RowLayout;
-import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
-import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 
 import Action.Node;
-import Dialog.IDialog;
+import Dialog.SavePlanDialog;
 import PlanPart.PlanContent;
-import PlanPart.Oval;
-import State.GoalStateCanvas;
-import State.InitialStateCanvas;
 
 public class PlanView  extends CTabFolder{
 	
 	ConsoleView consoleView;
 	DomainView domainView;
 	ToolItem showCondition;
+	PlanContent contentPlan;
 	
 	public PlanView(Composite parent, int style) {
 		super(parent, style);
@@ -54,7 +46,7 @@ public class PlanView  extends CTabFolder{
 	public void createContent(DomainView domainView) {
 		this.domainView=domainView;
 		CTabItem item = new CTabItem(this, SWT.CLOSE);
-		PlanContent contentPlan = new PlanContent(this, SWT.ALL);
+		contentPlan = new PlanContent(this, SWT.ALL);
 		contentPlan.addDndListener(domainView.getTreeAction());
 		item.setControl(contentPlan);
 		setSelection(item);
@@ -136,178 +128,24 @@ public class PlanView  extends CTabFolder{
 
 			}
 		} );
+		ToolItem savePlan=new ToolItem(t,SWT.PUSH);
+		icon = new Image(getDisplay(), "img/save.ico");
+		savePlan.setImage(icon);
+		savePlan.setToolTipText("Save Plan");
+		savePlan.addListener(SWT.Selection, new Listener() {
+			
+			@Override
+			public void handleEvent(Event event) {
+				
+				SavePlanDialog dialog=new SavePlanDialog(getShell(), SWT.SAVE);
+				dialog.setPlanContent(getPlan());
+				dialog.createContent();
+			}
+		});
 		
 		
-//		ToolItem toolSetLenght=new ToolItem(t, SWT.PUSH);
-//		icon = new Image(getDisplay(), "img/setL.png");
-//		toolSetLenght.setImage(icon);
-//		toolSetLenght.addListener(SWT.Selection, new Listener() {
-//			
-//			@Override
-//			public void handleEvent(Event event) {
-//				IDialog d=new IDialog(getShell(),SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL | SWT.CENTER) {
-//					Combo combo;
-//					Text lenghtPrec;
-//					Text lenghtEff;
-//					@Override
-//					public Listener getOkbtnListener() {
-//						Listener l;
-//						l = new Listener() {
-//
-//							@Override
-//							public void handleEvent(Event event) {
-//								if(combo.getText().equalsIgnoreCase("action")) {
-//									if(isNumeric(lenghtPrec.getText())&& isNumeric(lenghtEff.getText())) {
-//										ArrayList<Node> updateNodeList = contentPlan.getActionInPlan();
-//										if(updateNodeList !=null) {
-//											for(Node node:updateNodeList) {
-//												ArrayList<Oval> listOval=contentPlan.getOvalCounter().getListOval();
-//												Iterator<Oval> i = listOval.iterator();
-//												while (i.hasNext()) {
-//														Oval oval = i.next(); // must be called before you can call i.remove()
-//														if(oval!=null) {
-//															if(oval.getNode()  instanceof Node) {
-//																oval.dispose();
-//																 i.remove();
-//																 contentPlan.getOvalCounter().setListOval(listOval);
-//															}
-//														}
-//														
-//												}
-//
-//												
-//												
-//												
-//												node.getAction().setLengthPrecFromCm(Double.parseDouble(lenghtPrec.getText()));
-//												node.getAction().setStandardLengthPrecFromCm(Double.parseDouble(lenghtPrec.getText()));
-//
-//												node.getAction().setLengthEffFromCm(Double.parseDouble(lenghtEff.getText()));
-//												node.getAction().setStandardLengthEffFromCm(Double.parseDouble(lenghtEff.getText()));
-//												
-//
-//												node.pack();
-//										}
-//										
-//											dispose();
-//
-//											
-//											
-//										}
-//									}
-//								}else {
-//									if(isNumeric(lenghtPrec.getText())) {
-//										if(	contentPlan.getInitialStateCanvas()!=null) {
-//											
-//											ArrayList<Oval> listOval=contentPlan.getOvalCounter().getListOval();
-//											Iterator<Oval> i = listOval.iterator();
-//											while (i.hasNext()) {
-//													Oval oval = i.next(); // must be called before you can call i.remove()
-//													if(oval.getStateCanvas()!=null) {
-//														if(oval.getStateCanvas()  instanceof InitialStateCanvas) {
-//															oval.dispose();
-//															i.remove();
-//															contentPlan.getOvalCounter().setListOval(listOval);
-//														}
-//													}
-//													
-//											}
-//											
-//											
-//											
-//
-//																						
-//											contentPlan.getInitialStateCanvas().getState().setLengthFromCm(Double.parseDouble(lenghtPrec.getText()));
-//											contentPlan.getInitialStateCanvas().getState().setStandardLengthFromCm(Double.parseDouble(lenghtPrec.getText()));
-//											contentPlan.getInitialStateCanvas().pack();
-//										}
-//										if(contentPlan.getGoalStateCanvas()!=null) {
-//											if(	contentPlan.getGoalStateCanvas()!=null) {
-//												
-//												ArrayList<Oval> listOval=contentPlan.getOvalCounter().getListOval();
-//												for(int i=0;i<listOval.size();i++) {
-//													if(listOval.get(i).getStateCanvas()!=null) {
-//														if(listOval.get(i).getStateCanvas()  instanceof GoalStateCanvas) {
-//															listOval.get(i).dispose();
-//															listOval.remove(i);
-//															contentPlan.getOvalCounter().setListOval(listOval);
-//														}
-//													}
-//												}
-//																							
-//												contentPlan.getGoalStateCanvas().getState().setLengthFromCm(Double.parseDouble(lenghtPrec.getText()));
-//												contentPlan.getGoalStateCanvas().getState().setStandardLengthFromCm(Double.parseDouble(lenghtPrec.getText()));
-//												contentPlan.getGoalStateCanvas().pack();
-//											}
-//										}
-//										dispose();
-//
-//									}
-//								}
-//
-//							}
-//						};
-//						return l;
-//					}
-//					
-//					@Override
-//					public void createContent() {
-//						label.setText("Set global lenght");
-//						this.label.pack();
-//						Composite c = composite;
-//						c.setLayout(new GridLayout(1, false));
-//						Composite comp1 = new Composite(c, SWT.ALL);
-//						comp1.setLayout(new RowLayout(SWT.VERTICAL));
-//						Label l=new Label(comp1, SWT.ALL);
-//						l.setText("choose: ");
-//						combo = new Combo(comp1, SWT.PUSH);
-//						combo.setItems("Action","So/Goal State");
-//						combo.setText(combo.getItem(0));
-//						combo.pack();
-//						
-//						Composite comp2=new Composite(c, SWT.ALL);
-//						comp2.setLayout(new GridLayout(2, false));
-//						Label l2=new Label(comp2, SWT.ALL);
-//						l2.setText("Prec:");	
-//						lenghtPrec=new Text(comp2, SWT.BORDER);
-//						
-//						
-//						Label l3=new Label(comp2, SWT.ALL);
-//						l3.setText("Eff:");
-//
-//						lenghtEff=new Text(comp2, SWT.BORDER);
-//						Label l4=new Label(comp2, SWT.ALL);
-//						l4.setText("Default value is 1.2cm");
-//						
-//
-//						combo.addSelectionListener(new SelectionAdapter() {
-//							  public void widgetSelected(SelectionEvent e) {
-//									if(combo.getText().equalsIgnoreCase("action")) {	
-//										l3.setVisible(true);
-//										lenghtEff.setVisible(true);
-//
-//										comp2.pack();
-//										pack();
-//
-//										
-//									}else {
-//										l2.setText("Cond:");
-//										l3.setVisible(false);
-//										lenghtEff.setVisible(false);
-//										pack();
-//
-//									}
-//							  }
-//						});
-//						
-//						
-//						pack();
-//						
-//					}
-//				};
-//				
-//				d.createContent();
-//			}
-//		});
+		
+		
 		
 		ToolItem PDFPreview=new ToolItem(t,SWT.PUSH);
 		icon = new Image(getDisplay(), "img/pdf.ico");
@@ -345,12 +183,12 @@ public class PlanView  extends CTabFolder{
 				consoleViewDomain.saveFile();
 				
 				
-				try {
-					Thread.sleep(5000);
-				} catch (InterruptedException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+//				try {
+//					Thread.sleep(5000);
+//				} catch (InterruptedException e1) {
+//					// TODO Auto-generated catch block
+//					e1.printStackTrace();
+//				}
 
 				
 				try {
@@ -459,10 +297,8 @@ public class PlanView  extends CTabFolder{
 		return planContent;
 		
 	}
-	
-	
-	
-	
+
+
 	public DomainView getDomainView() {
 		return domainView;
 	}

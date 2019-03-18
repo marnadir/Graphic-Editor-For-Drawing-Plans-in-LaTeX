@@ -33,19 +33,15 @@ import org.eclipse.swt.widgets.MessageBox;
 
 import Action.Action;
 import Action.Node;
-import Dialog.DialogAreUsure;
 import Dialog.IDialog;
 import Dialog.LoadFileLocationDialog;
+import Dialog.LoadPlanDialog;
 import Dialog.SaveFileLocationDialog;
 import LaTex.LaTexGeneratorPlan;
 import LaTex.LaTexGeneratorStatePlan;
 import PlanPart.PlanContent;
 import PlanPart.LinkCanvas;
 import PlanPart.OrderCondition;
-import State.GoalState;
-import State.GoalStateCanvas;
-import State.InitialState;
-import State.InitialStateCanvas;
 import View.DomainView;
 import View.PlanView;
 import command.ExitCommand;
@@ -94,6 +90,9 @@ public class MenuPrincipalView extends IMenu{
 
 		MenuItem saveAllItem = new MenuItem(menuFile, SWT.PUSH);
 		saveAllItem.setText("&Save All Plans\t");
+		
+		MenuItem loadPlan = new MenuItem(menuFile, SWT.PUSH);
+		loadPlan.setText("&Load Plan\t");
 
 		MenuItem exitItem = new MenuItem(menuFile, SWT.PUSH);
 		exitItem.setText("&Exit");
@@ -123,76 +122,6 @@ public class MenuPrincipalView extends IMenu{
 				dialog.setDomainView(domainView);
 				dialog.setUpdateActionListDomain(updateActionListDomain);
 				dialog.createContent();
-//				createFileLog();
-//				WriteObjectToFile(data);
-				
-				
-//				IDialog dialog=new IDialog(getShell(),SWT.DIALOG_TRIM| SWT.APPLICATION_MODAL | SWT.CENTER) {
-//
-//
-//					@Override
-//					public Listener getOkbtnListener() {
-//						Listener l = new Listener() {
-//
-//							@Override
-//							public void handleEvent(Event event) {
-//								createFileLog();
-//								ArrayList<Object> data = new ArrayList<Object>();
-//								data.add(updateActionListDomain);
-//								if (domainView.getInitialStateCanvas() != null) {
-//									data.add(domainView.getInitialStateCanvas().getState());
-//								} else {
-//									data.add(null);
-//								}
-//								if (domainView.getGoalStateCanvas() != null) {
-//									data.add(domainView.getGoalStateCanvas().getState());
-//								} else {
-//									data.add(null);
-//								}
-//								WriteObjectToFile(data);
-//								dispose();
-//
-//							}
-//						};
-//						return l;
-//					}
-//
-//					@Override
-//					public void createContent() {
-//						label.setText("");
-//						composite.setLayout(new GridLayout(1, false));
-//
-//						Label l1 = new Label(composite, SWT.ALL);
-//						FontData defaultFont = new FontData("Arial", 15, SWT.BOLD);
-//
-//						l1.setFont(new org.eclipse.swt.graphics.Font(l1.getDisplay(), defaultFont));
-//						l1.setText("Store Domain already exits. Do you want to replace it?");
-//
-//						BasicFileAttributes attr;
-//						try {
-//							attr = Files.readAttributes(file.toPath(), BasicFileAttributes.class);
-//							FileTime fileTime = attr.lastModifiedTime();
-//
-//							DateFormat df = new SimpleDateFormat("MM/dd/yy");
-//							String dateCreated = df.format(fileTime.toMillis());
-//
-//							df = new SimpleDateFormat("HH:mm:ss");
-//							String dateCreated2 = df.format(fileTime.toMillis());
-//
-//							Label ltest = new Label(composite, SWT.ALL);
-//							String text = "Last version: " + dateCreated + " " + dateCreated2;
-//							ltest.setText(text);
-//						} catch (IOException e) {
-//							e.printStackTrace();
-//						}
-//
-//						pack();
-//
-//					}
-//				};
-//
-//				dialog.createContent();
-//
 			}
 		};
 
@@ -200,13 +129,6 @@ public class MenuPrincipalView extends IMenu{
 
 			@Override
 			public void handleEvent(Event event) {
-//				DialogAreUsure dialog = new DialogAreUsure(getShell(), "Are you sure?");
-//				if (dialog.getResult(event)) {
-//					createFileLog();
-//					ReadObjectToFile();
-//					domainView.restoreActionList(updateActionListDomain);
-//					df
-//				}
 				
 				LoadFileLocationDialog dialog=new LoadFileLocationDialog(getShell(), SWT.MULTI);
 				dialog.setDomainView(domainView);
@@ -422,7 +344,22 @@ public class MenuPrincipalView extends IMenu{
 
 			}
 		};
+		
+		Listener loadL = new Listener() {
 
+			@Override
+			public void handleEvent(Event event) {
+				LoadPlanDialog dialog=new LoadPlanDialog(getShell(), SWT.ALL);
+				//devo creare una nuova pagina dove salvare il nuovo piano
+				dialog.setPlanContent(planView.getPlan());
+				dialog.createContent();
+				
+			
+
+			}
+		};
+		
+		loadPlan.addListener(SWT.Selection, loadL);
 		saveAllItem.addListener(SWT.Selection, saveAll);
 		restoreStateDomain.addListener(SWT.Selection, listenerRestoreDomain);
 		storeStateDomain.addListener(SWT.Selection, listenerStoreDomain);
