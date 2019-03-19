@@ -116,7 +116,7 @@ public class MyDropActionListener extends DropTargetAdapter {
 
 	}
 
-	public void setNodeID() {
+	private void setNodeID() {
 		int t = 1;
 		String ID = getNameAction(node.getAction().getName()) + "-" + t;
 		for (int i = 0; i < graphContent.getActionInPlan().size(); i++) {
@@ -132,7 +132,7 @@ public class MyDropActionListener extends DropTargetAdapter {
 		node.setID(ID);
 	}
 
-	public String getNameAction(String string) {
+	private String getNameAction(String string) {
 		String name[] = string.split("\\(");
 		StringBuilder sb = new StringBuilder();
 		sb.append(name[0]);

@@ -1,13 +1,14 @@
 package PlanPart;
 
 
+import java.io.Serializable;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Path;
 import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.graphics.Transform;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
@@ -15,8 +16,12 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import LaTex.LaTexGeneratorNode;
 
-public class LinkCanvas {
+public class LinkCanvas implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5962744944510049128L;
 	Point p1 = null;
 	Point p2 = null;
 
@@ -29,13 +34,11 @@ public class LinkCanvas {
 	Composite c2;
 
 	PlanContent canvasContainer;
-	Color black;
 
 	String latexCode;
 
 	public LinkCanvas(PlanContent parent) {
 		this.canvasContainer = parent;
-		black = parent.getDisplay().getSystemColor(SWT.COLOR_BLACK);
 
 		// TODO Auto-generated constructor stub
 	}
@@ -61,18 +64,6 @@ public class LinkCanvas {
 		}
 		canvasContainer.addListener(SWT.MouseDoubleClick, addLink(l1, l2, btn));
 	}
-
-/*	public void removelistener(Label l1, Label l2, Button btn) {
-
-		for (int i = 0; i < canvasContainer.getChildren().length; i++) {
-			Composite comp = (Composite) canvasContainer.getChildren()[i];
-			comp.setEnabled(true);
-			if (comp instanceof Oval) {
-				comp.removeListener(SWT.MouseDoubleClick, addLink(l1, l2, comp, btn));
-
-			}
-		}
-	}*/
 
 	public Listener addLink(Label l1, Label l2, Button btn) {
 		Listener l;
@@ -150,20 +141,6 @@ public class LinkCanvas {
 
 					int distance = (int) Math.sqrt((p2.x - p1.x) * (p2.x - p1.x) + (p2.y - p1.y) * (p2.y - p1.y));
 
-//			    	 double theta = Math.atan2(p2.y - p1.y, p2.x - p1.x);
-//					    Transform t=new Transform(canvasContainer.getDisplay());
-//					    float angle = (float) Math.toDegrees(Math.atan2(p2.y - p1.y, p2.x - p1.x));
-//
-//					    if(angle < 0){
-//					        angle += 360;
-//					    }
-//						t.rotate((float) angle);
-//						t.translate((float) (theta*250),- (float) (theta*100));
-//
-//						e.gc.setTransform(t);
-//					t.rotate(0);
-//					e.gc.setTransform(t);
-
 					e.gc.drawArc(p1.x, p1.y - (distance / 6), distance, distance / 3, 0, 180);
 					isRight=false;
 
@@ -176,7 +153,6 @@ public class LinkCanvas {
 
 				} else {
 					e.gc.setLineWidth(1);
-					e.gc.setForeground(black);//
 					Path path = new Path(canvasContainer.getDisplay());
 					path.moveTo((float) (p1.x), (float) (p1.y));
 					Point temp1 = p1;
@@ -228,5 +204,15 @@ public class LinkCanvas {
 	public boolean isRight() {
 		return isRight;
 	}
+
+	public void setOval1(Oval oval1) {
+		this.oval1 = oval1;
+	}
+
+	public void setOval2(Oval oval2) {
+		this.oval2 = oval2;
+	}
+	
+	
 
 }

@@ -64,13 +64,10 @@ public class Oval extends Canvas{
 			@Override
 			public void paintControl(PaintEvent e) {
 
-				//e.gc=new GC(canvasContainer);
 				if(!isDisposed() && !e.gc.isDisposed()) {
 				e.gc.setForeground(black);
 					e.gc.setLineWidth(2);
 					e.gc.drawOval(getP().x, getP().y, 5, 5);
-					
-					//e.gc.dispose();
 				}
 			
 				
@@ -80,26 +77,8 @@ public class Oval extends Canvas{
 		
 		return l;
 	}
-	
-	public Listener selectionLister() {
-		Listener l;
 		
-		l=new Listener() {
-			
-			@Override
-			public void handleEvent(Event event) {
-				System.out.println("volareee");
-				
-			}
-		};
-		
-		return l;
-	}
 	
-	
-	public void remove() {
-		
-	}
 	
 	public String getCond() {
 		return cond;

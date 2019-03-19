@@ -63,6 +63,9 @@ public class PlanView  extends CTabFolder{
 			@Override
 			public void handleEvent(Event event) {
 				
+				
+				
+
 
 				ArrayList<Node> updateNodeList = contentPlan.getActionInPlan();
 				for(Node node:updateNodeList) {

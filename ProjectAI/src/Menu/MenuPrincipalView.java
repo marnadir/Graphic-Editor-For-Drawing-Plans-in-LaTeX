@@ -349,11 +349,11 @@ public class MenuPrincipalView extends IMenu{
 
 			@Override
 			public void handleEvent(Event event) {
-				LoadPlanDialog dialog=new LoadPlanDialog(getShell(), SWT.ALL);
+				LoadPlanDialog dialog=new LoadPlanDialog(getShell(), SWT.MULTI);
 				//devo creare una nuova pagina dove salvare il nuovo piano
 				dialog.setPlanContent(planView.getPlan());
 				dialog.createContent();
-				
+				planView.getPlan().update();
 			
 
 			}

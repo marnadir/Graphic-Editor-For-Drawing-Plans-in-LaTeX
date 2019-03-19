@@ -1,11 +1,16 @@
 package PlanPart;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 
 
 public class OvalCounter {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1411680819920336936L;
 	ArrayList<Oval> listOval=new ArrayList<>();
 	
 	public OvalCounter() {

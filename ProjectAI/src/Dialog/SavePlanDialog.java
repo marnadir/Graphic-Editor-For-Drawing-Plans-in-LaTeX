@@ -7,7 +7,9 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.FileDialog;
+import org.eclipse.swt.widgets.Link;
 import org.eclipse.swt.widgets.Shell;
 
 import Action.Node;
@@ -16,6 +18,7 @@ import PlanPart.OrderCondition;
 import PlanPart.OvalCounter;
 import PlanPart.PlanContent;
 import State.GoalStateCanvas;
+import State.IStateCanvas;
 import State.InitialStateCanvas;
 
 public class SavePlanDialog extends FileDialog{
@@ -99,8 +102,18 @@ public class SavePlanDialog extends FileDialog{
 		actionInPlan=planContent.getActionInPlan();
 		ords=planContent.getOrds();
 		
-		data.add(initialStateCanvas);
+		saveState(initialStateCanvas);
 		
+		saveState(goalStateCanvas);
+		for(Node node:actionInPlan) {
+			saveAction(node);
+		}
+		
+//		data.add(ovalCounter.getListOval());
+//		
+//		for(LinkCanvas link:link) {
+//			data.add(link);
+//		}
 				
 	}
 
@@ -108,6 +121,43 @@ public class SavePlanDialog extends FileDialog{
 		this.planContent = planContent;
 	}
 	
+	private void saveAction(Node node) {
+		Point point;
+		ArrayList<Object> info;
+        info=new ArrayList<Object>();
+        point=new Point(node.getParent().getLocation().x, 
+				node.getParent().getLocation().y);
+        info.add(node.getAction());
+        info.add(point);
+        data.add(info);
+		
+	}
 	
+	private void saveLink(Link link) {
+		Point point;
+		ArrayList<Object> info;
+        info=new ArrayList<Object>();
+        point=new Point(link.getParent().getLocation().x, 
+				link.getParent().getLocation().y);
+       // info.add(link.getData());
+        info.add(point);
+        data.add(info);
+		
+	}
+	
+	private void saveState(IStateCanvas stateCanvas) {
+		Point point;
+		ArrayList<Object> info;
+        info=new ArrayList<Object>();
+		if(stateCanvas != null) {
+			info.add(stateCanvas.getState());
+			point=new Point(stateCanvas.getParent().getLocation().x, 
+					stateCanvas.getParent().getLocation().y);
+			info.add(point);
+		}
+		
+		data.add(info);
+		
+	}
 	
 }

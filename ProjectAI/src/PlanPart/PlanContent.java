@@ -8,6 +8,8 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.dnd.DND;
 import org.eclipse.swt.dnd.DropTarget;
 import org.eclipse.swt.dnd.Transfer;
+import org.eclipse.swt.events.PaintEvent;
+import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Canvas;
@@ -47,6 +49,31 @@ public class PlanContent extends Canvas {
 		// TODO Auto-generated constructor stub
 	}
 
+	public void update() {
+		PlanContent p=this;
+
+		this.addPaintListener(new PaintListener() {
+			LinkCanvas link;
+
+			@Override
+			public void paintControl(PaintEvent e) {
+				if(ovalCounter.getListOval().size()>0) {
+					System.out.println(ovalCounter.getListOval().get(1).getCond());
+					System.out.println(ovalCounter.getListOval().get(2).getCond());
+					System.out.println(ovalCounter.getListOval().size());
+					link=new LinkCanvas(p);
+					link.setOval1(ovalCounter.getListOval().get(1));
+					link.setOval2(ovalCounter.getListOval().get(2));
+					link.drawLine();
+					link.removeL();
+
+				}
+				
+			}
+		});
+	}
+	
+	
 	public OvalCounter getOvalCounter() {
 		return ovalCounter;
 	}
@@ -63,8 +90,6 @@ public class PlanContent extends Canvas {
 		return ords;
 	}
 
-
-	
 
 	public InitialStateCanvas getInitialStateCanvas() {
 		return initialStateCanvas;
