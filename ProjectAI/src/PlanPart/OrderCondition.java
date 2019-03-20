@@ -18,6 +18,10 @@ public class OrderCondition{
 	PlanContent canvasContainer;
 	Node nod1=null;
 	Node nod2=null;
+	Point p1;
+	Point p2;
+	Point p1D;
+	Point p2D;
 	Composite c1;
 	Composite c2;
 	Composite parent;
@@ -30,17 +34,19 @@ public class OrderCondition{
 
 		//parent.pack();
 	}
-	
-	public void addlistener(Label l1,Label l2) {
 
-		for(int i=0;i<canvasContainer.getChildren().length;i++) {
-			Composite comp=(Composite)canvasContainer.getChildren()[i];
-			comp.setEnabled(true);
-			if(comp.getChildren().length>0) {
-				comp.getChildren()[0].addListener(SWT.MouseDoubleClick, addOrdCond(l1,l2,comp));
+	public void addlistener(Label l1, Label l2) {
 
+		for (int i = 0; i < canvasContainer.getChildren().length; i++) {
+			if (!(canvasContainer.getChildren()[i] instanceof Button)) {
+				Composite comp = (Composite) canvasContainer.getChildren()[i];
+				comp.setEnabled(true);
+				if (comp.getChildren().length > 0) {
+					comp.getChildren()[0].addListener(SWT.MouseDoubleClick, addOrdCond(l1, l2, comp));
+
+				}
 			}
-			
+
 		}
 	}
 	
@@ -104,10 +110,18 @@ public class OrderCondition{
 	public void drawOrder() {
 
 		Point p = new Point(nod1.getBounds().x + nod1.getBounds().width, nod1.getBounds().y - 20);
-		Point p1 = c1.getParent().toControl(c1.toDisplay(p.x, p.y));
+		p1 = c1.getParent().toControl(c1.toDisplay(p.x, p.y));
+		p = new Point(nod1.getBounds().x + nod1.getBounds().width, nod1.getBounds().y);
+
+		p1D = c1.getParent().getLocation();
+		
+
 
 		p = new Point(nod2.getBounds().x, nod2.getBounds().y - 20);
-		Point p2 = c2.getParent().toControl(c2.toDisplay(p.x, p.y));
+		p2 = c2.getParent().toControl(c2.toDisplay(p.x, p.y));
+		p = new Point(nod2.getBounds().x, nod2.getBounds().y);
+
+		p2D = c2.getParent().toControl(c2.toDisplay(p.x, p.y));
 		
 		
 		parent.setSize(90,60);
@@ -115,7 +129,7 @@ public class OrderCondition{
 		parent.setLocation(p1.x+((p2.x-p1.x-parent.getBounds().width)/2), p1.y - 30);
 
 		
-		Contrain c=new Contrain(parent, SWT.BORDER);
+		Contrain c=new Contrain(parent, SWT.ALL);
 		c.draw();
 		c.pack();
 		c.setSize(parent.getSize().x,parent.getSize().y);
@@ -140,5 +154,23 @@ public class OrderCondition{
 	public String getLatexCode() {
 		return latexCode;
 	}
+
+	public Point getP1() {
+		return p1;
+	}
+
+	public Point getP2() {
+		return p2;
+	}
+
+	public Point getP1D() {
+		return p1D;
+	}
+
+	public Point getP2D() {
+		return p2D;
+	}
+	
+	
 	
 }

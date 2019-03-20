@@ -51,14 +51,17 @@ public class LinkCanvas implements Serializable {
 	public void addlistener(Label l1, Label l2, Button btn) {
 
 		for (int i = 0; i < canvasContainer.getChildren().length; i++) {
-			Composite comp = (Composite) canvasContainer.getChildren()[i];
-			comp.setEnabled(true);
-			if(comp instanceof Oval) {
-				//comp.addListener(SWT.Selection, addLink(l1, l2, comp, btn));
-				Oval oval=(Oval) comp;
-				
+			if(!(canvasContainer.getChildren()[i] instanceof Button)) {
+				Composite comp = (Composite) canvasContainer.getChildren()[i];
+				comp.setEnabled(true);
+				if(comp instanceof Oval) {
+					//comp.addListener(SWT.Selection, addLink(l1, l2, comp, btn));
+					Oval oval=(Oval) comp;
+					
 
+				}
 			}
+			
 			
 
 		}
@@ -117,6 +120,7 @@ public class LinkCanvas implements Serializable {
 
 	public void drawLine() {
 		canvasContainer.addPaintListener(getListener());
+	
 	}
 
 	public void removeL() {

@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.PaintEvent;
+import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
@@ -17,6 +19,7 @@ import org.eclipse.swt.widgets.Shell;
 
 import Action.Action;
 import Action.Node;
+import PlanPart.Contrain;
 import PlanPart.LinkCanvas;
 import PlanPart.Oval;
 import PlanPart.OvalCounter;
@@ -25,7 +28,6 @@ import State.GoalState;
 import State.GoalStateCanvas;
 import State.InitialState;
 import State.InitialStateCanvas;
-import View.PlanView;
 
 public class LoadPlanDialog extends FileDialog {
 	
@@ -33,6 +35,7 @@ public class LoadPlanDialog extends FileDialog {
 	ArrayList<Object> data;
 	PlanContent planContent;
 	private OvalCounter ovalCounter;
+	String path;
 
 
 	public LoadPlanDialog(Shell parent, int style) {
@@ -41,82 +44,82 @@ public class LoadPlanDialog extends FileDialog {
 	}
 	
 	public void createContent() {
-		String path;
+		
 		String filterPath = System.getProperty("user.home")+"/TDP"+"/dirLatex";
 		setFilterPath(filterPath);
 	    path=open();
-	    ReadObjectToFile(path);
+	    ReadObjectToFile();
 	   
 	}
 	
-	public void ReadObjectToFile(String path) {
+	public void ReadObjectToFile() {
 
-		try {
-			FileInputStream fileIn = new FileInputStream(path);
+		if(path !=null) {
+			try {
+				FileInputStream fileIn = new FileInputStream(path);
 
-			if (!fileIsEmpty(path)) {
+				if (!fileIsEmpty(path)) {
 
-				ObjectInputStream objectIn = new ObjectInputStream(fileIn);
-				data = (ArrayList<Object>) objectIn.readObject();
-				ArrayList<Object> info;
-				
-				info = (ArrayList<Object>) data.get(0);
-				if (info.size()>0) {
-					loadInitialState();
-				}
+					ObjectInputStream objectIn = new ObjectInputStream(fileIn);
+					data = (ArrayList<Object>) objectIn.readObject();
+					ArrayList<Object> info;
+					
+					info = (ArrayList<Object>) data.get(0);
+					if (info.size()>0) {
+						loadInitialState();
+					}
 
-				info = (ArrayList<Object>) data.get(1);
-				if (info.size()>0) {
-					loadGoalState();
-				}
+					info = (ArrayList<Object>) data.get(1);
+					if (info.size()>0) {
+						loadGoalState();
+					}
 
-				int i=2;
-				info=(ArrayList<Object>) data.get(i);
-				while(info.get(0) instanceof Action ) {
-					loadNode(i);
-					i++;
-					if(i==data.size()) {
-						break;
+					int i=2;
+					info=(ArrayList<Object>) data.get(i);
+					while(info.get(0) instanceof Action ) {
+						loadNode(i);
+						i++;
+						if(i==data.size()) {
+							break;
+						}
+						if(data.get(i).equals("Link")) {
+							break;
+						}
+						info=(ArrayList<Object>) data.get(i);
 					}
 					
-					info=(ArrayList<Object>) data.get(i);
+					
+					while(!(data.get(i).equals("Link"))) {
+						loadOrd(i);
+						i++;
+					}
+					
+					
+					ArrayList<Object> arraylink = new ArrayList<>();
+					for(int j=i;j<data.size();j++) {
+						arraylink.add(data.get(j));
+					}
+					
+					planContent.setLinkStored(arraylink);
+					
+					if(arraylink.size()>0) {
+						planContent.getButton().setVisible(true);
+
+					}
+
+
+					
+					objectIn.close();
+					System.out.println("The Object  was succesfully read from a file");
+
 				}
-				
-				planContent.update();
-				System.out.println(planContent.getOvalCounter().getListOval().size());
 
-				
-	
-//				while(data.get(i) instanceof LinkCanvas) {
-//					loadLink(i);
-//					i++;
-//					if(i==data.size()) {
-//						break;
-//					}
-//				}
-				
-				
-				Oval oval1=new Oval(planContent, planContent.getInitialStateCanvas().getState().getConds().get(0),  planContent.getInitialStateCanvas());
-				oval1.setLocation(10,10);
-				Oval oval2=new Oval(planContent, planContent.getActionInPlan().get(0).getAction().getPrec().get(0),  planContent.getActionInPlan().get(0));
-				oval2.setLocation(20,20);
-				
-				
-				LinkCanvas link=new LinkCanvas(planContent);
-				link.setOval1(oval1);
-				link.setOval2(oval2);
-				link.drawLine();
-				
-				
-				objectIn.close();
-				System.out.println(planContent.getOvalCounter().getListOval().size());
-				System.out.println("The Object  was succesfully read from a file");
-
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
-
-		} catch (Exception e) {
-			e.printStackTrace();
 		}
+		
+		
 
 	}
 	
@@ -145,7 +148,6 @@ public class LoadPlanDialog extends FileDialog {
 		comp.setLocation(position.x, position.y);
 		InitialStateCanvas stateCanvas = new InitialStateCanvas(comp, SWT.ALL, inState);
 		stateCanvas.draw();
-		
 		planContent.setInitialStateCanvas((InitialStateCanvas) stateCanvas);
 		planContent.addMoveListener(comp);
 	}
@@ -181,12 +183,25 @@ public class LoadPlanDialog extends FileDialog {
 		planContent.addMoveListener(comp);
 	}
 	
-	private void loadLink(int i) {
-		LinkCanvas link=(LinkCanvas) data.get(i);
-		link.drawLine();
-		
-		
-		
+	private void loadOrd(int i) {
+		ArrayList<Object> info = (ArrayList<Object>) data.get(i);
+		Point p1 = (Point) info.get(0);
+		Point p2 = (Point) info.get(0);
+		Composite parent = new Composite(planContent, SWT.ALL);
+
+		// sulla definizione di cio, ce qualcosa che mi turba!!
+		parent.setSize(50, 50);
+		parent.setLocation(20, 30);
+
+		parent.setSize(90, 60);
+
+		parent.setLocation(p1.x + ((p2.x - p1.x - parent.getBounds().width) / 2), p1.y - 30);
+
+		Contrain c = new Contrain(parent, SWT.ALL);
+		c.draw();
+		c.pack();
+		c.setSize(parent.getSize().x, parent.getSize().y);
+
 	}
 	
 	private void setNodeID(Node node) {
@@ -211,6 +226,8 @@ public class LoadPlanDialog extends FileDialog {
 		sb.append(name[0]);
 		return sb.toString();
 	}
+	
+
 	
 	@Override
 	protected void checkSubclass() {

@@ -198,7 +198,7 @@ public class MenuPrincipalView extends IMenu{
 						dialog.pack();
 						compPoint.setVisible(true);
 
-						Composite comp = new Composite(planView.getPlan(), SWT.BORDER);
+						Composite comp = new Composite(planView.getPlan(), SWT.ALL);
 
 						// sulla definizione di cio, ce qualcosa che mi turba!!
 						comp.setSize(50, 50);
@@ -353,7 +353,6 @@ public class MenuPrincipalView extends IMenu{
 				//devo creare una nuova pagina dove salvare il nuovo piano
 				dialog.setPlanContent(planView.getPlan());
 				dialog.createContent();
-				planView.getPlan().update();
 			
 
 			}

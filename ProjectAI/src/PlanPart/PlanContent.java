@@ -3,17 +3,16 @@ package PlanPart;
 
 import java.util.ArrayList;
 
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.dnd.DND;
 import org.eclipse.swt.dnd.DropTarget;
 import org.eclipse.swt.dnd.Transfer;
-import org.eclipse.swt.events.PaintEvent;
-import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Listener;
 
 import Action.Node;
@@ -35,6 +34,7 @@ public class PlanContent extends Canvas {
 	private InitialStateCanvas initialStateCanvas;
 	private GoalStateCanvas goalStateCanvas;
 	private String text;
+	private ArrayList<Object> linkStored;
 	
 	public PlanContent(Composite parent, int style) {
 		super(parent, style);
@@ -44,35 +44,24 @@ public class PlanContent extends Canvas {
 		link=new ArrayList<>();
 		ords=new ArrayList<>();
 		
+		
+		
 
 		
 		// TODO Auto-generated constructor stub
 	}
 
-	public void update() {
-		PlanContent p=this;
-
-		this.addPaintListener(new PaintListener() {
-			LinkCanvas link;
-
-			@Override
-			public void paintControl(PaintEvent e) {
-				if(ovalCounter.getListOval().size()>0) {
-					System.out.println(ovalCounter.getListOval().get(1).getCond());
-					System.out.println(ovalCounter.getListOval().get(2).getCond());
-					System.out.println(ovalCounter.getListOval().size());
-					link=new LinkCanvas(p);
-					link.setOval1(ovalCounter.getListOval().get(1));
-					link.setOval2(ovalCounter.getListOval().get(2));
-					link.drawLine();
-					link.removeL();
-
-				}
-				
-			}
-		});
-	}
 	
+	public Button getButton() {
+		Button b1 = null;
+		for(Control c:getChildren()) {
+			if(c instanceof Button) {
+				b1=(Button) c;
+				return b1;
+			}
+		}
+		return b1;
+	}
 	
 	public OvalCounter getOvalCounter() {
 		return ovalCounter;
@@ -159,5 +148,18 @@ public class PlanContent extends Canvas {
 		text=this.parent.getSelection().getText();
 		return text;
 	}
+
+
+	public ArrayList<Object> getLinkStored() {
+		return linkStored;
+	}
+
+
+	public void setLinkStored(ArrayList<Object> linkStored) {
+		this.linkStored = linkStored;
+	}
+
+
+
 	
 }

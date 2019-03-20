@@ -13,6 +13,7 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Event;
@@ -23,6 +24,7 @@ import org.eclipse.swt.widgets.ToolItem;
 import Action.Node;
 import Dialog.SavePlanDialog;
 import PlanPart.PlanContent;
+import State.LoadLink;
 
 public class PlanView  extends CTabFolder{
 	
@@ -48,6 +50,23 @@ public class PlanView  extends CTabFolder{
 		CTabItem item = new CTabItem(this, SWT.CLOSE);
 		contentPlan = new PlanContent(this, SWT.ALL);
 		contentPlan.addDndListener(domainView.getTreeAction());
+		Button b1=new Button(contentPlan, SWT.PUSH);
+		b1.setText("link");
+		b1.pack();
+		b1.setVisible(false);
+		b1.addListener(SWT.Selection, new Listener() {
+			
+			@Override
+			public void handleEvent(Event event) {
+				b1.setVisible(false);
+				LoadLink loadLink=new LoadLink(getPlan());
+				loadLink.draw();
+				
+				
+			}
+		});
+		
+		
 		item.setControl(contentPlan);
 		setSelection(item);
 		ArrayList<PlanContent> listOfPlan = new ArrayList<>();

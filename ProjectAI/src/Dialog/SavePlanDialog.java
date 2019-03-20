@@ -109,11 +109,15 @@ public class SavePlanDialog extends FileDialog{
 			saveAction(node);
 		}
 		
-//		data.add(ovalCounter.getListOval());
-//		
-//		for(LinkCanvas link:link) {
-//			data.add(link);
-//		}
+		for(OrderCondition ord:ords) {
+			saveOrd(ord);
+		}
+		
+		data.add("Link");
+		
+		for(LinkCanvas link:link) {
+			saveLink(link);
+		}
 				
 	}
 
@@ -133,22 +137,10 @@ public class SavePlanDialog extends FileDialog{
 		
 	}
 	
-	private void saveLink(Link link) {
-		Point point;
-		ArrayList<Object> info;
-        info=new ArrayList<Object>();
-        point=new Point(link.getParent().getLocation().x, 
-				link.getParent().getLocation().y);
-       // info.add(link.getData());
-        info.add(point);
-        data.add(info);
-		
-	}
-	
+
 	private void saveState(IStateCanvas stateCanvas) {
 		Point point;
-		ArrayList<Object> info;
-        info=new ArrayList<Object>();
+		ArrayList<Object> info=new ArrayList<Object>();
 		if(stateCanvas != null) {
 			info.add(stateCanvas.getState());
 			point=new Point(stateCanvas.getParent().getLocation().x, 
@@ -159,5 +151,31 @@ public class SavePlanDialog extends FileDialog{
 		data.add(info);
 		
 	}
+	
+	private void saveOrd(OrderCondition ord) {
+		ArrayList<Object> info=new ArrayList<Object>();
+		if(ord != null) {
+			info.add(ord.getP1D());
+			info.add(ord.getP2D());
+		}
+		
+		data.add(info);
+		
+	}
+	
+	
+	private void saveLink(LinkCanvas linkCanvas) {
+		ArrayList<Object> info=new ArrayList<Object>();
+		if(linkCanvas != null) {
+			info.add(linkCanvas.getOval1().getP());
+			info.add(linkCanvas.getOval2().getP());
+		}
+		
+		data.add(info);
+		
+	}
+	
+	
+	
 	
 }

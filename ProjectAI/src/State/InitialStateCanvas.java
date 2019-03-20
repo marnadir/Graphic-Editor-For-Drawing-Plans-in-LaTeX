@@ -12,20 +12,8 @@ import org.eclipse.swt.widgets.Composite;
 
 import PlanPart.PlanContent;
 
-public class InitialStateCanvas extends IStateCanvas implements Serializable {
+public class InitialStateCanvas extends IStateCanvas  {
 
-	
-
-	
-	
-
-	/**
-	 * 
-	 */
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -1499882871217776674L;
 
 	public InitialStateCanvas(Composite parent, int style, IState state) {
