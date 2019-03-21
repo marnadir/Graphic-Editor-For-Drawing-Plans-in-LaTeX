@@ -51,7 +51,7 @@ public class SavePlanDialog extends FileDialog{
 		setFilterNames (filterNames);
 		setFilterExtensions (filterExtensions);
 		setFilterPath (filterPath);
-		setFileName ("LatexPlan");
+		setFileName ("PlanStore");
 		System.out.println ("Save to: " +open ());	
 		createFile(getFileName(),getFilterPath());
 		data = new ArrayList<Object>();
@@ -109,6 +109,8 @@ public class SavePlanDialog extends FileDialog{
 			saveAction(node);
 		}
 		
+		
+		
 		for(OrderCondition ord:ords) {
 			saveOrd(ord);
 		}
@@ -155,8 +157,13 @@ public class SavePlanDialog extends FileDialog{
 	private void saveOrd(OrderCondition ord) {
 		ArrayList<Object> info=new ArrayList<Object>();
 		if(ord != null) {
-			info.add(ord.getP1D());
-			info.add(ord.getP2D());
+//			info.add(ord.getP1());
+//			info.add(ord.getP2());
+			info.add(ord.getCond1().getID());
+			System.out.println(ord.getCond1().getID());
+			info.add(ord.getCond2().getID());
+			System.out.println(ord.getCond2().getID());
+
 		}
 		
 		data.add(info);

@@ -2,14 +2,18 @@ package PlanPart;
 
 
 
+import java.util.ArrayList;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 
+import Action.Action;
 import Action.Node;
 import LaTex.LaTexGeneratorNode;
 
@@ -20,12 +24,13 @@ public class OrderCondition{
 	Node nod2=null;
 	Point p1;
 	Point p2;
-	Point p1D;
-	Point p2D;
 	Composite c1;
 	Composite c2;
 	Composite parent;
 	String latexCode;
+	
+	String id1;
+	String id2;
 
 	
 	public OrderCondition(Composite parent) {
@@ -42,12 +47,15 @@ public class OrderCondition{
 				Composite comp = (Composite) canvasContainer.getChildren()[i];
 				comp.setEnabled(true);
 				if (comp.getChildren().length > 0) {
-					comp.getChildren()[0].addListener(SWT.MouseDoubleClick, addOrdCond(l1, l2, comp));
+					comp.getChildren()[0].addListener(SWT.MouseDoubleClick, addOrdCond(l1, l2));
 
 				}
 			}
 
 		}
+		
+
+		
 	}
 	
 	public void removelistener(Label l1,Label l2,Button btn) {
@@ -55,28 +63,31 @@ public class OrderCondition{
 		for(int i=0;i<canvasContainer.getChildren().length;i++) {
 			Composite comp=(Composite)canvasContainer.getChildren()[i];
 			comp.setEnabled(true);
-			comp.getChildren()[0].addListener(SWT.MouseDoubleClick, addOrdCond(l1,l2,comp));
-			comp.getChildren()[0].removeListener(SWT.MouseDoubleClick, addOrdCond(l1,l2,comp));
+			comp.getChildren()[0].addListener(SWT.MouseDoubleClick, addOrdCond(l1,l2));
+			comp.getChildren()[0].removeListener(SWT.MouseDoubleClick, addOrdCond(l1,l2));
+			
 		}
 	}
 	
-	public Listener addOrdCond(Label l1,Label l2, Composite comp) {
+	public Listener addOrdCond(Label l1,Label l2) {
 		Listener l;
 		l = new Listener() {
 
 			@Override
 			public void handleEvent(Event event) {
+				
+				Point point=((Control) event.widget).getParent().getLocation();
+				
 				if (l1.getText().contains("ordering")) {
 					if (nod1 == null) {
 						for (int i = 0; i < canvasContainer.getActionInPlan().size(); i++) {
-
-							canvasContainer.getActionInPlan().get(i).getClientArea();
-
-							if ((canvasContainer.getActionInPlan().get(i).getClientArea().contains(event.x, event.y))) {
-								c1 = comp;
+							if ((canvasContainer.getActionInPlan().get(i).getParent().getLocation().equals(point))) {
 
 								nod1 = canvasContainer.getActionInPlan().get(i);
+								c1=nod1.getParent();
 								l2.setText(nod1.getAction().getName() + "<" + ".....");
+								l2.setText(nod1.getID() + "<" + ".....");
+
 								l2.pack();
 								break;
 
@@ -85,14 +96,17 @@ public class OrderCondition{
 					} else if (nod2 == null) {
 						for (int i = 0; i < canvasContainer.getActionInPlan().size(); i++) {
 
-							canvasContainer.getActionInPlan().get(i).getClientArea();
 
-							if ((canvasContainer.getActionInPlan().get(i).getClientArea().contains(event.x, event.y))) {
+							if ((canvasContainer.getActionInPlan().get(i).getParent().getLocation().equals(point))) {
 								if(canvasContainer.getActionInPlan().get(i)!=nod1) {
-									c2 = comp;
+								
 									nod2 = canvasContainer.getActionInPlan().get(i);
+									c2=nod2.getParent();
 									l2.setText(nod1.getAction().getName() + "<" + nod2.getAction().getName());
+									l2.setText(nod1.getID() + "<" + nod2.getID());
+
 									l2.pack();
+									break;
 								}
 							
 
@@ -111,17 +125,14 @@ public class OrderCondition{
 
 		Point p = new Point(nod1.getBounds().x + nod1.getBounds().width, nod1.getBounds().y - 20);
 		p1 = c1.getParent().toControl(c1.toDisplay(p.x, p.y));
-		p = new Point(nod1.getBounds().x + nod1.getBounds().width, nod1.getBounds().y);
+		id1=nod1.getID();
 
-		p1D = c1.getParent().getLocation();
 		
 
 
 		p = new Point(nod2.getBounds().x, nod2.getBounds().y - 20);
 		p2 = c2.getParent().toControl(c2.toDisplay(p.x, p.y));
-		p = new Point(nod2.getBounds().x, nod2.getBounds().y);
-
-		p2D = c2.getParent().toControl(c2.toDisplay(p.x, p.y));
+		id2=nod2.getID();
 		
 		
 		parent.setSize(90,60);
@@ -163,13 +174,7 @@ public class OrderCondition{
 		return p2;
 	}
 
-	public Point getP1D() {
-		return p1D;
-	}
 
-	public Point getP2D() {
-		return p2D;
-	}
 	
 	
 	

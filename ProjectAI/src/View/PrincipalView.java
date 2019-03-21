@@ -44,7 +44,6 @@ public class PrincipalView {
 
 		MenuPrincipalView menuBar=new MenuPrincipalView(shell, SWT.BAR);
 		menuBar.fillMenu(domainView, planView);
-		menuBar.createFileLog();
 		
 	}
 

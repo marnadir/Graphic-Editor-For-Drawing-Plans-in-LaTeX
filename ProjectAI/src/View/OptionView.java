@@ -58,14 +58,14 @@ public class OptionView extends Group{
 		initialState.setText("Initial State: ");
 
 		Button bInitState = new Button(this, SWT.PUSH);
-		Image img = new Image(this.getDisplay(), "img/ok.png");
+		Image img = new Image(this.getDisplay(), "img/add.png");
 		bInitState.setImage(img);
 
 		GridData gridData = new GridData(GridData.CENTER, GridData.CENTER, false, false);
 		gridData.horizontalSpan = 2;
 
 		Label finalState = new Label(this, SWT.ALL);
-		finalState.setText("Final State: ");
+		finalState.setText("Goal State: ");
 		
 		Button bFnState = new Button(this, SWT.PUSH);
 		bFnState.setImage(img);
@@ -74,7 +74,6 @@ public class OptionView extends Group{
 		actionLabel.setText("Action:  ");
 
 		Button bntAct = new Button(this, SWT.PUSH);
-		img = new Image(this.getDisplay(), "img/ok.png");
 		bntAct.setImage(img);
 		
 		bInitState.addListener(SWT.Selection, getListenerbtnIn());

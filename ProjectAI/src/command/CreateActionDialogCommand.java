@@ -2,16 +2,12 @@ package command;
 
 import java.util.ArrayList;
 
-import org.eclipse.swt.widgets.Combo;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.List;
-import org.eclipse.swt.widgets.Shell;
+
 import org.eclipse.swt.widgets.Tree;
 
 import Action.Action;
 import Dialog.CreateActionDialog;
-import Dialog.CreateSoDialog;
-import State.InitialStateCanvas;
+
 
 public class CreateActionDialogCommand implements ICommand {
 

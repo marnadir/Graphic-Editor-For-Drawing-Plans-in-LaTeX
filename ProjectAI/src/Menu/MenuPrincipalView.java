@@ -84,7 +84,7 @@ public class MenuPrincipalView extends IMenu{
 
 
 		MenuItem restoreStateDomain = new MenuItem(menuFile, SWT.PUSH);
-		restoreStateDomain.setText("&Reload domain\tCtrl+R");
+		restoreStateDomain.setText("&Load Domain\tCtrl+R");
 		restoreStateDomain.setAccelerator( SWT.CONTROL + 'R');
 
 

@@ -91,9 +91,10 @@ public class LoadPlanDialog extends FileDialog {
 					
 					while(!(data.get(i).equals("Link"))) {
 						loadOrd(i);
+						
 						i++;
 					}
-					
+					i++;//skip string link
 					
 					ArrayList<Object> arraylink = new ArrayList<>();
 					for(int j=i;j<data.size();j++) {
@@ -185,22 +186,51 @@ public class LoadPlanDialog extends FileDialog {
 	
 	private void loadOrd(int i) {
 		ArrayList<Object> info = (ArrayList<Object>) data.get(i);
-		Point p1 = (Point) info.get(0);
-		Point p2 = (Point) info.get(0);
-		Composite parent = new Composite(planContent, SWT.ALL);
+		String id1=(String) info.get(0);
+		String id2=(String) info.get(1);
+		
+		Node nod1 = null;
+		Node nod2 = null;
+		
+		for(Node node:planContent.getActionInPlan()) {
+			if(node.getID().equals(id1)) {
+				nod1=node;
+			}
+		}
+		
+		for(Node node:planContent.getActionInPlan()) {
+			if(node.getID().equals(id2)) {
+				nod2=node;
+			}
+		}
 
-		// sulla definizione di cio, ce qualcosa che mi turba!!
+		Composite parent = new Composite(planContent, SWT.ALL);
 		parent.setSize(50, 50);
 		parent.setLocation(20, 30);
+		
+		
+		
+		Point p = new Point(nod1.getBounds().x + nod1.getBounds().width, nod1.getBounds().y - 20);
+		Point p1 = nod1.getParent()
+				.getParent().toControl(nod1.getParent().toDisplay(p.x, p.y));
 
-		parent.setSize(90, 60);
+		
 
-		parent.setLocation(p1.x + ((p2.x - p1.x - parent.getBounds().width) / 2), p1.y - 30);
 
-		Contrain c = new Contrain(parent, SWT.ALL);
+		p = new Point(nod2.getBounds().x, nod2.getBounds().y - 20);
+		Point p2 = nod2.getParent().getParent().toControl(nod2.getParent().toDisplay(p.x, p.y));
+
+		
+		
+		parent.setSize(90,60);
+		
+		parent.setLocation(p1.x+((p2.x-p1.x-parent.getBounds().width)/2), p1.y - 30);
+
+		
+		Contrain c=new Contrain(parent, SWT.ALL);
 		c.draw();
 		c.pack();
-		c.setSize(parent.getSize().x, parent.getSize().y);
+		c.setSize(parent.getSize().x,parent.getSize().y);
 
 	}
 	

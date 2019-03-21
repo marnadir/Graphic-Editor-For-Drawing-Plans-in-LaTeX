@@ -1,20 +1,14 @@
 package Dialog;
 
 import java.util.ArrayList;
-import java.util.Set;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Layout;
 import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
@@ -59,7 +53,7 @@ public abstract class IDialogNewState extends IDialog{
 		buttonNeg.setText("neg");
 
 		Button btnAddCond = new Button(compositeDialog, SWT.PUSH);
-		Image icon = new Image(compositeDialog.getDisplay(), "img/addCond.png");
+		Image icon = new Image(compositeDialog.getDisplay(), "img/add.png");
 		btnAddCond.setImage(icon);
 
 		btnAddCond.addListener(SWT.Selection, getAddListener());

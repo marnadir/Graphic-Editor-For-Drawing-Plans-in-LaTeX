@@ -14,7 +14,6 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Listener;
-import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
@@ -85,7 +84,7 @@ public class CreateActionDialog extends IDialog {
 		buttonNegPrec.setText("neg");
 
 		Button addPrec = new Button(groupPrec, SWT.PUSH);
-		Image icon = new Image(composite.getDisplay(), "img/addCond.png");
+		Image icon = new Image(composite.getDisplay(), "img/add.png");
 		addPrec.setImage(icon);
 		addPrec.addListener(SWT.Selection, addPrecListener());
 
@@ -105,7 +104,7 @@ public class CreateActionDialog extends IDialog {
 		buttonNegEff.setText("neg");
 
 		Button addEff = new Button(groupEff, SWT.PUSH);
-		icon = new Image(composite.getDisplay(), "img/addCond.png");
+		icon = new Image(composite.getDisplay(), "img/add.png");
 		addEff.setImage(icon);
 		addEff.addListener(SWT.Selection, addEffListener());
 
