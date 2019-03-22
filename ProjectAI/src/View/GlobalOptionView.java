@@ -17,8 +17,10 @@ public class GlobalOptionView extends Composite{
 
 	
 	Composite compListdetail;
-	Text tWidth,tHeight,tLenEff,tLenPre,tLenEmpty;
-	Label confermW,confermH,confermP,confermE,confermEmtpy;
+	Text tWidth,tHeight,tLenEff,tLenPre,tLenEmpty,tLenCond;
+	Label confermW,confermH,confermP,confermE,confermEmtpy,lEmpty,confermC;
+	Button bntWidth,bntHeigt,bntPrec,bntEff,bntEmty,bntCond;
+	
 	
 	DomainView domainView;
 	
@@ -44,7 +46,7 @@ public class GlobalOptionView extends Composite{
 		compListdetail.setLayout(new GridLayout(5, false));
 		
 
-		Button bntWidth=new Button(compListdetail, SWT.CHECK | SWT.BORDER);
+		bntWidth=new Button(compListdetail, SWT.CHECK | SWT.BORDER);
 		bntWidth.addListener(SWT.Selection, getAddBtnWListener(bntWidth));
 		Label lWidth=new Label(compListdetail, SWT.ALL);
 		lWidth.setText("Width of Action");
@@ -58,7 +60,7 @@ public class GlobalOptionView extends Composite{
 		confermW.setText("Global value not present,check the box.");
 		
 		
-		Button bntHeigt=new Button(compListdetail, SWT.CHECK | SWT.BORDER);
+		bntHeigt=new Button(compListdetail, SWT.CHECK | SWT.BORDER);
 		bntHeigt.addListener(SWT.Selection, getAddBtnHListener(bntHeigt));
 		Label lHeight=new Label(compListdetail, SWT.ALL);
 		lHeight.setText("Height of Action");
@@ -72,7 +74,7 @@ public class GlobalOptionView extends Composite{
 		confermH.setText("Global value not present,check the box.");
 		
 		
-		Button bntPrec=new Button(compListdetail, SWT.CHECK | SWT.BORDER);
+		bntPrec=new Button(compListdetail, SWT.CHECK | SWT.BORDER);
 		bntPrec.addListener(SWT.Selection, getAddBtnPListener(bntPrec));
 		Label lPrec=new Label(compListdetail, SWT.ALL);
 		lPrec.setText("Lenght Precs of Action");
@@ -85,7 +87,20 @@ public class GlobalOptionView extends Composite{
 		confermP=new Label(compListdetail, SWT.ALL);
 		confermP.setText("Global value not present,check the box.");
 		
-		Button bntEff=new Button(compListdetail, SWT.CHECK | SWT.BORDER);
+		bntCond=new Button(compListdetail, SWT.CHECK | SWT.BORDER);
+		bntCond.addListener(SWT.Selection, getAddBtnEListener(bntEff));
+		Label lConds=new Label(compListdetail, SWT.ALL);
+		lConds.setText("Lenght Cond of State");
+		tLenCond=new Text(compListdetail, SWT.BORDER );
+		tLenCond.setEditable(false);
+		tLenCond.setText("NONE");
+		Button btnOkCond=new Button(compListdetail, SWT.ALL);
+		btnOkCond.setText("ok");
+		btnOkCond.addListener(SWT.Selection, getOkBtnEListener());
+		confermC=new Label(compListdetail, SWT.ALL);
+		confermC.setText("Global value not present,check the box.");
+		
+		bntEff=new Button(compListdetail, SWT.CHECK | SWT.BORDER);
 		bntEff.addListener(SWT.Selection, getAddBtnEListener(bntEff));
 		Label lEffs=new Label(compListdetail, SWT.ALL);
 		lEffs.setText("Lenght Effs of Action");
@@ -98,10 +113,10 @@ public class GlobalOptionView extends Composite{
 		confermE=new Label(compListdetail, SWT.ALL);
 		confermE.setText("Global value not present,check the box.");
 		
-		Button bntEmty=new Button(compListdetail, SWT.CHECK | SWT.BORDER );
+		bntEmty=new Button(compListdetail, SWT.CHECK | SWT.BORDER );
 		bntEmty.setSelection(true);
 		bntEmty.setEnabled(false);
-		Label lEmpty=new Label(compListdetail, SWT.ALL);
+		lEmpty=new Label(compListdetail, SWT.ALL);
 		lEmpty.setText("Lenght of Empty Tssks");
 		tLenEmpty=new Text(compListdetail, SWT.BORDER );
 		tLenEmpty.setText(GlobalValue.lengthsOfEmptyTasks);
@@ -112,6 +127,50 @@ public class GlobalOptionView extends Composite{
 		confermEmtpy.setText("Insert the value and click OK");
 		pack();
 		tLenEmpty.setSize(tLenEff.getSize().x, tLenEff.getSize().y);
+	}
+	
+	
+	public void update() {
+		if(GlobalValue.isWidthOfAction) {
+			bntWidth.setSelection(true);
+			tWidth.setText(GlobalValue.widthOfAction);
+			confermW.setText("Update successfully");
+
+		}
+		
+		if(GlobalValue.isHeightOfAction) {
+			bntHeigt.setSelection(true);
+			tHeight.setText(GlobalValue.heightOfAction);					
+			confermH.setText("Update successfully");
+
+		}
+		
+		if(GlobalValue.isLengthsOfPrecs) {
+			bntPrec.setSelection(true);
+			tLenPre.setText(GlobalValue.lengthsOfPrecs);
+			confermP.setText("Update successfully");
+
+		}
+		
+		if(GlobalValue.isLengthsOfEffs) {
+			bntEff.setSelection(true);
+			tLenEff.setText(GlobalValue.lengthsOfEffs);
+			confermE.setText("Update successfully");
+
+		}
+		
+		if(GlobalValue.isLengthsOfConds) {
+			bntCond.setSelection(true);
+			tLenCond.setText(GlobalValue.widthOfAction);
+			confermC.setText("Update successfully");
+
+		}
+		
+		if(GlobalValue.isLengthsOfEmptyTasks) {
+			tLenEmpty.setText(GlobalValue.lengthsOfEmptyTasks);
+		}
+		
+		
 	}
 	
 	private Listener getAddBtnWListener(Button b1) {

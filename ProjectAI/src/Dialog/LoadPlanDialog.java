@@ -19,8 +19,9 @@ import org.eclipse.swt.widgets.Shell;
 
 import Action.Action;
 import Action.Node;
-import PlanPart.Contrain;
+import PlanPart.OrderConstrainCanvas;
 import PlanPart.LinkCanvas;
+import PlanPart.OrderConstrain;
 import PlanPart.Oval;
 import PlanPart.OvalCounter;
 import PlanPart.PlanContent;
@@ -208,26 +209,14 @@ public class LoadPlanDialog extends FileDialog {
 		parent.setSize(50, 50);
 		parent.setLocation(20, 30);
 		
-		
-		
-		Point p = new Point(nod1.getBounds().x + nod1.getBounds().width, nod1.getBounds().y - 20);
-		Point p1 = nod1.getParent()
-				.getParent().toControl(nod1.getParent().toDisplay(p.x, p.y));
 
 		
-
-
-		p = new Point(nod2.getBounds().x, nod2.getBounds().y - 20);
-		Point p2 = nod2.getParent().getParent().toControl(nod2.getParent().toDisplay(p.x, p.y));
-
+		OrderConstrain orderConstrain=new OrderConstrain(parent);
+		orderConstrain.setNod1(nod1);
+		orderConstrain.setNod2(nod2);
+		orderConstrain.setLocationParent();
 		
-		
-		parent.setSize(90,60);
-		
-		parent.setLocation(p1.x+((p2.x-p1.x-parent.getBounds().width)/2), p1.y - 30);
-
-		
-		Contrain c=new Contrain(parent, SWT.ALL);
+		OrderConstrainCanvas c=new OrderConstrainCanvas(parent, SWT.ALL,orderConstrain);
 		c.draw();
 		c.pack();
 		c.setSize(parent.getSize().x,parent.getSize().y);

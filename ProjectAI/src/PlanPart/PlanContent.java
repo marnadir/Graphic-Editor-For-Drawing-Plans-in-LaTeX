@@ -30,7 +30,7 @@ public class PlanContent extends Canvas {
 	private OvalCounter ovalCounter;
 	private ArrayList<Node> actionInPlan;
 	private ArrayList<LinkCanvas> link;
-	private ArrayList<OrderCondition> ords;
+	private ArrayList<OrderConstrain> orderCon;
 	private InitialStateCanvas initialStateCanvas;
 	private GoalStateCanvas goalStateCanvas;
 	private String text;
@@ -42,7 +42,7 @@ public class PlanContent extends Canvas {
 		this.ovalCounter=new OvalCounter();
 		actionInPlan=new ArrayList<>();
 		link=new ArrayList<>();
-		ords=new ArrayList<>();
+		orderCon=new ArrayList<>();
 		
 		
 		
@@ -75,8 +75,8 @@ public class PlanContent extends Canvas {
 		return link;
 	}
 
-	public ArrayList<OrderCondition> getOrds() {
-		return ords;
+	public ArrayList<OrderConstrain> getOrds() {
+		return orderCon;
 	}
 
 

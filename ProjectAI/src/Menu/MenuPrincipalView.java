@@ -1,25 +1,16 @@
 package Menu;
 
 import java.io.File;
-import java.io.FileInputStream;
+
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
-import java.nio.file.Files;
-import java.nio.file.attribute.BasicFileAttributes;
-import java.nio.file.attribute.FileTime;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import javax.swing.text.PlainView;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Button;
@@ -34,14 +25,15 @@ import org.eclipse.swt.widgets.MessageBox;
 import Action.Action;
 import Action.Node;
 import Dialog.IDialog;
-import Dialog.LoadFileLocationDialog;
+import Dialog.LoadDomainFileLocationDialog;
 import Dialog.LoadPlanDialog;
-import Dialog.SaveFileLocationDialog;
+import Dialog.SaveDomainFileLocationDialog;
 import LaTex.LaTexGeneratorPlan;
 import LaTex.LaTexGeneratorStatePlan;
 import PlanPart.PlanContent;
+import PlanPart.OrderConstrainCanvas;
 import PlanPart.LinkCanvas;
-import PlanPart.OrderCondition;
+import PlanPart.OrderConstrain;
 import View.DomainView;
 import View.PlanView;
 import command.ExitCommand;
@@ -118,7 +110,7 @@ public class MenuPrincipalView extends IMenu{
 			@Override
 			public void handleEvent(Event event) {
 				
-				SaveFileLocationDialog dialog=new SaveFileLocationDialog(getShell(), SWT.SAVE);
+				SaveDomainFileLocationDialog dialog=new SaveDomainFileLocationDialog(getShell(), SWT.SAVE);
 				dialog.setDomainView(domainView);
 				dialog.setUpdateActionListDomain(updateActionListDomain);
 				dialog.createContent();
@@ -130,7 +122,7 @@ public class MenuPrincipalView extends IMenu{
 			@Override
 			public void handleEvent(Event event) {
 				
-				LoadFileLocationDialog dialog=new LoadFileLocationDialog(getShell(), SWT.MULTI);
+				LoadDomainFileLocationDialog dialog=new LoadDomainFileLocationDialog(getShell(), SWT.MULTI);
 				dialog.setDomainView(domainView);
 				dialog.createContent();
 				
@@ -147,7 +139,8 @@ public class MenuPrincipalView extends IMenu{
 			private Composite compPoint;
 
 			private LinkCanvas link;
-			private OrderCondition orderCond;
+			private OrderConstrainCanvas constrain;
+			private OrderConstrain orderCond;
 			Label l1 = null;
 			Label l2 = null;
 			String c1 = "....";
@@ -204,7 +197,7 @@ public class MenuPrincipalView extends IMenu{
 						comp.setSize(50, 50);
 						comp.setLocation(20, 30);
 
-						orderCond = new OrderCondition(comp);
+						orderCond = new OrderConstrain(comp);
 						orderCond.addlistener(l1, l2);
 					}
 				};
@@ -240,7 +233,12 @@ public class MenuPrincipalView extends IMenu{
 									}
 								} else if (orderCond != null) {
 									if (!l2.getText().contains("null")) {
-										orderCond.drawOrder();
+										orderCond.setLocationParent();
+										Composite parent=orderCond.getParent();
+										constrain=new OrderConstrainCanvas(parent, SWT.ALL,orderCond);
+										constrain.draw();
+										constrain.pack();
+										constrain.setSize(parent.getSize().x,parent.getSize().y);
 										planView.getPlan().getOrds().add(orderCond);
 										c1 = "null";
 										c2 = "null";
@@ -330,7 +328,7 @@ public class MenuPrincipalView extends IMenu{
 						sb.append(updateLinkList.get(i).getLatexCode());
 					}
 
-					ArrayList<OrderCondition> updateOrder = contentAction.getOrds();
+					ArrayList<OrderConstrain> updateOrder = contentAction.getOrds();
 					for (int i = 0; i < updateOrder.size(); i++) {
 						updateOrder.get(i).generateLatexCode();
 						sb.append(updateOrder.get(i).getLatexCode());
@@ -501,76 +499,6 @@ public class MenuPrincipalView extends IMenu{
 
 	}
 
-//	public void WriteObjectToFile(Object serObj) {
-//
-//		try {
-//			FileOutputStream fileOut = new FileOutputStream(file.getAbsolutePath());
-//			ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
-//			objectOut.writeObject(serObj);
-//			objectOut.close();
-//			System.out.println("The Object  was succesfully written to a file");
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//
-//	}
-
-//	public void ReadObjectToFile() {
-//
-//		try {
-//			FileInputStream fileIn = new FileInputStream(file.getAbsolutePath());
-//
-//			if (file.length()>0) {
-//				
-//				ObjectInputStream objectIn = new ObjectInputStream(fileIn);
-//				ArrayList<Object> data = (ArrayList<Object>) objectIn.readObject();
-//				updateActionListDomain = (ArrayList<Action>) data.get(0);
-//
-//				if (data.get(1) != null) {
-//					InitialState in = (InitialState) data.get(1);
-//					if (domainView.getInitStateView().getContainerInitState().getChildren().length > 0) {
-//						domainView.getInitStateView().getContainerInitState().getChildren()[0].dispose();
-//					}
-//					InitialStateCanvas initialStateCanvas = new InitialStateCanvas(
-//							domainView.getInitStateView().getContainerInitState(), SWT.ALL, in);
-//					domainView.getInitStateView().getContainerInitState().setVisible(true);
-//					initialStateCanvas.draw();
-//					initialStateCanvas.addDNDListener();
-//					in.generateLatexCodeDomain();
-//					in.getLatexCodeDomain();
-//				}
-//				if (data.get(2) != null) {
-//					GoalState goal = (GoalState) data.get(2);
-//					if (domainView.getGoalStateView().getContainerGoalState().getChildren().length > 0) {
-//						domainView.getGoalStateView().getContainerGoalState().getChildren()[0].dispose();
-//					}
-//					GoalStateCanvas goalStateCanvas = new GoalStateCanvas(
-//							domainView.getGoalStateView().getContainerGoalState(), SWT.ALL, goal);
-//					domainView.getGoalStateView().getContainerGoalState().setVisible(true);
-//					goalStateCanvas.draw();
-//					goalStateCanvas.pack();
-//					goalStateCanvas.addDNDListener();
-//					goal.generateLatexCodeDomain();
-//					goal.getLatexCodeDomain();
-//				}
-//				objectIn.close();
-//				System.out.println("The Object  was succesfully read from a file");
-//
-//
-//			}else {
-//				MessageBox messageBox = new MessageBox(getShell(),
-//						SWT.ICON_WARNING |  SWT.OK);
-//
-//				messageBox.setText("Warning");
-//				messageBox.setMessage("There are no stored information");
-//				messageBox.open();
-//			}
-//
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//
-//	}
 
 	public PlainView getPlainView() {
 		return plainView;

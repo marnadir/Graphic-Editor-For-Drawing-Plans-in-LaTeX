@@ -33,6 +33,7 @@ public class DomainView {
 	Composite contentGoalState;
 	ActionView actionView;
 	TreeActioDomainView treeAction;
+	GlobalOptionView globalOptionView;
 
 
 
@@ -125,25 +126,29 @@ public class DomainView {
 
 
 	public void restoreActionList(ArrayList<Action> actions) {
-		treeAction.setActionList(actions);
-		treeAction.removeAll();
-		for(Action action:treeAction.getActionList()) {
-			TreeItem item=new TreeItem(treeAction, SWT.BORDER);
-			item.setText(action.getName());
-			TreeItem childPrec = new TreeItem(item, SWT.NONE);
-			childPrec.setText("Preconditions");
-			TreeItem childEff = new TreeItem(item, SWT.NONE);
-			childEff.setText("Effect");
-			for(String pString:action.getPrec()) {
-				TreeItem child = new TreeItem(childPrec, SWT.NONE);
-				child.setText(pString);
-			}
+		
+		if(actions!=null) {
+			treeAction.setActionList(actions);
+			treeAction.removeAll();
+			for(Action action:treeAction.getActionList()) {
+				TreeItem item=new TreeItem(treeAction, SWT.BORDER);
+				item.setText(action.getName());
+				TreeItem childPrec = new TreeItem(item, SWT.NONE);
+				childPrec.setText("Preconditions");
+				TreeItem childEff = new TreeItem(item, SWT.NONE);
+				childEff.setText("Effect");
+				for(String pString:action.getPrec()) {
+					TreeItem child = new TreeItem(childPrec, SWT.NONE);
+					child.setText(pString);
+				}
 
-			for(String eString:action.getEffect()) {
-				TreeItem child = new TreeItem(childEff, SWT.NONE);
-				child.setText(eString);
+				for(String eString:action.getEffect()) {
+					TreeItem child = new TreeItem(childEff, SWT.NONE);
+					child.setText(eString);
+				}
 			}
 		}
+	
 	}
 	
 	public IStateCanvas getInitialStateCanvas() {
@@ -181,6 +186,14 @@ public class DomainView {
 
 	public Composite getContentCanvas() {
 		return contentCanvas;
+	}
+
+	public GlobalOptionView getGlobalOptionView() {
+		return globalOptionView;
+	}
+
+	public void setGlobalOptionView(GlobalOptionView globalOptionView) {
+		this.globalOptionView = globalOptionView;
 	}
 
 

@@ -89,6 +89,8 @@ public class PrincipalView {
 		folder.setSelection(itemGlobal);
 		globalOptionView.setDomainView(domainView);
 		
+		domainView.setGlobalOptionView(globalOptionView);
+		
 		CTabItem viewOption = new CTabItem(folder, SWT.NONE);
 		viewOption.setText("View Option");
 		folder.setSelection(viewOption);

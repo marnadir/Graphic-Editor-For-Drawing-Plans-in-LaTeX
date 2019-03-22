@@ -12,13 +12,16 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 
-public class Contrain extends Canvas{
+import Menu.MenuConstrain;
+
+public class OrderConstrainCanvas extends Canvas{
 
 	public static Composite parent;
 	private static float scale = 1;
+	private OrderConstrain orderConstrain;
 
 	
-	public Contrain(Composite parent, int style) {
+	public OrderConstrainCanvas(Composite parent, int style,OrderConstrain orderConstrain) {
 		super(parent, style);
 		this.parent=parent;
 	}
@@ -26,6 +29,7 @@ public class Contrain extends Canvas{
 	public void draw() {
 		
 		addPaintListener(getListener());
+		addMenuDetectListener(new MenuConstrain(this));
 		 this.addListener(SWT.MouseWheel, new Listener()
 		    {
 		        @Override
@@ -43,6 +47,8 @@ public class Contrain extends Canvas{
 		    });
 	}
 	
+	
+
 	
 	public static PaintListener getListener() {
 		PaintListener p;
@@ -100,7 +106,14 @@ public class Contrain extends Canvas{
 	    path.dispose();
 	}
 
-
+	public void clearDisplay() {
+		if (this != null) {
+			this.dispose();
+		}
+	}
+	public OrderConstrain getOrderConstrain() {
+		return orderConstrain;
+	}
 
 	
 	

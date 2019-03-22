@@ -29,8 +29,9 @@ import Action.Node;
 import LaTex.LaTexGeneratorPlan;
 import LaTex.LaTexGeneratorStatePlan;
 import PlanPart.PlanContent;
+import PlanPart.OrderConstrainCanvas;
 import PlanPart.LinkCanvas;
-import PlanPart.OrderCondition;
+import PlanPart.OrderConstrain;
 
 public class ConsoleViewPlan extends Group {
 	
@@ -279,7 +280,7 @@ public class ConsoleViewPlan extends Group {
 			textPlan.insert(updateLinkList.get(i).getLatexCode());
 		}
 
-		ArrayList<OrderCondition>updateOrder = contentAction.getOrds();
+		ArrayList<OrderConstrain> updateOrder = contentAction.getOrds();
 		for (int i = 0; i < updateOrder.size(); i++) {
 			updateOrder.get(i).generateLatexCode();
 			textPlan.insert(updateOrder.get(i).getLatexCode());

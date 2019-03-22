@@ -7,7 +7,7 @@ import Action.Action;
 import Action.ICanvasAction;
 import Action.Node;
 import PlanPart.LinkCanvas;
-import PlanPart.OrderCondition;
+import PlanPart.OrderConstrain;
 import PlanPart.Oval;
 import State.GoalStateCanvas;
 import State.IStateCanvas;
@@ -46,7 +46,7 @@ public class LaTexGeneratorNode {
 	}
 	
 	
-	public String getLatexOrderCodePlan(OrderCondition order) {
+	public String getLatexOrderCodePlan(OrderConstrain order) {
 		StringBuilder sb = new StringBuilder();
 		sb.append("\\ordering");
 		sb.append("{[yshift=.65cm,xshift=.2cm]"+order.getCond1().getID()+".east}");

@@ -10,11 +10,12 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Link;
+import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 
 import Action.Node;
 import PlanPart.LinkCanvas;
-import PlanPart.OrderCondition;
+import PlanPart.OrderConstrain;
 import PlanPart.OvalCounter;
 import PlanPart.PlanContent;
 import State.GoalStateCanvas;
@@ -29,7 +30,7 @@ public class SavePlanDialog extends FileDialog{
 	private OvalCounter ovalCounter;
 	private ArrayList<Node> actionInPlan;
 	private ArrayList<LinkCanvas> link;
-	private ArrayList<OrderCondition> ords;
+	private ArrayList<OrderConstrain> ords;
 	private InitialStateCanvas initialStateCanvas;
 	private GoalStateCanvas goalStateCanvas;
 	
@@ -111,7 +112,7 @@ public class SavePlanDialog extends FileDialog{
 		
 		
 		
-		for(OrderCondition ord:ords) {
+		for(OrderConstrain ord:ords) {
 			saveOrd(ord);
 		}
 		
@@ -154,7 +155,7 @@ public class SavePlanDialog extends FileDialog{
 		
 	}
 	
-	private void saveOrd(OrderCondition ord) {
+	private void saveOrd(OrderConstrain ord) {
 		ArrayList<Object> info=new ArrayList<Object>();
 		if(ord != null) {
 //			info.add(ord.getP1());
@@ -183,6 +184,36 @@ public class SavePlanDialog extends FileDialog{
 	}
 	
 	
-	
+	@Override
+	public String open() {
+
+		String fileName = null;
+
+		boolean done = false;
+
+		while (!done) {
+
+			fileName = super.open();
+			if (fileName == null) {
+
+				done = true;
+			} else {
+
+				File file = new File(fileName);
+				if (file.exists()) {
+
+					MessageBox mb = new MessageBox(super.getParent(), SWT.ICON_WARNING | SWT.YES | SWT.NO);
+
+					mb.setMessage(fileName + " already exists. Do you want to replace it?");
+
+					done = mb.open() == SWT.YES;
+				} else {
+
+					done = true;
+				}
+			}
+		}
+		return fileName;
+	}
 	
 }

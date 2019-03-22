@@ -44,6 +44,7 @@ public class LoadLink {
 			link.setOval1(oval1);
 			link.setOval2(oval2);
 			link.drawLine();
+			planContent.getLink().add(link);
 		}
 		
 	}

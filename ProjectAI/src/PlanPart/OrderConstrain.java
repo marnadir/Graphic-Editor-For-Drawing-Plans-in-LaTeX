@@ -2,7 +2,6 @@ package PlanPart;
 
 
 
-import java.util.ArrayList;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Point;
@@ -13,12 +12,19 @@ import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 
-import Action.Action;
 import Action.Node;
 import LaTex.LaTexGeneratorNode;
 
-public class OrderCondition{
+public class OrderConstrain{
  
+	public void setNod1(Node nod1) {
+		this.nod1 = nod1;
+	}
+
+	public void setNod2(Node nod2) {
+		this.nod2 = nod2;
+	}
+
 	PlanContent canvasContainer;
 	Node nod1=null;
 	Node nod2=null;
@@ -31,9 +37,11 @@ public class OrderCondition{
 	
 	String id1;
 	String id2;
+	
+	OrderConstrainCanvas c;
 
 	
-	public OrderCondition(Composite parent) {
+	public OrderConstrain(Composite parent) {
 		this.canvasContainer=(PlanContent)parent.getParent();
 		this.parent=parent;
 
@@ -84,7 +92,7 @@ public class OrderCondition{
 							if ((canvasContainer.getActionInPlan().get(i).getParent().getLocation().equals(point))) {
 
 								nod1 = canvasContainer.getActionInPlan().get(i);
-								c1=nod1.getParent();
+								//c1=nod1.getParent();
 								l2.setText(nod1.getAction().getName() + "<" + ".....");
 								l2.setText(nod1.getID() + "<" + ".....");
 
@@ -101,7 +109,7 @@ public class OrderCondition{
 								if(canvasContainer.getActionInPlan().get(i)!=nod1) {
 								
 									nod2 = canvasContainer.getActionInPlan().get(i);
-									c2=nod2.getParent();
+									//c2=nod2.getParent();
 									l2.setText(nod1.getAction().getName() + "<" + nod2.getAction().getName());
 									l2.setText(nod1.getID() + "<" + nod2.getID());
 
@@ -121,29 +129,19 @@ public class OrderCondition{
 		return l;
 	}
 	
-	public void drawOrder() {
+	public void setLocationParent() {
 
 		Point p = new Point(nod1.getBounds().x + nod1.getBounds().width, nod1.getBounds().y - 20);
+		c1=nod1.getParent();
 		p1 = c1.getParent().toControl(c1.toDisplay(p.x, p.y));
 		id1=nod1.getID();
-
-		
-
-
 		p = new Point(nod2.getBounds().x, nod2.getBounds().y - 20);
+		c2=nod2.getParent();
 		p2 = c2.getParent().toControl(c2.toDisplay(p.x, p.y));
 		id2=nod2.getID();
-		
-		
-		parent.setSize(90,60);
-		
+		parent.setSize(90,60);	
 		parent.setLocation(p1.x+((p2.x-p1.x-parent.getBounds().width)/2), p1.y - 30);
 
-		
-		Contrain c=new Contrain(parent, SWT.ALL);
-		c.draw();
-		c.pack();
-		c.setSize(parent.getSize().x,parent.getSize().y);
 
 	}
 
@@ -172,6 +170,10 @@ public class OrderCondition{
 
 	public Point getP2() {
 		return p2;
+	}
+
+	public Composite getParent() {
+		return parent;
 	}
 
 

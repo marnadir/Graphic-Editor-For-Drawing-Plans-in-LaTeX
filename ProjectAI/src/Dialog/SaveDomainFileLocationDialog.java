@@ -12,9 +12,10 @@ import org.eclipse.swt.*;
 import org.eclipse.swt.widgets.*;
 
 import Action.Action;
+import Action.GlobalValue;
 import View.DomainView;
 
-public class SaveFileLocationDialog extends FileDialog{
+public class SaveDomainFileLocationDialog extends FileDialog{
  
 	
 		String fileName;
@@ -27,7 +28,7 @@ public class SaveFileLocationDialog extends FileDialog{
 		File dirPlan;
 	 
 		
-		public SaveFileLocationDialog(Shell parent, int style) {
+		public SaveDomainFileLocationDialog(Shell parent, int style) {
 			super(parent, style);
 			// TODO Auto-generated constructor stub
 		}
@@ -48,6 +49,9 @@ public class SaveFileLocationDialog extends FileDialog{
 			setFilterPath (filterPath);
 			setFileName ("domain");
 			System.out.println ("Save to: " +open ());	
+			
+
+			
 			createFileLog(getFileName());
 			ArrayList<Object> data = new ArrayList<Object>();
 			data.add(updateActionListDomain);
@@ -61,6 +65,8 @@ public class SaveFileLocationDialog extends FileDialog{
 			} else {
 				data.add(null);
 			}
+			
+			data.add(prepareGlobalValueArray());
 			WriteObjectToFile(data);
 			
 		}
@@ -69,6 +75,32 @@ public class SaveFileLocationDialog extends FileDialog{
 			this.domainView = domainView;
 		}
 		
+		
+		public ArrayList<Object> prepareGlobalValueArray(){
+			ArrayList<Object> arrayList=new ArrayList<>();
+			arrayList.add(GlobalValue.isHeightOfAction);
+			arrayList.add(GlobalValue.heightOfAction);
+			
+			
+			arrayList.add(GlobalValue.isWidthOfAction);
+			arrayList.add(GlobalValue.widthOfAction);
+			
+			arrayList.add(GlobalValue.isWidthOfAction);
+			arrayList.add(GlobalValue.widthOfAction);
+			
+			arrayList.add(GlobalValue.isLengthsOfEmptyTasks);
+			arrayList.add(GlobalValue.lengthsOfEmptyTasks);
+			
+			arrayList.add(GlobalValue.isLengthsOfPrecs);
+			arrayList.add(GlobalValue.lengthsOfPrecs);
+			
+			arrayList.add(GlobalValue.isLengthsOfEffs);
+			arrayList.add(GlobalValue.lengthsOfEffs);
+			
+			arrayList.add(GlobalValue.isLengthsOfConds);
+			arrayList.add(GlobalValue.lengthsOfConds);
+			return arrayList;
+		}
 	
 		public void setUpdateActionListDomain(ArrayList<Action> updateActionListDomain) {
 			this.updateActionListDomain = updateActionListDomain;
@@ -78,14 +110,16 @@ public class SaveFileLocationDialog extends FileDialog{
 			createDirectorLog();
 			String filepath = dirLog.getAbsolutePath();
 			fileLog = new File(filepath, name);
-			try {
-				fileLog.createNewFile();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			if (fileLog.exists() && !fileLog.isDirectory()) {
-
+			
+			if (!fileLog.exists()) {
+				try {
+					fileLog.createNewFile();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}else {
+				
 			}
 
 		}
@@ -146,4 +180,36 @@ public class SaveFileLocationDialog extends FileDialog{
 			
 		}
 		
+	@Override
+	public String open() {
+
+		String fileName = null;
+
+		boolean done = false;
+
+		while (!done) {
+
+			fileName = super.open();
+			if (fileName == null) {
+
+				done = true;
+			} else {
+
+				File file = new File(fileName);
+				if (file.exists()) {
+
+					MessageBox mb = new MessageBox(super.getParent(), SWT.ICON_WARNING | SWT.YES | SWT.NO);
+
+					mb.setMessage(fileName + " already exists. Do you want to replace it?");
+
+					done = mb.open() == SWT.YES;
+				} else {
+
+					done = true;
+				}
+			}
+		}
+		return fileName;
+	}
+
 }
