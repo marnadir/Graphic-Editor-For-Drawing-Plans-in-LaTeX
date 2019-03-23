@@ -18,6 +18,7 @@ import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Text;
 
+import Action.GlobalValue;
 import Dialog.IDialog;
 import PlanPart.Oval;
 import PlanPart.PlanContent;
@@ -133,19 +134,9 @@ public class MenuContentState implements MenuDetectListener {
 							text = new Text(textButton, SWT.BORDER);
 							text.setText("state");
 							text.setSize(20, 10);
-							
-//							Label l2 = new Label(textButton, SWT.ALL);
-//							l2.setText("Name of Goal:");
-//
-//							text = new Text(textButton, SWT.BORDER);
-//							text.setText("goal");
-//							text.setSize(20, 10);
-							
-							
-
+						
 							btnText.setSelection(true);
 
-							// textButton.setVisible(false);
 
 							btnText.addListener(SWT.Selection, new Listener() {
 
@@ -217,7 +208,7 @@ public class MenuContentState implements MenuDetectListener {
 				public void handleEvent(Event event) {
 					IDialog dialog = new IDialog(canvas.getShell(),SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL | SWT.CENTER) {
 
-						Text textWid;
+						Text textPrec;
 
 						@Override
 						public Listener getOkbtnListener() {
@@ -228,14 +219,14 @@ public class MenuContentState implements MenuDetectListener {
 
 									if (state.isShownCond()) {
 										state.setDefaultValue(false);
-										if(isNumeric(textWid.getText())) {
-											state.setLengthFromCm(Double.parseDouble(textWid.getText()));
+										if(isNumeric(textPrec.getText())) {
+											state.setLengthFromCm(Double.parseDouble(textPrec.getText()));
 											setVisible(false);
 
 										}
 									} else {
-										if(isNumeric(textWid.getText())) {
-											state.setStandardLengthFromCm(Double.parseDouble(textWid.getText()));
+										if(isNumeric(textPrec.getText())) {
+											state.setStandardLengthFromCm(Double.parseDouble(textPrec.getText()));
 											setVisible(false);
 
 										}
@@ -248,15 +239,22 @@ public class MenuContentState implements MenuDetectListener {
 
 						@Override
 						public void createContent() {
-							this.label.setText("set the PrecLine-size of the So ");
+							this.label.setText("set the Conditions-size  ");
 							this.label.pack();
-							composite.setLayout(new GridLayout(2, false));
+							composite.setLayout(new GridLayout(3, false));
+							 Button btnPrec;
+
+							
+
 
 							if (state.isShownCond()) {
-								Label lWidth = new Label(composite, SWT.ALL);
-								lWidth.setText("Lenght in cm: ");
-								textWid = new Text(composite, SWT.BORDER);
-								textWid.setText(state.getLengthCondInCm());
+								Label lPrec = new Label(composite, SWT.ALL);
+								lPrec.setText("Lenght in cm: ");
+								textPrec = new Text(composite, SWT.BORDER);
+								textPrec.setText(state.getLengthCondInCm());
+								btnPrec=new Button(composite, SWT.CHECK);
+								btnPrec.setText("global");
+								btnPrec.setVisible(false);
 								Label info = new Label(composite, SWT.BORDER);
 								info.setText("the minimum lenght is: " + state.getLengthCondInCm()+"cm");
 								GridData gridData = new GridData(GridData.CENTER, GridData.CENTER, false, false);
@@ -265,9 +263,11 @@ public class MenuContentState implements MenuDetectListener {
 							} else {
 								Label lWidth = new Label(composite, SWT.ALL);
 								lWidth.setText("Lenght in cm: ");
-								textWid = new Text(composite, SWT.BORDER);
-							
-								textWid.setText((state.getLengthCondInCm()));
+								textPrec = new Text(composite, SWT.BORDER);
+								textPrec.setText((state.getLengthCondInCm()));
+								btnPrec=new Button(composite, SWT.CHECK);
+								btnPrec.setText("global");
+								btnPrec.setVisible(false);
 								Label info = new Label(composite, SWT.BORDER);
 								info.setText("the default lenght is: " + "1.4cm");
 								GridData gridData = new GridData(GridData.CENTER, GridData.CENTER, false, false);
@@ -275,6 +275,56 @@ public class MenuContentState implements MenuDetectListener {
 								info.setLayoutData(gridData);
 
 							}
+							
+							if(state.isShownCond()) {
+								if(GlobalValue.isLengthsOfConds) {
+									btnPrec.setVisible(true);
+									textPrec.setEditable(false);
+									if(state.isGlobalCond()) {
+										btnPrec.setSelection(true);
+									}
+									
+								}
+							}else {
+								btnPrec.setVisible(true);
+								if(state.isGlobalEmptyPrec()) {
+									btnPrec.setSelection(true);
+									textPrec.setEditable(false);
+
+								}
+							}
+
+							btnPrec.addListener(SWT.Selection, new Listener() {
+
+								@Override
+								public void handleEvent(Event event) {
+									if (btnPrec.getSelection()) {
+										if (state.isShownCond()) {
+											textPrec.setText(GlobalValue.lengthsOfConds);
+											textPrec.setEditable(false);
+											state.setGlobalCond(true);
+										} else {
+											textPrec.setText(GlobalValue.lengthsOfEmptyTasks);
+											textPrec.setEditable(false);
+											state.setGlobalEmptyPrec(true);
+											
+
+										}
+
+									} else {
+										if (state.isShownCond()) {
+											textPrec.setEditable(true);
+											state.setGlobalCond(false);
+										} else {
+											textPrec.setEditable(true);
+											state.setGlobalEmptyPrec(false);
+										}
+
+									}
+
+								}
+							});
+							
 
 							pack();
 

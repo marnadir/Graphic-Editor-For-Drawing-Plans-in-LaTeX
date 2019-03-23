@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
-
+import Action.GlobalValue;
 import LaTex.LaTexGeneratorStateDomain;
 
 public class IState  implements Serializable{
@@ -25,7 +25,21 @@ public class IState  implements Serializable{
 	final double CM_MEASUREMNT= 37.7957517575025;
 	boolean isText=false;
 	String text;
+	boolean globalCond;
+	boolean globalEmptyPrec;
+
+
 	
+
+	public boolean isGlobalEmptyPrec() {
+		return globalEmptyPrec;
+	}
+
+
+	public void setGlobalEmptyPrec(boolean globalEmptyPrec) {
+		this.globalEmptyPrec = globalEmptyPrec;
+	}
+
 
 	public void copyAttribute(IState iState) {
 		this.name="state";
@@ -78,7 +92,12 @@ public class IState  implements Serializable{
 
 
 	public int getLengthCond() {
+
+		if (globalCond) {
+			setLengthFromCm(Double.parseDouble(GlobalValue.lengthsOfConds));
+		}
 		return lengthCond;
+
 	}
 
 	
@@ -101,6 +120,9 @@ public class IState  implements Serializable{
 
 
 	public int getStandardLength() {
+		if(globalEmptyPrec) {
+			setStandardLengthFromCm( Double.parseDouble(GlobalValue.lengthsOfEmptyTasks));
+		}
 		return standardCondLength;
 	}
 
@@ -172,6 +194,16 @@ public class IState  implements Serializable{
 
 	public int getLenIn() {
 		return lenIn;
+	}
+
+
+	public boolean isGlobalCond() {
+		return globalCond;
+	}
+
+
+	public void setGlobalCond(boolean globalCond) {
+		this.globalCond = globalCond;
 	}
 	
 	

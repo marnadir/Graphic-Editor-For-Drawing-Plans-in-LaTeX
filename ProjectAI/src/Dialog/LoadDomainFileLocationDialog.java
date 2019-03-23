@@ -56,10 +56,15 @@ public class LoadDomainFileLocationDialog extends FileDialog {
 					
 					ObjectInputStream objectIn = new ObjectInputStream(fileIn);
 					ArrayList<Object> data = (ArrayList<Object>) objectIn.readObject();
-					updateActionListDomain = (ArrayList<Action>) data.get(0);
+					
+					GlobalValue.setValue((ArrayList<Object>) data.get(0));
+					setGlobalOptionView();
+					
+					
+					updateActionListDomain = (ArrayList<Action>) data.get(1);
 
-					if (data.get(1) != null) {
-						InitialState in = (InitialState) data.get(1);
+					if (data.get(2) != null) {
+						InitialState in = (InitialState) data.get(2);
 						if (domainView.getInitStateView().getContainerInitState().getChildren().length > 0) {
 							domainView.getInitStateView().getContainerInitState().getChildren()[0].dispose();
 						}
@@ -71,8 +76,8 @@ public class LoadDomainFileLocationDialog extends FileDialog {
 						in.generateLatexCodeDomain();
 						in.getLatexCodeDomain();
 					}
-					if (data.get(2) != null) {
-						GoalState goal = (GoalState) data.get(2);
+					if (data.get(3) != null) {
+						GoalState goal = (GoalState) data.get(3);
 						if (domainView.getGoalStateView().getContainerGoalState().getChildren().length > 0) {
 							domainView.getGoalStateView().getContainerGoalState().getChildren()[0].dispose();
 						}
@@ -86,8 +91,7 @@ public class LoadDomainFileLocationDialog extends FileDialog {
 						goal.getLatexCodeDomain();
 					}
 					
-					GlobalValue.setValue((ArrayList<Object>) data.get(3));
-					setGlobalOptionView();
+					
 					
 					System.out.println(GlobalValue.isWidthOfAction);
 					objectIn.close();

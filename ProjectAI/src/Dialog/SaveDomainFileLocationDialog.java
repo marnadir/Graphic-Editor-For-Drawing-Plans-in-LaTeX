@@ -54,6 +54,7 @@ public class SaveDomainFileLocationDialog extends FileDialog{
 			
 			createFileLog(getFileName());
 			ArrayList<Object> data = new ArrayList<Object>();
+			data.add(prepareGlobalValueArray());
 			data.add(updateActionListDomain);
 			if (domainView.getInitialStateCanvas() != null) {
 				data.add(domainView.getInitialStateCanvas().getState());
@@ -66,7 +67,7 @@ public class SaveDomainFileLocationDialog extends FileDialog{
 				data.add(null);
 			}
 			
-			data.add(prepareGlobalValueArray());
+			
 			WriteObjectToFile(data);
 			
 		}
@@ -78,6 +79,7 @@ public class SaveDomainFileLocationDialog extends FileDialog{
 		
 		public ArrayList<Object> prepareGlobalValueArray(){
 			ArrayList<Object> arrayList=new ArrayList<>();
+			
 			arrayList.add(GlobalValue.isHeightOfAction);
 			arrayList.add(GlobalValue.heightOfAction);
 			
@@ -85,8 +87,7 @@ public class SaveDomainFileLocationDialog extends FileDialog{
 			arrayList.add(GlobalValue.isWidthOfAction);
 			arrayList.add(GlobalValue.widthOfAction);
 			
-			arrayList.add(GlobalValue.isWidthOfAction);
-			arrayList.add(GlobalValue.widthOfAction);
+		
 			
 			arrayList.add(GlobalValue.isLengthsOfEmptyTasks);
 			arrayList.add(GlobalValue.lengthsOfEmptyTasks);

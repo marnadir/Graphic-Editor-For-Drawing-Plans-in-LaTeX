@@ -74,6 +74,19 @@ public class GlobalOptionView extends Composite{
 		confermH.setText("Global value not present,check the box.");
 		
 		
+		bntCond=new Button(compListdetail, SWT.CHECK | SWT.BORDER);
+		bntCond.addListener(SWT.Selection, getAddBtnCondListener(bntCond));
+		Label lConds=new Label(compListdetail, SWT.ALL);
+		lConds.setText("Lenght Cond of State");
+		tLenCond=new Text(compListdetail, SWT.BORDER );
+		tLenCond.setEditable(false);
+		tLenCond.setText("NONE");
+		Button btnOkCond=new Button(compListdetail, SWT.ALL);
+		btnOkCond.setText("ok");
+		btnOkCond.addListener(SWT.Selection, getOkBtnCondListener());
+		confermC=new Label(compListdetail, SWT.ALL);
+		confermC.setText("Global value not present,check the box.");
+		
 		bntPrec=new Button(compListdetail, SWT.CHECK | SWT.BORDER);
 		bntPrec.addListener(SWT.Selection, getAddBtnPListener(bntPrec));
 		Label lPrec=new Label(compListdetail, SWT.ALL);
@@ -87,18 +100,7 @@ public class GlobalOptionView extends Composite{
 		confermP=new Label(compListdetail, SWT.ALL);
 		confermP.setText("Global value not present,check the box.");
 		
-		bntCond=new Button(compListdetail, SWT.CHECK | SWT.BORDER);
-		bntCond.addListener(SWT.Selection, getAddBtnEListener(bntEff));
-		Label lConds=new Label(compListdetail, SWT.ALL);
-		lConds.setText("Lenght Cond of State");
-		tLenCond=new Text(compListdetail, SWT.BORDER );
-		tLenCond.setEditable(false);
-		tLenCond.setText("NONE");
-		Button btnOkCond=new Button(compListdetail, SWT.ALL);
-		btnOkCond.setText("ok");
-		btnOkCond.addListener(SWT.Selection, getOkBtnEListener());
-		confermC=new Label(compListdetail, SWT.ALL);
-		confermC.setText("Global value not present,check the box.");
+		
 		
 		bntEff=new Button(compListdetail, SWT.CHECK | SWT.BORDER);
 		bntEff.addListener(SWT.Selection, getAddBtnEListener(bntEff));
@@ -161,10 +163,13 @@ public class GlobalOptionView extends Composite{
 		
 		if(GlobalValue.isLengthsOfConds) {
 			bntCond.setSelection(true);
-			tLenCond.setText(GlobalValue.widthOfAction);
+			tLenCond.setText(GlobalValue.lengthsOfConds);
 			confermC.setText("Update successfully");
 
 		}
+		
+	
+		
 		
 		if(GlobalValue.isLengthsOfEmptyTasks) {
 			tLenEmpty.setText(GlobalValue.lengthsOfEmptyTasks);
@@ -352,6 +357,59 @@ public class GlobalOptionView extends Composite{
 				}
 				confermE.pack();
 				tLenEff.pack();
+			}
+		};
+
+		return l;
+	}
+
+	private Listener getOkBtnCondListener() {
+		Listener l;
+
+		l = new Listener() {
+
+			@Override
+			public void handleEvent(Event event) {
+				//CHECK IF TEXT IS NUMERIC
+				if(tLenCond.getEditable()) {
+					GlobalValue.isLengthsOfConds=true;
+					GlobalValue.lengthsOfConds=tLenCond.getText();
+					confermC.setText("Update successfully");
+					domainView.getContentCanvas().pack();
+
+				}
+				
+			}
+		};
+
+		return l;
+	}
+	
+	
+	
+	private Listener getAddBtnCondListener(Button b1) {
+		Listener l;
+
+		l = new Listener() {
+
+			@Override
+			public void handleEvent(Event event) {
+				if (b1.getSelection()) {
+					tLenCond.setEditable(true);
+					confermC.setText("Insert the value and click OK");
+
+					
+					//insert the new command in the latex code
+				} else {
+					tLenCond.setEditable(false);
+					tLenCond.setText("NONE");
+					GlobalValue.isLengthsOfConds=false;
+					confermC.setText("Global value not present,check the box.");
+
+
+				}
+				confermC.pack();
+				tLenCond.pack();
 			}
 		};
 
