@@ -4,8 +4,9 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Group;
 
-public class GoalStateView extends Composite{
+public class GoalStateView extends Group{
 
 	Composite containerGoalState;
 	Composite parent;

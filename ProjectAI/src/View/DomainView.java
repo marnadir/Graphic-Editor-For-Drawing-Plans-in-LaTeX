@@ -29,7 +29,7 @@ public class DomainView {
 	InitialStateView initStateView;
 	GoalStateView goalStateView;
 	Composite part1;
-	Composite part2;
+	Group part2;
 	Composite contentGoalState;
 	ActionView actionView;
 	TreeActioDomainView treeAction;
@@ -90,15 +90,20 @@ public class DomainView {
 
 		initStateView=new InitialStateView(part1, SWT.BORDER);
 		initStateView.createContent();
+		//initStateView.setFont(new Font(initStateView.getDisplay(), "Consolas", 10, SWT.CENTER));
+
+		initStateView.setText("Initial State");
 		subOption.setContainerInitialState(initStateView.getContainerInitState());
 
 
 		goalStateView=new GoalStateView(part1, SWT.BORDER);
 		goalStateView.createContent();
+		goalStateView.setText("Goal State");
 		subOption.setContainerGoalState(goalStateView.getContainerGoalState());
 
-		part2 = new Composite(contentCanvas, SWT.ALL);
+		part2 = new Group(contentCanvas, SWT.BORDER);
 		part2.setLayout(new GridLayout(3, true));
+		part2.setText("Actions");
 
 		final ScrolledComposite scrolledComposite = new ScrolledComposite(part2, SWT.V_SCROLL);
 		scrolledComposite.setLayout(new GridLayout());
