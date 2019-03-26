@@ -59,7 +59,7 @@ public class GoalStateCanvas extends IStateCanvas {
 					startX=parent.getClientArea().width-22;
 					
 				}else {
-					e.gc.setLineWidth(6);
+					e.gc.setLineWidth(5);
 					e.gc.drawLine(startX-2, startY, startX-2, startY + state.getLenIn());
 					e.gc.setLineWidth(1);
 				}

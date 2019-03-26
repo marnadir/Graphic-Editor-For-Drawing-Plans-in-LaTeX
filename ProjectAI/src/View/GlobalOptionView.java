@@ -169,11 +169,8 @@ public class GlobalOptionView extends Composite{
 		}
 		
 	
-		
-		
-		if(GlobalValue.isLengthsOfEmptyTasks) {
-			tLenEmpty.setText(GlobalValue.lengthsOfEmptyTasks);
-		}
+		tLenEmpty.setText(GlobalValue.lengthsOfEmptyTasks);
+	
 		
 		
 	}

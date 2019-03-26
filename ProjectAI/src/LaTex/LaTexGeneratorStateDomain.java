@@ -2,6 +2,7 @@ package LaTex;
 
 import java.util.ArrayList;
 
+import Action.Action;
 import State.IState;
 
 public class LaTexGeneratorStateDomain {
@@ -45,7 +46,7 @@ public class LaTexGeneratorStateDomain {
 		sb.append(space+"pres = {},"+"\n");
 		sb.append(space+"effs = {");
 		sb.append(getTextPrecEffL(stateCanvas.getConds())+"},"+"\n");
-		sb.append(space+"eff length =  "+stateCanvas.getStandardLengthInCm()+"cm,"+"\n");
+		sb.append(space+"eff length =  "+stateCanvas.getStandardLengthInCm()+"\n");
 		sb.append(space+"height = 5.5cm"+","+"\n");
 		sb.append(space+"width = 1mm"+""+"\n"+"}"+"\n");
 
@@ -55,7 +56,7 @@ public class LaTexGeneratorStateDomain {
 	/*
 	 * get the source code for STARTL, which represents  just the empty conditions 
 	 */
-	public String getSoCode(IState stateCanvas) {
+	public String getSoCode(IState state) {
 		StringBuilder sb = new StringBuilder();
 		String space="  ";
 		sb.append("% PRIMITIVE");
@@ -68,15 +69,15 @@ public class LaTexGeneratorStateDomain {
 		sb.append(space+"text="+"{\\hspace*"+"{-2mm}"+"},"+"\n");
 		sb.append(space+"pres = {},"+"\n");
 		sb.append(space+"effs = {");
-		sb.append(getTextPrecEff(stateCanvas.getConds())+"},"+"\n");
-		sb.append(space+"eff length =  "+stateCanvas.getStandardLengthInCm()+"cm,"+"\n");
+		sb.append(getTextPrecEff(state.getConds())+"},"+"\n");
+		sb.append(space+"eff length =  "+getLenghtConds(state)+"\n");
 		sb.append(space+"height = 5.5cm"+","+"\n");
 		sb.append(space+"width = 1mm"+""+"\n"+"}"+"\n");
 
 		return sb.toString();
 	}
 	
-	public String getGoalCodeL(IState stateCanvas) {
+	public String getGoalCodeL(IState state) {
 		StringBuilder sb = new StringBuilder();
 		String space="  ";
 		sb.append("% PRIMITIVE");
@@ -88,16 +89,16 @@ public class LaTexGeneratorStateDomain {
 		
 		sb.append(space+"text="+"{\\hspace*"+"{-2mm}"+"},"+"\n");
 		sb.append(space+"pres = {");
-		sb.append(getTextPrecEffL(stateCanvas.getConds())+"},"+"\n");
+		sb.append(getTextPrecEffL(state.getConds())+"},"+"\n");
 		sb.append(space+"effs = {},"+"\n");
-		sb.append(space+"eff length =  "+stateCanvas.getStandardLengthInCm()+"cm,"+"\n");
+		sb.append(space+"eff length =  "+getLenghtCondL(state)+"\n");
 		sb.append(space+"height = 5.5cm"+","+"\n");
 		sb.append(space+"width = 1mm"+""+"\n"+"}"+"\n");
 
 		return sb.toString();
 	}
 	
-	public String getGoalCode(IState stateCanvas) {
+	public String getGoalCode(IState state) {
 		StringBuilder sb = new StringBuilder();
 		String space="  ";
 		sb.append("% PRIMITIVE");
@@ -109,9 +110,9 @@ public class LaTexGeneratorStateDomain {
 		
 		sb.append(space+"text="+"{\\hspace*"+"{-2mm}"+"},"+"\n");
 		sb.append(space+"pres = {");
-		sb.append(getTextPrecEff(stateCanvas.getConds())+"},"+"\n");
+		sb.append(getTextPrecEff(state.getConds())+"},"+"\n");
 		sb.append(space+"effs = {},"+"\n");
-		sb.append(space+"eff length =  "+stateCanvas.getStandardLengthInCm()+"cm,"+"\n");
+		sb.append(space+"eff length =  "+getLenghtConds(state)+"\n");
 		sb.append(space+"height = 5.5cm"+","+"\n");
 		sb.append(space+"width = 1mm"+""+"\n"+"}"+"\n");
 
@@ -166,5 +167,32 @@ public class LaTexGeneratorStateDomain {
 		return sb.toString();
 	}
 
+	
+	public String getLenghtConds(IState state) {
+
+		StringBuilder sb = new StringBuilder();
+
+		if (state.isGlobalCond()) {
+			sb.append("\\LenghtOfConds");
+		} else {
+			sb.append(state.getLengthCondInCm() + "cm,");
+		}
+
+		return sb.toString();
+	}
+	
+	public String getLenghtCondL(IState state) {
+
+		StringBuilder sb = new StringBuilder();
+
+		if (state.isGlobalEmpty()) {
+			sb.append("\\LengthsOfEmptyTasks");
+		} else {
+			sb.append(state.getStandardLengthInCm() + "cm,");
+		}
+
+		return sb.toString();
+	}
+	
 	
 }

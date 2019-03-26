@@ -31,12 +31,12 @@ public class IState  implements Serializable{
 
 	
 
-	public boolean isGlobalEmptyPrec() {
+	public boolean isGlobalEmpty() {
 		return globalEmptyPrec;
 	}
 
 
-	public void setGlobalEmptyPrec(boolean globalEmptyPrec) {
+	public void setGlobalEmpty(boolean globalEmptyPrec) {
 		this.globalEmptyPrec = globalEmptyPrec;
 	}
 

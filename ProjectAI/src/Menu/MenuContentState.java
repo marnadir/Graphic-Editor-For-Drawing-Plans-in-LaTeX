@@ -287,7 +287,7 @@ public class MenuContentState implements MenuDetectListener {
 								}
 							}else {
 								btnPrec.setVisible(true);
-								if(state.isGlobalEmptyPrec()) {
+								if(state.isGlobalEmpty()) {
 									btnPrec.setSelection(true);
 									textPrec.setEditable(false);
 
@@ -306,7 +306,7 @@ public class MenuContentState implements MenuDetectListener {
 										} else {
 											textPrec.setText(GlobalValue.lengthsOfEmptyTasks);
 											textPrec.setEditable(false);
-											state.setGlobalEmptyPrec(true);
+											state.setGlobalEmpty(true);
 											
 
 										}
@@ -317,7 +317,7 @@ public class MenuContentState implements MenuDetectListener {
 											state.setGlobalCond(false);
 										} else {
 											textPrec.setEditable(true);
-											state.setGlobalEmptyPrec(false);
+											state.setGlobalEmpty(false);
 										}
 
 									}
