@@ -135,21 +135,25 @@ public class GlobalOptionView extends Composite{
 	public void update() {
 		if(GlobalValue.isWidthOfAction) {
 			bntWidth.setSelection(true);
-			tWidth.setText(GlobalValue.widthOfAction);
+			tWidth.setText(GlobalValue.widthOfAction);			
+			tWidth.setEditable(true);
 			confermW.setText("Update successfully");
 
 		}
 		
 		if(GlobalValue.isHeightOfAction) {
 			bntHeigt.setSelection(true);
-			tHeight.setText(GlobalValue.heightOfAction);					
+			tHeight.setText(GlobalValue.heightOfAction);	
+			tHeight.setEditable(true);
 			confermH.setText("Update successfully");
+			
 
 		}
 		
 		if(GlobalValue.isLengthsOfPrecs) {
 			bntPrec.setSelection(true);
-			tLenPre.setText(GlobalValue.lengthsOfPrecs);
+			tLenPre.setText(GlobalValue.lengthsOfPrecs);			
+			tLenPre.setEditable(true);
 			confermP.setText("Update successfully");
 
 		}
@@ -157,6 +161,7 @@ public class GlobalOptionView extends Composite{
 		if(GlobalValue.isLengthsOfEffs) {
 			bntEff.setSelection(true);
 			tLenEff.setText(GlobalValue.lengthsOfEffs);
+			tLenEff.setEditable(true);
 			confermE.setText("Update successfully");
 
 		}
@@ -164,12 +169,14 @@ public class GlobalOptionView extends Composite{
 		if(GlobalValue.isLengthsOfConds) {
 			bntCond.setSelection(true);
 			tLenCond.setText(GlobalValue.lengthsOfConds);
+			tLenCond.setEditable(true);
 			confermC.setText("Update successfully");
 
 		}
 		
 	
 		tLenEmpty.setText(GlobalValue.lengthsOfEmptyTasks);
+		tLenEmpty.setEditable(true);
 	
 		
 		

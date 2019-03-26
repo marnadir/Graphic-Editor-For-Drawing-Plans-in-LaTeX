@@ -208,7 +208,7 @@ public class MenuContentState implements MenuDetectListener {
 				public void handleEvent(Event event) {
 					IDialog dialog = new IDialog(canvas.getShell(),SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL | SWT.CENTER) {
 
-						Text textPrec;
+						Text textConds;
 
 						@Override
 						public Listener getOkbtnListener() {
@@ -219,14 +219,14 @@ public class MenuContentState implements MenuDetectListener {
 
 									if (state.isShownCond()) {
 										state.setDefaultValue(false);
-										if(isNumeric(textPrec.getText())) {
-											state.setLengthFromCm(Double.parseDouble(textPrec.getText()));
+										if(isNumeric(textConds.getText())) {
+											state.setLengthFromCm(Double.parseDouble(textConds.getText()));
 											setVisible(false);
 
 										}
 									} else {
-										if(isNumeric(textPrec.getText())) {
-											state.setStandardLengthFromCm(Double.parseDouble(textPrec.getText()));
+										if(isNumeric(textConds.getText())) {
+											state.setStandardLengthFromCm(Double.parseDouble(textConds.getText()));
 											setVisible(false);
 
 										}
@@ -242,7 +242,7 @@ public class MenuContentState implements MenuDetectListener {
 							this.label.setText("set the Conditions-size  ");
 							this.label.pack();
 							composite.setLayout(new GridLayout(3, false));
-							 Button btnPrec;
+							 Button btnCond;
 
 							
 
@@ -250,11 +250,11 @@ public class MenuContentState implements MenuDetectListener {
 							if (state.isShownCond()) {
 								Label lPrec = new Label(composite, SWT.ALL);
 								lPrec.setText("Lenght in cm: ");
-								textPrec = new Text(composite, SWT.BORDER);
-								textPrec.setText(state.getLengthCondInCm());
-								btnPrec=new Button(composite, SWT.CHECK);
-								btnPrec.setText("global");
-								btnPrec.setVisible(false);
+								textConds = new Text(composite, SWT.BORDER);
+								textConds.setText(state.getLengthCondInCm());
+								btnCond=new Button(composite, SWT.CHECK);
+								btnCond.setText("global");
+								btnCond.setVisible(false);
 								Label info = new Label(composite, SWT.BORDER);
 								info.setText("the minimum lenght is: " + state.getLengthCondInCm()+"cm");
 								GridData gridData = new GridData(GridData.CENTER, GridData.CENTER, false, false);
@@ -263,11 +263,11 @@ public class MenuContentState implements MenuDetectListener {
 							} else {
 								Label lWidth = new Label(composite, SWT.ALL);
 								lWidth.setText("Lenght in cm: ");
-								textPrec = new Text(composite, SWT.BORDER);
-								textPrec.setText((state.getLengthCondInCm()));
-								btnPrec=new Button(composite, SWT.CHECK);
-								btnPrec.setText("global");
-								btnPrec.setVisible(false);
+								textConds = new Text(composite, SWT.BORDER);
+								textConds.setText((state.getStandardLengthInCm()));
+								btnCond=new Button(composite, SWT.CHECK);
+								btnCond.setText("global");
+								btnCond.setVisible(false);
 								Label info = new Label(composite, SWT.BORDER);
 								info.setText("the default lenght is: " + "1.4cm");
 								GridData gridData = new GridData(GridData.CENTER, GridData.CENTER, false, false);
@@ -278,34 +278,34 @@ public class MenuContentState implements MenuDetectListener {
 							
 							if(state.isShownCond()) {
 								if(GlobalValue.isLengthsOfConds) {
-									btnPrec.setVisible(true);
-									textPrec.setEditable(false);
+									btnCond.setVisible(true);
 									if(state.isGlobalCond()) {
-										btnPrec.setSelection(true);
+										btnCond.setSelection(true);
+										textConds.setEditable(false);
 									}
 									
 								}
 							}else {
-								btnPrec.setVisible(true);
+								btnCond.setVisible(true);
 								if(state.isGlobalEmpty()) {
-									btnPrec.setSelection(true);
-									textPrec.setEditable(false);
+									btnCond.setSelection(true);
+									textConds.setEditable(false);
 
 								}
 							}
 
-							btnPrec.addListener(SWT.Selection, new Listener() {
+							btnCond.addListener(SWT.Selection, new Listener() {
 
 								@Override
 								public void handleEvent(Event event) {
-									if (btnPrec.getSelection()) {
+									if (btnCond.getSelection()) {
 										if (state.isShownCond()) {
-											textPrec.setText(GlobalValue.lengthsOfConds);
-											textPrec.setEditable(false);
+											textConds.setText(GlobalValue.lengthsOfConds);
+											textConds.setEditable(false);
 											state.setGlobalCond(true);
 										} else {
-											textPrec.setText(GlobalValue.lengthsOfEmptyTasks);
-											textPrec.setEditable(false);
+											textConds.setText(GlobalValue.lengthsOfEmptyTasks);
+											textConds.setEditable(false);
 											state.setGlobalEmpty(true);
 											
 
@@ -313,10 +313,10 @@ public class MenuContentState implements MenuDetectListener {
 
 									} else {
 										if (state.isShownCond()) {
-											textPrec.setEditable(true);
+											textConds.setEditable(true);
 											state.setGlobalCond(false);
 										} else {
-											textPrec.setEditable(true);
+											textConds.setEditable(true);
 											state.setGlobalEmpty(false);
 										}
 

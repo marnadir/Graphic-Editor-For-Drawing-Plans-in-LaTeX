@@ -71,14 +71,14 @@ public abstract class IStateCanvas extends Canvas implements Serializable {
 			parent.setSize(x1,y1);
 			
 		}else {
-			int x1;
+			double x1;
 			if(state.isText()) {
-				x1=state.getStandardLength()+22;
+				x1=state.getStandardLengthCond()+22;
 			}else {
-				x1=state.getStandardLength()+3;
+				x1=state.getStandardLengthCond()+3;
 			}
 			int y1=state.getLenIn()+4;
-			parent.setSize(x1,y1);
+			parent.setSize((int) x1,y1);
 
 		}
 	}

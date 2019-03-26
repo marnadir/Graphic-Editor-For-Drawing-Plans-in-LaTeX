@@ -24,12 +24,12 @@ public class Action implements Serializable {
 	String latexCode;
 
 	
-	int widthRect;
-	int lengthPrec;
-	int lengthEff;
-	int heightRect = 30;
-	int standardLengthEff=(int) (CM_MEASUREMNT*Double.parseDouble(GlobalValue.lengthsOfEmptyTasks)); //Standard lenght of effect line 
-	int standardLengthPrec=(int) (CM_MEASUREMNT*Double.parseDouble(GlobalValue.lengthsOfEmptyTasks));
+	double widthRect;
+	double lengthPrec;
+	double lengthEff;
+	double heightRect = 30;
+	double standardLengthEff=(CM_MEASUREMNT*Double.parseDouble(GlobalValue.lengthsOfEmptyTasks)); //Standard lenght of effect line 
+	double standardLengthPrec= (CM_MEASUREMNT*Double.parseDouble(GlobalValue.lengthsOfEmptyTasks));
 	//??default wtf means?
 	boolean defaultValuePrecLenght=true;
 	boolean defaultValueEffLenght=true;
@@ -199,7 +199,7 @@ public class Action implements Serializable {
 		this.effect = effect;
 	}
 	
-	public int getWidthRect() {
+	public double getWidthRect() {
 		if(globalWidth) {
 			setWidthRectFromCm( Double.parseDouble(GlobalValue.widthOfAction));
 		}
@@ -214,12 +214,12 @@ public class Action implements Serializable {
 	
 
 	public void setWidthRectFromCm(double widthRect) {
-		this.widthRect = (int)(widthRect*CM_MEASUREMNT);
+		this.widthRect = (widthRect*CM_MEASUREMNT);
 	}
 
 
 
-	public int getLengthPrec() {
+	public double getLengthPrec() {
 		if(isGlobalPrec()) {
 			setLengthPrecFromCm(Double.parseDouble(GlobalValue.lengthsOfPrecs));
 		}
@@ -233,12 +233,12 @@ public class Action implements Serializable {
 	}
 
 	public void setLengthPrecFromCm(double lengthPrec) {
-		this.lengthPrec = (int)(lengthPrec*CM_MEASUREMNT);
+		this.lengthPrec =(lengthPrec*CM_MEASUREMNT);
 	}
 
 
 
-	public int getLengthEff() {
+	public double getLengthEff() {
 		if(globalEff) {
 			setLengthEffFromCm(Double.parseDouble(GlobalValue.lengthsOfEffs));
 		}
@@ -252,12 +252,12 @@ public class Action implements Serializable {
 	}
 
 	public void setLengthEffFromCm(double lengthEff) {
-		this.lengthEff = (int)(lengthEff*CM_MEASUREMNT);
+		this.lengthEff = (lengthEff*CM_MEASUREMNT);
 	}
 
 
 
-	public int getHeightRect() {
+	public double getHeightRect() {
 		if(globalHeight) {
 			setHeightRectFromCm( Double.parseDouble(GlobalValue.heightOfAction));
 		}
@@ -274,12 +274,12 @@ public class Action implements Serializable {
 	
 
 	public void setHeightRectFromCm(double heightRect) {
-		this.heightRect =(int)( heightRect*CM_MEASUREMNT);
+		this.heightRect =( heightRect*CM_MEASUREMNT);
 	}
 
 
 
-	public int getStandardLengthEff() {
+	public double getStandardLengthEff() {
 	
 		if(globalEmptyEff) {
 			setStandardLengthEffFromCm( Double.parseDouble(GlobalValue.lengthsOfEmptyTasks));
@@ -295,7 +295,7 @@ public class Action implements Serializable {
 
 	public void setStandardLengthEffFromCm(double standardLengthEff) {
 		
-		this.standardLengthEff =(int) (standardLengthEff*CM_MEASUREMNT);
+		this.standardLengthEff = (standardLengthEff*CM_MEASUREMNT);
 	}
 
 
@@ -306,7 +306,7 @@ public class Action implements Serializable {
 		return angleFormated;
 	}
 
-	public int getStandardLengthPrec() {
+	public double getStandardLengthPrec() {
 		if(globalEmptyPrec) {
 			setStandardLengthPrecFromCm( Double.parseDouble(GlobalValue.lengthsOfEmptyTasks));
 		}
@@ -315,7 +315,7 @@ public class Action implements Serializable {
 	
 	
 	public void setStandardLengthPrecFromCm(double standardLengthPrec) {
-		this.standardLengthPrec = (int)(standardLengthPrec*CM_MEASUREMNT);
+		this.standardLengthPrec = (standardLengthPrec*CM_MEASUREMNT);
 	}
 
 

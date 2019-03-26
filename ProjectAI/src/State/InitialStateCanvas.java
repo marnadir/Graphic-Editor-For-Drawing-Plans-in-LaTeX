@@ -67,13 +67,13 @@ public class InitialStateCanvas extends IStateCanvas  {
 					String string = state.getConds().get(i);
 
 					if(state.isShownCond()) {
-						e.gc.drawLine(startX, posY, startX + state.getLengthCond(), posY);
+						e.gc.drawLine(startX, posY, (int) (startX + state.getLengthCond()), posY);
 						e.gc.drawString(string, startX + 5, posY - 20, false);
 						if(parent.getParent() instanceof PlanContent) {
 							addOval(state,string,parent.getLocation().x+parent.getBounds().width+1,parent.getLocation().y+ posY-1);
 						}
 					}else {
-						e.gc.drawLine(startX, posY, startX + state.getStandardLength(), posY);
+						e.gc.drawLine(startX, posY, (int) (startX + state.getStandardLengthCond()), posY);
 						if(parent.getParent() instanceof PlanContent) {
 							addOval(state,string,parent.getLocation().x+parent.getBounds().width+1,parent.getLocation().y+ posY-1);
 						}

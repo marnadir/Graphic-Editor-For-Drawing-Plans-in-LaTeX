@@ -68,11 +68,11 @@ public class CanvasAction  extends ICanvasAction{
 
 					if (action.isShownCond()) {
 						String string = action.getPrec().get(i);
-						e.gc.drawLine(0, posY, (action.getLengthPrec()), posY);
+						e.gc.drawLine(0, posY, (int) (action.getLengthPrec()), posY);
 						e.gc.drawString(string, 2, posY - 20, false);
 
 					} else {
-						e.gc.drawLine(0, posY, action.getStandardLengthPrec(), posY);
+						e.gc.drawLine(0, posY, (int) action.getStandardLengthPrec(), posY);
 					}
 
 					posY = posY + 30;
@@ -81,9 +81,9 @@ public class CanvasAction  extends ICanvasAction{
 				/* Drawing rectangle w/o name */
 				Rectangle rect;
 				if (action.isShownCond()) {
-					rect = new Rectangle((action.getLengthPrec()), y - 5, action.getWidthRect(), action.getHeightRect());
+					rect = new Rectangle((int)(action.getLengthPrec()), y - 5,(int) action.getWidthRect(), (int)action.getHeightRect());
 				} else {
-					rect = new Rectangle((action.getStandardLengthPrec()), y - 5, action.getWidthRect(), action.getHeightRect());	
+					rect = new Rectangle((int)(action.getStandardLengthPrec()), y - 5, (int)action.getWidthRect(),(int) action.getHeightRect());	
 				}
 
 				if (action.isForm()) {
@@ -108,12 +108,12 @@ public class CanvasAction  extends ICanvasAction{
 
 					if (action.isShownCond()) {
 						String string = action.getEffect().get(i);
-						e.gc.drawLine(x, posY, x + action.getLengthEff(), posY);
+						e.gc.drawLine(x, posY, (int) (x + action.getLengthEff()), posY);
 						e.gc.drawString(string, x + 2, posY - 20, false);
 
 					} else {
 
-						e.gc.drawLine(x, posY, x + action.getStandardLengthEff(), posY);
+						e.gc.drawLine(x, posY, (int) (x + action.getStandardLengthEff()), posY);
 
 					}
 
@@ -131,14 +131,14 @@ public class CanvasAction  extends ICanvasAction{
 	
 	public void resizeParent() {
 		if(action.isShownCond()) {
-			int x1=action.getLengthPrec()+action.getLengthEff()+action.getWidthRect();
-			int y1=action.getHeightRect()+40;
-			parent.setSize(x1,y1);
+			double x1=action.getLengthPrec()+action.getLengthEff()+action.getWidthRect();
+			double y1=action.getHeightRect()+40;
+			parent.setSize((int)x1,(int)y1);
 			
 		}else {
-			int x1=action.getStandardLengthPrec()+action.getStandardLengthEff()+action.getWidthRect();
-			int y1=action.getHeightRect()+40;
-			parent.setSize(x1,y1);
+			double x1=action.getStandardLengthPrec()+action.getStandardLengthEff()+action.getWidthRect();
+			double y1=action.getHeightRect()+40;
+			parent.setSize((int)x1,(int)y1);
 		}
 	}
 	

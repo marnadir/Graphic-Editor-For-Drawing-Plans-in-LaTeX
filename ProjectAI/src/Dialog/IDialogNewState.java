@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Button;
@@ -93,7 +94,10 @@ public abstract class IDialogNewState extends IDialog{
 		newCond.setVisible(false);
 
 		list.addListener(SWT.Selection,addListListener());
-
+		GridData gd = new GridData ();
+		gd.widthHint = 50;
+		gd.heightHint=50;
+		list.setLayoutData(gd);
 
 		pack();
 		

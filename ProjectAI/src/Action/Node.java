@@ -36,12 +36,12 @@ public class Node extends ICanvasAction {
 					String string = action.getPrec().get(i);
 
 					if (action.isShownCond()) {
-						e.gc.drawLine(0, posY, (action.getLengthPrec()), posY);
+						e.gc.drawLine(0, posY, (int) (action.getLengthPrec()), posY);
 						e.gc.drawString(string, 2, posY - 20, false);
 						addOval(action, string,parent.getLocation().x-6, parent.getLocation().y+ posY-1);
 
 					} else {
-						e.gc.drawLine(0, posY, action.getStandardLengthPrec(), posY);
+						e.gc.drawLine(0, posY, (int) action.getStandardLengthPrec(), posY);
 						addOval(action, string,parent.getLocation().x-6, parent.getLocation().y+ posY-1);
 
 					}
@@ -52,12 +52,12 @@ public class Node extends ICanvasAction {
 				/* Drawing rectangle w/o name */
 				Rectangle rect;
 				if (action.isShownCond()) {
-					rect = new Rectangle((action.getLengthPrec()), y - 5, action.getWidthRect(),
-							action.getHeightRect());
+					rect = new Rectangle((int)(action.getLengthPrec()), y - 5, (int)action.getWidthRect(),
+							(int)action.getHeightRect());
 
 				} else {
-					rect = new Rectangle((action.getStandardLengthPrec()), y - 5, action.getWidthRect(),
-							action.getHeightRect());
+					rect = new Rectangle((int)(action.getStandardLengthPrec()), y - 5, (int)action.getWidthRect(),
+							(int)action.getHeightRect());
 				}
 
 				if (action.isForm()) {
@@ -81,13 +81,13 @@ public class Node extends ICanvasAction {
 					String string = action.getEffect().get(i);
 
 					if (action.isShownCond()) {
-						e.gc.drawLine(x, posY, x + action.getLengthEff(), posY);
+						e.gc.drawLine(x, posY, (int) (x + action.getLengthEff()), posY);
 						e.gc.drawString(string, x + 2, posY - 20, false);
 						addOval(action,string,parent.getLocation().x+parent.getBounds().width+1,parent.getLocation().y+ posY-1);
 
 					} else {
 
-						e.gc.drawLine(x, posY, x + action.getStandardLengthEff(), posY);
+						e.gc.drawLine(x, posY, (int) (x + action.getStandardLengthEff()), posY);
 						addOval(action,string,parent.getLocation().x+parent.getBounds().width+1,parent.getLocation().y+ posY-1);
 
 					}

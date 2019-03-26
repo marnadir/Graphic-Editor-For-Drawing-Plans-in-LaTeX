@@ -237,9 +237,10 @@ public class MenuContentAction implements MenuDetectListener {
 							
 							if(GlobalValue.isWidthOfAction) {
 								btnWidth.setVisible(true);
-								textWid.setEditable(false);
 								if(canvas.getAction().isGlobalWid()) {
 									btnWidth.setSelection(true);
+									textWid.setEditable(false);
+
 								}
 								
 							}
@@ -276,9 +277,11 @@ public class MenuContentAction implements MenuDetectListener {
 							
 							if(GlobalValue.isHeightOfAction) {
 								btnHeight.setVisible(true);
-								textHei.setEditable(false);
 								if(canvas.getAction().isGlobalHeight()) {
-									btnHeight.setSelection(true);
+									btnHeight.setSelection(true);	
+									textHei.setEditable(false);
+
+									
 								}
 								
 							}
@@ -389,9 +392,10 @@ public class MenuContentAction implements MenuDetectListener {
 							if(canvas.getAction().isShownCond()) {
 								if(GlobalValue.isLengthsOfPrecs) {
 									btnPrec.setVisible(true);
-									textPrec.setEditable(false);
 									if(canvas.getAction().isGlobalPrec()) {
 										btnPrec.setSelection(true);
+										textPrec.setEditable(false);
+
 									}
 									
 								}
@@ -519,9 +523,10 @@ public class MenuContentAction implements MenuDetectListener {
 							if(canvas.getAction().isShownCond()) {
 								if(GlobalValue.isLengthsOfEffs) {
 									btnEff.setVisible(true);
-									textEff.setEditable(false);
 									if(canvas.getAction().isGlobalEff()) {
-										btnEff.setSelection(true);
+										btnEff.setSelection(true);								
+										textEff.setEditable(false);
+
 									}
 									
 								}
