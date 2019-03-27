@@ -66,10 +66,7 @@ public class ConsoleViewPlan extends Group {
 		Image icon = new Image(getDisplay(), "img/refresh.png");
 		updateTextPlan.setImage(icon);
 		
-		ToolItem clearTextPlan = new ToolItem(toolBarPlan, SWT.PUSH);
-		clearTextPlan.setText("clear");
-		icon = new Image(getDisplay(), "img/clear.ico");
-		clearTextPlan.setImage(icon);
+	
 
 		ToolItem saveLatex=new ToolItem(toolBarPlan,SWT.PUSH);
 		saveLatex.setText("save");
@@ -93,15 +90,7 @@ public class ConsoleViewPlan extends Group {
 
 			}
 		});
-		
-		clearTextPlan.addListener(SWT.Selection, new Listener() {
-
-			@Override
-			public void handleEvent(Event event) {
-				textPlan.setText("");
-
-			}
-		});
+	
 		
 		saveLatex.addListener(SWT.Selection, new Listener() {
 			
@@ -296,6 +285,10 @@ public class ConsoleViewPlan extends Group {
 	}
 	
 
+
+	public Text getTextPlan() {
+		return textPlan;
+	}
 
 	public File getDirPlan() {
 		return dirPlan;

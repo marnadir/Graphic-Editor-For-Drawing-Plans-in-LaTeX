@@ -41,7 +41,7 @@ public class LaTexGeneratorAction {
 		sb.append("{");
 		sb.append("\n");
 		
-		sb.append(space+"text="+"{\\textbf"+getText(a.getName())+"},"+"\n");
+		sb.append(space+"text = " +"{\\textbf"+getText(a.getName())+"},"+"\n");
 		sb.append(space+"pres = {");
 		sb.append(getTextPrecEff(a.getPrec())+"},"+"\n");
 		sb.append(space+"effs = {");
@@ -65,7 +65,7 @@ public class LaTexGeneratorAction {
 		sb.append("{");
 		sb.append("\n");
 		
-		sb.append(space+"text"+"{\\textbf"+getText(a.getName())+"},"+"\n");
+		sb.append(space+"text = "+"{\\textbf"+getText(a.getName())+"},"+"\n");
 		sb.append(space+"pres = {");
 		sb.append(getTextPrecEffE(a.getPrec())+"},"+"\n");
 		sb.append(space+"effs = {");
@@ -206,7 +206,7 @@ public class LaTexGeneratorAction {
 		if(a.isGlobalHeight()) {
 			sb.append("\\HeightOfActions");
 		}else {
-			sb.append(a.getHeightRectInCm()+"cm");
+			sb.append(a.getHeightRectInCm()+"cm,");
 		}
 		return sb.toString();		
 	}
@@ -218,7 +218,7 @@ public class LaTexGeneratorAction {
 		if (a.isGlobalPrec()) {
 			sb.append("\\LenghtOfPrecs");
 		} else {
-			sb.append(a.getLengthPrecInCm() + "cm");
+			sb.append(a.getLengthPrecInCm() + "cm,");
 		}
 
 		return sb.toString();		
@@ -231,7 +231,7 @@ public class LaTexGeneratorAction {
 			if(a.isGlobalEmptyPrec()) {
 				sb.append("\\LengthsOfEmptyTasks");
 			}else {
-				sb.append(a.getLengthPrecInCm()+"cm");
+				sb.append(a.getStandardLengthPrecInCm()+"cm,");
 			}
 		
 		return sb.toString();		
@@ -244,7 +244,7 @@ public class LaTexGeneratorAction {
 		if (a.isGlobalEff()) {
 			sb.append("\\LenghtOfEffs");
 		} else {
-			sb.append(a.getLengthEffInCm() + "cm");
+			sb.append(a.getLengthEffInCm() + "cm,");
 		}
 
 		return sb.toString();
@@ -257,7 +257,7 @@ public class LaTexGeneratorAction {
 		if (a.isGlobalEmptyEff()) {
 			sb.append("\\LengthsOfEmptyTasks");
 		} else {
-			sb.append(a.getLengthEffInCm() + "cm");
+			sb.append(a.getStandardLengthEffInCm() + "cm,");
 		}
 
 		return sb.toString();

@@ -126,6 +126,7 @@ public class TreeActioDomainView extends Tree {
 							SWT.DOUBLE_BUFFERED | SWT.NO_REDRAW_RESIZE, action);
 					canvasAction.draw();
 					canvasAction.addDNDListener();
+					canvasAction.resizeParent();
 
 				}
 

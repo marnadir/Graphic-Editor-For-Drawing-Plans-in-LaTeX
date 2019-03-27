@@ -7,9 +7,14 @@ import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.custom.CTabItem;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.events.PaintEvent;
+import org.eclipse.swt.events.PaintListener;
+import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 
 import Menu.MenuPrincipalView;
@@ -25,6 +30,7 @@ public class PrincipalView {
 	private PlanContent contentAction;
 	private ConsoleView consoleView;
 	PlanView planView;
+	PdfView pdfView;
 
 	private File directory;
 
@@ -70,14 +76,14 @@ public class PrincipalView {
 		planView.createContent(domainView);
 		
 		CTabFolder folder=new CTabFolder(sashForm2, SWT.ALL);
-		CTabItem item = new CTabItem(folder, SWT.NONE);
 		
+		CTabItem itemConsole = new CTabItem(folder, SWT.NONE);
 		consoleView = new ConsoleView(folder, SWT.SCROLL_LINE);
 		consoleView.setLayout();
 		consoleView.createContent(domainView, planView);
-		item.setText("Console");
-		item.setControl(consoleView);
-		folder.setSelection(item);
+		itemConsole.setText("Console");
+		itemConsole.setControl(consoleView);
+		folder.setSelection(itemConsole);
 		
 		
 		CTabItem itemGlobal = new CTabItem(folder, SWT.NONE);
@@ -86,18 +92,30 @@ public class PrincipalView {
 		globalOptionView.createContent();
 		itemGlobal.setText("Global Option");
 		itemGlobal.setControl(globalOptionView);
-		folder.setSelection(itemGlobal);
 		globalOptionView.setDomainView(domainView);
 		
 		domainView.setGlobalOptionView(globalOptionView);
 		
-		CTabItem viewOption = new CTabItem(folder, SWT.NONE);
-		viewOption.setText("View Option");
-		folder.setSelection(viewOption);
+		CTabItem pdfItem = new CTabItem(folder, SWT.NONE);
+		pdfItem.setText("Pdf View");
+		folder.setSelection(pdfItem);
+		
+		pdfView=new PdfView(folder, SWT.ALL);
+//		pdfView.draw(imagePath);
+		
+//		Composite comp=new Composite(folder, SWT.ALL);
+//		Image myImage = new Image( comp.getDisplay(), "PdfImg/PlanLatex.pdf-1.png");
+//		Label myLabel = new Label( comp, SWT.NONE );
+//		myLabel.setLocation(200, 0);
+//		myLabel.setImage( myImage );
+//		myLabel.pack();
+//		comp.pack();
 		
 		
+		pdfItem.setControl(pdfView);
+		folder.setSelection(itemConsole);
 		planView.setPdfPreView(consoleView);
-
+		planView.setPdfView(pdfView);
 
 		shell.setMaximized(false);
 	}

@@ -80,8 +80,6 @@ public class MenuPrincipalView extends IMenu{
 		restoreStateDomain.setAccelerator( SWT.CONTROL + 'R');
 
 
-		MenuItem saveAllItem = new MenuItem(menuFile, SWT.PUSH);
-		saveAllItem.setText("&Save All Plans\t");
 		
 		MenuItem loadPlan = new MenuItem(menuFile, SWT.PUSH);
 		loadPlan.setText("&Load Plan\t");
@@ -112,7 +110,7 @@ public class MenuPrincipalView extends IMenu{
 				
 				SaveDomainFileLocationDialog dialog=new SaveDomainFileLocationDialog(getShell(), SWT.SAVE);
 				dialog.setDomainView(domainView);
-				dialog.setUpdateActionListDomain(updateActionListDomain);
+				dialog.setUpdateActionListDomain(domainView.getTreeAction().getActionList());
 				dialog.createContent();
 			}
 		};
@@ -303,46 +301,6 @@ public class MenuPrincipalView extends IMenu{
 			}
 		};
 
-		Listener saveAll = new Listener() {
-
-			@Override
-			public void handleEvent(Event event) {
-
-				for (PlanContent contentAction : planView.getAllPlan()) {
-					StringBuilder sb = new StringBuilder();
-					LaTexGeneratorPlan laTexGeneratorPlan = new LaTexGeneratorPlan();
-					sb.append(laTexGeneratorPlan.getLatexIntro());
-
-					LaTexGeneratorStatePlan generatorStatePlan = new LaTexGeneratorStatePlan();
-					sb.append(generatorStatePlan.getLatexPlanCode(contentAction));
-
-					ArrayList<Node> updateNodeList = contentAction.getActionInPlan();
-					for (int i = 0; i < updateNodeList.size(); i++) {
-						updateNodeList.get(i).generateLatexCode();
-						sb.append(updateNodeList.get(i).getLatexCode());
-					}
-
-					ArrayList<LinkCanvas> updateLinkList = contentAction.getLink();
-					for (int i = 0; i < updateLinkList.size(); i++) {
-						updateLinkList.get(i).generateLatexCode();
-						sb.append(updateLinkList.get(i).getLatexCode());
-					}
-
-					ArrayList<OrderConstrain> updateOrder = contentAction.getOrds();
-					for (int i = 0; i < updateOrder.size(); i++) {
-						updateOrder.get(i).generateLatexCode();
-						sb.append(updateOrder.get(i).getLatexCode());
-					}
-
-					sb.append(laTexGeneratorPlan.getLatexEnd());
-
-					saveFile(contentAction, sb.toString());
-
-				}
-
-			}
-		};
-		
 		Listener loadL = new Listener() {
 
 			@Override
@@ -357,7 +315,7 @@ public class MenuPrincipalView extends IMenu{
 		};
 		
 		loadPlan.addListener(SWT.Selection, loadL);
-		saveAllItem.addListener(SWT.Selection, saveAll);
+	
 		restoreStateDomain.addListener(SWT.Selection, listenerRestoreDomain);
 		storeStateDomain.addListener(SWT.Selection, listenerStoreDomain);
 		exitItem.addListener(SWT.Selection, listenerExit);

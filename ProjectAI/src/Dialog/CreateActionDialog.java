@@ -31,6 +31,9 @@ public class CreateActionDialog extends IDialog {
 	Button buttonNegPrec;
 	Button buttonNegEff;
 	Text actionName;
+	Button btnPrim;
+	Button btnAbst;
+	
 
 	Combo combOption;
 	Combo comboAction;
@@ -61,7 +64,44 @@ public class CreateActionDialog extends IDialog {
 	@Override
 	public void createContent() {
 		label.setText("Create a new action");
+
 		composite.setLayout(new GridLayout(2, false));
+		
+		btnPrim=new  Button(composite, SWT.CHECK);
+		btnPrim.setText("Primitive");
+		
+		btnAbst=new  Button(composite, SWT.CHECK);
+		btnAbst.setText("Abstract");
+		
+		btnPrim.setSelection(true);
+		
+		btnPrim.addListener(SWT.Selection, new Listener() {
+			
+			@Override
+			public void handleEvent(Event event) {
+				if(btnPrim.getSelection()) {
+					btnAbst.setSelection(false);
+				}else {
+					btnAbst.setSelection(true);
+				}
+				
+			}
+		});
+		
+		
+		btnAbst.addListener(SWT.Selection, new Listener() {
+			
+			@Override
+			public void handleEvent(Event event) {
+				if(btnAbst.getSelection()) {
+					btnPrim.setSelection(false);
+				}else {
+					btnPrim.setSelection(true);
+				}
+				
+			}
+		});
+		
 
 		Label lNameAct = new Label(composite, SWT.ALL);
 		lNameAct.setText("Name of the action: ");
@@ -226,6 +266,15 @@ public class CreateActionDialog extends IDialog {
 							child.setText(eString);
 						}
 	
+						if(btnPrim.getSelection()) {
+							action.setPrimitive(true);
+							action.setAbstract(false);
+
+						}else {
+							action.setPrimitive(false);
+							action.setAbstract(true);
+						}
+						
 						actions.add(action);
 						
 						setVisible(false);

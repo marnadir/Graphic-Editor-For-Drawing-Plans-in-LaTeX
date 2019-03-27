@@ -144,16 +144,19 @@ public class MenuContentAction implements MenuDetectListener {
 			
 			
 			
-			
-			
-			MenuItem form = new MenuItem(m, SWT.CASCADE);
-			form.setText("form");
+			MenuItem frame = new MenuItem(m, SWT.CASCADE);
+			frame.setText("frame");
 			Menu subM = new Menu(m);
-			form.setMenu(subM);
-			MenuItem black = new MenuItem(subM, SWT.ALL);
+			frame.setMenu(subM);
+			
+			MenuItem form = new MenuItem(subM, SWT.CASCADE);
+			form.setText("form");
+			Menu subForm = new Menu(m);
+			form.setMenu(subForm);
+			MenuItem black = new MenuItem(subForm, SWT.ALL);
 			black.setText("Black");
 			
-			MenuItem white = new MenuItem(subM, SWT.ALL);
+			MenuItem white = new MenuItem(subForm, SWT.ALL);
 			white.setText("White");
 			
 			
@@ -176,6 +179,67 @@ public class MenuContentAction implements MenuDetectListener {
 
 				}
 			});
+			
+			MenuItem menufett = new MenuItem(subM, SWT.CASCADE);
+			menufett.setText("normal/fett");
+			Menu subfett = new Menu(m);
+			menufett.setMenu(subfett);
+			MenuItem normal = new MenuItem(subfett, SWT.ALL);
+			normal.setText("Normal");
+			normal.addListener(SWT.Selection, new Listener() {
+				
+				@Override
+				public void handleEvent(Event event) {
+					canvas.getAction().setIsFett(false);
+					canvas.redraw();
+					
+				}
+			});
+			
+			MenuItem fett = new MenuItem(subfett, SWT.ALL);
+			fett.setText("fett");
+			fett.addListener(SWT.Selection, new Listener() {
+				
+				@Override
+				public void handleEvent(Event event) {
+					canvas.getAction().setIsFett(true);
+					canvas.redraw();
+					
+				}
+			});
+			
+			
+
+			MenuItem menuEckig = new MenuItem(subM, SWT.CASCADE);
+			menuEckig.setText("Corner");
+		
+			Menu subeckig = new Menu(m);
+			menuEckig.setMenu(subeckig);
+			MenuItem round = new MenuItem(subeckig, SWT.ALL);
+			round.setText("Round");
+			round.addListener(SWT.Selection, new Listener() {
+				
+				@Override
+				public void handleEvent(Event event) {
+					canvas.getAction().setRectRound(true);
+					canvas.redraw();
+					
+				}
+			});
+			
+			MenuItem square = new MenuItem(subeckig, SWT.ALL);
+			square.setText("Square");
+			
+			square.addListener(SWT.Selection, new Listener() {
+				
+				@Override
+				public void handleEvent(Event event) {
+					canvas.getAction().setRectRound(false);
+					canvas.redraw();
+					
+				}
+			});
+			
 			
 			MenuItem setSize = new MenuItem(m, SWT.CASCADE);
 			setSize.setText("Set Size...");
@@ -305,12 +369,12 @@ public class MenuContentAction implements MenuDetectListener {
 							
 							
 
-							Label info = new Label(composite, SWT.BORDER);
-							info.setText(
-									"the default size is: " + canvas.getAction().getWidthRectInCm() + "cm x" + canvas.getAction().getHeightRectInCm()+"cm");
-							GridData gridData = new GridData(GridData.CENTER, GridData.CENTER, false, false);
-							gridData.horizontalSpan = 2;
-							info.setLayoutData(gridData);
+//							Label info = new Label(composite, SWT.BORDER);
+//							info.setText(
+//									"the default size is: " + canvas.getAction().getWidthRectInCm() + "cm x" + canvas.getAction().getHeightRectInCm()+"cm");
+//							GridData gridData = new GridData(GridData.CENTER, GridData.CENTER, false, false);
+//							gridData.horizontalSpan = 2;
+//							info.setLayoutData(gridData);
 							pack();
 
 						}
@@ -368,11 +432,11 @@ public class MenuContentAction implements MenuDetectListener {
 								btnPrec=new Button(composite, SWT.CHECK);
 								btnPrec.setText("global");
 								btnPrec.setVisible(false);
-								Label info = new Label(composite, SWT.BORDER);
-								info.setText("the minimum lenght is: " + canvas.getAction().getLengthPrecInCm()+"cm");
-								GridData gridData = new GridData(GridData.CENTER, GridData.CENTER, false, false);
-								gridData.horizontalSpan = 2;
-								info.setLayoutData(gridData);
+//								Label info = new Label(composite, SWT.BORDER);
+//								info.setText("the minimum lenght is: " + canvas.getAction().getLengthPrecInCm()+"cm");
+//								GridData gridData = new GridData(GridData.CENTER, GridData.CENTER, false, false);
+//								gridData.horizontalSpan = 2;
+//								info.setLayoutData(gridData);
 							} else {
 								Label lWidth = new Label(composite, SWT.ALL);
 								lWidth.setText("Lenght in cm: ");
@@ -381,11 +445,11 @@ public class MenuContentAction implements MenuDetectListener {
 								btnPrec=new Button(composite, SWT.CHECK);
 								btnPrec.setText("global");
 								btnPrec.setVisible(false);
-								Label info = new Label(composite, SWT.BORDER);
-								info.setText("the default lenght is: " + canvas.getAction().getStandardLengthPrecInCm()+"cm");
-								GridData gridData = new GridData(GridData.CENTER, GridData.CENTER, false, false);
-								gridData.horizontalSpan = 2;
-								info.setLayoutData(gridData);
+//								Label info = new Label(composite, SWT.BORDER);
+//								info.setText("the default lenght is: " + canvas.getAction().getStandardLengthPrecInCm()+"cm");
+//								GridData gridData = new GridData(GridData.CENTER, GridData.CENTER, false, false);
+//								gridData.horizontalSpan = 2;
+//								info.setLayoutData(gridData);
 
 							}
 							
@@ -499,11 +563,11 @@ public class MenuContentAction implements MenuDetectListener {
 								btnEff=new Button(composite, SWT.CHECK);
 								btnEff.setText("global");
 								btnEff.setVisible(false);
-								Label info = new Label(c, SWT.BORDER);
-								info.setText("the minimum lenght is: " + canvas.getAction().getLengthEffInCm()+"cm");
-								GridData gridData = new GridData(GridData.CENTER, GridData.CENTER, false, false);
-								gridData.horizontalSpan = 2;
-								info.setLayoutData(gridData);
+//								Label info = new Label(c, SWT.BORDER);
+//								info.setText("the minimum lenght is: " + canvas.getAction().getLengthEffInCm()+"cm");
+//								GridData gridData = new GridData(GridData.CENTER, GridData.CENTER, false, false);
+//								gridData.horizontalSpan = 2;
+//								info.setLayoutData(gridData);
 							} else {
 								Label lWidth = new Label(c, SWT.ALL);
 								lWidth.setText("Lenght in cm: ");
@@ -512,11 +576,11 @@ public class MenuContentAction implements MenuDetectListener {
 								btnEff=new Button(composite, SWT.CHECK);
 								btnEff.setText("global");
 								btnEff.setVisible(false);
-								Label info = new Label(c, SWT.BORDER);
-								info.setText("the default lenght is: " +canvas.getAction().getStandardLengthEffInCm()+"cm");
-								GridData gridData = new GridData(GridData.CENTER, GridData.CENTER, false, false);
-								gridData.horizontalSpan = 2;
-								info.setLayoutData(gridData);
+//								Label info = new Label(c, SWT.BORDER);
+//								info.setText("the default lenght is: " +canvas.getAction().getStandardLengthEffInCm()+"cm");
+//								GridData gridData = new GridData(GridData.CENTER, GridData.CENTER, false, false);
+//								gridData.horizontalSpan = 2;
+//								info.setLayoutData(gridData);
 
 							}
 							

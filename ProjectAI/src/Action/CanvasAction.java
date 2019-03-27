@@ -80,21 +80,37 @@ public class CanvasAction  extends ICanvasAction{
 
 				/* Drawing rectangle w/o name */
 				Rectangle rect;
+				if(action.isFett()) {
+					e.gc.setLineWidth(3);
+				}else {
+					e.gc.setLineWidth(0);
+
+				}
 				if (action.isShownCond()) {
 					rect = new Rectangle((int)(action.getLengthPrec()), y - 5,(int) action.getWidthRect(), (int)action.getHeightRect());
 				} else {
 					rect = new Rectangle((int)(action.getStandardLengthPrec()), y - 5, (int)action.getWidthRect(),(int) action.getHeightRect());	
 				}
 
+				
 				if (action.isForm()) {
 					if(action.isFillColor()) {
 						e.gc.setBackground(getColorSWT());
-						e.gc.fillRoundRectangle(rect.x, rect.y, rect.width, rect.height, 10, 10);
+						if(action.isRectRound()) {
+							e.gc.fillRoundRectangle(rect.x, rect.y, rect.width, rect.height, 10, 10);
+						}else {
+							e.gc.fillRectangle(rect);
+						}
 					}else {
-						//e.gc.drawRectangle(rect);
-						e.gc.drawRoundRectangle(rect.x, rect.y, rect.width, rect.height, 10, 10);
+						if(action.isRectRound()) {
+							e.gc.drawRoundRectangle(rect.x, rect.y, rect.width, rect.height, 10, 10);
 
+						}else {
+							e.gc.drawRectangle(rect);	
+						}
 					}
+					
+
 				}
 				
 				if (action.isShownName()) {
@@ -132,11 +148,17 @@ public class CanvasAction  extends ICanvasAction{
 	public void resizeParent() {
 		if(action.isShownCond()) {
 			double x1=action.getLengthPrec()+action.getLengthEff()+action.getWidthRect();
+			if(action.getPrec().size()==0 || action.getEffect().size()==0) {
+				x1=x1+3;
+			}
 			double y1=action.getHeightRect()+40;
 			parent.setSize((int)x1,(int)y1);
 			
 		}else {
 			double x1=action.getStandardLengthPrec()+action.getStandardLengthEff()+action.getWidthRect();
+			if(action.getPrec().size()==0 || action.getEffect().size()==0) {
+				x1=x1+3;
+			}
 			double y1=action.getHeightRect()+40;
 			parent.setSize((int)x1,(int)y1);
 		}

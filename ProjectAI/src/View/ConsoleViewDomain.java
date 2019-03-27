@@ -72,18 +72,7 @@ public class ConsoleViewDomain extends Group{
 			}
 		});
 
-		ToolItem clearTextDomain = new ToolItem(toolBarDomain, SWT.PUSH);
-		clearTextDomain.setText("clear");
-		icon = new Image(getDisplay(), "img/clear.ico");
-		clearTextDomain.setImage(icon);
-		clearTextDomain.addListener(SWT.Selection, new Listener() {
-
-			@Override
-			public void handleEvent(Event event) {
-				updateView();
-
-			}
-		});
+	
 
 		toolBarDomain.pack();
 
@@ -191,6 +180,12 @@ public class ConsoleViewDomain extends Group{
 		}
 	}
 	
+	
+	
+	public Text getTextDomain() {
+		return textDomain;
+	}
+
 	@Override
 	protected void checkSubclass() {
 		

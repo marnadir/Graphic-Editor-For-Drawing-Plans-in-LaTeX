@@ -22,7 +22,9 @@ import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 
 import Action.Node;
+import Dialog.SaveLAtexCode;
 import Dialog.SavePlanDialog;
+import PDFConverter.PdfConverter;
 import PlanPart.PlanContent;
 import State.LoadLink;
 
@@ -30,6 +32,7 @@ public class PlanView  extends CTabFolder{
 	
 	ConsoleView consoleView;
 	DomainView domainView;
+	PdfView pdfView;
 	ToolItem showCondition;
 	PlanContent contentPlan;
 	
@@ -179,44 +182,43 @@ public class PlanView  extends CTabFolder{
 			public void handleEvent(Event event) {
 				
 				
-//				try {
-//				Process proc;
-
-//					ProcessBuilder pb = new ProcessBuilder("xdg-open"+consoleViewPlan.getFile().getAbsolutePath());
-//					pb.directory(consoleViewPlan.getDirPlan());
-//					pb.start();
-//					
-//					String cmd1="cd "+consoleViewPlan.getDirPlan().getAbsolutePath();
-//					System.out.println(cmd1);
-//					proc=Runtime.getRuntime().exec(consoleViewPlan.getDirPlan().getAbsolutePath());
-//					proc = Runtime.getRuntime().exec("pdflatex "+consoleViewPlan.getFile().getName());
-//					proc.waitFor();
-//
-//				} 
 				
-				
+	
 				ConsoleViewPlan consoleViewPlan=consoleView.getConsoleViewPlan();
-				consoleViewPlan.createDirector();
-				
-				consoleViewPlan.saveFile();
-				
+				//consoleViewPlan.createDirector();
 				
 				ConsoleViewDomain consoleViewDomain=consoleView.getConsoleViewDomain();
-				consoleViewDomain.saveFile();
-				
-				
-//				try {
-//					Thread.sleep(5000);
-//				} catch (InterruptedException e1) {
-//					// TODO Auto-generated catch block
-//					e1.printStackTrace();
-//				}
+//				consoleViewDomain.saveFile();
 
+				
+				SaveLAtexCode dialog=new SaveLAtexCode(getShell(), SWT.SAVE);
+				dialog.setConsoleViewPlan(consoleViewPlan);
+				dialog.setConsoleViewDomain(consoleViewDomain);
+				dialog.createContent();
+				
+				String pdfFile=dialog.getFileName();
+				pdfFile=pdfFile.substring(0, pdfFile.length()-3);
+				pdfFile=pdfFile+"pdf";
+				PdfConverter pdfConverter=new PdfConverter(dialog.getFilterPath()+"/"+pdfFile);
+				pdfConverter.execute();
+				
+				pdfFile=dialog.getFileName();
+				pdfFile=pdfFile.substring(0, pdfFile.length()-3);
+				pdfFile=pdfFile+"png";
+				pdfView.draw(dialog.getFilterPath()+"/"+pdfFile);
+				
+				//consoleViewPlan.saveFile();
+				
+				
+				
+				
+				
 				
 				try {
 
-					String cmd1="cd "+consoleViewPlan.getDirPlan().getAbsolutePath();
-					String cmd2="pdflatex LatexPlan\\.tex  -synctex=1 -interaction=nonstopmode";
+					String cmd1="cd "+dialog.getFilterPath();
+					//dialog.getFileName();
+					String cmd2="pdflatex "+dialog.getFileName()+" -synctex=1 -interaction=nonstopmode";
 					String cmd3="xdg-open LatexPlan.pdf";
 							
 					Process process = Runtime.getRuntime().exec(new String[] { "bash", "-c",
@@ -331,6 +333,10 @@ public class PlanView  extends CTabFolder{
 	}
 	
 	
+	public void setPdfView(PdfView pdfView) {
+		this.pdfView = pdfView;
+	}
+
 	public boolean isShowConditionSelecte() {
 		return showCondition.getSelection();
 	}

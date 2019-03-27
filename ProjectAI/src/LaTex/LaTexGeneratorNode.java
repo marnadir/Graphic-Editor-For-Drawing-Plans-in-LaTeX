@@ -27,9 +27,9 @@ public class LaTexGeneratorNode {
 		StringBuilder sb = new StringBuilder();
 		sb.append("\\action");
 		sb.append("{"+node.getID()+"}");//numerare le azioni
-		sb.append("{"+getNameAction(action.getName())+"=");
+		sb.append("{"+getNameAction(action)+"=");
 		sb.append(getVariable(action.getName())+","+"\n");
-		sb.append("  body="+"{"+isFillColor(action)+"at={"+getPosition(node)+"}}"+"\n"+"}"+"\n");
+		sb.append("  body="+"{"+isPrimitive(action)+isFillColor(action)+"at={"+getPosition(node)+"}}"+"\n"+"}"+"\n");
 		
 
 		return sb.toString();
@@ -54,7 +54,7 @@ public class LaTexGeneratorNode {
 		return sb.toString();
 	}
 	
-	public String isFillColor(Action a) {
+	private String isFillColor(Action a) {
 		StringBuilder sb=new StringBuilder();
 		if(a.isFillColor()) {
 			sb.append("fill="+a.getColorString()+",");
@@ -62,7 +62,17 @@ public class LaTexGeneratorNode {
 		return sb.toString();
 	}
 	
-	public String isStateorAction(Oval o) {
+	private String isPrimitive(Action a) {
+		StringBuilder sb=new StringBuilder();
+		if(a.isPrimitive()) {
+			sb.append("primitive"+",");
+		}else {
+			sb.append("abstract"+",");
+		}
+		return sb.toString();
+	}
+	
+	private String isStateorAction(Oval o) {
 		StringBuilder sb = new StringBuilder();
 		if(o.getNode()!= null) {
 			sb.append(o.getNode().getID());
@@ -143,10 +153,15 @@ public class LaTexGeneratorNode {
 
 	}
 	
-	public String getNameAction(String string) {
+	public String getNameAction(Action action) {
+		String string=action.getName();
 		String name[]=string.split("\\(");	
 		StringBuilder sb=new StringBuilder();
 		sb.append(name[0]);
+		if(!action.isShownCond()) {
+			sb.append("-E");
+		}
+		
 		return sb.toString();
 	}
 	

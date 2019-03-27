@@ -47,6 +47,7 @@ public class ChangeEffCommand  implements ICommand{
 							l.add(a.getEffect().get(i));
 						}
 						setListPCond(a.getEffect());
+						pack();
 					}
 
 					@Override
@@ -72,7 +73,7 @@ public class ChangeEffCommand  implements ICommand{
 
 	public void updateEff(List l) {
 		if(a.getEffect().size()>0 && a.getStandardLengthEff()==0) {
-			a.setStandardLengthEff((int) (CM_MEASUREMNT*Double.parseDouble(GlobalValue.lengthsOfEffs)));
+			a.setStandardLengthEff(CM_MEASUREMNT*Double.parseDouble(GlobalValue.lengthsOfEmptyTasks));
 		}
 		a.setEffect(new ArrayList<>());
 		for(int i=0;i<l.getItemCount();i++) {

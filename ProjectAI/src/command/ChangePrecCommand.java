@@ -48,6 +48,8 @@ public class ChangePrecCommand implements ICommand {
 							l.add(a.getPrec().get(i));
 						}
 						setListPCond(a.getPrec());
+						pack();
+
 					}
 
 					@Override
@@ -73,7 +75,8 @@ public class ChangePrecCommand implements ICommand {
 
 	public void updatePrec(List l) {
 		if(a.getPrec().size()>0 && a.getStandardLengthPrec()==0) {
-			a.setStandardLengthPrec((int) (CM_MEASUREMNT*Double.parseDouble(GlobalValue.lengthsOfEffs)));
+			
+			a.setStandardLengthPrec( CM_MEASUREMNT*Double.parseDouble(GlobalValue.lengthsOfEmptyTasks));
 		}
 		a.setPrec(new ArrayList<>());
 		for(int i=0;i<l.getItemCount();i++) {

@@ -22,6 +22,7 @@ public class Action implements Serializable {
 	ArrayList<String> effect;
 	CanvasAction paintCanvas;
 	String latexCode;
+	boolean fett;//true fett, false normal
 
 	
 	double widthRect;
@@ -44,8 +45,9 @@ public class Action implements Serializable {
 	boolean globalEmptyEff;
 
 	
-	
-	
+	boolean isPrimitive;
+	boolean isAbstract;
+	boolean rectRound;
 
 
 	int numPrec;
@@ -84,6 +86,10 @@ public class Action implements Serializable {
 		form=a.form;
 		isFillColor=a.isFillColor;
 		colorString=a.colorString;
+		isPrimitive=a.isPrimitive;
+		isAbstract=a.isAbstract;
+		fett=a.fett;
+		rectRound=a.rectRound;
 		
 		
 		
@@ -334,27 +340,27 @@ public class Action implements Serializable {
 		this.defaultValueEffLenght = defaultValueEffLenght;
 	}
 
-	public void setWidthRect(int widthRect) {
+	public void setWidthRect(double widthRect) {
 		this.widthRect = widthRect;
 	}
 
-	public void setLengthPrec(int lengthPrec) {
+	public void setLengthPrec(double lengthPrec) {
 		this.lengthPrec = lengthPrec;
 	}
 
-	public void setLengthEff(int lengthEff) {
+	public void setLengthEff(double lengthEff) {
 		this.lengthEff = lengthEff;
 	}
 
-	public void setHeightRect(int heightRect) {
+	public void setHeightRect(double heightRect) {
 		this.heightRect = heightRect;
 	}
 
-	public void setStandardLengthEff(int standardLengthEff) {
+	public void setStandardLengthEff(double standardLengthEff) {
 		this.standardLengthEff = standardLengthEff;
 	}
 
-	public void setStandardLengthPrec(int standardLengthPrec) {
+	public void setStandardLengthPrec(double standardLengthPrec) {
 		this.standardLengthPrec = standardLengthPrec;
 	}
 
@@ -492,6 +498,38 @@ public class Action implements Serializable {
 
 	public void setGlobalEmptyEff(boolean globalEmptyEff) {
 		this.globalEmptyEff = globalEmptyEff;
+	}
+
+	public boolean isPrimitive() {
+		return isPrimitive;
+	}
+
+	public void setPrimitive(boolean isPrimitive) {
+		this.isPrimitive = isPrimitive;
+	}
+
+	public boolean isAbstract() {
+		return isAbstract;
+	}
+
+	public void setAbstract(boolean isAbstract) {
+		this.isAbstract = isAbstract;
+	}
+
+	public boolean isFett() {
+		return fett;
+	}
+
+	public void setIsFett(boolean fett) {
+		this.fett = fett;
+	}
+
+	public boolean isRectRound() {
+		return rectRound;
+	}
+
+	public void setRectRound(boolean rectRound) {
+		this.rectRound = rectRound;
 	}
 	
 	

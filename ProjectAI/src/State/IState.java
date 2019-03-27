@@ -107,7 +107,7 @@ public class IState  implements Serializable{
 
 	
 	
-	public void setLengthCond(int lengthCond) {
+	public void setLengthCond(double lengthCond) {
 		this.lengthCond = lengthCond;
 	}
 

@@ -255,11 +255,11 @@ public class MenuContentState implements MenuDetectListener {
 								btnCond=new Button(composite, SWT.CHECK);
 								btnCond.setText("global");
 								btnCond.setVisible(false);
-								Label info = new Label(composite, SWT.BORDER);
-								info.setText("the minimum lenght is: " + state.getLengthCondInCm()+"cm");
-								GridData gridData = new GridData(GridData.CENTER, GridData.CENTER, false, false);
-								gridData.horizontalSpan = 2;
-								info.setLayoutData(gridData);
+//								Label info = new Label(composite, SWT.BORDER);
+//								info.setText("the minimum lenght is: " + state.getLengthCondInCm()+"cm");
+//								GridData gridData = new GridData(GridData.CENTER, GridData.CENTER, false, false);
+//								gridData.horizontalSpan = 2;
+//								info.setLayoutData(gridData);
 							} else {
 								Label lWidth = new Label(composite, SWT.ALL);
 								lWidth.setText("Lenght in cm: ");
@@ -268,11 +268,11 @@ public class MenuContentState implements MenuDetectListener {
 								btnCond=new Button(composite, SWT.CHECK);
 								btnCond.setText("global");
 								btnCond.setVisible(false);
-								Label info = new Label(composite, SWT.BORDER);
-								info.setText("the default lenght is: " + "1.4cm");
-								GridData gridData = new GridData(GridData.CENTER, GridData.CENTER, false, false);
-								gridData.horizontalSpan = 2;
-								info.setLayoutData(gridData);
+//								Label info = new Label(composite, SWT.BORDER);
+//								info.setText("the default lenght is: " + "1.4cm");
+//								GridData gridData = new GridData(GridData.CENTER, GridData.CENTER, false, false);
+//								gridData.horizontalSpan = 2;
+//								info.setLayoutData(gridData);
 
 							}
 							

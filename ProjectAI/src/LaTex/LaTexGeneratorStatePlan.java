@@ -71,9 +71,9 @@ public class LaTexGeneratorStatePlan {
 		StringBuilder sb = new StringBuilder();
 		sb.append("\\action{start}{");
 		if(initialStateCanvas.getState().isShownCond()) {
-			sb.append("START,");
-		}else {
 			sb.append("STARTL,");
+		}else {
+			sb.append("START,");
 		}
 		
 		
@@ -89,9 +89,9 @@ public class LaTexGeneratorStatePlan {
 		StringBuilder sb = new StringBuilder();
 		sb.append("\\action{goal}{");
 		if(goalStateCanvas.getState().isShownCond()) {
-			sb.append("GOAL,");
-		}else {
 			sb.append("GOALL,");
+		}else {
+			sb.append("GOAL,");
 		}
 		
 		
