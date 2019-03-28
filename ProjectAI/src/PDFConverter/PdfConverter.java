@@ -15,11 +15,14 @@ public class PdfConverter {
 	String filePath;
 	
 	public PdfConverter(String string) {
-		this.filePath=string;
+		this.filePath=string;    
+
 	}
 	
 	public void execute() {
 		PDDocument document = null;
+		File imageFile = null;
+
 		try {
 			document = PDDocument.load(new File(filePath));
 		} catch (InvalidPasswordException e) {
@@ -45,7 +48,13 @@ public class PdfConverter {
     	    	
     	    	filePath=filePath.substring(0, filePath.length()-3);
     	    	filePath=filePath+"png";
+//    	    	 imageFile = new File(filePath);
+//    	    	 if(imageFile.exists()) {
+//    	    		 imageFile.delete();
+//    	    	 }
 				ImageIOUtil.writeImage(bim, filePath, 300);
+		       
+
 				System.out.println("Image converted");
 			} catch (IOException e) {
 				// TODO Auto-generated catch block

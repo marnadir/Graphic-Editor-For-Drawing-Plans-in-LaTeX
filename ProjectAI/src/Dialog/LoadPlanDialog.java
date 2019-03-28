@@ -45,8 +45,17 @@ public class LoadPlanDialog extends FileDialog {
 	}
 	
 	public void createContent() {
-		
+		String [] filterNames = new String [] {"*.txt","All Files (*)"};
+		String [] filterExtensions = new String [] {"*.txt", "*"};
 		String filterPath = System.getProperty("user.home")+"/TDP"+"/dirLatex";
+		String platform = SWT.getPlatform();
+		if (platform.equals("win32")) {
+			filterNames = new String [] {"Image Files", "All Files (*.*)"};
+			filterExtensions = new String [] {"*.gif;*.png;*.bmp;*.jpg;*.jpeg;*.tiff", "*.*"};
+			filterPath = "c:\\";
+		}
+		setFilterNames (filterNames);
+		setFilterExtensions (filterExtensions);
 		setFilterPath(filterPath);
 	    path=open();
 	    ReadObjectToFile();

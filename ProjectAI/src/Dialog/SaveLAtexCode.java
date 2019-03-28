@@ -7,12 +7,6 @@ import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
-import java.nio.file.attribute.BasicFileAttributes;
-import java.nio.file.attribute.FileTime;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.MessageBox;
@@ -20,7 +14,6 @@ import org.eclipse.swt.widgets.Shell;
 
 import View.ConsoleViewDomain;
 import View.ConsoleViewPlan;
-import View.DomainView;
 
 public class SaveLAtexCode extends FileDialog  {
 

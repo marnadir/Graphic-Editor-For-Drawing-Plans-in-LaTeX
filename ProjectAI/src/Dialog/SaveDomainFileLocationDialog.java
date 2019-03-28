@@ -35,7 +35,7 @@ public class SaveDomainFileLocationDialog extends FileDialog{
 		
 		public void createContent() {
 			createDirectorLog();
-			String [] filterNames = new String [] {"All Files (*)"};
+			String [] filterNames = new String [] {"*.txt","All Files (*)"};
 			String [] filterExtensions = new String [] {"*.txt", "*"};
 			String filterPath = System.getProperty("user.home")+"/TDP"+"/dirLog";
 			String platform = SWT.getPlatform();

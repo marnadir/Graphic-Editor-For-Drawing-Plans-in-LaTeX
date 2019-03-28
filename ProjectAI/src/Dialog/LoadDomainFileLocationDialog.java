@@ -34,8 +34,21 @@ public class LoadDomainFileLocationDialog extends FileDialog {
 
 	
 	public void createContent() {
-		String path;
+		
+		String [] filterNames = new String [] {"*.txt","All Files (*)"};
+		String [] filterExtensions = new String [] {"*.txt", "*"};
 		String filterPath = System.getProperty("user.home")+"/TDP"+"/dirLog";
+		String platform = SWT.getPlatform();
+		if (platform.equals("win32")) {
+			filterNames = new String [] {"Image Files", "All Files (*.*)"};
+			filterExtensions = new String [] {"*.gif;*.png;*.bmp;*.jpg;*.jpeg;*.tiff", "*.*"};
+			filterPath = "c:\\";
+		}
+		setFilterNames (filterNames);
+		setFilterExtensions (filterExtensions);
+		setFilterPath(filterPath);
+		
+		String path;
 		setFilterPath(filterPath);
 	    path=open();
 	    ReadObjectToFile(path);

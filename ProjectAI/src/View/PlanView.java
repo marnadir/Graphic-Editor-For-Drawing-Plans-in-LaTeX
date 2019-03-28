@@ -196,16 +196,7 @@ public class PlanView  extends CTabFolder{
 				dialog.setConsoleViewDomain(consoleViewDomain);
 				dialog.createContent();
 				
-				String pdfFile=dialog.getFileName();
-				pdfFile=pdfFile.substring(0, pdfFile.length()-3);
-				pdfFile=pdfFile+"pdf";
-				PdfConverter pdfConverter=new PdfConverter(dialog.getFilterPath()+"/"+pdfFile);
-				pdfConverter.execute();
-				
-				pdfFile=dialog.getFileName();
-				pdfFile=pdfFile.substring(0, pdfFile.length()-3);
-				pdfFile=pdfFile+"png";
-				pdfView.draw(dialog.getFilterPath()+"/"+pdfFile);
+			
 				
 				//consoleViewPlan.saveFile();
 				
@@ -247,7 +238,16 @@ public class PlanView  extends CTabFolder{
 
 				}                       
 			
+				String pdfFile=dialog.getFileName();
+				pdfFile=pdfFile.substring(0, pdfFile.length()-3);
+				pdfFile=pdfFile+"pdf";
+				PdfConverter pdfConverter=new PdfConverter(dialog.getFilterPath()+"/"+pdfFile);
+				pdfConverter.execute();
 				
+				pdfFile=dialog.getFileName();
+				pdfFile=pdfFile.substring(0, pdfFile.length()-3);
+				pdfFile=pdfFile+"png";
+				pdfView.draw(dialog.getFilterPath()+"/"+pdfFile);
 				
 				
 			}
