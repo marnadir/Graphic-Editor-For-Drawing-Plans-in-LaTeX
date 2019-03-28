@@ -309,6 +309,12 @@ public class MenuPrincipalView extends IMenu{
 				//devo creare una nuova pagina dove salvare il nuovo piano
 				dialog.setPlanContent(planView.getPlan());
 				dialog.createContent();
+				if(dialog.getFilePlan()!=null) {
+					planView.getPlan().setSavedPllan(dialog.getFilePlan());
+					planView.getPlan().setDirectory(dialog.getFilePlan().getParentFile());
+					
+				}
+				
 			
 
 			}

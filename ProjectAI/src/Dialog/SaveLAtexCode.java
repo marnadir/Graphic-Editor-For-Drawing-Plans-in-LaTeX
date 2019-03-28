@@ -22,6 +22,7 @@ public class SaveLAtexCode extends FileDialog  {
 	File fileLatex; 
 	ConsoleViewPlan consoleViewPlan;
 	ConsoleViewDomain consoleViewDomain;
+	boolean IsdomainLoad;
 
 
 	
@@ -46,8 +47,11 @@ public class SaveLAtexCode extends FileDialog  {
 		setFilterExtensions (filterExtensions);
 		setFilterPath (filterPath);
 		setFileName ("PlanLatex");
-		System.out.println ("Save to: " +open ());	
-		createFilePlan(getFileName(),getFilterPath());
+		if(open ()!=null) {
+			createFilePlan(getFilterPath(),getFileName());;	
+		}
+		
+		
 
 		
 		
@@ -58,26 +62,37 @@ public class SaveLAtexCode extends FileDialog  {
 	}
 
 	
-	public void createFilePlan(String name,String filepath) {
+	public void createFilePlan(String filepath,String name) {
 		
 
-		fileLatex = new File(filepath, name);
+		fileLatex = new File(filepath,name);
 		
-		if (!fileLatex.exists()) {
-			try {
+
+		try {
 				fileLatex.createNewFile();
 				
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		}
+		
 		
 		if (fileLatex.isFile()) {
 			consoleViewPlan.updateView();
 			WriteTextToFile(fileLatex,consoleViewPlan.getTextPlan().getText());
 			copyTikzLibrary();
-			saveDomainFile(getFilterPath());
+			if(saveDomainFile(fileLatex.getParentFile().getAbsolutePath())){
+				IsdomainLoad=true;
+			}else {
+				IsdomainLoad=false;
+				MessageBox messageBox = new MessageBox(consoleViewDomain.getShell(),
+						SWT.ICON_WARNING |  SWT.OK);
+
+				messageBox.setText("Warning");
+				messageBox.setMessage("Domain not Present, please load the domain");
+				messageBox.open();
+			}
+			
 		}
 		
 
@@ -130,9 +145,8 @@ public class SaveLAtexCode extends FileDialog  {
 	
 	public void copyTikzLibrary()  {
 		File file=new File("TikzLibrary/tikzlibraryaiplans.code.tex");
-		System.out.println(file.exists());
 		
-		File file2=new File(getFilterPath(), "tikzlibraryaiplans.code.tex");
+		File file2=new File(fileLatex.getParentFile(), "tikzlibraryaiplans.code.tex");
 		try {
 			if(file.exists()) {
 				file2.createNewFile();
@@ -148,7 +162,7 @@ public class SaveLAtexCode extends FileDialog  {
 		
 	}
 	
-	public void saveDomainFile(String dir) {
+	public boolean saveDomainFile(String dir) {
 	
 			if (dir!=null) {
 				File file = new File(dir, "tikzlibrarydomain.code.tex");
@@ -160,9 +174,17 @@ public class SaveLAtexCode extends FileDialog  {
 				}
 				if (file.isFile()) {
 					consoleViewDomain.updateView();
-					WriteTextToFile(file,consoleViewDomain.getTextDomain().getText());
+					System.out.println(consoleViewDomain.getTextDomain().getText().length());
+					//\newcommand{\LengthsOfEmptyTasks}   {.35cm} has length 44
+					if(consoleViewDomain.getTextDomain().getText().length()>45) {
+						WriteTextToFile(file,consoleViewDomain.getTextDomain().getText());
+						return true;
+					}else {
+						return false;
+					}
 				}
 			}
+			return false;
 		
 
 		
@@ -228,6 +250,19 @@ public class SaveLAtexCode extends FileDialog  {
 
 	public void setConsoleViewDomain(ConsoleViewDomain consoleViewDomain) {
 		this.consoleViewDomain = consoleViewDomain;
+	}
+
+	
+	
+	
+	public File getFileLatex() {
+		return fileLatex;
+	}
+	
+	
+
+	public boolean isIsdomainLoad() {
+		return IsdomainLoad;
 	}
 
 	@Override

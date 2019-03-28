@@ -1,6 +1,7 @@
 package PlanPart;
 
 
+import java.io.File;
 import java.util.ArrayList;
 
 import org.eclipse.swt.SWT;
@@ -35,6 +36,9 @@ public class PlanContent extends Canvas {
 	private GoalStateCanvas goalStateCanvas;
 	private String text;
 	private ArrayList<Object> linkStored;
+	private File savedPllan;
+	private File LatexFile;
+	private File directory;
 	
 	public PlanContent(Composite parent, int style) {
 		super(parent, style);
@@ -157,6 +161,36 @@ public class PlanContent extends Canvas {
 
 	public void setLinkStored(ArrayList<Object> linkStored) {
 		this.linkStored = linkStored;
+	}
+
+
+	public File getSavedPllan() {
+		return savedPllan;
+	}
+
+
+	public void setSavedPllan(File savedPllan) {
+		this.savedPllan = savedPllan;
+	}
+
+
+	public File getLatexFile() {
+		return LatexFile;
+	}
+
+
+	public void setLatexFile(File latexFile) {
+		LatexFile = latexFile;
+	}
+
+
+	public File getDirectory() {
+		return directory;
+	}
+
+
+	public void setDirectory(File directory) {
+		this.directory = directory;
 	}
 
 

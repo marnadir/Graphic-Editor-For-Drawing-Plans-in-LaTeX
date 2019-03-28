@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.FileDialog;
-import org.eclipse.swt.widgets.Link;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 
@@ -24,7 +23,7 @@ import State.InitialStateCanvas;
 
 public class SavePlanDialog extends FileDialog{
 
-	File file;
+	File planFile;
 	ArrayList<Object> data;
 	PlanContent planContent;
 	private OvalCounter ovalCounter;
@@ -54,22 +53,26 @@ public class SavePlanDialog extends FileDialog{
 		setFilterPath (filterPath);
 		setFileName ("PlanStore");
 		System.out.println ("Save to: " +open ());	
-		createFile(getFileName(),getFilterPath());
-		data = new ArrayList<Object>();
-		prepareObject();
-		WriteObjectToFile(data);
+		createFile(getFilterPath(),getFileName());
+		
 		
 	}
 	
-	private void createFile(String name,String path) {
-		file = new File(path, name);
+	public void createFile(String path,String name) {
+		planFile = new File(path,name);
+
 		try {
-			file.createNewFile();
+			planFile.createNewFile();
+			planContent.setDirectory(planFile.getParentFile());
+			data = new ArrayList<Object>();
+			prepareObject();
+			WriteObjectToFile(data);
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		if (file.exists() && !file.isDirectory()) {
+		if (planFile.exists() && !planFile.isDirectory()) {
 
 		}
 
@@ -79,7 +82,7 @@ public class SavePlanDialog extends FileDialog{
 	private void WriteObjectToFile(Object serObj) {
 
 		try {
-			FileOutputStream fileOut = new FileOutputStream(file.getAbsolutePath());
+			FileOutputStream fileOut = new FileOutputStream(planFile.getAbsolutePath());
 			ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
 			objectOut.writeObject(serObj);
 			objectOut.close();
@@ -215,5 +218,15 @@ public class SavePlanDialog extends FileDialog{
 		}
 		return fileName;
 	}
+
+	public File getPlanFile() {
+		return planFile;
+	}
+
+	public void setPlanFile(File domainFile) {
+		this.planFile = domainFile;
+	}
+	
+	
 	
 }

@@ -1,6 +1,7 @@
 package View;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -18,6 +19,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
+import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 
@@ -35,6 +37,8 @@ public class PlanView  extends CTabFolder{
 	PdfView pdfView;
 	ToolItem showCondition;
 	PlanContent contentPlan;
+	SaveLAtexCode dialog = null;
+	SavePlanDialog dialogPlan;
 	
 	public PlanView(Composite parent, int style) {
 		super(parent, style);
@@ -46,7 +50,12 @@ public class PlanView  extends CTabFolder{
 		setSimple(false);
 		setUnselectedImageVisible(false);
 		setUnselectedCloseVisible(false);
+		
+		dialog=new SaveLAtexCode(getShell(), SWT.SAVE);
+
+		
 	}
+	
 	
 	public void createContent(DomainView domainView) {
 		this.domainView=domainView;
@@ -89,7 +98,7 @@ public class PlanView  extends CTabFolder{
 				
 
 
-				ArrayList<Node> updateNodeList = contentPlan.getActionInPlan();
+				ArrayList<Node> updateNodeList = getPlan().getActionInPlan();
 				for(Node node:updateNodeList) {
 //					Iterator<Oval> i = listOval.iterator();
 //					while (i.hasNext()) {
@@ -124,27 +133,27 @@ public class PlanView  extends CTabFolder{
 				
 				
 				if(showCondition.getSelection()) {
-					if(contentPlan.getInitialStateCanvas()!=null) {
-						contentPlan.getInitialStateCanvas().getState().setShownCond(true);
-						contentPlan.getInitialStateCanvas().pack();
+					if(getPlan().getInitialStateCanvas()!=null) {
+						getPlan().getInitialStateCanvas().getState().setShownCond(true);
+						getPlan().getInitialStateCanvas().pack();
 				
 
 						
 					}
-					if(contentPlan.getGoalStateCanvas()!=null) {
-						contentPlan.getGoalStateCanvas().getState().setShownCond(true);
-						contentPlan.getGoalStateCanvas().pack();
+					if(getPlan().getGoalStateCanvas()!=null) {
+						getPlan().getGoalStateCanvas().getState().setShownCond(true);
+						getPlan().getGoalStateCanvas().pack();
 					}
 					
 				}else {
-					if(contentPlan.getInitialStateCanvas()!=null) {
-						contentPlan.getInitialStateCanvas().getState().setShownCond(false);
-						contentPlan.getInitialStateCanvas().pack();
+					if(getPlan().getInitialStateCanvas()!=null) {
+						getPlan().getInitialStateCanvas().getState().setShownCond(false);
+						getPlan().getInitialStateCanvas().pack();
 
 					}
-					if(contentPlan.getGoalStateCanvas()!=null) {
-						contentPlan.getGoalStateCanvas().getState().setShownCond(false);
-						contentPlan.getGoalStateCanvas().pack();
+					if(getPlan().getGoalStateCanvas()!=null) {
+						getPlan().getGoalStateCanvas().getState().setShownCond(false);
+						getPlan().getGoalStateCanvas().pack();
 					}
 				}
 				
@@ -162,9 +171,20 @@ public class PlanView  extends CTabFolder{
 			@Override
 			public void handleEvent(Event event) {
 				
-				SavePlanDialog dialog=new SavePlanDialog(getShell(), SWT.SAVE);
-				dialog.setPlanContent(getPlan());
-				dialog.createContent();
+				if(getPlan().getSavedPllan()==null) {
+					dialogPlan=new SavePlanDialog(getShell(), SWT.SAVE);
+					dialogPlan.setPlanContent(getPlan());
+					dialogPlan.createContent();
+					getPlan().setSavedPllan(dialogPlan.getPlanFile());
+				}else {
+					if(dialog==null) {
+						dialogPlan=new SavePlanDialog(getShell(), SWT.SAVE);
+						dialogPlan.setPlanContent(getPlan());
+					}
+					dialogPlan.createFile( getPlan().getSavedPllan().getAbsolutePath(),"PlanStore.txt");
+				}
+				
+			
 			}
 		});
 		
@@ -176,78 +196,117 @@ public class PlanView  extends CTabFolder{
 		icon = new Image(getDisplay(), "img/pdf.ico");
 		PDFPreview.setImage(icon);
 		
+		
 		PDFPreview.addListener(SWT.Selection, new Listener() {
 			
 			@Override
 			public void handleEvent(Event event) {
 				
-				
-				
 	
 				ConsoleViewPlan consoleViewPlan=consoleView.getConsoleViewPlan();
-				//consoleViewPlan.createDirector();
-				
 				ConsoleViewDomain consoleViewDomain=consoleView.getConsoleViewDomain();
-//				consoleViewDomain.saveFile();
-
 				
-				SaveLAtexCode dialog=new SaveLAtexCode(getShell(), SWT.SAVE);
+				
+//				if(contentPlan.getLatexFile()==null) {
+//					dialog=new SaveLAtexCode(getShell(), SWT.SAVE);
+//					dialog.setConsoleViewPlan(consoleViewPlan);
+//					dialog.setConsoleViewDomain(consoleViewDomain);
+//					dialog.createContent();
+//					contentPlan.setLatexFile(dialog.getFileLatex());
+//					
+//				}else {
+//					dialog.createFilePlan(dialog.getFilterPath());
+//
+//				}
+				
 				dialog.setConsoleViewPlan(consoleViewPlan);
 				dialog.setConsoleViewDomain(consoleViewDomain);
-				dialog.createContent();
 				
+				if(getPlan().getDirectory()==null) {
+					
+					dialog.createContent();
+					System.out.println(dialog.getFileName());
+					if(dialog.getFileLatex()!=null) {
+						getPlan().setLatexFile(dialog.getFileLatex());
+						getPlan().setDirectory(dialog.getFileLatex().getParentFile());
+					}
 			
+				}else {
+					File dir=getPlan().getDirectory();
+					if(getPlan().getLatexFile()==null) {
+						dialog.createFilePlan(dir.getAbsolutePath(),"PlanLatex.tex");
+						System.out.println(dialog.getFileName());
+						getPlan().setLatexFile(dialog.getFileLatex());
+
+						
+					}else {
+						dialog.createFilePlan(dir.getAbsolutePath(),"PlanLatex.tex");
+						System.out.println(dialog.getFileName());
+
+						getPlan().setLatexFile(dialog.getFileLatex());
+
+					}
+				}
+				
+				
 				
 				//consoleViewPlan.saveFile();
 				
 				
 				
 				
-				
-				
-				try {
+				File dir=getPlan().getDirectory();
+				if(dialog.isIsdomainLoad() ) {
+					try {
 
-					String cmd1="cd "+dialog.getFilterPath();
-					//dialog.getFileName();
-					String cmd2="pdflatex "+dialog.getFileName()+" -synctex=1 -interaction=nonstopmode";
-					String cmd3="xdg-open LatexPlan.pdf";
-							
-					Process process = Runtime.getRuntime().exec(new String[] { "bash", "-c",
-							cmd1+" && "+cmd2+" && "+cmd3});
+						String cmd1="cd "+dir.getAbsolutePath();
+						
+						//dialog.getFileName();
+						String cmd2="pdflatex "+dialog.getFileLatex().getName()+" -synctex=1 -interaction=nonstopmode";
+						String cmd3="xdg-open LatexPlan.pdf";
+								
+						Process process = Runtime.getRuntime().exec(new String[] { "bash", "-c",
+								cmd1+" && "+cmd2+" && "+cmd3});
 
 
-					BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-					StringBuilder builder = new StringBuilder();
-					String line = null;
-					while ((line = reader.readLine()) != null) {
-						builder.append(line);
-						builder.append(System.getProperty("line.separator"));
+						BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+						StringBuilder builder = new StringBuilder();
+						String line = null;
+						while ((line = reader.readLine()) != null) {
+							builder.append(line);
+							builder.append(System.getProperty("line.separator"));
+						}
+						String result = builder.toString();
+						System.out.println(result);
+						
+						//process.waitFor();
+
 					}
-					String result = builder.toString();
-					System.out.println(result);
 					
-					//process.waitFor();
+					
+					
+					catch (IOException  e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
 
+					}                       
+				
+					String pdfFile=getPlan().getLatexFile().getName();
+					pdfFile=pdfFile.substring(0, pdfFile.length()-3);
+					pdfFile=pdfFile+"pdf";
+					PdfConverter pdfConverter=new PdfConverter(dir+"/"+pdfFile);
+					pdfConverter.execute();
+					
+					pdfFile=getPlan().getLatexFile().getName();
+					pdfFile=pdfFile.substring(0, pdfFile.length()-3);
+					pdfFile=pdfFile+"png";
+					pdfView.draw(dir+"/"+pdfFile);
+				}else {
+					
 				}
+					
 				
-				
-				
-				catch (IOException  e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-
-				}                       
 			
-				String pdfFile=dialog.getFileName();
-				pdfFile=pdfFile.substring(0, pdfFile.length()-3);
-				pdfFile=pdfFile+"pdf";
-				PdfConverter pdfConverter=new PdfConverter(dialog.getFilterPath()+"/"+pdfFile);
-				pdfConverter.execute();
-				
-				pdfFile=dialog.getFileName();
-				pdfFile=pdfFile.substring(0, pdfFile.length()-3);
-				pdfFile=pdfFile+"png";
-				pdfView.draw(dialog.getFilterPath()+"/"+pdfFile);
 				
 				
 			}

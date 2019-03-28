@@ -32,7 +32,7 @@ import State.InitialStateCanvas;
 
 public class LoadPlanDialog extends FileDialog {
 	
-	File file;
+	File filePlan;
 	ArrayList<Object> data;
 	PlanContent planContent;
 	private OvalCounter ovalCounter;
@@ -66,6 +66,7 @@ public class LoadPlanDialog extends FileDialog {
 
 		if(path !=null) {
 			try {
+				filePlan=new File(path);
 				FileInputStream fileIn = new FileInputStream(path);
 
 				if (!fileIsEmpty(path)) {
@@ -257,6 +258,14 @@ public class LoadPlanDialog extends FileDialog {
 	
 
 	
+	public File getFilePlan() {
+		return filePlan;
+	}
+
+	public void setFilePlan(File filePlan) {
+		this.filePlan = filePlan;
+	}
+
 	@Override
 	protected void checkSubclass() {
 		
