@@ -140,6 +140,8 @@ public class PlanContent extends Canvas {
         this.addListener(SWT.MouseMove, listener);
 	}
 
+	
+	
 	public void addDndListener(TreeActioDomainView treeAction) {
 		DropTarget target = new DropTarget(this, DND.DROP_MOVE | DND.DROP_COPY);
 		target.setTransfer(new Transfer[] { MyTransfer.getInstance() });

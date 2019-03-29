@@ -36,7 +36,7 @@ public class GlobalOptionView extends Composite{
 	public void createContent() {
 			
 		Label l=new Label(this, SWT.ALL);
-		l.setText("enable the details, which you want to used");
+		l.setText("enable global values, which you want to used");
 		GridData gridData = new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false);
 		gridData.horizontalSpan = 2;
 	   l.setLayoutData(gridData);

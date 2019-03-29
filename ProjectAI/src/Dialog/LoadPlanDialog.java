@@ -12,7 +12,9 @@ import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
@@ -71,58 +73,75 @@ public class LoadPlanDialog extends FileDialog {
 
 				if (!fileIsEmpty(path)) {
 
+					
+					
+					
 					ObjectInputStream objectIn = new ObjectInputStream(fileIn);
 					data = (ArrayList<Object>) objectIn.readObject();
 					ArrayList<Object> info;
-					
 					info = (ArrayList<Object>) data.get(0);
-					if (info.size()>0) {
-						loadInitialState();
-					}
-
-					info = (ArrayList<Object>) data.get(1);
-					if (info.size()>0) {
-						loadGoalState();
-					}
-
-					int i=2;
-					info=(ArrayList<Object>) data.get(i);
-					while(info.get(0) instanceof Action ) {
-						loadNode(i);
-						i++;
-						if(i==data.size()) {
-							break;
+					
+					if(planContent.getChildren().length<2) {
+						if (info.size()>0) {
+							loadInitialState();
 						}
-						if(data.get(i).equals("Link")) {
-							break;
+
+						info = (ArrayList<Object>) data.get(1);
+						if (info.size()>0) {
+							loadGoalState();
 						}
+
+						int i=2;
 						info=(ArrayList<Object>) data.get(i);
-					}
-					
-					
-					while(!(data.get(i).equals("Link"))) {
-						loadOrd(i);
+						while(info.get(0) instanceof Action ) {
+							loadNode(i);
+							i++;
+							if(i==data.size()) {
+								break;
+							}
+							if(data.get(i).equals("Link")) {
+								break;
+							}
+							info=(ArrayList<Object>) data.get(i);
+						}
 						
-						i++;
-					}
-					i++;//skip string link
-					
-					ArrayList<Object> arraylink = new ArrayList<>();
-					for(int j=i;j<data.size();j++) {
-						arraylink.add(data.get(j));
-					}
-					
-					planContent.setLinkStored(arraylink);
-					
-					if(arraylink.size()>0) {
-						planContent.getButton().setVisible(true);
+						
+						while(!(data.get(i).equals("Link"))) {
+							loadOrd(i);
+							
+							i++;
+						}
+						i++;//skip string link
+						
+						ArrayList<Object> arraylink = new ArrayList<>();
+						for(int j=i;j<data.size();j++) {
+							arraylink.add(data.get(j));
+						}
+						
+						planContent.setLinkStored(arraylink);
+						
+						if(arraylink.size()>0) {
+							planContent.getButton().setVisible(true);
 
-					}
+						}
 
 
+						
+						objectIn.close();
+						System.out.println("The Object  was succesfully read from a file");
+					}else {
+						MessageBox messageBox = new MessageBox(planContent.getShell(),
+								SWT.ICON_WARNING |  SWT.OK);
+
+						messageBox.setText("Warning");
+						messageBox.setMessage("Plan already present, not possible overwriting."
+								+ "\n"+"Please oper a new plan view and load the plan");
+						messageBox.open();
 					
-					objectIn.close();
-					System.out.println("The Object  was succesfully read from a file");
+						
+					}
+					
+					
 
 				}
 
@@ -148,6 +167,16 @@ public class LoadPlanDialog extends FileDialog {
 		}else {
 			return true;
 		}
+	}
+	
+	private void clearDisplay() {
+//		for(Control child:planContent.getChildren()) {
+//			if(!(child instanceof Button)) {
+//				child.dispose();
+//
+//			}
+//			
+//		}
 	}
 	
 	private void loadInitialState() {

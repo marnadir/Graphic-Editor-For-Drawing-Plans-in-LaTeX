@@ -39,7 +39,7 @@ public abstract class IDialog  extends Shell{
 		cancelButton.addListener(SWT.Selection, getCancListener());
 
 		this.label = new Label (this, SWT.NONE);
-		this.composite=new Composite(this, SWT.ALL);
+		this.composite=new Composite(this, SWT.BORDER);
 		
 		FormLayout form = new FormLayout ();
 		form.marginWidth = form.marginHeight = 8;

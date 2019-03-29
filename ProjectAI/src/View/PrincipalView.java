@@ -27,7 +27,6 @@ public class PrincipalView {
 	private SashForm sashForm;
 	private SashForm sashForm2;
 	private DomainView domainView;
-	private PlanContent contentAction;
 	private ConsoleView consoleView;
 	PlanView planView;
 	PdfView pdfView;
@@ -98,21 +97,20 @@ public class PrincipalView {
 		
 		CTabItem pdfItem = new CTabItem(folder, SWT.NONE);
 		pdfItem.setText("Pdf View");
-		folder.setSelection(pdfItem);
-		
 		pdfView=new PdfView(folder, SWT.ALL);
-//		pdfView.draw(imagePath);
-		
-//		Composite comp=new Composite(folder, SWT.ALL);
-//		Image myImage = new Image( comp.getDisplay(), "PdfImg/PlanLatex.pdf-1.png");
-//		Label myLabel = new Label( comp, SWT.NONE );
-//		myLabel.setLocation(200, 0);
-//		myLabel.setImage( myImage );
-//		myLabel.pack();
-//		comp.pack();
-		
-		
 		pdfItem.setControl(pdfView);
+		
+		CTabItem positionItem=new CTabItem(folder, SWT.NONE);
+		positionItem.setText("Position View");
+		PositionInPlanView positionInPlanView=new PositionInPlanView(folder, SWT.ALL);
+		positionInPlanView.setContentPlan(planView.getPlan());
+		positionInPlanView.setLayout();
+		positionInPlanView.createContent();
+		positionItem.setControl(positionInPlanView);
+		
+		
+		
+		
 		folder.setSelection(itemConsole);
 		planView.setPdfPreView(consoleView);
 		planView.setPdfView(pdfView);
