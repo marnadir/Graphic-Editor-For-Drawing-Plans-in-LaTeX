@@ -14,17 +14,27 @@ import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Table;
 
 import Action.Action;
 import Action.Node;
+import PlanPart.PlanContent;
+import State.IState;
+import State.IStateCanvas;
 
 public class PostionActionDialog extends IDialog{
 	
 	ArrayList<Node> nodes;
 	ArrayList<Button> buttonList;
-	ArrayList<Action> actionList;
-	ArrayList<Action> selectedAction;
+	ArrayList<Node> nodeList;
+	ArrayList<Node> selectedNode;
+	ArrayList<IStateCanvas> stateCanvas;
+//	Composite compBtn;
 	Composite compList;
+//	Composite compRef;
+	PlanContent contentPlan;
+
+
 	Combo combo;
 	Button btnX;
 	Button btnY;
@@ -35,8 +45,9 @@ public class PostionActionDialog extends IDialog{
 	public PostionActionDialog(Shell shell, int style) {
 		super(shell, style);
 		buttonList=new ArrayList<>();
-		actionList=new ArrayList<>();
-		selectedAction=new ArrayList<>();
+		nodeList=new ArrayList<>();
+		selectedNode=new ArrayList<>();
+		stateCanvas=new ArrayList<>();
 		// TODO Auto-generated constructor stub
 	}
 
@@ -57,11 +68,15 @@ public class PostionActionDialog extends IDialog{
 			btn.addListener(SWT.Selection, getbtnSelectionListener(btn));
 			//btn.setLayoutData(gridData);
 			buttonList.add(btn);
-			actionList.add(node.getAction());
+			nodeList.add(node);
 			btn.pack();
 			
 			
 		}
+		
+
+		
+		
 		composite.pack();
 		
 		combo=new Combo(composite, SWT.READ_ONLY);
@@ -122,8 +137,6 @@ public class PostionActionDialog extends IDialog{
 				if(btn.getSelection()) {
 					combo.add(btn.getText());
 					combo.setSize(composite.getSize().x,combo.getSize().y);
-//					composite.pack();
-//					pack();
 					
 				}else {
 					combo.remove(btn.getText());
@@ -145,10 +158,12 @@ public class PostionActionDialog extends IDialog{
 				
 				for(int i=0;i<buttonList.size();i++) {
 					if(buttonList.get(i).getSelection()) {
-						selectedAction.add(actionList.get(i));
+						selectedNode.add(nodeList.get(i));
 					}
 				}
-				changeCompList();
+				updateTable();
+				Node n1=getNodeCombo();
+				updateCordinate(n1);
 				dispose();
 			}
 		};
@@ -160,31 +175,72 @@ public class PostionActionDialog extends IDialog{
 		this.nodes = nodes;
 	}
 
-	
-	
 	public void setCompList(Composite compList) {
 		this.compList = compList;
 	}
 
-	private void changeCompList() {
-		Button btnDelete=new Button(compList, SWT.ALL);
-		Image img=new Image(getDisplay(), "img/deleteCond.png");
-		btnDelete.setImage(img);
+	/*
+	 * get the reference node
+	 */
+	private Node getNodeCombo() {
+		for(Node node:selectedNode) {
+			String compator=node.getAction().getName()+" ["+node.getID()+"]";
+			if(compator.equals(combo.getText())) {
+				return node;
+			}
+		}
+		
+
+		return null;
+	}
+	private void updateCordinate(Node n1) {
+		if(btnX.getSelection()) {
+			for(Node node:selectedNode) {
+				node.getParent().setLocation(n1.getParent().getLocation().x, node.getParent().getLocation().y);
+				
+			}
+		}else {
+			for(Node node:selectedNode) {
+				node.getParent().setLocation(node.getParent().getLocation().x, n1.getParent().getLocation().y);
+				
+			}
+		}
+		//contentPlan.getActionInPlan().get(0).getParent().setLocation(0,0);
+		
+	}
+
+	private void updateTable() {
+		
+//		Button btnDelete=new Button(compList, SWT.BORDER);
+//		Image img=new Image(getDisplay(), "img/deleteCond.png");
+//		btnDelete.setImage(img);
+		
+		
 		Label lb=new Label(compList, SWT.BORDER);
-		lb.setText(printArrayList(selectedAction));
+		lb.setText("List: "+printArrayList(selectedNode));
+		
 		Label comparator=new Label(compList, SWT.BORDER);
-		comparator.setText(combo.getText());
+		
+		String x;
+		if(btnX.getSelection()) {
+			x="X";
+		}else {
+			
+			x="Y";
+		}
+		comparator.setText("Reference: "+x+" cord. of "+combo.getText());
 		compList.pack();
 		compList.getParent().pack();
+		
 	}
 	
 	
-	private String printArrayList(ArrayList<Action> actions) {
+	private String printArrayList(ArrayList<Node> node) {
 		StringBuilder sb = new StringBuilder();
 
-		for (int i = 0; i < actions.size(); i++) {
-			sb.append(actions.get(i).getName());
-			if (i < actions.size() - 1) {
+		for (int i = 0; i < node.size(); i++) {
+			sb.append(node.get(i).getAction().getName());
+			if (i < node.size() - 1) {
 				sb.append(",");
 			}
 
@@ -192,4 +248,11 @@ public class PostionActionDialog extends IDialog{
 
 		return sb.toString();
 	}
+
+	public void setContentPlan(PlanContent contentPlan) {
+		this.contentPlan = contentPlan;
+	}
+	
+	
+	
 }

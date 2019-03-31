@@ -16,6 +16,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.ToolBar;
@@ -59,6 +60,19 @@ public class PlanView  extends CTabFolder{
 		this.domainView=domainView;
 		CTabItem item = new CTabItem(this, SWT.CLOSE);
 		contentPlan = new PlanContent(this, SWT.ALL);
+	
+		//TODO Quanto mi consuma sta pezzo di codice
+		
+		Display.getDefault().timerExec(100, new Runnable() {
+		    @Override
+		    public void run() {
+		    	contentPlan.redraw();
+
+		      // Run again - TODO add logic to stop after correct number of moves
+		      Display.getDefault().timerExec(500, this);
+		    }
+		   });
+		
 		contentPlan.addDndListener(domainView.getTreeAction());
 		Button b1=new Button(contentPlan, SWT.PUSH);
 		b1.setText("link");
@@ -175,11 +189,12 @@ public class PlanView  extends CTabFolder{
 					dialogPlan.createContent();
 					getPlan().setSavedPllan(dialogPlan.getPlanFile());
 				}else {
-					if(dialog==null) {
+					if(dialogPlan==null) {
 						dialogPlan=new SavePlanDialog(getShell(), SWT.SAVE);
 						dialogPlan.setPlanContent(getPlan());
 					}
-					dialogPlan.createFile( getPlan().getSavedPllan().getAbsolutePath(),"PlanStore.txt");
+					dialogPlan.createFile( getPlan().getSavedPllan().getParentFile()
+							.getAbsolutePath(),"PlanStore.txt");
 				}
 				
 			

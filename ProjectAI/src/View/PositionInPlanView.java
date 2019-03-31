@@ -1,8 +1,8 @@
 package View;
 
-import java.util.ArrayList;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -12,16 +12,22 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 
-import Action.Node;
 import Dialog.PostionActionDialog;
+import PlanPart.Oval;
 import PlanPart.PlanContent;
 
 public class PositionInPlanView extends Composite{
 
 	
 	Composite compositeSetting;
-	Button addBtn;
+//	Composite compBtn;
+//	Composite compList;
+//	Composite compRef;
+	
+	
+	Button addBtnAction;
 	PlanContent contentPlan;
+	Button addBtnState;
 
 	
 	public PositionInPlanView(Composite parent, int style) {
@@ -40,24 +46,50 @@ public class PositionInPlanView extends Composite{
 		gridData.horizontalSpan = 2;
 		l.setLayoutData(gridData);
 
-		addBtn = new Button(this, SWT.ALL);
-		addBtn.setText("add new setting");
-		gridData = new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false);
-		gridData.horizontalSpan = 2;
-		addBtn.setLayoutData(gridData);
-		addBtn.addListener(SWT.Selection, getAddListener());
+		addBtnAction = new Button(this, SWT.ALL);
+		addBtnAction.setText("add new setting");
+//		gridData = new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false);
+//		gridData.horizontalSpan = 2;
+//		addBtnAction.setLayoutData(gridData);
+		addBtnAction.addListener(SWT.Selection, getAddListener());
+		
+		addBtnState=new Button(this, SWT.ALL);
+		addBtnState.setText("synchronization State");
+		addBtnState.addListener(SWT.Selection, getAddStateListener());
+		
+		
 
 		Group listSetting=new Group(this, SWT.ALL);
-		listSetting.setText("List of Setting");
+		listSetting.setText("List of recent Setting");
 		gridData = new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false);
 		gridData.horizontalSpan = 2;
-		listSetting.setLayoutData(gridData);
+	    listSetting.setLayoutData(gridData);
 		
 		compositeSetting = new Composite(listSetting, SWT.ALL);
-		compositeSetting.setLayout(new GridLayout(3, false));
+	    compositeSetting.setLayout(new GridLayout(2, false));
+//		compositeSetting.setLayout(new FillLayout());
 		
+//		compBtn=new Composite(compositeSetting, SWT.BORDER);
+//	    compBtn.setLayout(new FillLayout(SWT.VERTICAL));
+//	    Label l1=new Label(listSetting, SWT.ALL);
+//	    l1.setText("Remove?");
+//	    l1.pack();
+	    
+	    
+//	    compList=new Composite(compositeSetting, SWT.BORDER);
+//	    compList.setLayout(new FillLayout(SWT.VERTICAL));
+//		Label l2=new Label(listSetting, SWT.ALL);
+//		l2.setText("list of Action/state");
+//		l2.pack();
 		
-
+//		compRef=new Composite(compositeSetting, SWT.BORDER);
+//		compRef.setLayout(new FillLayout(SWT.VERTICAL));
+//		Label l3=new Label(listSetting, SWT.ALL);
+//		l3.setText("reference");
+//		l3.pack();
+		
+		//compositeSetting.pack();
+		compositeSetting.pack();
 		pack();
 	}
 	
@@ -74,6 +106,7 @@ public class PositionInPlanView extends Composite{
 						, SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL | SWT.CENTER);
 				dialog.setNodes(contentPlan.getActionInPlan());
 				dialog.setCompList(compositeSetting);
+				dialog.setContentPlan(contentPlan);
 				dialog.createContent();
 				dialog.pack();
 			
@@ -84,12 +117,30 @@ public class PositionInPlanView extends Composite{
 		return l;
 	}
 
-	public void setContentPlan(PlanContent contentPlan) {
-		this.contentPlan = contentPlan;
-		
-	
-		
+	private Listener getAddStateListener() {
+		Listener l;
+
+		l = new Listener() {
+
+			@Override
+			public void handleEvent(Event event) {
+
+				contentPlan.getGoalStateCanvas().getParent().setLocation(
+						contentPlan.getGoalStateCanvas().getParent().getLocation().x,
+						contentPlan.getInitialStateCanvas().getParent().getLocation().y);
+
+				
+
+			}
+		};
+		return l;
 	}
+
+	public void setContentPlan(PlanContent contentPlan) {
+		this.contentPlan = contentPlan;	
+	}
+
+
 	
 	
 	
