@@ -161,8 +161,14 @@ public class LaTexGeneratorStatePlan {
 	}
 	
 	private String getPosition(IStateCanvas iState) {
-		StringBuilder sb=new StringBuilder();		
-		sb.append("("+convertInCm(iState.getParent().getLocation().x)+",");
+		StringBuilder sb=new StringBuilder();	
+		if(iState instanceof IStateCanvas) {
+			sb.append("("+convertInCm(iState.getParent().getLocation().x-iState.getParent().getBounds().width)+",");
+
+		}else {
+			sb.append("("+convertInCm(iState.getParent().getLocation().x+iState.getParent().getBounds().width)+",");
+
+		}
 		sb.append(convertInCm(iState.getParent().getParent().getSize().y-iState.getParent().getLocation().y)+")");
 		return sb.toString();
 	}
