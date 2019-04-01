@@ -92,7 +92,7 @@ public class LaTexGeneratorStateDomain {
 		sb.append(space+"pres = {");
 		sb.append(getTextPrecEffL(state.getConds())+"},"+"\n");
 		sb.append(space+"effs = {},"+"\n");
-		sb.append(space+"eff length =  "+getLenghtCondL(state)+"\n");
+		sb.append(space+"pre length =  "+getLenghtCondL(state)+"\n");
 		sb.append(space+"height = 5.5cm"+","+"\n");
 		sb.append(space+"width = 1mm"+""+"\n"+"}"+"\n");
 
@@ -113,7 +113,7 @@ public class LaTexGeneratorStateDomain {
 		sb.append(space+"pres = {");
 		sb.append(getTextPrecEff(state.getConds())+"},"+"\n");
 		sb.append(space+"effs = {},"+"\n");
-		sb.append(space+"eff length =  "+getLenghtConds(state)+"\n");
+		sb.append(space+"pre length =  "+getLenghtConds(state)+"\n");
 		sb.append(space+"height = 5.5cm"+","+"\n");
 		sb.append(space+"width = 1mm"+""+"\n"+"}"+"\n");
 
