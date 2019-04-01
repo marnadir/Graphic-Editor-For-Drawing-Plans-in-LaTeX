@@ -62,7 +62,11 @@ public class SavePlanDialog extends FileDialog{
 		planFile = new File(path,name);
 
 		try {
+			if(planFile.exists()) {
+				planFile.delete();	
+			}
 			planFile.createNewFile();
+
 			planContent.setDirectory(planFile.getParentFile());
 			data = new ArrayList<Object>();
 			prepareObject();
@@ -161,12 +165,11 @@ public class SavePlanDialog extends FileDialog{
 	private void saveOrd(OrderConstrain ord) {
 		ArrayList<Object> info=new ArrayList<Object>();
 		if(ord != null) {
-//			info.add(ord.getP1());
-//			info.add(ord.getP2());
+
 			info.add(ord.getCond1().getID());
-			System.out.println(ord.getCond1().getID());
 			info.add(ord.getCond2().getID());
-			System.out.println(ord.getCond2().getID());
+			info.add(ord.getP1());
+			info.add(ord.getP2());
 
 		}
 		

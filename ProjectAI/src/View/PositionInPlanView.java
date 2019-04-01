@@ -2,7 +2,6 @@ package View;
 
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -13,7 +12,6 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 
 import Dialog.PostionActionDialog;
-import PlanPart.Oval;
 import PlanPart.PlanContent;
 
 public class PositionInPlanView extends Composite{

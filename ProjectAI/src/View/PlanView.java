@@ -182,18 +182,20 @@ public class PlanView  extends CTabFolder{
 			
 			@Override
 			public void handleEvent(Event event) {
-				
-				if(getPlan().getSavedPllan()==null) {
+				//save first time the plan
+				if(getPlan().getSavedPlanFile()==null) {
 					dialogPlan=new SavePlanDialog(getShell(), SWT.SAVE);
 					dialogPlan.setPlanContent(getPlan());
 					dialogPlan.createContent();
 					getPlan().setSavedPllan(dialogPlan.getPlanFile());
 				}else {
+					//load the plan and then save it
 					if(dialogPlan==null) {
 						dialogPlan=new SavePlanDialog(getShell(), SWT.SAVE);
-						dialogPlan.setPlanContent(getPlan());
+//						dialogPlan.setPlanContent(getPlan());
 					}
-					dialogPlan.createFile( getPlan().getSavedPllan().getParentFile()
+					dialogPlan.setPlanContent(getPlan());
+					dialogPlan.createFile( getPlan().getSavedPlanFile().getParentFile()
 							.getAbsolutePath(),"PlanStore.txt");
 				}
 				

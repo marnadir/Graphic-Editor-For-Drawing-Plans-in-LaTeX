@@ -166,7 +166,7 @@ public class PlanContent extends Canvas {
 	}
 
 
-	public File getSavedPllan() {
+	public File getSavedPlanFile() {
 		return savedPllan;
 	}
 

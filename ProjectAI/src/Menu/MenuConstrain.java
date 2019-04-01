@@ -10,9 +10,7 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 
-import Action.Node;
 import PlanPart.OrderConstrainCanvas;
-import PlanPart.Oval;
 import PlanPart.PlanContent;
 
 public class MenuConstrain implements MenuDetectListener  {
@@ -38,8 +36,11 @@ public class MenuConstrain implements MenuDetectListener  {
 				if(constrain instanceof OrderConstrainCanvas) {
 					if(constrain.getParent().getParent() instanceof PlanContent) {
 						PlanContent plan=(PlanContent)constrain.getParent().getParent();	
-						plan.getOrds().remove(constrain.getOrderConstrain());
-						constrain.getParent().dispose();
+						
+						if(plan.getOrds().remove(constrain.getOrderConstrain())) {
+							constrain.getParent().dispose();
+						}
+						
 						
 					}
 				}

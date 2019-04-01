@@ -46,7 +46,6 @@ public class PdfView  extends Composite{
 		if(canvas==null) {
 			
 			canvas = new Canvas(this, SWT.ALL);
-			System.out.println(canvas.getSize());
 			
 		    canvas.addListener(SWT.Paint, new Listener()
 		    {
@@ -74,8 +73,10 @@ public class PdfView  extends Composite{
 
 		            Rectangle bounds = image.getBounds();
 		            event.gc.drawImage(image, 0, 0, bounds.width, bounds.height, 0, 0, (int) (bounds.width * scale), (int) (bounds.height * scale));
+		            canvas.setSize(image.getBounds().width,image.getBounds(). height);
 		        }
 		    });
+		    
 		    canvas.addListener(SWT.MouseWheel, new Listener()
 		    {
 		        @Override
@@ -91,17 +92,17 @@ public class PdfView  extends Composite{
 		            canvas.redraw();
 		        }
 		    });
-		    canvas.addListener(SWT.Dispose, new Listener()
-		    {
-		        @Override
-		        public void handleEvent(Event event)
-		        {
-		            if (!image.isDisposed())
-		                image.dispose();
-		            if (!font.isDisposed())
-		                font.dispose();
-		        }
-		    });
+//		    canvas.addListener(SWT.Dispose, new Listener()
+//		    {
+//		        @Override
+//		        public void handleEvent(Event event)
+//		        {
+//		            if (!image.isDisposed())
+//		                image.dispose();
+//		            if (!font.isDisposed())
+//		                font.dispose();
+//		        }
+//		    });
 
 		}
 		canvas.redraw();

@@ -24,27 +24,14 @@ public class OrderConstrainCanvas extends Canvas{
 	public OrderConstrainCanvas(Composite parent, int style,OrderConstrain orderConstrain) {
 		super(parent, style);
 		this.parent=parent;
+		this.orderConstrain=orderConstrain;
 	}
 	//have to be improved, working just with constant, should be dynamically
 	public void draw() {
 		
 		addPaintListener(getListener());
 		addMenuDetectListener(new MenuConstrain(this));
-		 this.addListener(SWT.MouseWheel, new Listener()
-		    {
-		        @Override
-		        public void handleEvent(Event event)
-		        {
-		            if (event.count > 0)
-		                scale += .2f;
-		            else
-		                scale -= .2f;
-
-		            scale = Math.max(scale, 0);
-
-		            redraw();
-		        }
-		    });
+		
 	}
 	
 	

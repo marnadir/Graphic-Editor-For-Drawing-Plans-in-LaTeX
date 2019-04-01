@@ -130,6 +130,12 @@ public class OrderConstrain{
 	}
 	
 	public void setLocationParent() {
+		
+//		System.out.println(nod1.getBounds().x);
+//		System.out.println(nod1.getBounds().width);
+//		
+//		System.out.println(nod1.getParent().getBounds().x);
+//		System.out.println(nod1.getParent().getBounds().width);
 
 		Point p = new Point(nod1.getBounds().x + nod1.getBounds().width, nod1.getBounds().y - 20);
 		c1=nod1.getParent();

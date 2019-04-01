@@ -1,5 +1,6 @@
 package Action;
 
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.Rectangle;
@@ -15,7 +16,7 @@ public class Node extends ICanvasAction {
 
 
 	public Node(Composite parent, int style, Action a) {
-		super(parent, style, a);
+		super(parent, SWT.BORDER, a);
 	}
 
 	@Override

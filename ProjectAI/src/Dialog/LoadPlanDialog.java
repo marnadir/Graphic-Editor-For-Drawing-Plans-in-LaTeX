@@ -4,17 +4,12 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
-import java.util.concurrent.TimeUnit;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.PaintEvent;
-import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
@@ -22,9 +17,7 @@ import org.eclipse.swt.widgets.Shell;
 import Action.Action;
 import Action.Node;
 import PlanPart.OrderConstrainCanvas;
-import PlanPart.LinkCanvas;
 import PlanPart.OrderConstrain;
-import PlanPart.Oval;
 import PlanPart.OvalCounter;
 import PlanPart.PlanContent;
 import State.GoalState;
@@ -229,6 +222,9 @@ public class LoadPlanDialog extends FileDialog {
 		String id1=(String) info.get(0);
 		String id2=(String) info.get(1);
 		
+		Point p1= (Point) info.get(2);
+		Point p2= (Point) info.get(3);
+		
 		Node nod1 = null;
 		Node nod2 = null;
 		
@@ -245,20 +241,31 @@ public class LoadPlanDialog extends FileDialog {
 		}
 
 		Composite parent = new Composite(planContent, SWT.ALL);
-		parent.setSize(50, 50);
-		parent.setLocation(20, 30);
+//		parent.setSize(50, 50);
+//		parent.setLocation(20, 30);
 		
 
 		
 		OrderConstrain orderConstrain=new OrderConstrain(parent);
 		orderConstrain.setNod1(nod1);
 		orderConstrain.setNod2(nod2);
-		orderConstrain.setLocationParent();
+	
+		parent.setSize(90,60);	
+		parent.setLocation(p1.x+((p2.x-p1.x-parent.getBounds().width)/2), p1.y - 30);
+		
+		System.out.println(orderConstrain.getP1());
+
+	
+		System.out.println(orderConstrain.getP2());
+
+		
+		//orderConstrain.setLocationParent();
 		
 		OrderConstrainCanvas c=new OrderConstrainCanvas(parent, SWT.ALL,orderConstrain);
 		c.draw();
 		c.pack();
 		c.setSize(parent.getSize().x,parent.getSize().y);
+		planContent.getOrds().add(orderConstrain);
 
 	}
 	

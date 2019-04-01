@@ -155,7 +155,7 @@ public class LaTexGeneratorStateDomain {
 			}
 			text=text.replace("(", "($");
 			
-			text=text.replace(")","$))");
+			text=text.replace(")","$)");
 			sb.append(text+"}}");
 			//cond.get(i)+"}}"
 			if(i<cond.size()-1) {
