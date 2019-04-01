@@ -78,11 +78,13 @@ public class MyDropActionListener extends DropTargetAdapter {
 						}
 
 						if (action != null) {
-							InitializationVariableDialog dialog=new InitializationVariableDialog(graphContent.getShell(), SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL | SWT.CENTER);
-							dialog.setAction(action);
-							dialog.createContent();
-							dialog.pack();
-							
+							if (!(action.getName().toLowerCase().contains("No-Op".toLowerCase()))) {
+								InitializationVariableDialog dialog = new InitializationVariableDialog(
+										graphContent.getShell(), SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL | SWT.CENTER);
+								dialog.setAction(action);
+								dialog.createContent();
+								dialog.pack();
+							}
 							if(graphContent.getParent() instanceof PlanView) {
 								PlanView planView=(PlanView) graphContent.getParent();
 								if(planView.isShowConditionSelecte()) {

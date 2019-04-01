@@ -22,15 +22,42 @@ public class LaTexGeneratorAction {
 	
 	public String getLatexActionCodeDomain(Action action) {
 		StringBuilder sb = new StringBuilder();
-		sb.append(generatAction(action));
-		sb.append("\n");
-		sb.append(generatActionE(action));
+		if(action.getName().toLowerCase().contains("No-Op".toLowerCase())) {
+			sb.append(genereteNoOpAction(action));
+		}else {
+			sb.append(generatAction(action));
+			sb.append("\n");
+			sb.append(generatActionE(action));
+		}
+		
 		return sb.toString();
 	}
 	
 	/*
 	 * action with preconditions and effects representation 
 	 */
+	
+	private String genereteNoOpAction(Action a) {
+		StringBuilder sb = new StringBuilder();
+		String space="  ";
+		sb.append(a.getName()+"{0}{");
+		sb.append("\n");
+		sb.append(space+"text = " +"{\\textbf{"+(a.getName())+"}()},"+"\n");
+		sb.append(space+"pres = {},");
+		sb.append("\n");
+
+		sb.append(space+"effs = {},");
+		sb.append("\n");
+
+		sb.append(space+"height = "+getHeigthRect(a)+"\n");
+		sb.append(space+"width = "+getWidthRect(a)+"\n"+"}"+"\n");
+
+		
+		return sb.toString();
+	}
+	
+	
+	
 	public String generatAction(Action a) {
 		StringBuilder sb = new StringBuilder();
 		String space="  ";

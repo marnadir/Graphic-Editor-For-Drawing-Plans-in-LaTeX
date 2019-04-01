@@ -27,8 +27,10 @@ public class LaTexGeneratorNode {
 		StringBuilder sb = new StringBuilder();
 		sb.append("\\action");
 		sb.append("{"+node.getID()+"}");//numerare le azioni
-		sb.append("{"+getNameAction(action)+"=");
-		sb.append(getVariable(action.getName())+","+"\n");
+		sb.append("{"+getNameAction(action));
+		if(!(action.getName().toLowerCase().contains("No-Op".toLowerCase())))  {
+			sb.append("="+getVariable(action.getName())+","+"\n");
+		}
 		sb.append("  body="+"{"+isPrimitive(action)+isFillColor(action)+"at={"+getPosition(node)+"}}"+"\n"+"}"+"\n");
 		
 
