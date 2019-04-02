@@ -1,6 +1,12 @@
 % author: Mario Schmautz
+% modifications by: Pascal Bercher
 
-% version: 1.04
+% 
+% Please read the "IMPORTANT NOTES" after the change log that
+% warns you of some pitfalls in using the library
+% 
+
+% version: 1.05 (2018-02-15)
 % 
 % change log:
 % 
@@ -20,20 +26,39 @@
 % 
 % 1.03 -> 1.04
 % - added commands for adding ordering constraints
+% 
+% 1.04 -> 1.05
+% - made the variable names of the stage command consistent: now they are "init" and "goal"
+%   (before they were "start" and "goal"; also okay would have been "start" and "end", but
+%    this synonym has not been added)
+% - added a note explaining how to use the library accordingly
 %  
 % feature request list:
 % - the start an end goal commands (cf. 1st entry, 1.03) should be optional with standard value
 % - currently, one cannot draw actions with a single precondition/effect that has no content (text)
 %   (some time later: really? I thought that's possible by specifying {} within the surrounding
 %   parentheses... check!)
-% - the should be a standard scheme for "almost empty" actions and just 3 parameters:
-%   number of precs, number of effs, and the name.
+% - there should be a standard scheme for "almost empty" actions and just 3 parameters:
+%   number of precs, number of effs, and the name. Maybe also optional arguments for height and width
+%   (in many cases one uses these empty boxes, so providing extra commands for them would be appreciated)
 % - the name of actions cannot be specified in math mode. this needs to be changed!!
 % - actions sollte ein optionaler Parameter mitgegeben werden können, den man als tikz-Style definieren
 %   kann; Beispiel: abstract/compound = rounded corners, double = \MyRed
 
 
-% Usage examples can be found in the file ``example.tex''.
+% IMPORTANT NOTES: (usage)
+% 
+% - There is no documentation, please extract the usage from our examples; see "example.tex"
+% - Note that when specifying math code ($...$) in the preconditions and effects, you need to
+%   put it in an *additional* set of parentheses (in addition to the ones already there). Example:
+%   pres = { {A} , {B} , {C} }, BUT:
+%   pres = { {A{$_1$}} , {B{$_2$}} , {C{$_1$}} }, or simply
+%   pres = { {{A$_1$}} , {{B$_2$}} , {{C$_1$}} }.
+%   Otherwise, you will get strange compilation errors...
+% - The same (see previous note) holds for other commands like \textbf{} -- they need to be
+%   encapsulated in parentheses as well, e.g., when used as an action name.
+% - If you want to use action names that use several lines (e.g., to put the 
+%   parameters in different lines to save space), then use \shortstack{line-1\\...\\line-n}
 
 \usetikzlibrary{shapes.geometric, calc, math, decorations.text,positioning, arrows.meta, fit}
 
@@ -199,7 +224,7 @@
 % #6 name of the start action
 % #7 name of the goal action
 \newcommand{\stage}[7][{{(0,0)}}]{
-  \action{start}{text = {\rotatebox{90}{\textbf{#6}}},
+  \action{init}{text = {\rotatebox{90}{\textbf{#6}}},
     body = {aiplans emph, left = #3 of #1},
     height = #2,
     width  = 1em,

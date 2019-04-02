@@ -9,6 +9,7 @@ import Action.Node;
 import PlanPart.LinkCanvas;
 import PlanPart.OrderConstrain;
 import PlanPart.Oval;
+import PlanPart.PlanContent;
 import State.GoalStateCanvas;
 import State.IStateCanvas;
 import State.InitialStateCanvas;
@@ -17,10 +18,11 @@ public class LaTexGeneratorNode {
 
 	final double PIXEL_MEASUREMNT= 0.026458;
 	final double CM_MEASUREMNT= 37.7957517575025;
+	PlanContent planContent;
 	
 	
-	public LaTexGeneratorNode() {
-		// TODO Auto-generated constructor stub
+	public LaTexGeneratorNode(PlanContent planContent) {
+		this.planContent=planContent;
 	}
 	
 	public String getLatexActionCodePlan(Action action,Node node) {
@@ -32,7 +34,15 @@ public class LaTexGeneratorNode {
 			sb.append("="+getVariable(action.getName()));
 		}
 		sb.append(","+"\n");
-		sb.append("  body="+"{"+isFillColor(action)+"at={"+getPosition(node)+"}}"+"\n"+"}"+"\n");
+		sb.append("  body="+"{"+isFillColor(action));
+		//we need to take care of init/goal
+		if(planContent.getInitialStateCanvas().getState().isText()) {
+			sb.append(" below right="+getPositionToInit(node)+"}"+"\n"+"}"+"\n");
+
+		}else {
+			sb.append("at={"+getPosition(node)+"}}"+"\n"+"}"+"\n");
+
+		}
 		
 
 		return sb.toString();
@@ -210,7 +220,20 @@ public class LaTexGeneratorNode {
 		return sb.toString();
 	}
 	
-	public String getPosition(ICanvasAction node) {
+	private String getPositionToInit(ICanvasAction node) {
+		StringBuilder sb=new StringBuilder();	
+		int y=(node.getParent().getLocation().y)-(planContent.getInitialStateCanvas().getParent().getLocation().y);
+		sb.append("("+convertInCm(y)+"cm and ");
+		int x=node.getParent().getLocation().x-planContent.getInitialStateCanvas().getParent().getLocation().x;
+		sb.append(convertInCm(x)+"cm of init.north east");
+		
+		return sb.toString();
+
+		
+	}
+	
+	
+	private String getPosition(ICanvasAction node) {
 		StringBuilder sb=new StringBuilder();		
 		sb.append("("+convertInCm(node.getParent().getLocation().x)+",");
 		sb.append(convertInCm(node.getParent().getParent().getSize().y-node.getParent().getLocation().y)+")");

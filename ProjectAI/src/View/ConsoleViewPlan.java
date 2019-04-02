@@ -259,7 +259,7 @@ public class ConsoleViewPlan extends Group {
 		
 		ArrayList<Node> updateNodeList = contentAction.getActionInPlan();
 		for (int i = 0; i < updateNodeList.size(); i++) {
-			updateNodeList.get(i).generateLatexCode();
+			updateNodeList.get(i).generateLatexCode(contentAction);
 			textPlan.insert(updateNodeList.get(i).getLatexCode());
 		}
 

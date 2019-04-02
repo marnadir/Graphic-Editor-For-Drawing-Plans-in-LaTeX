@@ -160,7 +160,7 @@ public class OrderConstrain{
 	}
 	
 	public void generateLatexCode() {
-		LaTexGeneratorNode generator=new LaTexGeneratorNode();
+		LaTexGeneratorNode generator=new LaTexGeneratorNode(canvasContainer);
 		latexCode=generator.getLatexOrderCodePlan(this);
 	
 		

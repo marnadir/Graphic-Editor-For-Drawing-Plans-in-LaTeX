@@ -63,13 +63,13 @@ public class PlanView  extends CTabFolder{
 	
 		//TODO Quanto mi consuma sta pezzo di codice
 		
-		Display.getDefault().timerExec(100, new Runnable() {
+		Display.getDefault().timerExec(500, new Runnable() {
 		    @Override
 		    public void run() {
 		    	contentPlan.redraw();
 
 		      // Run again - TODO add logic to stop after correct number of moves
-		      Display.getDefault().timerExec(500, this);
+		      //Display.getDefault().timerExec(500, this);
 		    }
 		   });
 		

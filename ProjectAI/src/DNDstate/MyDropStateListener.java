@@ -94,45 +94,45 @@ public class MyDropStateListener extends DropTargetAdapter {
 						}
 						
 					}
-					if (inState != null && goalState != null) {
-						if (graphContent.getParent() instanceof PlanView) {
-							PlanView planView = (PlanView) graphContent.getParent();
-							if (planView.isShowConditionSelecte()) {
-
-								inState.setShownCond(true);
-								goalState.setShownCond(true);
-							}
-						}
-
-						Composite comp = new Composite(graphContent, SWT.ALL);
-						comp.setLayoutData(new GridData(GridData.FILL, GridData.FILL, false, false));
-						comp.setLayout(new FillLayout());
-						comp.setLocation(comp.toControl(event.x, event.y));
-						
-						
-						InitialStateCanvas stateCanvas = new InitialStateCanvas(comp, SWT.ALL, inState);
-						stateCanvas.draw();
-						graphContent.setInitialStateCanvas((InitialStateCanvas) stateCanvas);
-
-						
-						
-						Composite comp2 = new Composite(graphContent, SWT.ALL);
-						comp2.setLayoutData(new GridData(GridData.FILL, GridData.FILL, false, false));
-						comp2.setLayout(new FillLayout());
-						comp2.setLocation(comp2.toControl(event.x, event.y));
-						int x=graphContent.getClientArea().width;
-						x=x-(comp.getLocation().x*2);
-						comp2.setLocation(comp.getLocation().x+x, comp.getLocation().y);
-						if(!goalState.isText()) {
-							goalState.setIsText(true);
-							goalState.setText("goal");
-						}
-						IStateCanvas stateCanvas2 = new GoalStateCanvas(comp2, SWT.ALL, goalState);
-						stateCanvas2.draw();
-						graphContent.setGoalStateCanvas((GoalStateCanvas)stateCanvas2);
-
-						
-					}else {
+//					if (inState != null && goalState != null) {
+//						if (graphContent.getParent() instanceof PlanView) {
+//							PlanView planView = (PlanView) graphContent.getParent();
+//							if (planView.isShowConditionSelecte()) {
+//
+//								inState.setShownCond(true);
+//								goalState.setShownCond(true);
+//							}
+//						}
+//
+//						Composite comp = new Composite(graphContent, SWT.ALL);
+//						comp.setLayoutData(new GridData(GridData.FILL, GridData.FILL, false, false));
+//						comp.setLayout(new FillLayout());
+//						comp.setLocation(comp.toControl(event.x, event.y));
+//						
+//						
+//						InitialStateCanvas stateCanvas = new InitialStateCanvas(comp, SWT.ALL, inState);
+//						stateCanvas.draw();
+//						graphContent.setInitialStateCanvas((InitialStateCanvas) stateCanvas);
+//
+//						
+//						
+//						Composite comp2 = new Composite(graphContent, SWT.ALL);
+//						comp2.setLayoutData(new GridData(GridData.FILL, GridData.FILL, false, false));
+//						comp2.setLayout(new FillLayout());
+//						comp2.setLocation(comp2.toControl(event.x, event.y));
+//						int x=graphContent.getClientArea().width;
+//						x=x-(comp.getLocation().x*2);
+//						comp2.setLocation(comp.getLocation().x+x, comp.getLocation().y);
+//						if(!goalState.isText()) {
+//							goalState.setIsText(true);
+//							goalState.setText("goal");
+//						}
+//						IStateCanvas stateCanvas2 = new GoalStateCanvas(comp2, SWT.ALL, goalState);
+//						stateCanvas2.draw();
+//						graphContent.setGoalStateCanvas((GoalStateCanvas)stateCanvas2);
+//
+//						
+//					}else {
 						if(inState!=null) {
 							if (graphContent.getParent() instanceof PlanView) {
 								PlanView planView = (PlanView) graphContent.getParent();
@@ -177,7 +177,7 @@ public class MyDropStateListener extends DropTargetAdapter {
 							graphContent.addMoveListener(comp);
 
 						}
-					}
+//					}
 				}
 			}
 

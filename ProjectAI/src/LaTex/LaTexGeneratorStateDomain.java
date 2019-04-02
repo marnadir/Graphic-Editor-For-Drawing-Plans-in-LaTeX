@@ -169,7 +169,7 @@ public class LaTexGeneratorStateDomain {
 	}
 
 	
-	public String getLenghtConds(IState state) {
+	public String getLenghtCondL(IState state) {
 
 		StringBuilder sb = new StringBuilder();
 
@@ -182,7 +182,7 @@ public class LaTexGeneratorStateDomain {
 		return sb.toString();
 	}
 	
-	public String getLenghtCondL(IState state) {
+	public String getLenghtConds(IState state) {
 
 		StringBuilder sb = new StringBuilder();
 

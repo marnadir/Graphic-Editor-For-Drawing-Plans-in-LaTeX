@@ -288,7 +288,7 @@ public class LaTexGeneratorAction {
 		
 		StringBuilder sb=new StringBuilder();
 		if(a.isGlobalHeight()) {
-			sb.append("\\HeightOfActions");
+			sb.append("\\HeightOfActions,");
 		}else {
 			sb.append(a.getHeightRectInCm()+"cm,");
 		}
@@ -300,7 +300,7 @@ public class LaTexGeneratorAction {
 		StringBuilder sb = new StringBuilder();
 
 		if (a.isGlobalPrec()) {
-			sb.append("\\LenghtOfPrecs");
+			sb.append("\\LenghtOfPrecs,");
 		} else {
 			sb.append(a.getLengthPrecInCm() + "cm,");
 		}
@@ -313,7 +313,7 @@ public class LaTexGeneratorAction {
 		StringBuilder sb=new StringBuilder();
 		
 			if(a.isGlobalEmptyPrec()) {
-				sb.append("\\LengthsOfEmptyTasks");
+				sb.append("\\LengthsOfEmptyTasks,");
 			}else {
 				sb.append(a.getStandardLengthPrecInCm()+"cm,");
 			}
@@ -326,7 +326,7 @@ public class LaTexGeneratorAction {
 		StringBuilder sb = new StringBuilder();
 
 		if (a.isGlobalEff()) {
-			sb.append("\\LenghtOfEffs");
+			sb.append("\\LenghtOfEffs,");
 		} else {
 			sb.append(a.getLengthEffInCm() + "cm,");
 		}
@@ -339,7 +339,7 @@ public class LaTexGeneratorAction {
 		StringBuilder sb = new StringBuilder();
 
 		if (a.isGlobalEmptyEff()) {
-			sb.append("\\LengthsOfEmptyTasks");
+			sb.append("\\LengthsOfEmptyTasks,");
 		} else {
 			sb.append(a.getStandardLengthEffInCm() + "cm,");
 		}

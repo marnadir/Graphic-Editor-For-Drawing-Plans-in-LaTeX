@@ -8,11 +8,13 @@ import org.eclipse.swt.widgets.Composite;
 
 import LaTex.LaTexGeneratorNode;
 import Menu.MenuContentAction;
+import PlanPart.PlanContent;
 
 public class Node extends ICanvasAction {
 	
 	public  String ID;
 	String latexCode;
+	
 
 
 	public Node(Composite parent, int style, Action a) {
@@ -129,8 +131,8 @@ public class Node extends ICanvasAction {
 		ID = iD;
 	}
 
-	public void generateLatexCode() {
-		LaTexGeneratorNode generator=new LaTexGeneratorNode();
+	public void generateLatexCode(PlanContent planContent) {
+		LaTexGeneratorNode generator=new LaTexGeneratorNode(planContent);
 		latexCode=generator.getLatexActionCodePlan(action, this);
 		
 	}

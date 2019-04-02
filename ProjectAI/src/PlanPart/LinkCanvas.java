@@ -273,7 +273,7 @@ public class LinkCanvas {
 	}
 
 	public void generateLatexCode() {
-		LaTexGeneratorNode generator = new LaTexGeneratorNode();
+		LaTexGeneratorNode generator = new LaTexGeneratorNode(canvasContainer);
 		latexCode = generator.getLatexLinkCodePlan(this);
 
 	}
