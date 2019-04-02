@@ -34,7 +34,10 @@ public class LaTexGeneratorNode {
 			sb.append("="+getVariable(action.getName()));
 		}
 		sb.append(","+"\n");
-		sb.append("  body="+"{"+isFillColor(action));
+		sb.append("  body="+"{");
+		sb.append(isFillColor(action));
+		sb.append(isRound(action));
+		sb.append(isFett(action));
 		//we need to take care of init/goal
 		if(planContent.getInitialStateCanvas().getState().isText()) {
 			sb.append(" below right="+getPositionToInit(node)+"}"+"\n"+"}"+"\n");
@@ -75,15 +78,36 @@ public class LaTexGeneratorNode {
 		return sb.toString();
 	}
 	
-//	private String isPrimitive(Action a) {
-//		StringBuilder sb=new StringBuilder();
-//		if(a.isPrimitive()) {
-//			sb.append("primitive"+",");
-//		}else {
-//			sb.append("abstract"+",");
-//		}
-//		return sb.toString();
-//	}
+	private String isRound(Action a) {
+		StringBuilder sb=new StringBuilder();
+		if(a.isRectRound()) {
+			sb.append("rounded corners,");
+		}
+		return sb.toString();
+
+		
+	}
+	
+	private String isFett(Action a) {
+		StringBuilder sb=new StringBuilder();
+		if(a.isFett()) {
+			sb.append("fett,");
+		}
+		return sb.toString();
+
+		
+	}
+	
+	
+	private String isPrimitive(Action a) {
+		StringBuilder sb=new StringBuilder();
+		if(a.isPrimitive()) {
+			sb.append("primitive"+",");
+		}else {
+			sb.append("abstract"+",");
+		}
+		return sb.toString();
+	}
 	
 	private String isStateorAction(Oval o) {
 		StringBuilder sb = new StringBuilder();

@@ -1,10 +1,5 @@
 package State;
 
-
-
-
-import java.io.Serializable;
-
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.Transform;
