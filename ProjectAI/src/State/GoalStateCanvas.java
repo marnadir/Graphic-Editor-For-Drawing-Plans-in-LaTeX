@@ -37,7 +37,11 @@ public class GoalStateCanvas extends IStateCanvas {
 				int startX = parent.getClientArea().width;
 				int startY = 0;
 
-				state.setLenIn(numCond*30);
+				if(state.isText) {
+					state.setLenIn(300);
+				}else {
+					state.setLenIn(numCond*30);
+				}
 
 				if(state.isText()) {
 					int val=getTextPosition(avergWidth);
@@ -65,7 +69,8 @@ public class GoalStateCanvas extends IStateCanvas {
 				}
 				
 				
-				int posY = startY + 20;
+				int posY=5+(state.getLenIn()/numCond)/2; 
+				int incr=state.getLenIn()/numCond;
 				for (int i = 0; i < numCond; i++) {
 					String string = state.getConds().get(i);
 
@@ -81,7 +86,7 @@ public class GoalStateCanvas extends IStateCanvas {
 							addOval(state,string,parent.getLocation().x-6, parent.getLocation().y+ posY-2);
 						}
 					}
-					posY = posY + 30;
+					posY = posY + incr;
 
 				}
 			
