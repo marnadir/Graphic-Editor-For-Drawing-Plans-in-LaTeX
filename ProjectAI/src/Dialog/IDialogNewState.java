@@ -60,7 +60,7 @@ public abstract class IDialogNewState extends IDialog{
 		btnAddCond.addListener(SWT.Selection, getAddListener());
 		
 		
-		list = new List (compositeDialog, SWT.BORDER | SWT.MULTI | SWT.V_SCROLL);
+		list = new List (compositeDialog, SWT.BORDER | SWT.MULTI | SWT.V_SCROLL|SWT.H_SCROLL);
 		
 		Button btnDeletePrec=new Button(compositeDialog, SWT.PUSH);
 		icon = new Image(compositeDialog.getDisplay(), "img/deleteCond.png");
@@ -129,7 +129,7 @@ public abstract class IDialogNewState extends IDialog{
 				if(index!= -1) {
 					list.setItem(index, newCond.getText());
 					listPCond.set(index, newCond.getText());
-
+					list.pack();
 				}
 				
 			}

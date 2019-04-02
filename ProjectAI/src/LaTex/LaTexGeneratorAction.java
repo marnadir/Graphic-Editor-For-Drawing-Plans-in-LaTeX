@@ -22,12 +22,15 @@ public class LaTexGeneratorAction {
 	
 	public String getLatexActionCodeDomain(Action action) {
 		StringBuilder sb = new StringBuilder();
-		if(action.getName().toLowerCase().contains("No-Op".toLowerCase())) {
-			sb.append(genereteNoOpAction(action));
-		}else {
+//		if(action.getName().toLowerCase().contains("No-Op".toLowerCase())) {
+		if(actionHasVariable(action)) {
 			sb.append(generatAction(action));
 			sb.append("\n");
 			sb.append(generatActionE(action));
+		}else {
+			sb.append(generateActionWoVariable(action));
+			sb.append("\n");
+			sb.append(generateActionWoVariableE(action));
 		}
 		
 		return sb.toString();
@@ -37,26 +40,74 @@ public class LaTexGeneratorAction {
 	 * action with preconditions and effects representation 
 	 */
 	
-	private String genereteNoOpAction(Action a) {
-		StringBuilder sb = new StringBuilder();
-		String space="  ";
-		sb.append(a.getName()+"{0}{");
-		sb.append("\n");
-		sb.append(space+"text = " +"{\\textbf{"+(a.getName())+"}()},"+"\n");
-		sb.append(space+"pres = {},");
-		sb.append("\n");
-
-		sb.append(space+"effs = {},");
-		sb.append("\n");
-
-		sb.append(space+"height = "+getHeigthRect(a)+"\n");
-		sb.append(space+"width = "+getWidthRect(a)+"\n"+"}"+"\n");
-
+	
+	private boolean actionHasVariable(Action a) {
+		boolean result=false;
+		String name=a.getName();
+		if(name.contains("(")&& name.contains(",")) {
+			result=true;
+		}
 		
-		return sb.toString();
+		return result;
 	}
 	
 	
+	private String generateActionWoVariable(Action a) {
+		StringBuilder sb = new StringBuilder();
+		String space="  ";
+		sb.append("\\scheme");
+		sb.append("{"+a.getName()+"}{0}{");
+		sb.append("\n");
+		sb.append(space+"text = " +"{\\textbf{"+(a.getName())+"}()},"+"\n");
+		sb.append(space+"pres = {");
+		sb.append(getTextPrecEff(a.getPrec(),false)+"},"+"\n");
+		sb.append(space+"effs = {");
+		sb.append(getTextPrecEff(a.getEffect(),false)+"},"+"\n");
+		if(a.getPrec().size()>0 && a.getPrec()!=null) {
+			sb.append(space+"pre length = "+getLenghtPrecs(a)+"\n");
+
+		}
+		if(a.getEffect().size()>0 && a.getEffect()!=null) {
+			sb.append(space+"eff length = "+getLenghtEffs(a)+"\n");
+		}
+		sb.append(space+"height = "+getHeigthRect(a)+"\n");
+		sb.append(space+"width = "+getWidthRect(a)+"\n"+"}"+"\n");
+		
+		return sb.toString();
+
+	}
+	
+	
+	private String generateActionWoVariableE(Action a) {
+		
+		StringBuilder sb = new StringBuilder();
+
+		
+//		if(!(a.getName().toLowerCase().contains("No-Op".toLowerCase()) || a.getName().toLowerCase().contains("NoOp".toLowerCase()))) {
+			String space="  ";
+			sb.append("\\scheme");
+			sb.append("{"+a.getName()+"-E}{0}{");
+			sb.append("\n");
+			sb.append(space+"text = " +"{\\textbf{"+(a.getName())+"}()},"+"\n");
+			sb.append(space+"pres = {");
+			sb.append(getTextPrecEffE(a.getPrec())+"},"+"\n");
+			sb.append(space+"effs = {");
+			sb.append(getTextPrecEffE(a.getEffect())+"},"+"\n");
+			if(a.getPrec().size()>0 && a.getPrec()!=null) {
+				sb.append(space+"pre length = "+getLenghtPrecsE(a)+"\n");
+			}
+			if(a.getEffect().size()>0 && a.getEffect()!=null) {
+				sb.append(space+"eff length = "+getLenghtEffsE(a)+"\n");
+			}
+			sb.append(space+"height = "+getHeigthRect(a)+"\n");
+			sb.append(space+"width = "+getWidthRect(a)+"\n"+"}"+"\n");
+//		}
+		
+
+		
+		return sb.toString();
+
+	}
 	
 	public String generatAction(Action a) {
 		StringBuilder sb = new StringBuilder();
@@ -70,9 +121,9 @@ public class LaTexGeneratorAction {
 		
 		sb.append(space+"text = " +"{\\textbf"+getText(a.getName())+"},"+"\n");
 		sb.append(space+"pres = {");
-		sb.append(getTextPrecEff(a.getPrec())+"},"+"\n");
+		sb.append(getTextPrecEff(a.getPrec(),true)+"},"+"\n");
 		sb.append(space+"effs = {");
-		sb.append(getTextPrecEff(a.getEffect())+"},"+"\n");
+		sb.append(getTextPrecEff(a.getEffect(),true)+"},"+"\n");
 		sb.append(space+"pre length = "+getLenghtPrecs(a)+"\n");
 		sb.append(space+"eff length = "+getLenghtEffs(a)+"\n");
 		sb.append(space+"height = "+getHeigthRect(a)+"\n");
@@ -152,12 +203,16 @@ public class LaTexGeneratorAction {
 	
 	
 	/*take the prec and affect actions and trasform into latex code*/
-	public String getTextPrecEff(ArrayList<String> cond) {
+	public String getTextPrecEff(ArrayList<String> cond,boolean hasVariable) {
 		String space="  ";
 		StringBuilder sb=new StringBuilder();
 		
 		for(int i=0;i<cond.size();i++) {
-			sb.append("\n"+"\t"+getCond(cond.get(i)));
+			if(hasVariable) {
+				sb.append("\n"+"\t"+getCond(cond.get(i)));
+			}else {
+				sb.append("\n"+"\t"+cond.get(i));
+			}
 			if(i<cond.size()-1) {
 				sb.append(",");
 			}
@@ -172,18 +227,20 @@ public class LaTexGeneratorAction {
 	public String getTextPrecEffE(ArrayList<String> cond) {
 		String space="  ";
 		StringBuilder sb=new StringBuilder();
-		sb.append("\n"+"\t");
+		if(cond.size()>0) {
+			sb.append("\n"+"\t");
 
-		for(int i=0;i<cond.size();i++) {
-			sb.append("{}");
-			if(i<cond.size()-1) {
-				sb.append(",");
+			for(int i=0;i<cond.size();i++) {
+				sb.append("{}");
+				if(i<cond.size()-1) {
+					sb.append(",");
+				}
+			}
+			if(cond.size()>0) {
+				sb.append("\n"+space);
 			}
 		}
-		if(cond.size()>0) {
-			sb.append("\n"+space);
-		}
-	
+		
 		return sb.toString();
 	}
 	

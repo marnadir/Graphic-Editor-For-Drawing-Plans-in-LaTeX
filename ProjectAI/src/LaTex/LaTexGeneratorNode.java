@@ -28,10 +28,11 @@ public class LaTexGeneratorNode {
 		sb.append("\\action");
 		sb.append("{"+node.getID()+"}");//numerare le azioni
 		sb.append("{"+getNameAction(action));
-		if(!(action.getName().toLowerCase().contains("No-Op".toLowerCase())))  {
-			sb.append("="+getVariable(action.getName())+","+"\n");
+		if(actionHasVariable(action))  {
+			sb.append("="+getVariable(action.getName()));
 		}
-		sb.append("  body="+"{"+isPrimitive(action)+isFillColor(action)+"at={"+getPosition(node)+"}}"+"\n"+"}"+"\n");
+		sb.append(","+"\n");
+		sb.append("  body="+"{"+isFillColor(action)+"at={"+getPosition(node)+"}}"+"\n"+"}"+"\n");
 		
 
 		return sb.toString();
@@ -64,15 +65,15 @@ public class LaTexGeneratorNode {
 		return sb.toString();
 	}
 	
-	private String isPrimitive(Action a) {
-		StringBuilder sb=new StringBuilder();
-		if(a.isPrimitive()) {
-			sb.append("primitive"+",");
-		}else {
-			sb.append("abstract"+",");
-		}
-		return sb.toString();
-	}
+//	private String isPrimitive(Action a) {
+//		StringBuilder sb=new StringBuilder();
+//		if(a.isPrimitive()) {
+//			sb.append("primitive"+",");
+//		}else {
+//			sb.append("abstract"+",");
+//		}
+//		return sb.toString();
+//	}
 	
 	private String isStateorAction(Oval o) {
 		StringBuilder sb = new StringBuilder();
@@ -224,7 +225,16 @@ public class LaTexGeneratorNode {
 	}
 	
 	
+	private boolean actionHasVariable(Action a) {
+		boolean result=false;
+		String name=a.getName();
+		if(name.contains("(")&& name.contains(",")) {
+			result=true;
+		}
+		
+		return result;
 	
+	}
 	
 	
 	

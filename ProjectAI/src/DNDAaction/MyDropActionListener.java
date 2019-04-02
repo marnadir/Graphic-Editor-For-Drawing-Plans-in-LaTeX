@@ -78,7 +78,7 @@ public class MyDropActionListener extends DropTargetAdapter {
 						}
 
 						if (action != null) {
-							if (!(action.getName().toLowerCase().contains("No-Op".toLowerCase()))) {
+							if (actionHasVariable(action)) {
 								InitializationVariableDialog dialog = new InitializationVariableDialog(
 										graphContent.getShell(), SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL | SWT.CENTER);
 								dialog.setAction(action);
@@ -140,5 +140,15 @@ public class MyDropActionListener extends DropTargetAdapter {
 		sb.append(name[0]);
 		return sb.toString();
 	}
-
+	
+	private boolean actionHasVariable(Action a) {
+		boolean result=false;
+		String name=a.getName();
+		if(name.contains("(")&& name.contains(",")) {
+			result=true;
+		}
+		
+		return result;
+	
+	}
 }
