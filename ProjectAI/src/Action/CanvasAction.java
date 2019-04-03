@@ -13,7 +13,7 @@ import DNDAaction.MyDragActionListener;
 import DataTrasfer.MyTransfer;
 import Menu.MenuContentAction;
 
-public class CanvasAction  extends ICanvasAction{
+public class CanvasAction  extends ICanvasNode{
 
 	int style;
 	PaintListener p;
@@ -92,8 +92,8 @@ public class CanvasAction  extends ICanvasAction{
 					rect = new Rectangle((int)(action.getStandardLengthPrec()), y - 5, (int)action.getWidthRect(),(int) action.getHeightRect());	
 				}
 
-				
-				if (action.isForm()) {
+
+				if (action.Isborder()) {
 					if(action.isFillColor()) {
 						e.gc.setBackground(getColorSWT());
 						if(action.isRectRound()) {
@@ -113,6 +113,8 @@ public class CanvasAction  extends ICanvasAction{
 
 				}
 				
+				e.gc.setLineWidth(0);
+
 				if (action.isShownName()) {
 					int l = rect.x + rect.width / 6;
 					e.gc.drawString(action.getName(), l, rect.y + rect.height / 3);

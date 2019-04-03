@@ -211,7 +211,7 @@ public class LaTexGeneratorAction {
 			if(hasVariable) {
 				sb.append("\n"+"\t"+getCond(cond.get(i)));
 			}else {
-				sb.append("\n"+"\t"+cond.get(i));
+				sb.append("\n"+"\t"+getCondWoVariable(cond.get(i)));
 			}
 			if(i<cond.size()-1) {
 				sb.append(",");
@@ -272,6 +272,21 @@ public class LaTexGeneratorAction {
 		return sb.toString();
 	}
 
+	public String getCondWoVariable(String string) {
+
+	
+		
+		if(string.startsWith("¬")){
+			string=string.replaceAll("¬", "");
+			string= "{$\\neg$}"+string;
+		}
+		StringBuilder sb = new StringBuilder();
+		sb.append(string);
+		
+
+		return sb.toString();
+	}
+	
 	
 	public String getWidthRect(Action a) {
 		
@@ -300,7 +315,7 @@ public class LaTexGeneratorAction {
 		StringBuilder sb = new StringBuilder();
 
 		if (a.isGlobalPrec()) {
-			sb.append("\\LenghtOfPrecs,");
+			sb.append("\\LengthsOfPrecs,");
 		} else {
 			sb.append(a.getLengthPrecInCm() + "cm,");
 		}
@@ -326,7 +341,7 @@ public class LaTexGeneratorAction {
 		StringBuilder sb = new StringBuilder();
 
 		if (a.isGlobalEff()) {
-			sb.append("\\LenghtOfEffs,");
+			sb.append("\\LengthsOfEffs,");
 		} else {
 			sb.append(a.getLengthEffInCm() + "cm,");
 		}

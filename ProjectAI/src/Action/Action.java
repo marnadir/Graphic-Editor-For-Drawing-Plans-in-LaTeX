@@ -54,7 +54,7 @@ public class Action implements Serializable {
 	int numEff;
 	boolean shownCond = false;
 	boolean shownName = true;
-	boolean form=true;
+	boolean Isborder=true;
 	boolean isFillColor=false;
 	String colorString;
 	
@@ -83,7 +83,7 @@ public class Action implements Serializable {
 
 		shownCond=a.shownCond;
 		shownName=a.shownName;
-		form=a.form;
+		Isborder=a.Isborder;
 		isFillColor=a.isFillColor;
 		colorString=a.colorString;
 		isPrimitive=a.isPrimitive;
@@ -418,12 +418,12 @@ public class Action implements Serializable {
 		shownName=!shownName;
 	}
 
-	public boolean isForm() {
-		return form;
+	public boolean Isborder() {
+		return Isborder;
 	}
 
-	public void setForm(boolean form) {
-		this.form = form;
+	public void setIsborder(boolean form) {
+		this.Isborder = form;
 	}
 
 	public boolean isFillColor() {

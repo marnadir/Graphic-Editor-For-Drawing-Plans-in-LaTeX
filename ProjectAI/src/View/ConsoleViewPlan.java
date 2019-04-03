@@ -29,6 +29,7 @@ import Action.Node;
 import LaTex.LaTexGeneratorPlan;
 import LaTex.LaTexGeneratorStatePlan;
 import PlanPart.PlanContent;
+import resourceLoader.ResourceLoader;
 import PlanPart.OrderConstrainCanvas;
 import PlanPart.LinkCanvas;
 import PlanPart.OrderConstrain;
@@ -63,14 +64,14 @@ public class ConsoleViewPlan extends Group {
 
 		ToolItem updateTextPlan = new ToolItem(toolBarPlan, SWT.PUSH);
 		updateTextPlan.setText("update");
-		Image icon = new Image(getDisplay(), "img/refresh.png");
+		Image icon = new Image(getDisplay(),ResourceLoader.load("img/refresh.png") );
 		updateTextPlan.setImage(icon);
 		
 	
 
 		ToolItem saveLatex=new ToolItem(toolBarPlan,SWT.PUSH);
 		saveLatex.setText("save");
-		icon = new Image(getDisplay(), "img/save.ico");
+		icon = new Image(getDisplay(),ResourceLoader.load("img/save.ico") );
 		saveLatex.setImage(icon);
 		
 		textPlan = new Text(this, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL | SWT.READ_ONLY);

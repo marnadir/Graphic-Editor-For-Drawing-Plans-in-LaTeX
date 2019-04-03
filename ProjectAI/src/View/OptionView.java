@@ -1,7 +1,14 @@
 package View;
 
+import java.io.FileInputStream;
+import java.net.URL;
+
+import javax.imageio.ImageIO;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.ImageData;
+import org.eclipse.swt.graphics.ImageLoader;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -15,6 +22,7 @@ import command.CreateActionDialogCommand;
 import command.CreateGoalDialogCommand;
 import command.CreateSoDialogCommand;
 import command.EliminateActionCommand;
+import resourceLoader.ResourceLoader;
 
 public class OptionView extends Group{
 
@@ -57,8 +65,16 @@ public class OptionView extends Group{
 		Label initialState = new Label(this, SWT.ALL);
 		initialState.setText("Initial State: ");
 
+		
 		Button bInitState = new Button(this, SWT.PUSH);
-		Image img = new Image(this.getDisplay(), "img/add.png");
+	
+		
+		
+		
+				
+		Image img ;
+		img = new Image(getDisplay(), ResourceLoader.load("img/add.png"));
+
 		bInitState.setImage(img);
 
 		GridData gridData = new GridData(GridData.CENTER, GridData.CENTER, false, false);

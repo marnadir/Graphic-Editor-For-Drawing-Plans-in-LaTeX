@@ -2,7 +2,10 @@ package Dialog;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.nio.file.Files;
@@ -14,6 +17,7 @@ import org.eclipse.swt.widgets.Shell;
 
 import View.ConsoleViewDomain;
 import View.ConsoleViewPlan;
+import resourceLoader.ResourceLoader;
 
 public class SaveLAtexCode extends FileDialog  {
 
@@ -80,7 +84,12 @@ public class SaveLAtexCode extends FileDialog  {
 		if (fileLatex.isFile()) {
 			consoleViewPlan.updateView();
 			WriteTextToFile(fileLatex,consoleViewPlan.getTextPlan().getText());
-			copyTikzLibrary();
+			try {
+				copyTikzLibrary();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			if(saveDomainFile(fileLatex.getParentFile().getAbsolutePath())){
 				IsdomainLoad=true;
 			}else {
@@ -143,22 +152,29 @@ public class SaveLAtexCode extends FileDialog  {
 
 	}
 	
-	public void copyTikzLibrary()  {
-		File file=new File("TikzLibrary/tikzlibraryaiplans.code.tex");
+	public void copyTikzLibrary() throws IOException  {
+
+		InputStream inputStream=ResourceLoader
+				.load("TikzLibrary/tikzlibraryaiplans.code.tex");
+		
+		 byte[] buffer = new byte[inputStream.available()];
+		 inputStream.read(buffer);
 		
 		File file2=new File(fileLatex.getParentFile(), "tikzlibraryaiplans.code.tex");
-		try {
-			if(file.exists()) {
-				file2.createNewFile();
-
-			}
-			Files.copy(file.toPath(), file2.toPath(),StandardCopyOption.REPLACE_EXISTING);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			System.out.println(e.getMessage());
-		}
+//		try {
+//			if(file.exists()) {
+//				file2.createNewFile();
+//
+//			}
+//			Files.copy(file.toPath(), file2.toPath(),StandardCopyOption.REPLACE_EXISTING);
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			System.out.println(e.getMessage());
+//		}
 		
-		
+		 OutputStream outStream = new FileOutputStream(file2);
+		outStream.write(buffer);
+		outStream.close();
 		
 	}
 	

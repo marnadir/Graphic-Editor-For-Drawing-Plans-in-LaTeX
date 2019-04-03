@@ -4,7 +4,7 @@ import java.text.DecimalFormat;
 
 
 import Action.Action;
-import Action.ICanvasAction;
+import Action.ICanvasNode;
 import Action.Node;
 import PlanPart.LinkCanvas;
 import PlanPart.OrderConstrain;
@@ -35,19 +35,22 @@ public class LaTexGeneratorNode {
 		}
 		sb.append(","+"\n");
 		sb.append("  body="+"{");
+		sb.append(isPrimitive(action));
 		sb.append(isFillColor(action));
+		sb.append(isBorderWhite(action));
 		sb.append(isRound(action));
 		sb.append(isFett(action));
 		//we need to take care of init/goal
-		if(planContent.getInitialStateCanvas().getState().isText()) {
-			sb.append(" below right="+getPositionToInit(node)+"}"+"\n"+"}"+"\n");
-
-		}else {
-			sb.append("at={"+getPosition(node)+"}}"+"\n"+"}"+"\n");
+		if (planContent.getInitialStateCanvas() != null) {
+			if (planContent.getInitialStateCanvas().getState().isText()) {
+				sb.append(" below right=" + getPositionToInit(node) + "}" + "\n" + "}" + "\n");
+			} else {
+				sb.append("at={" + getPosition(node) + "}}" + "\n" + "}" + "\n");
+			}
+		} else {
+			sb.append("at={" + getPosition(node) + "}}" + "\n" + "}" + "\n");
 
 		}
-		
-
 		return sb.toString();
 	}
 	
@@ -81,17 +84,30 @@ public class LaTexGeneratorNode {
 	private String isRound(Action a) {
 		StringBuilder sb=new StringBuilder();
 		if(a.isRectRound()) {
-			sb.append("rounded corners,");
+			if(a.isPrimitive()) {
+				sb.append("rounded corners,");
+			}
 		}
 		return sb.toString();
 
 		
 	}
 	
+	private String isBorderWhite(Action a) {
+		StringBuilder sb=new StringBuilder();
+		if(!(a.Isborder())) {
+			sb.append("draw=white,");
+		}
+		return sb.toString();
+
+	}
+	
 	private String isFett(Action a) {
 		StringBuilder sb=new StringBuilder();
 		if(a.isFett()) {
-			sb.append("fett,");
+			if(a.isAbstract()) {
+				sb.append("thick,");
+			}
 		}
 		return sb.toString();
 
@@ -244,7 +260,7 @@ public class LaTexGeneratorNode {
 		return sb.toString();
 	}
 	
-	private String getPositionToInit(ICanvasAction node) {
+	private String getPositionToInit(ICanvasNode node) {
 		StringBuilder sb=new StringBuilder();	
 		int y=(node.getParent().getLocation().y)-(planContent.getInitialStateCanvas().getParent().getLocation().y);
 		sb.append("("+convertInCm(y)+"cm and ");
@@ -257,7 +273,7 @@ public class LaTexGeneratorNode {
 	}
 	
 	
-	private String getPosition(ICanvasAction node) {
+	private String getPosition(ICanvasNode node) {
 		StringBuilder sb=new StringBuilder();		
 		sb.append("("+convertInCm(node.getParent().getLocation().x)+",");
 		sb.append(convertInCm(node.getParent().getParent().getSize().y-node.getParent().getLocation().y)+")");

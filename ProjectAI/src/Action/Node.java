@@ -10,7 +10,7 @@ import LaTex.LaTexGeneratorNode;
 import Menu.MenuContentAction;
 import PlanPart.PlanContent;
 
-public class Node extends ICanvasAction {
+public class Node extends ICanvasNode {
 	
 	public  String ID;
 	String latexCode;
@@ -18,7 +18,7 @@ public class Node extends ICanvasAction {
 
 
 	public Node(Composite parent, int style, Action a) {
-		super(parent, SWT.BORDER, a);
+		super(parent, style, a);
 	}
 
 	@Override
@@ -69,7 +69,8 @@ public class Node extends ICanvasAction {
 							(int)action.getHeightRect());
 				}
 
-				if (action.isForm()) {
+
+				if (action.Isborder()) {
 					if(action.isFillColor()) {
 						e.gc.setBackground(getColorSWT());
 						if(action.isRectRound()) {
@@ -87,6 +88,9 @@ public class Node extends ICanvasAction {
 					}
 					
 				}
+				
+				e.gc.setLineWidth(0);
+
 				if (action.isShownName()) {
 					int l = rect.x + rect.width / 6;
 					e.gc.drawString(action.getName(), l, rect.y + rect.height / 3);

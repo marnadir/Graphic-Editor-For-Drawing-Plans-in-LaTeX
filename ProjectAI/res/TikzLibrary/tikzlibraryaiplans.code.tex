@@ -1,0 +1,245 @@
+% author: Mario Schmautz
+% modifications by: Pascal Bercher
+
+% 
+% Please read the "IMPORTANT NOTES" after the change log that
+% warns you of some pitfalls in using the library
+% 
+
+% version: 1.05 (2018-02-15)
+% 
+% change log:
+% 
+% 1.00 --> 1.01
+% - added version number and history of changes
+% - moved required libraries from examples in here
+% - added library fit, which enables fitting nodes together (useful for methods)
+% 
+% 1.01 -> 1.02
+% - added "raise = .25 ex," to all text decorations (in actions), such that the
+%   precondition and effect texts are not directly on the lines, but a bit above them
+% 
+% 1.02 -> 1.03
+% - added parameters to stage command: instead of displaying 'start' and 'goal', those
+%   strings can now be specified
+% - added feature request list
+% 
+% 1.03 -> 1.04
+% - added commands for adding ordering constraints
+% 
+% 1.04 -> 1.05
+% - made the variable names of the stage command consistent: now they are "init" and "goal"
+%   (before they were "start" and "goal"; also okay would have been "start" and "end", but
+%    this synonym has not been added)
+% - added a note explaining how to use the library accordingly
+%  
+% feature request list:
+% - the start an end goal commands (cf. 1st entry, 1.03) should be optional with standard value
+% - currently, one cannot draw actions with a single precondition/effect that has no content (text)
+%   (some time later: really? I thought that's possible by specifying {} within the surrounding
+%   parentheses... check!)
+% - there should be a standard scheme for "almost empty" actions and just 3 parameters:
+%   number of precs, number of effs, and the name. Maybe also optional arguments for height and width
+%   (in many cases one uses these empty boxes, so providing extra commands for them would be appreciated)
+% - the name of actions cannot be specified in math mode. this needs to be changed!!
+% - actions sollte ein optionaler Parameter mitgegeben werden können, den man als tikz-Style definieren
+%   kann; Beispiel: abstract/compound = rounded corners, double = \MyRed
+
+
+% IMPORTANT NOTES: (usage)
+% 
+% - There is no documentation, please extract the usage from our examples; see "example.tex"
+% - Note that when specifying math code ($...$) in the preconditions and effects, you need to
+%   put it in an *additional* set of parentheses (in addition to the ones already there). Example:
+%   pres = { {A} , {B} , {C} }, BUT:
+%   pres = { {A{$_1$}} , {B{$_2$}} , {C{$_1$}} }, or simply
+%   pres = { {{A$_1$}} , {{B$_2$}} , {{C$_1$}} }.
+%   Otherwise, you will get strange compilation errors...
+% - The same (see previous note) holds for other commands like \textbf{} -- they need to be
+%   encapsulated in parentheses as well, e.g., when used as an action name.
+% - If you want to use action names that use several lines (e.g., to put the 
+%   parameters in different lines to save space), then use \shortstack{line-1\\...\\line-n}
+
+\usetikzlibrary{shapes.geometric, calc, math, decorations.text,positioning, arrows.meta, fit}
+
+\newcounter{aiplans@numeffs} % number of effects in the current action
+\newcounter{aiplans@numpres} % number of preconditions in the current action
+
+\tikzset{aiplans action body/.style = {draw}}
+\tikzset{aiplans action limb/.style = {draw}}
+\tikzset{aiplans emph/.style = {fill=black!40!cyan, text=white}}
+
+\newcommand{\aiplans@body}[1]{
+  \tikzset{aiplans action body/.style = {#1}}
+}
+
+\newcommand{\aiplans@limb}[1]{
+  \tikzset{aiplans action limb/.style = {#1}}
+}
+
+% Definition of the key-value pairs that can be used with \scheme and \action.
+\pgfkeys{
+  /aiplans/.is family, /aiplans,
+  default/.style = {
+    text = {},
+    effs = {},
+    pres = {},
+    height = 10ex,
+    width = 12em,
+    pre length  = 12em,
+    pre lengths = {},
+    eff length  = 12em,
+    eff lengths = {}},
+  pre/.style = {pres = { {#1}}}, % the space is important for \foreach
+  eff/.style = {effs = { {#1}}},
+  limb length/.style = {pre length = #1, eff length = #1},
+  % text/.estore in = \aiplans@text, % probelematic for \textbf \emph etc.
+  text/.store in = \aiplans@text,
+  pres/.store in = \aiplans@pres,
+  effs/.store in = \aiplans@effs,
+  height/.estore in = \aiplans@height,
+  width/.estore in = \aiplans@width,
+  pre length/.estore in = \aiplans@prelength,
+  pre lengths/.estore in = \aiplans@prelengths,
+  eff length/.estore in = \aiplans@efflength,
+  eff lengths/.estore in = \aiplans@efflengths,
+}
+
+\pgfkeys{
+  /aiplans,
+  body/.code = {\aiplans@body{#1}},
+  limb/.code = {\aiplans@limb{#1}}
+}
+
+% \scheme defines a parameterized scheme that can be instantiated
+% with \action.
+% #1 name
+% #2 number of arguments
+% #3 key-value pairs
+\newcommand{\scheme}[3]{
+  \pgfkeys{/aiplans, #1/.style n args =#2{#3}}
+}
+
+% #1 from (coordinate)
+% #2 to (coordinate)
+% #3 tikz edge/arrow
+\newcommand{\link}[3]{
+  \node (aiplans circle from) at (#1) [circle,fill,inner sep=0.1em] {};
+  \node (aiplans circle to)   at (#2) [circle,fill,inner sep=0.1em] {};
+  \draw (aiplans circle from) #3 (aiplans circle to);
+}
+
+% #1 name
+% #2 key-value pairs
+\def\action#1#2{
+  \def\aiplans@name{#1}
+
+  \pgfkeys{/aiplans, default, #2}
+
+  \setcounter{aiplans@numpres}{0}
+  \foreach \x in \aiplans@pres {
+    \stepcounter{aiplans@numpres}
+  }
+
+  \setcounter{aiplans@numeffs}{0}
+  \foreach \x in \aiplans@effs {
+    \stepcounter{aiplans@numeffs}
+  }
+
+  \node [
+    minimum height = \aiplans@height,
+    minimum width  = \aiplans@width,
+    aiplans action body, draw, rectangle
+  ] (\aiplans@name) {\aiplans@text};
+
+  \foreach \eff [count=\k] in \aiplans@effs {
+    \tikzmath{
+      \s = 1/\value{aiplans@numeffs};
+      \r = \s * (\k-1) + \s/2;
+    }
+
+    \coordinate (\aiplans@name/eff/start/\k) at
+      ($(\aiplans@name.north east)!\r!(\aiplans@name.south east)$);
+
+    \def\aiplans@length{\aiplans@efflength}
+    \foreach \x / \y in \aiplans@efflengths {
+      \if\x\k
+        \xdef\aiplans@length{\y}
+      \fi
+    }
+
+    \coordinate (\aiplans@name/eff/\k) at
+      ($(\aiplans@name/eff/start/\k)+(\aiplans@length,0)$);
+
+    \path[
+      aiplans action limb,
+      postaction = {decorate},
+      decoration = {
+        raise = .25 ex,
+        text along path,
+        text = {{\phantom i}\eff},
+        text align = left
+      }
+    ] (\aiplans@name/eff/start/\k) -- (\aiplans@name/eff/\k);
+  }
+
+  \foreach \pre [count=\k] in \aiplans@pres{
+    \tikzmath{
+      \s = 1/\value{aiplans@numpres};
+      \r = \s * (\k-1) + \s/2;
+    }
+
+    \coordinate (\aiplans@name/pre/start/\k) at
+      ($(\aiplans@name.north west)!\r!(\aiplans@name.south west)$);
+
+    \def\aiplans@length{\aiplans@prelength}
+    \foreach \x / \y in \aiplans@prelengths {
+      \if\x\k
+        \xdef\aiplans@length{\y}
+      \fi
+    }
+
+    \coordinate (\aiplans@name/pre/\k) at
+      ($(\aiplans@name/pre/start/\k)+(-\aiplans@length,0)$);
+
+    \path[
+      aiplans action limb,
+      postaction = {decorate},
+      decoration = {
+        raise = .25 ex,
+        text along path,
+        text = {\pre{\phantom i}},
+        text align = right
+      }
+    ] (\aiplans@name/pre/\k) -- (\aiplans@name/pre/start/\k);
+  }
+}
+
+% \stage draws a start and a goal action.
+% #1 center (optional!)
+% #2 height
+% #3 distance from center
+% #4 start parameters
+% #5 goal parameters
+% #6 name of the start action
+% #7 name of the goal action
+\newcommand{\stage}[7][{{(0,0)}}]{
+  \action{init}{text = {\rotatebox{90}{\textbf{#6}}},
+    body = {aiplans emph, left = #3 of #1},
+    height = #2,
+    width  = 1em,
+    #4,
+  }
+  \action{goal}{text = {\rotatebox{90}{\textbf{#7}}},
+    body = {aiplans emph, right = #3 of #1},
+    height = #2,
+    width  = 1em,
+    #5,
+  }
+}
+
+\newcommand{\ordering}[2]{
+  \draw[bend left,->] (#1) to node[midway,above] {$<$} (#2);
+}
+
+\endinput

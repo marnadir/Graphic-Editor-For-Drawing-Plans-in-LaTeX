@@ -25,7 +25,11 @@ public class LaTexGeneratorPlan {
 		
 		sb.append("\\tikzset{\n" + 
 				"  every picture/.style = {font issue=\\tiny},\n" + 
-				"  font issue/.style = {execute at begin picture={#1\\selectfont}}\n" + 
+				"  font issue/.style = {execute at begin picture={#1\\selectfont}},\n" + 
+				"  TemplatePrimitive/.style = {thick,draw=black},\n"+
+				"  TemplateAbstract/.style = {rounded corners=3pt,draw=black},\n"+
+				" abstract/.style = {TemplateAbstract}, \n"+
+				" primitive/.style = {TemplatePrimitive} \n"+
 				"}"+"\n");
 
 		sb.append("\\begin{document}"+"\n");

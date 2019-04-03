@@ -28,6 +28,7 @@ import Dialog.SavePlanDialog;
 import PDFConverter.PdfConverter;
 import PlanPart.PlanContent;
 import State.LoadLink;
+import resourceLoader.ResourceLoader;
 
 public class PlanView  extends CTabFolder{
 	
@@ -99,7 +100,7 @@ public class PlanView  extends CTabFolder{
 
 		ToolBar t = new ToolBar(this, SWT.ALL);
 		showCondition=new ToolItem(t, SWT.CHECK);
-		Image icon = new Image(getDisplay(), "img/eye.png");
+		Image icon = new Image(getDisplay(), ResourceLoader.load("img/eye.png"));
 		showCondition.setImage(icon);
 		showCondition.addListener(SWT.Selection,new Listener() {
 			
@@ -175,7 +176,7 @@ public class PlanView  extends CTabFolder{
 			}
 		} );
 		ToolItem savePlan=new ToolItem(t,SWT.PUSH);
-		icon = new Image(getDisplay(), "img/save.ico");
+		icon = new Image(getDisplay(), ResourceLoader.load("img/save.ico"));
 		savePlan.setImage(icon);
 		savePlan.setToolTipText("Save Plan");
 		savePlan.addListener(SWT.Selection, new Listener() {
@@ -208,7 +209,7 @@ public class PlanView  extends CTabFolder{
 		
 		
 		ToolItem PDFPreview=new ToolItem(t,SWT.PUSH);
-		icon = new Image(getDisplay(), "img/pdf.ico");
+		icon = new Image(getDisplay(),ResourceLoader.load("img/pdf.ico") );
 		PDFPreview.setImage(icon);
 		
 		
@@ -329,7 +330,7 @@ public class PlanView  extends CTabFolder{
 		
 		ToolItem i = new ToolItem(t, SWT.PUSH);
 		i.setToolTipText("add a new Plan");
-		 icon = new Image(getDisplay(), "img/add-documents.png");
+		 icon = new Image(getDisplay(),ResourceLoader.load("img/add-documents.png") );
 		i.setImage(icon);
 		i.addSelectionListener(new SelectionListener() {
 

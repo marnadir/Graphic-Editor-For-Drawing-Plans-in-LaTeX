@@ -15,6 +15,8 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
+import resourceLoader.ResourceLoader;
+
 public abstract class IDialogNewState extends IDialog{
 
 
@@ -54,7 +56,7 @@ public abstract class IDialogNewState extends IDialog{
 		buttonNeg.setText("neg");
 
 		Button btnAddCond = new Button(compositeDialog, SWT.PUSH);
-		Image icon = new Image(compositeDialog.getDisplay(), "img/add.png");
+		Image icon = new Image(compositeDialog.getDisplay(), ResourceLoader.load("img/add.png"));
 		btnAddCond.setImage(icon);
 
 		btnAddCond.addListener(SWT.Selection, getAddListener());
@@ -63,7 +65,7 @@ public abstract class IDialogNewState extends IDialog{
 		list = new List (compositeDialog, SWT.BORDER | SWT.MULTI | SWT.V_SCROLL|SWT.H_SCROLL);
 		
 		Button btnDeletePrec=new Button(compositeDialog, SWT.PUSH);
-		icon = new Image(compositeDialog.getDisplay(), "img/deleteCond.png");
+		icon = new Image(compositeDialog.getDisplay(), ResourceLoader.load("img/deleteCond.png"));
 		btnDeletePrec.setImage(icon);
 		btnDeletePrec.addListener(SWT.Selection, getDelListener());
 		
@@ -71,13 +73,13 @@ public abstract class IDialogNewState extends IDialog{
 		compOrd.setLayout(new RowLayout(SWT.VERTICAL));
 		
 		Button btnUp=new Button(compOrd, SWT.PUSH);
-		icon = new Image(compositeDialog.getDisplay(), "img/up.png");
+		icon = new Image(compositeDialog.getDisplay(), ResourceLoader.load("img/up.png"));
 		btnUp.setImage(icon);
 		btnUp.setToolTipText("Up");
 		implementBtnUpDown(btnUp);
 		
 		Button btnDown=new Button(compOrd, SWT.PUSH);
-		icon = new Image(compositeDialog.getDisplay(), "img/down.png");
+		icon = new Image(compositeDialog.getDisplay(), ResourceLoader.load("img/down.png"));
 		btnDown.setImage(icon);
 		btnDown.setToolTipText("Down");
 		implementBtnUpDown(btnDown);
@@ -86,7 +88,7 @@ public abstract class IDialogNewState extends IDialog{
 
 		newCond=new Text(compositeDialog,  SWT.SINGLE | SWT.BORDER);
 		btnEdit=new Button(compositeDialog, SWT.PUSH);
-		icon = new Image(compositeDialog.getDisplay(), "img/edit.png");
+		icon = new Image(compositeDialog.getDisplay(),ResourceLoader.load( "img/edit.png"));
 		btnEdit.setImage(icon);
 		
 		btnEdit.setVisible(false);

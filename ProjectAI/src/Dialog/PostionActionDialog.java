@@ -210,12 +210,7 @@ public class PostionActionDialog extends IDialog{
 	}
 
 	private void updateTable() {
-		
-//		Button btnDelete=new Button(compList, SWT.BORDER);
-//		Image img=new Image(getDisplay(), "img/deleteCond.png");
-//		btnDelete.setImage(img);
-		
-		
+
 		Label lb=new Label(compList, SWT.BORDER);
 		lb.setText("List: "+printArrayList(selectedNode));
 		

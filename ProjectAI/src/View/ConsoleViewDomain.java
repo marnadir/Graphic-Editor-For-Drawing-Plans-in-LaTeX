@@ -23,6 +23,7 @@ import org.eclipse.swt.widgets.ToolItem;
 
 import Action.Action;
 import LaTex.LatexGeneratorGlobalSize;
+import resourceLoader.ResourceLoader;
 
 public class ConsoleViewDomain extends Group{
 
@@ -54,7 +55,7 @@ public class ConsoleViewDomain extends Group{
 
 		ToolItem updateTextDomain = new ToolItem(toolBarDomain, SWT.PUSH);
 		updateTextDomain.setText("update");
-		Image icon = new Image(getDisplay(), "img/refresh.png");
+		Image icon = new Image(getDisplay(), ResourceLoader.load("img/refresh.png"));
 		updateTextDomain.setImage(icon);
 		textDomain = new Text(this, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL | SWT.READ_ONLY);
 

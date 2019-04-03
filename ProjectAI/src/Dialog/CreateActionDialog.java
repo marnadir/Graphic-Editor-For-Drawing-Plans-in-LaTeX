@@ -19,6 +19,7 @@ import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
 
 import Action.Action;
+import resourceLoader.ResourceLoader;
 
 public class CreateActionDialog extends IDialog {
 
@@ -124,14 +125,14 @@ public class CreateActionDialog extends IDialog {
 		buttonNegPrec.setText("neg");
 
 		Button addPrec = new Button(groupPrec, SWT.PUSH);
-		Image icon = new Image(composite.getDisplay(), "img/add.png");
+		Image icon = new Image(composite.getDisplay(),ResourceLoader.load("img/add.png"));
 		addPrec.setImage(icon);
 		addPrec.addListener(SWT.Selection, addPrecListener());
 
 		listPrec = new List(groupPrec, SWT.BORDER | SWT.MULTI | SWT.V_SCROLL);
 
 		Button btnDeletePrec = new Button(groupPrec, SWT.PUSH);
-		icon = new Image(groupPrec.getDisplay(), "img/deleteCond.png");
+		icon = new Image(groupPrec.getDisplay(), ResourceLoader.load("img/deleteCond.png"));
 		btnDeletePrec.setImage(icon);
 		btnDeletePrec.addListener(SWT.Selection, getDelPrecListener());
 
@@ -144,14 +145,14 @@ public class CreateActionDialog extends IDialog {
 		buttonNegEff.setText("neg");
 
 		Button addEff = new Button(groupEff, SWT.PUSH);
-		icon = new Image(composite.getDisplay(), "img/add.png");
+		icon = new Image(composite.getDisplay(), ResourceLoader.load("img/add.png"));
 		addEff.setImage(icon);
 		addEff.addListener(SWT.Selection, addEffListener());
 
 		listEff = new List(groupEff, SWT.BORDER | SWT.MULTI | SWT.V_SCROLL);
 
 		Button btnDeleteEff = new Button(groupEff, SWT.PUSH);
-		icon = new Image(composite.getDisplay(), "img/deleteCond.png");
+		icon = new Image(composite.getDisplay(), ResourceLoader.load("img/deleteCond.png"));
 		btnDeleteEff.setImage(icon);
 		btnDeleteEff.addListener(SWT.Selection, getDelEffListener());
 
@@ -250,6 +251,11 @@ public class CreateActionDialog extends IDialog {
 			public void handleEvent(Event event) {
 				if (!actionName.equals("") && !isAlreadyCreated(actionName.getText())) {
 						action = new Action(actionName.getText(), prec, effect);
+						if(btnPrim.getSelection()) {
+							action.setIsFett(true);
+						}else {
+							action.setRectRound(true);
+						}
 						TreeItem item=new TreeItem(treeActions, SWT.BORDER);
 						item.setText(actionName.getText());
 						TreeItem childPrec = new TreeItem(item, SWT.NONE);

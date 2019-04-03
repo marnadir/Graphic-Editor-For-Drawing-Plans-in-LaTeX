@@ -18,7 +18,7 @@ import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Text;
 
 import Action.GlobalValue;
-import Action.ICanvasAction;
+import Action.ICanvasNode;
 import Action.Node;
 import Dialog.IDialog;
 import PlanPart.Oval;
@@ -26,10 +26,10 @@ import PlanPart.PlanContent;
 
 public class MenuContentAction implements MenuDetectListener {
 
-	ICanvasAction canvas;
+	ICanvasNode canvas;
 
 
-	public MenuContentAction(ICanvasAction canvas) {
+	public MenuContentAction(ICanvasNode canvas) {
 		this.canvas = canvas;
 	}
 
@@ -164,7 +164,7 @@ public class MenuContentAction implements MenuDetectListener {
 				
 				@Override
 				public void handleEvent(Event event) {
-					canvas.getAction().setForm(true);
+					canvas.getAction().setIsborder(true);
 					canvas.redraw();
 					
 				}
@@ -174,7 +174,7 @@ public class MenuContentAction implements MenuDetectListener {
 				
 				@Override
 				public void handleEvent(Event event) {
-					canvas.getAction().setForm(false);
+					canvas.getAction().setIsborder(false);
 					canvas.redraw();
 
 				}
