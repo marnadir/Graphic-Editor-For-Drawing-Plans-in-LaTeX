@@ -317,6 +317,17 @@ public class PlanView  extends CTabFolder{
 					pdfFile=pdfFile.substring(0, pdfFile.length()-3);
 					pdfFile=pdfFile+"png";
 					pdfView.draw(dir+"/"+pdfFile);
+					
+					if(pdfView.getParent() instanceof CTabFolder) {
+						CTabFolder folder=(CTabFolder)pdfView.getParent();
+						for(CTabItem c:folder.getItems()) {
+							if(c.getControl() instanceof PdfView) {
+								folder.setSelection(c);
+							}
+						}
+					}
+					
+					
 				}else {
 					
 				}

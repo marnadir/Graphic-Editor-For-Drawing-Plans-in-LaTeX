@@ -7,18 +7,11 @@ import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.custom.CTabItem;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.custom.ScrolledComposite;
-import org.eclipse.swt.events.PaintEvent;
-import org.eclipse.swt.events.PaintListener;
-import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 
 import Menu.MenuPrincipalView;
-import PlanPart.PlanContent;
 
 public class PrincipalView {
 
@@ -100,6 +93,8 @@ public class PrincipalView {
 		pdfView=new PdfView(folder, SWT.ALL);
 		pdfItem.setControl(pdfView);
 		
+		
+		
 		CTabItem positionItem=new CTabItem(folder, SWT.NONE);
 		positionItem.setText("Position View");
 		PositionInPlanView positionInPlanView=new PositionInPlanView(folder, SWT.ALL);
@@ -127,10 +122,10 @@ public class PrincipalView {
 
 		// if the directory does not exist, create it
 		if (!directory.exists()) {
-			System.out.println("creating directory: " + directory.getName());
+			System.out.println("creating directory: " + directory.getAbsolutePath());
 			boolean result = false;
 
-			try {
+			try { 
 				directory.mkdir();
 				result = true;
 			} catch (SecurityException se) {
@@ -142,7 +137,7 @@ public class PrincipalView {
 		}
 
 		if (!dirLog.exists()) {
-			System.out.println("creating directory: " + dirLog.getName());
+			System.out.println("creating directory: " + dirLog.getAbsolutePath());
 			boolean result = false;
 
 			try {

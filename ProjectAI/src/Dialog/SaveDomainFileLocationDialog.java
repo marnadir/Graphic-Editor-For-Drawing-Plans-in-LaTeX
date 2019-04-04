@@ -131,7 +131,7 @@ public class SaveDomainFileLocationDialog extends FileDialog{
 
 			// if the directory does n exist, create it
 			if (!directory.exists()) {
-				System.out.println("creating directory: " + directory.getName());
+				System.out.println("creating directory: " + directory.getAbsolutePath());
 				boolean result = false;
 
 				try {
@@ -146,7 +146,7 @@ public class SaveDomainFileLocationDialog extends FileDialog{
 			}
 
 			if (!dirLog.exists()) {
-				System.out.println("creating directory: " + dirLog.getName());
+				System.out.println("creating directory: " + dirLog.getAbsolutePath());
 				boolean result = false;
 
 				try {
