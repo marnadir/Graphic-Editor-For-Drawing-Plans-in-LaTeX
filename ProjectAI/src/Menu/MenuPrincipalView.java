@@ -276,7 +276,7 @@ public class MenuPrincipalView extends IMenu{
 						compButton.setLayout(new RowLayout(SWT.VERTICAL));
 
 						archBtn = new Button(compButton, SWT.PUSH);
-						archBtn.setText("draw arch");
+						archBtn.setText("draw Link");
 
 						Button ordBtn = new Button(compButton, SWT.PUSH);
 						ordBtn.setText("draw Ord");
