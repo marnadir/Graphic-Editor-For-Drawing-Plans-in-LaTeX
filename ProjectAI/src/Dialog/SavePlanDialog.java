@@ -111,39 +111,44 @@ public class SavePlanDialog extends FileDialog{
 		ords=planContent.getOrds();
 		
 		saveState(initialStateCanvas);
-		
 		saveState(goalStateCanvas);
-		for(Node node:actionInPlan) {
-			saveAction(node);
+		
+		
+		ArrayList<Object> info=new ArrayList<Object>();
+		for (Node node : actionInPlan) {
+			saveAction(info, node);
 		}
+		data.add(info);
+
 		
 		
-		
-		for(OrderConstrain ord:ords) {
-			saveOrd(ord);
+		info = new ArrayList<Object>();
+		for (OrderConstrain ord : ords) {
+			saveOrd(info,ord);
 		}
+		data.add(info);
 		
-		data.add("Link");
-		
+	
+		info = new ArrayList<Object>();		
 		for(LinkCanvas link:link) {
-			saveLink(link);
+			saveLink(info,link);
 		}
-				
+		data.add(info);
+		
 	}
 
 	public void setPlanContent(PlanContent planContent) {
 		this.planContent = planContent;
 	}
 	
-	private void saveAction(Node node) {
+	private void saveAction(ArrayList<Object > info,Node node) {
 		Point point;
-		ArrayList<Object> info;
-        info=new ArrayList<Object>();
+		ArrayList<Object> list=new ArrayList<Object>();
         point=new Point(node.getParent().getLocation().x, 
 				node.getParent().getLocation().y);
-        info.add(node.getAction());
-        info.add(point);
-        data.add(info);
+        list.add(node.getAction());
+        list.add(point);
+        info.add(list);
 		
 	}
 	
@@ -162,31 +167,29 @@ public class SavePlanDialog extends FileDialog{
 		
 	}
 	
-	private void saveOrd(OrderConstrain ord) {
-		ArrayList<Object> info=new ArrayList<Object>();
+	private void saveOrd(ArrayList<Object> info,OrderConstrain ord) {
+		ArrayList<Object> list=new ArrayList<Object>();
 		if(ord != null) {
 
-			info.add(ord.getCond1().getID());
-			info.add(ord.getCond2().getID());
-			info.add(ord.getP1());
-			info.add(ord.getP2());
+			list.add(ord.getCond1().getID());
+			list.add(ord.getCond2().getID());
+			list.add(ord.getP1());
+			list.add(ord.getP2());
 
 		}
 		
-		data.add(info);
+		info.add(list);
 		
 	}
 	
 	
-	private void saveLink(LinkCanvas linkCanvas) {
-		ArrayList<Object> info=new ArrayList<Object>();
+	private void saveLink(ArrayList<Object> info,LinkCanvas linkCanvas) {
+		ArrayList<Object> list=new ArrayList<Object>();
 		if(linkCanvas != null) {
-			info.add(linkCanvas.getOval1().getP());
-			info.add(linkCanvas.getOval2().getP());
+			list.add(linkCanvas.getOval1().getP());
+			list.add(linkCanvas.getOval2().getP());
 		}
-		
-		data.add(info);
-		
+		info.add(list);	
 	}
 	
 	

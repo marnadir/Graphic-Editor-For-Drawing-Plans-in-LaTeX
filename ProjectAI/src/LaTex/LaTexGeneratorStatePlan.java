@@ -1,7 +1,9 @@
 package LaTex;
 
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
 import PlanPart.PlanContent;
 import State.GoalStateCanvas;
@@ -174,8 +176,11 @@ public class LaTexGeneratorStatePlan {
 	}
 	
 	private String convertInCm(int x) {
-		DecimalFormat df = new DecimalFormat("#.00");
-	    String result = df.format(x*PIXEL_MEASUREMNT);
+//		DecimalFormat df = new DecimalFormat("#.00");
+//	    String result = df.format(x*PIXEL_MEASUREMNT);
+		NumberFormat nf_out = NumberFormat.getNumberInstance(Locale.UK);
+		nf_out.setMaximumFractionDigits(2);
+		String result = nf_out.format(x*PIXEL_MEASUREMNT);
 	    return result;
 	    
 	}

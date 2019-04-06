@@ -29,6 +29,7 @@ public class LoadPlanDialog extends FileDialog {
 	
 	File filePlan;
 	ArrayList<Object> data;
+	ArrayList<Object> info;
 	PlanContent planContent;
 	private OvalCounter ovalCounter;
 	String path;
@@ -71,9 +72,9 @@ public class LoadPlanDialog extends FileDialog {
 					
 					ObjectInputStream objectIn = new ObjectInputStream(fileIn);
 					data = (ArrayList<Object>) objectIn.readObject();
-					ArrayList<Object> info;
 					info = (ArrayList<Object>) data.get(0);
 					
+					//plan space is free(button "link" always present)
 					if(planContent.getChildren().length<2) {
 						if (info.size()>0) {
 							loadInitialState();
@@ -83,37 +84,27 @@ public class LoadPlanDialog extends FileDialog {
 						if (info.size()>0) {
 							loadGoalState();
 						}
+						
+						info = (ArrayList<Object>) data.get(2);
+						// this check isn't now neccessary
 
-						int i=2;
-						info=(ArrayList<Object>) data.get(i);
-						while(info.get(0) instanceof Action ) {
+						for (int i = 0; i < info.size(); i++) {
 							loadNode(i);
-							i++;
-							if(i==data.size()) {
-								break;
-							}
-							if(data.get(i).equals("Link")) {
-								break;
-							}
-							info=(ArrayList<Object>) data.get(i);
 						}
 						
-						
-						while(!(data.get(i).equals("Link"))) {
-							loadOrd(i);
-							
-							i++;
-						}
-						i++;//skip string link
-						
-						ArrayList<Object> arraylink = new ArrayList<>();
-						for(int j=i;j<data.size();j++) {
-							arraylink.add(data.get(j));
+						info = (ArrayList<Object>) data.get(3);
+						for (int i = 0; i < info.size(); i++) {
+							loadOrd(i);;
 						}
 						
-						planContent.setLinkStored(arraylink);
+						info = (ArrayList<Object>) data.get(4);
+//						for(int i=0;i<data.size();i++) {
+//							arraylink.add(data.get(i));
+//						}
 						
-						if(arraylink.size()>0) {
+						planContent.setLinkStored(info);
+						
+						if(info.size()>0) {
 							planContent.getButton().setVisible(true);
 
 						}
@@ -201,9 +192,9 @@ public class LoadPlanDialog extends FileDialog {
 	}
 	
 	private void loadNode(int i) {
-		ArrayList<Object> info=(ArrayList<Object>) data.get(i);
-		Action action = (Action) info.get(0);
-		Point position=(Point) info.get(1);
+		ArrayList<Object> list=(ArrayList<Object>) info.get(i);
+		Action action = (Action) list.get(0);
+		Point position=(Point) list.get(1);
 		Composite comp = new Composite(planContent, SWT.DRAW_DELIMITER);
 		comp.setLayoutData(new GridData(GridData.FILL, GridData.FILL, false, false));
 		comp.setLayout(new FillLayout());
@@ -218,12 +209,12 @@ public class LoadPlanDialog extends FileDialog {
 	}
 	
 	private void loadOrd(int i) {
-		ArrayList<Object> info = (ArrayList<Object>) data.get(i);
-		String id1=(String) info.get(0);
-		String id2=(String) info.get(1);
+		ArrayList<Object> list = (ArrayList<Object>) info.get(i);
+		String id1=(String) list.get(0);
+		String id2=(String) list.get(1);
 		
-		Point p1= (Point) info.get(2);
-		Point p2= (Point) info.get(3);
+		Point p1= (Point) list.get(2);
+		Point p2= (Point) list.get(3);
 		
 		Node nod1 = null;
 		Node nod2 = null;

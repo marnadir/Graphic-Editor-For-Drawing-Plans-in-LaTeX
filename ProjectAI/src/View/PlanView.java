@@ -279,10 +279,10 @@ public class PlanView  extends CTabFolder{
 						
 						//dialog.getFileName();
 						String cmd2="pdflatex "+dialog.getFileLatex().getName()+" -synctex=1 -interaction=nonstopmode";
-						String cmd3="xdg-open LatexPlan.pdf";
+						//String cmd3="xdg-open LatexPlan.pdf";
 								
 						Process process = Runtime.getRuntime().exec(new String[] { "bash", "-c",
-								cmd1+" && "+cmd2+" && "+cmd3});
+								cmd1+" && "+cmd2});
 
 
 						BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));

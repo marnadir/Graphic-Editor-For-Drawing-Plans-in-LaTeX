@@ -2,8 +2,9 @@ package Action;
 
 import java.io.Serializable;
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
-
+import java.util.Locale;
 
 import LaTex.LaTexGeneratorAction;
 
@@ -213,9 +214,12 @@ public class Action implements Serializable {
 	}
 
 	public String getWidthRectInCm() {
-		DecimalFormat df = new DecimalFormat("#.00");
-	    String angleFormated = df.format(widthRect*PIXEL_MEASUREMNT);
-		return angleFormated;
+//		DecimalFormat df = new DecimalFormat("#.00");
+//	    String angleFormated = df.format(widthRect*PIXEL_MEASUREMNT);
+		NumberFormat nf_out = NumberFormat.getNumberInstance(Locale.UK);
+		nf_out.setMaximumFractionDigits(2);
+		String result = nf_out.format(widthRect*PIXEL_MEASUREMNT);
+		return result;
 	}
 	
 
@@ -233,9 +237,13 @@ public class Action implements Serializable {
 	}
 
 	public String getLengthPrecInCm() {
-		DecimalFormat df = new DecimalFormat("#.00");
-	    String angleFormated = df.format(lengthPrec*PIXEL_MEASUREMNT);
-		return angleFormated;
+//		DecimalFormat df = new DecimalFormat("#.00");
+//	    String angleFormated = df.format(lengthPrec*PIXEL_MEASUREMNT);
+//		return angleFormated;
+		NumberFormat nf_out = NumberFormat.getNumberInstance(Locale.UK);
+		nf_out.setMaximumFractionDigits(2);
+		String result = nf_out.format(lengthPrec*PIXEL_MEASUREMNT);
+		return result;
 	}
 
 	public void setLengthPrecFromCm(double lengthPrec) {
@@ -252,9 +260,13 @@ public class Action implements Serializable {
 	}
 
 	public String getLengthEffInCm() {
-		DecimalFormat df = new DecimalFormat("#.00");
-	    String angleFormated = df.format(lengthEff*PIXEL_MEASUREMNT);
-		return angleFormated;
+//		DecimalFormat df = new DecimalFormat("#.00");
+//	    String angleFormated = df.format(lengthEff*PIXEL_MEASUREMNT);
+//		return angleFormated;
+		NumberFormat nf_out = NumberFormat.getNumberInstance(Locale.UK);
+		nf_out.setMaximumFractionDigits(2);
+		String result = nf_out.format(lengthEff*PIXEL_MEASUREMNT);
+		return result;
 	}
 
 	public void setLengthEffFromCm(double lengthEff) {
@@ -271,9 +283,13 @@ public class Action implements Serializable {
 	}
 
 	public String getHeightRectInCm() {
-		DecimalFormat df = new DecimalFormat("#.00");
-		String angleFormated = df.format(heightRect * PIXEL_MEASUREMNT);
-		return angleFormated;
+//		DecimalFormat df = new DecimalFormat("#.00");
+//		String angleFormated = df.format(heightRect * PIXEL_MEASUREMNT);
+//		return angleFormated;
+		NumberFormat nf_out = NumberFormat.getNumberInstance(Locale.UK);
+		nf_out.setMaximumFractionDigits(2);
+		String result = nf_out.format(heightRect*PIXEL_MEASUREMNT);
+		return result;
 
 	}
 	
@@ -294,10 +310,15 @@ public class Action implements Serializable {
 	}
 
 	public String getStandardLengthEffInCm() {
-		DecimalFormat df = new DecimalFormat("#.00");
-	    String angleFormated = df.format(standardLengthEff*PIXEL_MEASUREMNT);
-		return angleFormated;
+//		DecimalFormat df = new DecimalFormat("#.00");
+//	    String angleFormated = df.format(standardLengthEff*PIXEL_MEASUREMNT);
+//		return angleFormated;
+		NumberFormat nf_out = NumberFormat.getNumberInstance(Locale.UK);
+		nf_out.setMaximumFractionDigits(2);
+		String result = nf_out.format(standardLengthEff*PIXEL_MEASUREMNT);
+		return result;
 	}
+	
 
 	public void setStandardLengthEffFromCm(double standardLengthEff) {
 		
@@ -307,9 +328,12 @@ public class Action implements Serializable {
 
 
 	public String getStandardLengthPrecInCm() {
-		DecimalFormat df = new DecimalFormat("#.00");
-	    String angleFormated = df.format(standardLengthPrec*PIXEL_MEASUREMNT);
-		return angleFormated;
+//		DecimalFormat df = new DecimalFormat("#.00");
+//	    String angleFormated = df.format(standardLengthPrec*PIXEL_MEASUREMNT);
+		NumberFormat nf_out = NumberFormat.getNumberInstance(Locale.UK);
+		nf_out.setMaximumFractionDigits(2);
+		String result = nf_out.format(standardLengthPrec*PIXEL_MEASUREMNT);
+		return result;
 	}
 
 	public double getStandardLengthPrec() {

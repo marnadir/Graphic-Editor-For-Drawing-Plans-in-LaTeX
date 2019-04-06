@@ -3,8 +3,9 @@ package State;
 import java.awt.Toolkit;
 import java.io.Serializable;
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
-
+import java.util.Locale;
 
 import Action.GlobalValue;
 import LaTex.LaTexGeneratorStateDomain;
@@ -59,9 +60,10 @@ public class IState  implements Serializable{
 	}
 	
 	public String getLengthCondInCm() {
-		DecimalFormat df = new DecimalFormat("#.00");
-	    String angleFormated = df.format(lengthCond*PIXEL_MEASUREMNT);
-		return angleFormated;
+		NumberFormat nf_out = NumberFormat.getNumberInstance(Locale.UK);
+		nf_out.setMaximumFractionDigits(2);
+		String result = nf_out.format(lengthCond*PIXEL_MEASUREMNT);
+		return result;
 	}
 	public void setLengthFromCm(double d) {
 		this.lengthCond = (d*CM_MEASUREMNT);
@@ -77,9 +79,11 @@ public class IState  implements Serializable{
 	}
 	
 	public String getStandardLengthInCm() {
-		DecimalFormat df = new DecimalFormat("#.00");
-	    String angleFormated = df.format((standardCondLength*PIXEL_MEASUREMNT));
-		return angleFormated;
+		
+		NumberFormat nf_out = NumberFormat.getNumberInstance(Locale.UK);
+		nf_out.setMaximumFractionDigits(2);
+		String result = nf_out.format(standardCondLength*PIXEL_MEASUREMNT);
+		return result;
 	}
 	
 	
@@ -94,13 +98,6 @@ public class IState  implements Serializable{
 		return standardCondLength;
 	}
 	
-
-
-
-
-	
-
-
 	public boolean isDefaultValuePrec() {
 		return defaultValue;
 	}
