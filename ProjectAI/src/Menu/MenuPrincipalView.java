@@ -110,7 +110,7 @@ public class MenuPrincipalView extends IMenu{
 				
 				SaveDomainFileLocationDialog dialog=new SaveDomainFileLocationDialog(getShell(), SWT.SAVE);
 				dialog.setDomainView(domainView);
-				dialog.setUpdateActionListDomain(domainView.getTreeAction().getActionList());
+				//dialog.setUpdateActionListDomain(domainView.getTreeAction().getActionList());
 				dialog.createContent();
 			}
 		};
