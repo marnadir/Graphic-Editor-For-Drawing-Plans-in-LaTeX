@@ -1,4 +1,4 @@
-package Dialog;
+package command;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -6,9 +6,7 @@ import java.io.ObjectInputStream;
 import java.util.ArrayList;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.MessageBox;
-import org.eclipse.swt.widgets.Shell;
 
 import Action.Action;
 import Action.GlobalValue;
@@ -19,49 +17,40 @@ import State.InitialStateCanvas;
 import View.DomainView;
 import View.GlobalOptionView;
 
-public class LoadDomainFileLocationDialog extends FileDialog {
+public class LoadDomainCommand implements ICommand{
 
 	ArrayList<Action> updateActionListDomain;
 	DomainView domainView;
-	Shell shell;
 	
 	
-	public LoadDomainFileLocationDialog(Shell parent, int style) {
-		super(parent, style);
-		this.shell=parent;
-		// TODO Auto-generated constructor stub
+	@Override
+	public boolean canExecute(Object var1, Object var2) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
-	
-	public void createContent() {
-		
-		String [] filterNames = new String [] {"*.txt","All Files (*)"};
-		String [] filterExtensions = new String [] {"*.txt", "*"};
-		String filterPath = System.getProperty("user.home")+"/TDP"+"/dirLog";
-		String platform = SWT.getPlatform();
-		if (platform.equals("win32")) {
-			filterNames = new String [] {"Image Files", "All Files (*.*)"};
-			filterExtensions = new String [] {"*.gif;*.png;*.bmp;*.jpg;*.jpeg;*.tiff", "*.*"};
-			filterPath = "c:\\";
-		}
-		setFilterNames (filterNames);
-		setFilterExtensions (filterExtensions);
-		setFilterPath(filterPath);
-		
-		String path;
-		setFilterPath(filterPath);
-	    path=open();
-	    ReadObjectToFile(path);
-		domainView.restoreActionList(updateActionListDomain);
-	}
 	@Override
-	protected void checkSubclass() {
+	public void execute(Object var1, Object var2) {
 		
+		String path = null;
+		if (var1 instanceof String) {
+			path = (String) var1;
+		}
+		if (var2 instanceof DomainView) {
+			this.domainView = (DomainView) var2;
+		}
+
+		ReadObjectToFile(path);
+		domainView.restoreActionList(updateActionListDomain);
+
 	}
 	
-	public void ReadObjectToFile(String path) {
+	public boolean ReadObjectToFile(String path) {
 		
+		
+		boolean result=false;
 		if(path!=null) {
+			result=true;
 			try {
 				FileInputStream fileIn = new FileInputStream(path);
 
@@ -112,7 +101,8 @@ public class LoadDomainFileLocationDialog extends FileDialog {
 
 
 				}else {
-					MessageBox messageBox = new MessageBox(shell,
+					MessageBox messageBox = new MessageBox(domainView
+							.getTreeAction().getShell(),
 							SWT.ICON_WARNING |  SWT.OK);
 
 					messageBox.setText("Warning");
@@ -124,18 +114,10 @@ public class LoadDomainFileLocationDialog extends FileDialog {
 				e.printStackTrace();
 			}
 		}
-		
-
-	}
-	
-	public void setDomainView(DomainView domainView) {
-		this.domainView = domainView;
+		return result;
 	}
 	
 
-	public void setUpdateActionListDomain(ArrayList<Action> updateActionListDomain) {
-		this.updateActionListDomain = updateActionListDomain;
-	}
 	
 	public void setGlobalOptionView() {
 		GlobalOptionView globalOptionView=domainView.getGlobalOptionView();
@@ -151,6 +133,11 @@ public class LoadDomainFileLocationDialog extends FileDialog {
 			return true;
 		}
 	}
-	
-	
+
+	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

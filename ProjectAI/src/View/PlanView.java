@@ -23,11 +23,13 @@ import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 
 import Action.Node;
+import Dialog.NewConnectionDialog;
 import Dialog.SaveLAtexCode;
 import Dialog.SavePlanDialog;
 import PDFConverter.PdfConverter;
 import PlanPart.PlanContent;
 import State.LoadLink;
+import command.SavePlanCommand;
 import resourceLoader.ResourceLoader;
 
 public class PlanView  extends CTabFolder{
@@ -99,18 +101,32 @@ public class PlanView  extends CTabFolder{
 		item.setText("Plan" + listOfPlan.size());
 
 		ToolBar t = new ToolBar(this, SWT.ALL);
+		
+		
+		ToolItem newConnection=new ToolItem(t, SWT.PUSH);
+		Image icon = new Image(getDisplay(), ResourceLoader.load("img/connection.png"));
+		newConnection.setToolTipText("new Link/Constrain");
+		newConnection.setImage(icon);
+		newConnection.addListener(SWT.Selection, new Listener() {
+			
+			@Override
+			public void handleEvent(Event event) {
+				NewConnectionDialog dialog=new NewConnectionDialog(getShell(), SWT.DIALOG_TRIM | SWT.CENTER);
+				dialog.setPlanView(getPlanView());
+				dialog.createContent();
+				
+			}
+		});
+		
 		showCondition=new ToolItem(t, SWT.CHECK);
-		Image icon = new Image(getDisplay(), ResourceLoader.load("img/eye.png"));
+		icon = new Image(getDisplay(), ResourceLoader.load("img/eye.png"));
+		showCondition.setToolTipText("show/hide condition");
 		showCondition.setImage(icon);
 		showCondition.addListener(SWT.Selection,new Listener() {
 			
 			@Override
 			public void handleEvent(Event event) {
 				
-				
-				
-
-
 				ArrayList<Node> updateNodeList = getPlan().getActionInPlan();
 				for(Node node:updateNodeList) {
 //					Iterator<Oval> i = listOval.iterator();
@@ -141,9 +157,7 @@ public class PlanView  extends CTabFolder{
 
 				
 				}
-
-			
-				
+		
 				
 				if(showCondition.getSelection()) {
 					if(getPlan().getInitialStateCanvas()!=null) {
@@ -191,12 +205,9 @@ public class PlanView  extends CTabFolder{
 					getPlan().setSavedPllan(dialogPlan.getPlanFile());
 				}else {
 					//load the plan and then save it
-					if(dialogPlan==null) {
-						dialogPlan=new SavePlanDialog(getShell(), SWT.SAVE);
-//						dialogPlan.setPlanContent(getPlan());
-					}
-					dialogPlan.setPlanContent(getPlan());
-					dialogPlan.createFile( getPlan().getSavedPlanFile().getParentFile()
+					SavePlanCommand command=new SavePlanCommand();
+					command.setPlanContent(getPlan());
+					command.execute( getPlan().getSavedPlanFile().getParentFile()
 							.getAbsolutePath(),"PlanStore.txt");
 				}
 				
@@ -204,14 +215,10 @@ public class PlanView  extends CTabFolder{
 			}
 		});
 		
-		
-		
-		
-		
 		ToolItem PDFPreview=new ToolItem(t,SWT.PUSH);
 		icon = new Image(getDisplay(),ResourceLoader.load("img/pdf.ico") );
 		PDFPreview.setImage(icon);
-		
+		PDFPreview.setToolTipText("Generete pdf into PdfView");
 		
 		PDFPreview.addListener(SWT.Selection, new Listener() {
 			
@@ -221,19 +228,6 @@ public class PlanView  extends CTabFolder{
 	
 				ConsoleViewPlan consoleViewPlan=consoleView.getConsoleViewPlan();
 				ConsoleViewDomain consoleViewDomain=consoleView.getConsoleViewDomain();
-				
-				
-//				if(contentPlan.getLatexFile()==null) {
-//					dialog=new SaveLAtexCode(getShell(), SWT.SAVE);
-//					dialog.setConsoleViewPlan(consoleViewPlan);
-//					dialog.setConsoleViewDomain(consoleViewDomain);
-//					dialog.createContent();
-//					contentPlan.setLatexFile(dialog.getFileLatex());
-//					
-//				}else {
-//					dialog.createFilePlan(dialog.getFilterPath());
-//
-//				}
 				
 				dialog.setConsoleViewPlan(consoleViewPlan);
 				dialog.setConsoleViewDomain(consoleViewDomain);
