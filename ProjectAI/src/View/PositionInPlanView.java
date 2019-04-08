@@ -122,12 +122,11 @@ public class PositionInPlanView extends Composite{
 
 			@Override
 			public void handleEvent(Event event) {
-
-				contentPlan.getGoalStateCanvas().getParent().setLocation(
-						contentPlan.getGoalStateCanvas().getParent().getLocation().x,
-						contentPlan.getInitialStateCanvas().getParent().getLocation().y);
-
-				
+				if(contentPlan.getInitialStateCanvas()!=null && contentPlan.getGoalStateCanvas()!=null) {
+					contentPlan.getGoalStateCanvas().getParent().setLocation(
+							contentPlan.getGoalStateCanvas().getParent().getLocation().x,
+							contentPlan.getInitialStateCanvas().getParent().getLocation().y);
+				}	
 
 			}
 		};
