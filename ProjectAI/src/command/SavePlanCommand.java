@@ -11,7 +11,6 @@ import org.eclipse.swt.graphics.Point;
 import Action.Node;
 import PlanPart.LinkCanvas;
 import PlanPart.OrderConstrain;
-import PlanPart.OvalCounter;
 import PlanPart.PlanContent;
 import State.GoalStateCanvas;
 import State.IStateCanvas;
@@ -22,7 +21,6 @@ public class SavePlanCommand implements ICommand {
 	File planFile;
 	ArrayList<Object> data;
 	PlanContent planContent;
-	private OvalCounter ovalCounter;
 	private ArrayList<Node> actionInPlan;
 	private ArrayList<LinkCanvas> link;
 	private ArrayList<OrderConstrain> ords;
@@ -94,7 +92,6 @@ public class SavePlanCommand implements ICommand {
 		
 		initialStateCanvas=planContent.getInitialStateCanvas();
 		goalStateCanvas=planContent.getGoalStateCanvas();
-		ovalCounter=planContent.getOvalCounter();
 		link=planContent.getLink();
 		actionInPlan=planContent.getActionInPlan();
 		ords=planContent.getOrds();
@@ -187,4 +184,9 @@ public class SavePlanCommand implements ICommand {
 		return null;
 	}
 
+	public File getPlanFile() {
+		return planFile;
+	}
+	
+	
 }

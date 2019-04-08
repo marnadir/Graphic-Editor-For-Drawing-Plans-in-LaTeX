@@ -5,6 +5,9 @@ import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.Locale;
 
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.MessageBox;
+
 import Action.Action;
 import Action.ICanvasNode;
 import Action.Node;
@@ -69,9 +72,20 @@ public class LaTexGeneratorNode {
 	
 	public String getLatexOrderCodePlan(OrderConstrain order) {
 		StringBuilder sb = new StringBuilder();
-		sb.append("\\ordering");
-		sb.append("{[yshift=.65cm,xshift=.2cm]"+order.getCond1().getID()+".east}");
-		sb.append("{[yshift=.65cm,xshift=-.2cm]"+order.getCond2().getID()+".west}"+"\n"+"\n");
+		if(!order.getCond1().isDisposed() && !order.getCond2().isDisposed()) {
+			sb.append("\\ordering");
+			sb.append("{[yshift=.65cm,xshift=.2cm]"+order.getCond1().getID()+".east}");
+			sb.append("{[yshift=.65cm,xshift=-.2cm]"+order.getCond2().getID()+".west}"+"\n"+"\n");
+		}else {
+			MessageBox messageBox = new MessageBox(planContent.getShell(),
+					SWT.ICON_WARNING |  SWT.OK);
+
+			messageBox.setText("Warning");
+			messageBox.setMessage("Some ordering constrains missing one/both action's order."+"\n"+
+			"Plese remove it.");
+			messageBox.open();
+		}
+		
 		return sb.toString();
 	}
 	

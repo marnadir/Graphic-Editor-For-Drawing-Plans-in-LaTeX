@@ -93,8 +93,8 @@ public class OrderConstrain{
 
 								nod1 = canvasContainer.getActionInPlan().get(i);
 								//c1=nod1.getParent();
-								l2.setText(nod1.getAction().getName() + "<" + ".....");
-								l2.setText(nod1.getID() + "<" + ".....");
+								l2.setText(nod1.getAction().getName() + "<" + "null");
+								l2.setText(nod1.getID() + "<" + "null");
 
 								l2.pack();
 								break;
@@ -131,12 +131,6 @@ public class OrderConstrain{
 	
 	public void setLocationParent() {
 		
-//		System.out.println(nod1.getBounds().x);
-//		System.out.println(nod1.getBounds().width);
-//		
-//		System.out.println(nod1.getParent().getBounds().x);
-//		System.out.println(nod1.getParent().getBounds().width);
-
 		Point p = new Point(nod1.getBounds().x + nod1.getBounds().width, nod1.getBounds().y - 20);
 		c1=nod1.getParent();
 		p1 = c1.getParent().toControl(c1.toDisplay(p.x, p.y));

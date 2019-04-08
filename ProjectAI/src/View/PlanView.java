@@ -29,6 +29,7 @@ import Dialog.SavePlanDialog;
 import PDFConverter.PdfConverter;
 import PlanPart.PlanContent;
 import State.LoadLink;
+import command.SaveDomainCommand;
 import command.SavePlanCommand;
 import resourceLoader.ResourceLoader;
 
@@ -202,7 +203,7 @@ public class PlanView  extends CTabFolder{
 					dialogPlan=new SavePlanDialog(getShell(), SWT.SAVE);
 					dialogPlan.setPlanContent(getPlan());
 					dialogPlan.createContent();
-					getPlan().setSavedPllan(dialogPlan.getPlanFile());
+					getPlan().setSavedPllan(dialogPlan.getCommand().getPlanFile());
 				}else {
 					//load the plan and then save it
 					SavePlanCommand command=new SavePlanCommand();
@@ -210,7 +211,9 @@ public class PlanView  extends CTabFolder{
 					command.execute( getPlan().getSavedPlanFile().getParentFile()
 							.getAbsolutePath(),"PlanStore.txt");
 				}
-				
+				SaveDomainCommand command=new SaveDomainCommand();
+				command.copyFileDomain(getPlan().getSavedPlanFile().getParentFile()
+							.getAbsolutePath(), domainView);
 			
 			}
 		});

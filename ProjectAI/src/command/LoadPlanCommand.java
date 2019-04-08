@@ -151,7 +151,7 @@ public class LoadPlanCommand  implements ICommand{
 		}
 	}
 	
-
+	
 	
 	private void loadInitialState() {
 		ArrayList<Object> info=(ArrayList<Object>) data.get(0);

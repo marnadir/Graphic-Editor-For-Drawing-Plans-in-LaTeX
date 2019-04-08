@@ -13,6 +13,7 @@ import Dialog.SaveDomainFileLocationDialog;
 import View.DomainView;
 import View.PlanView;
 import command.ExitCommand;
+import command.LoadDomainCommand;
 
 
 
@@ -80,7 +81,7 @@ public class MenuPrincipalView extends IMenu{
 			}
 		};
 
-		Listener listenerRestoreDomain = new Listener() {
+		Listener listenerLoadDomain = new Listener() {
 
 			@Override
 			public void handleEvent(Event event) {
@@ -94,17 +95,6 @@ public class MenuPrincipalView extends IMenu{
 		};
 
 		
-		Listener listenerLink=new Listener() {
-			
-			@Override
-			public void handleEvent(Event event) {
-				NewConnectionDialog dialog=new NewConnectionDialog(getShell(), SWT.DIALOG_TRIM | SWT.CENTER);
-				dialog.setPlanView(planView);
-				dialog.createContent();
-				
-			}
-		};
-		
 		Listener loadL = new Listener() {
 
 			@Override
@@ -117,17 +107,34 @@ public class MenuPrincipalView extends IMenu{
 				if(dialog.getCommand().isLoad()) {
 					planView.getPlan().setSavedPllan(dialog.getCommand().getFilePlan());
 					planView.getPlan().setDirectory(dialog.getCommand().getFilePlan().getParentFile());
+					LoadDomainCommand command=new LoadDomainCommand();
+					String path=dialog.getCommand().getFilePlan().getParentFile()+"/tempDomain.txt";
+					command.execute(path,domainView);
 					
 				}
-				
+			
 			
 
 			}
 		};
 		
+		
+		Listener listenerLink=new Listener() {
+			
+			@Override
+			public void handleEvent(Event event) {
+				NewConnectionDialog dialog=new NewConnectionDialog(getShell(), SWT.DIALOG_TRIM | SWT.CENTER);
+				dialog.setPlanView(planView);
+				dialog.createContent();
+				
+			}
+		};
+		
+		
+		
 		loadPlan.addListener(SWT.Selection, loadL);
 	
-		restoreStateDomain.addListener(SWT.Selection, listenerRestoreDomain);
+		restoreStateDomain.addListener(SWT.Selection, listenerLoadDomain);
 		storeStateDomain.addListener(SWT.Selection, listenerStoreDomain);
 		exitItem.addListener(SWT.Selection, listenerExit);
 		menuLines.addListener(SWT.Selection, listenerLink);

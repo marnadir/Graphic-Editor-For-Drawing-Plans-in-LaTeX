@@ -59,7 +59,17 @@ public class SaveDomainCommand  implements ICommand{
 		
 	}
 
-	public ArrayList<Object> prepareGlobalValueArray(){
+	public void copyFileDomain(String path,DomainView domainView) {
+		createDirectorLog();
+		execute("tempDomain.txt", domainView);
+		path=path+"/tempDomain.txt";
+		fileLog.renameTo(new File(path));
+		
+		
+	}
+	
+	
+	private ArrayList<Object> prepareGlobalValueArray(){
 		ArrayList<Object> arrayList=new ArrayList<>();
 		
 		arrayList.add(GlobalValue.isHeightOfAction);

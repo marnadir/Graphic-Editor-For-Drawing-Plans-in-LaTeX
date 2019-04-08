@@ -158,7 +158,7 @@ public class NewConnectionDialog extends IDialog {
 
 					}
 				} else if (orderCond != null) {
-					if (!l2.getText().contains("null")) {
+					if (!(l1.getText().contains("null")) && !(l2.getText().contains("null"))) {
 						orderCond.setLocationParent();
 						Composite parent=orderCond.getParent();
 						constrain=new OrderConstrainCanvas(parent, SWT.ALL,orderCond);

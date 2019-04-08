@@ -1,38 +1,20 @@
 package Dialog;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 
-import Action.Node;
-import PlanPart.LinkCanvas;
-import PlanPart.OrderConstrain;
-import PlanPart.OvalCounter;
 import PlanPart.PlanContent;
-import State.GoalStateCanvas;
-import State.IStateCanvas;
-import State.InitialStateCanvas;
 import command.SavePlanCommand;
 
 public class SavePlanDialog extends FileDialog{
 
-	File planFile;
-	ArrayList<Object> data;
 	PlanContent planContent;
-	private OvalCounter ovalCounter;
-	private ArrayList<Node> actionInPlan;
-	private ArrayList<LinkCanvas> link;
-	private ArrayList<OrderConstrain> ords;
-	private InitialStateCanvas initialStateCanvas;
-	private GoalStateCanvas goalStateCanvas;
+	SavePlanCommand command;
 	
 	public SavePlanDialog(Shell parent, int style) {
 		super(parent, style);
@@ -54,7 +36,7 @@ public class SavePlanDialog extends FileDialog{
 		setFilterPath (filterPath);
 		setFileName ("PlanStore");
 		System.out.println ("Save to: " +open ());	
-		SavePlanCommand command=new SavePlanCommand();
+		command=new SavePlanCommand();
 		command.setPlanContent(planContent);
 		command.execute(getFilterPath(),getFileName());
 		
@@ -95,12 +77,13 @@ public class SavePlanDialog extends FileDialog{
 		return fileName;
 	}
 
-	public File getPlanFile() {
-		return planFile;
-	}
 
 	
 	
+	public SavePlanCommand getCommand() {
+		return command;
+	}
+
 	@Override
 	protected void checkSubclass() {
 		
@@ -112,9 +95,6 @@ public class SavePlanDialog extends FileDialog{
 	
 	
 	
-	public void setPlanFile(File domainFile) {
-		this.planFile = domainFile;
-	}
 	
 	
 	
