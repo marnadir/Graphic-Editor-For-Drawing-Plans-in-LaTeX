@@ -93,7 +93,7 @@ public class LoadPlanCommand  implements ICommand{
 						
 						info = (ArrayList<Object>) data.get(3);
 						for (int i = 0; i < info.size(); i++) {
-							loadOrd(i);;
+							loadOrd(i);
 						}
 						
 						info = (ArrayList<Object>) data.get(4);
@@ -222,25 +222,13 @@ public class LoadPlanCommand  implements ICommand{
 		}
 
 		Composite parent = new Composite(planContent, SWT.ALL);
-//		parent.setSize(50, 50);
-//		parent.setLocation(20, 30);
-		
 
-		
 		OrderConstrain orderConstrain=new OrderConstrain(parent);
 		orderConstrain.setNod1(nod1);
 		orderConstrain.setNod2(nod2);
 	
 		parent.setSize(90,60);	
 		parent.setLocation(p1.x+((p2.x-p1.x-parent.getBounds().width)/2), p1.y - 30);
-		
-		System.out.println(orderConstrain.getP1());
-
-	
-		System.out.println(orderConstrain.getP2());
-
-		
-		//orderConstrain.setLocationParent();
 		
 		OrderConstrainCanvas c=new OrderConstrainCanvas(parent, SWT.ALL,orderConstrain);
 		c.draw();

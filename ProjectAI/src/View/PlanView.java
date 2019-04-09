@@ -79,7 +79,7 @@ public class PlanView  extends CTabFolder{
 		
 		contentPlan.addDndListener(domainView.getTreeAction());
 		Button b1=new Button(contentPlan, SWT.PUSH);
-		b1.setText("link");
+		b1.setText("Load link");
 		b1.pack();
 		b1.setVisible(false);
 		b1.addListener(SWT.Selection, new Listener() {

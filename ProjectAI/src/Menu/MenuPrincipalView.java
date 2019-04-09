@@ -38,6 +38,11 @@ public class MenuPrincipalView extends IMenu{
 		MenuItem option = createItem("&Option", SWT.CASCADE);
 		IMenu menuOption = new IMenu(getShell(), SWT.DROP_DOWN);
 		option.setMenu(menuOption);
+		
+		MenuItem help = createItem("&Help", SWT.CASCADE);
+		IMenu menuHelp= new IMenu(getShell(), SWT.DROP_DOWN);
+		help.setMenu(menuHelp);
+		
 
 		MenuItem storeStateDomain = new MenuItem(menuFile, SWT.PUSH);
 		storeStateDomain.setText("&Save Domain\tCtrl+S");
@@ -60,6 +65,10 @@ public class MenuPrincipalView extends IMenu{
 
 		MenuItem menuLines = new MenuItem(menuOption, SWT.PUSH);
 		menuLines.setText("Create Connection");
+		
+		MenuItem tutorial = new MenuItem(menuHelp, SWT.PUSH);
+		tutorial.setText("&Tutorial");
+		
 		
 		
 		Listener listenerExit = new Listener() {

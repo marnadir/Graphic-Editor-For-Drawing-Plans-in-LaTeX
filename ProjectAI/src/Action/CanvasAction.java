@@ -2,11 +2,13 @@ package Action;
 
 import java.util.ArrayList;
 
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.dnd.DND;
 import org.eclipse.swt.dnd.DragSource;
 import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
+import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Composite;
 import DNDAaction.MyDragActionListener;
@@ -59,6 +61,8 @@ public class CanvasAction  extends ICanvasNode{
 
 				action.resize();
 		
+				Font font = new Font(getDisplay(), "Arabic Transparent", 9, SWT.NORMAL);
+				e.gc.setFont(font);
 
 				int posY = 30;
 				int y = 25;

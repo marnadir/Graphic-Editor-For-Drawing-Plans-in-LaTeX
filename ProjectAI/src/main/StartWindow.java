@@ -13,7 +13,7 @@ public class StartWindow {
 		Display display = new Display();
 		Shell shell = new Shell(display);
 		shell.setSize(display.getClientArea().width, display.getClientArea().height);
-		shell.setText("Tool Drawing Plan");
+		shell.setText("Graphical Editor For Drawing Plan");
 		shell.setLayout(new FillLayout());
 
 		PrincipalView principalView = new PrincipalView(shell);

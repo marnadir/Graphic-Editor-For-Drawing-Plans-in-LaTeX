@@ -30,7 +30,6 @@ import LaTex.LaTexGeneratorPlan;
 import LaTex.LaTexGeneratorStatePlan;
 import PlanPart.PlanContent;
 import resourceLoader.ResourceLoader;
-import PlanPart.OrderConstrainCanvas;
 import PlanPart.LinkCanvas;
 import PlanPart.OrderConstrain;
 
@@ -68,11 +67,11 @@ public class ConsoleViewPlan extends Group {
 		updateTextPlan.setImage(icon);
 		
 	
-
-		ToolItem saveLatex=new ToolItem(toolBarPlan,SWT.PUSH);
-		saveLatex.setText("save");
-		icon = new Image(getDisplay(),ResourceLoader.load("img/save.ico") );
-		saveLatex.setImage(icon);
+//
+//		ToolItem saveLatex=new ToolItem(toolBarPlan,SWT.PUSH);
+//		saveLatex.setText("save");
+//		icon = new Image(getDisplay(),ResourceLoader.load("img/save.ico") );
+//		saveLatex.setImage(icon);
 		
 		textPlan = new Text(this, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL | SWT.READ_ONLY);
 		textPlan.insert("update data...");
@@ -92,160 +91,18 @@ public class ConsoleViewPlan extends Group {
 			}
 		});
 	
-		
-		saveLatex.addListener(SWT.Selection, new Listener() {
-			
-			@Override
-			public void handleEvent(Event event) {
-				updateView();
-				saveFile();
-				
-				
-			}
-		});
-		
-		
-		
-		
-		
-		
+//		
+//		saveLatex.addListener(SWT.Selection, new Listener() {
+//			
+//			@Override
+//			public void handleEvent(Event event) {
+//				updateView();
+//				
+//				
+//			}
+//		});
+					
 	}
-	
-	public void saveFile() {
-			createDirector();
-			updateView();
-			String filepath = dirPlan.getAbsolutePath();
-			file = new File(filepath,"LatexPlan.tex");
-			try {
-				file.createNewFile();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			if (file.isFile()) {
-				WriteTextToFile(textPlan.getText());
-			}
-			
-			updateView();
-
-	}
-	
-	public void copyTikzLibrary()  {
-		File file=new File("TikzLibrary/tikzlibraryaiplans.code.tex");
-		File file2=new File(dirPlan.getAbsolutePath(), "tikzlibraryaiplans.code.tex");
-		try {
-			if(!file.exists()) {
-				file2.createNewFile();
-
-			}
-			Files.copy(file.toPath(), file2.toPath(),StandardCopyOption.REPLACE_EXISTING);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			System.out.println(e.getMessage());
-		}
-		
-		
-		
-	}
-	
-	
-	
-	public void createDirector() {
-		String filepath = System.getProperty("user.home");
-		directory = new File(filepath + "/TDP");
-		File dirLatex = new File(filepath + "/TDP" + "/dirLatex");
-		
-		BasicFileAttributes attr;
-		String text = null;
-		try {
-			attr = Files.readAttributes(file.toPath(), BasicFileAttributes.class);
-			FileTime fileTime = attr.lastModifiedTime();
-
-			DateFormat df = new SimpleDateFormat("MM/dd/yy");
-			String dateCreated = df.format(fileTime.toMillis());
-
-			df = new SimpleDateFormat("HH:mm:ss");
-			String dateCreated2 = df.format(fileTime.toMillis());
-
-			text =  dateCreated + " " + dateCreated2;
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-		dirPlan=new File(dirLatex.getAbsolutePath()+"/"+planView.getSelection().getText()+text);
-		copyTikzLibrary();
-		
-
-		// if the directory does not exist, create it
-		if (!directory.exists()) {
-			System.out.println("creating directory: " + directory.getName());
-			boolean result = false;
-
-			try {
-				directory.mkdir();
-				result = true;
-			} catch (SecurityException se) {
-				// handle it
-			}
-			if (result) {
-				System.out.println("DIR created");
-			}
-		}
-
-		
-		if (!dirPlan.exists()) {
-			System.out.println("creating directory: " + dirPlan.getName());
-			boolean result = false;
-
-			try {
-				dirPlan.mkdir();
-				result = true;
-			} catch (SecurityException se) {
-				// handle it
-			}
-			if (result) {
-				System.out.println("DIR created");
-			}
-		}
-	
-
-		if (!dirLatex.exists()) {
-			System.out.println("creating directory: " + dirLatex.getName());
-			boolean result = false;
-
-			try {
-				dirLatex.mkdir();
-				result = true;
-			} catch (SecurityException se) {
-				// handle it
-			}
-			if (result) {
-				System.out.println("DIR created");
-			}
-		}
-
-	}
-	
-	public void WriteTextToFile(String serObj) {
-
-		PrintWriter writer = null;
-		try {
-			writer = new PrintWriter(file.getAbsolutePath(), "UTF-8");
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		writer.println(serObj);
-
-		writer.close();
-		
-		
-	}
-	
-
 	public void updateView() {
 		textPlan.setText("");
 
@@ -275,14 +132,7 @@ public class ConsoleViewPlan extends Group {
 			updateOrder.get(i).generateLatexCode();
 			textPlan.insert(updateOrder.get(i).getLatexCode());
 		}
-		
-
-		
-		
 		textPlan.insert(laTexGeneratorPlan.getLatexEnd());
-
-		
-		
 	}
 	
 

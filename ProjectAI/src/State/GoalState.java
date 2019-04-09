@@ -14,4 +14,9 @@ public class GoalState extends IState {
 		this.name="goal";
 	}
 
+	@Override
+	public String getName() {
+		this.name="goal";
+		return name;
+	}
 }

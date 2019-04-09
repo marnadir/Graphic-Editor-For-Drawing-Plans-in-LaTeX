@@ -1,8 +1,10 @@
 package State;
 
 
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
+import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.graphics.Transform;
 import org.eclipse.swt.widgets.Composite;
@@ -30,6 +32,9 @@ public class GoalStateCanvas extends IStateCanvas {
 			@Override
 			public void paintControl(PaintEvent e) {
 			
+				Font font = new Font(getDisplay(), "Arabic Transparent", 9, SWT.NORMAL);
+				e.gc.setFont(font);
+				
 				int avergWidth = 7;	
 				//int avergWidth =e.gc.getFontMetrics().getAverageCharacterWidth();
 				int numCond = state.getConds().size();

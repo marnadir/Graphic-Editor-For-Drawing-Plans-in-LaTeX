@@ -3,6 +3,7 @@ package Action;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
+import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Composite;
 
@@ -34,6 +35,8 @@ public class Node extends ICanvasNode {
 
 				int posY = 30;
 				int y = 25;
+				Font font = new Font(getDisplay(), "Arabic Transparent", 9, SWT.NORMAL);
+				e.gc.setFont(font);
 
 				for (int i = 0; i < action.getPrec().size(); i++) {
 					String string = action.getPrec().get(i);

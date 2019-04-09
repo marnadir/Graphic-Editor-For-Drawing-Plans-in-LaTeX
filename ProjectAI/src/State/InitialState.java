@@ -13,5 +13,11 @@ public class InitialState extends IState {
 		super(conds);
 		this.name="start";
 	}
+	
+	@Override
+	public String getName() {
+		this.name="start";
+		return name;
+	}
 
 }
