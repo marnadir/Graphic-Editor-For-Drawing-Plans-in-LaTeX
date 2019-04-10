@@ -14,7 +14,7 @@ public class InitialStateCanvas extends IStateCanvas  {
 	private static final long serialVersionUID = -1499882871217776674L;
 
 	public InitialStateCanvas(Composite parent, int style, IState state) {
-		super(parent, style, state);
+		super(parent, SWT.BORDER, state);
 	}
 
 	// TODO method allow to draw the initial state
@@ -39,12 +39,12 @@ public class InitialStateCanvas extends IStateCanvas  {
 				if(state.isText) {
 					state.setLenIn(300);
 				}else {
-					state.setLenIn(numCond*30);
+					state.setLenIn(state.getWidth());
 				}
 				if(state.isText) {
 					int val=getTextPosition(avergWidth);
 
-					e.gc.drawRectangle(startX, startY, 20, startY + state.getLenIn());
+					e.gc.drawRectangle(startX, startY, 20, (int) (startY + state.getLenIn()));
 				  
 					Transform t=new Transform(getDisplay());
 					t.rotate(90);
@@ -60,13 +60,13 @@ public class InitialStateCanvas extends IStateCanvas  {
 					
 				}else {
 					e.gc.setLineWidth(6);
-					e.gc.drawLine(startX, startY, startX, startY + state.getLenIn());
+					e.gc.drawLine(startX, startY, startX, (int) (startY + state.getLenIn()));
 					e.gc.setLineWidth(1);
 				}
 				
 				
-				int posY=5+(state.getLenIn()/numCond)/2; 
-				int incr=state.getLenIn()/numCond;
+				int posY=(int) (5+(state.getLenIn()/numCond)/2); 
+				int incr=(int) (state.getLenIn()/numCond);
 				
 				for (int i = 0; i < numCond; i++) {
 					String string = state.getConds().get(i);
@@ -104,7 +104,7 @@ public class InitialStateCanvas extends IStateCanvas  {
        		  state.setLenIn(stringLenght);
     		  return i;
     	  }else {
-    		  i=(state.getLenIn()-stringLenght)/2;
+    		  i=(int) ((state.getLenIn()-stringLenght)/2);
     		  return i;
     	  }
     	  

@@ -22,7 +22,7 @@ public class IState  implements Serializable{
 	double lengthCond;
 	double standardCondLength=53;
 	boolean defaultValue;
-	int lenIn;
+	double lenIn;
 	String latexCodeDomain;
 	float dpi = Toolkit.getDefaultToolkit().getScreenResolution();
 	final double PIXEL_MEASUREMNT= 2.54/dpi;
@@ -31,6 +31,8 @@ public class IState  implements Serializable{
 	String text;
 	boolean globalCond;
 	boolean globalEmptyPrec;
+	double width=5.5*CM_MEASUREMNT;
+	double height=0.01*CM_MEASUREMNT;
 
 
 
@@ -43,6 +45,8 @@ public class IState  implements Serializable{
 		this.lenIn=iState.getLenIn();
 		this.isText=iState.isText();
 		this.text=iState.getText();	
+		this.width=iState.getWidth();
+		this.height=iState.getHeight();
 		
 	
 	}
@@ -59,6 +63,20 @@ public class IState  implements Serializable{
 	
 	}
 	
+	public String getWidthInCm() {
+		NumberFormat nf_out = NumberFormat.getNumberInstance(Locale.UK);
+		nf_out.setMaximumFractionDigits(2);
+		String result = nf_out.format(width*PIXEL_MEASUREMNT);
+		return result;
+	}
+	
+	public String getHeiInCm() {
+		NumberFormat nf_out = NumberFormat.getNumberInstance(Locale.UK);
+		nf_out.setMaximumFractionDigits(2);
+		String result = nf_out.format(height*PIXEL_MEASUREMNT);
+		return result;
+	}
+	
 	public String getLengthCondInCm() {
 		NumberFormat nf_out = NumberFormat.getNumberInstance(Locale.UK);
 		nf_out.setMaximumFractionDigits(2);
@@ -67,6 +85,14 @@ public class IState  implements Serializable{
 	}
 	public void setLengthFromCm(double d) {
 		this.lengthCond = (d*CM_MEASUREMNT);
+	}
+	
+	public void setWidFromCm(double d) {
+		this.width=(d*CM_MEASUREMNT);
+	}
+	
+	public void setHeiFromCm(double d) {
+		this.height=(d*CM_MEASUREMNT);
 	}
 	
 	public double getLengthCond() {
@@ -142,11 +168,11 @@ public class IState  implements Serializable{
 		return latexCodeDomain;
 	}
 
-	public void setLenIn(int lenIn) {
+	public void setLenIn(double lenIn) {
 		this.lenIn = lenIn;
 	}
 
-	public int getLenIn() {
+	public double getLenIn() {
 		return lenIn;
 	}
 
@@ -204,4 +230,23 @@ public class IState  implements Serializable{
 		this.shownCond = shownCond;
 	}
 
+	public double getWidth() {
+		return width;
+	}
+
+	public void setWidth(double width) {
+		this.width = width;
+	}
+
+	public double getHeight() {
+		return height;
+	}
+
+	public void setHeight(double height) {
+		this.height = height;
+	}
+
+	
+	
+	
 }

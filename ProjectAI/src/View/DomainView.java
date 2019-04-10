@@ -63,7 +63,7 @@ public class DomainView {
 
 	public void createContent() {
 
-		OptionView subOption=new OptionView(inside, SWT.ALL,"Option");
+		OptionView subOption=new OptionView(inside, SWT.ALL,"Creation");
 		subOption.createContent();
 
 		stateGroup = new Group(inside, SWT.NONE);
