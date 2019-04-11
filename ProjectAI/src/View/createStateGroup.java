@@ -1,14 +1,9 @@
 package View;
 
-import java.io.FileInputStream;
-import java.net.URL;
 
-import javax.imageio.ImageIO;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.graphics.ImageData;
-import org.eclipse.swt.graphics.ImageLoader;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -24,7 +19,7 @@ import command.CreateSoDialogCommand;
 import command.EliminateActionCommand;
 import resourceLoader.ResourceLoader;
 
-public class OptionView extends Group{
+public class createStateGroup extends Group{
 
 	CreateSoDialogCommand so = new CreateSoDialogCommand();
 	CreateGoalDialogCommand goalCommand = new CreateGoalDialogCommand();
@@ -36,7 +31,7 @@ public class OptionView extends Group{
 	TreeActioDomainView treeAction;
 	
 	
-	public OptionView(Composite parent, int style,String name) {
+	public createStateGroup(Composite parent, int style,String name) {
 		super(parent, style);
 		this.setText(name);
 		this.setLayout();
