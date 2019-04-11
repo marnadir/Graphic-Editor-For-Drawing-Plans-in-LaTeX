@@ -54,10 +54,9 @@ public class CreateGoalDialog extends IDialogNewState{
 				}
 				if(listEff != null) {
 					goalState.updateConds(listEff);
-					if(listEff.size()>0) {
-						goalStateCanvas.draw();
-						setVisible(false);
-					}
+					goalStateCanvas.draw();
+					setVisible(false);
+				
 				}
 			}
 		};

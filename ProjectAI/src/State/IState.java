@@ -31,8 +31,8 @@ public class IState  implements Serializable{
 	String text;
 	boolean globalCond;
 	boolean globalEmptyPrec;
-	double width=5.5*CM_MEASUREMNT;
-	double height=0.01*CM_MEASUREMNT;
+	private double height=5.5*CM_MEASUREMNT;
+	double width=0.01*CM_MEASUREMNT;
 
 
 
@@ -45,8 +45,8 @@ public class IState  implements Serializable{
 		this.lenIn=iState.getLenIn();
 		this.isText=iState.isText();
 		this.text=iState.getText();	
-		this.width=iState.getWidth();
 		this.height=iState.getHeight();
+		this.width=iState.getWidth();
 		
 	
 	}
@@ -63,17 +63,17 @@ public class IState  implements Serializable{
 	
 	}
 	
-	public String getWidthInCm() {
-		NumberFormat nf_out = NumberFormat.getNumberInstance(Locale.UK);
-		nf_out.setMaximumFractionDigits(2);
-		String result = nf_out.format(width*PIXEL_MEASUREMNT);
-		return result;
-	}
-	
 	public String getHeiInCm() {
 		NumberFormat nf_out = NumberFormat.getNumberInstance(Locale.UK);
 		nf_out.setMaximumFractionDigits(2);
 		String result = nf_out.format(height*PIXEL_MEASUREMNT);
+		return result;
+	}
+	
+	public String getWidInCm() {
+		NumberFormat nf_out = NumberFormat.getNumberInstance(Locale.UK);
+		nf_out.setMaximumFractionDigits(2);
+		String result = nf_out.format(width*PIXEL_MEASUREMNT);
 		return result;
 	}
 	
@@ -87,12 +87,12 @@ public class IState  implements Serializable{
 		this.lengthCond = (d*CM_MEASUREMNT);
 	}
 	
-	public void setWidFromCm(double d) {
-		this.width=(d*CM_MEASUREMNT);
+	public void setHeigthFromCm(double d) {
+		this.height=(d*CM_MEASUREMNT);
 	}
 	
-	public void setHeiFromCm(double d) {
-		this.height=(d*CM_MEASUREMNT);
+	public void setWidFromCm(double d) {
+		this.width=(d*CM_MEASUREMNT);
 	}
 	
 	public double getLengthCond() {
@@ -230,14 +230,6 @@ public class IState  implements Serializable{
 		this.shownCond = shownCond;
 	}
 
-	public double getWidth() {
-		return width;
-	}
-
-	public void setWidth(double width) {
-		this.width = width;
-	}
-
 	public double getHeight() {
 		return height;
 	}
@@ -246,7 +238,14 @@ public class IState  implements Serializable{
 		this.height = height;
 	}
 
-	
+	public double getWidth() {
+		return width;
+	}
+
+	public void setWidth(double width) {
+		this.width = width;
+	}
+
 	
 	
 }

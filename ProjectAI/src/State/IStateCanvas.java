@@ -90,12 +90,14 @@ public abstract class IStateCanvas extends Canvas implements Serializable {
 
 
 
-	public void clear() {
-		dispose();
+	public void clearDisplay() {
+		if (this != null) {
+			this.dispose();
+		}
 		state.removeConds();
 	}
 
-
+	
 
 	
 	

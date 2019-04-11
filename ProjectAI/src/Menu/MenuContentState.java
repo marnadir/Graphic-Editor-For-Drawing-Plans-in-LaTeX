@@ -60,8 +60,8 @@ public class MenuContentState implements MenuDetectListener {
 					canvas.setOvalList(new ArrayList<>());
 
 				}
-				canvas.getParent().setVisible(false);
-				canvas.clear();
+				//canvas.getParent().setVisible(false);
+				canvas.clearDisplay();
 			}
 		});
 

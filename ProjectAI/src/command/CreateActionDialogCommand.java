@@ -7,6 +7,7 @@ import org.eclipse.swt.widgets.Tree;
 
 import Action.Action;
 import Dialog.CreateActionDialog;
+import View.TreeActioDomainView;
 
 
 public class CreateActionDialogCommand implements ICommand {
@@ -30,8 +31,8 @@ public class CreateActionDialogCommand implements ICommand {
 
 	@Override
 	public void execute(Object var1, Object var2) {
-		if (var1 instanceof Tree) {
-			Tree tree = (Tree) var1;
+		if (var1 instanceof TreeActioDomainView) {
+			TreeActioDomainView tree = (TreeActioDomainView) var1;
 			if (var2 instanceof ArrayList<?>) {
 				actions=(ArrayList<Action>)var2;
 				dialog = new CreateActionDialog(tree,actions);

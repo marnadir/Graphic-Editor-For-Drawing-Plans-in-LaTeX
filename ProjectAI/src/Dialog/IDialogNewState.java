@@ -26,7 +26,6 @@ public abstract class IDialogNewState extends IDialog{
 	List list;
 	Text newPrec;
 	Button buttonNeg;
-	protected Composite compositeDialog;
 	protected Composite compositeEditText;
 	protected Text newCond;
 	public Button btnEdit;
@@ -44,64 +43,66 @@ public abstract class IDialogNewState extends IDialog{
 	public void createContent() {
 		// TODO Auto-generated method stub
 		label.setText("Create a new  state");
-		compositeDialog = composite;
-		compositeDialog.setLayout(new GridLayout(3, false));
+		composite.setLayout(new GridLayout(3, false));
 
-		
+		GridData gd = new GridData ();
+		gd.widthHint=100;
+		newPrec = new Text(composite, SWT.SINGLE | SWT.BORDER);
+		newPrec.setLayoutData(gd);
 
-		
-		newPrec = new Text(compositeDialog, SWT.SINGLE | SWT.BORDER);
-
-		buttonNeg = new Button(compositeDialog, SWT.CHECK);
+		buttonNeg = new Button(composite, SWT.CHECK);
 		buttonNeg.setText("neg");
 
-		Button btnAddCond = new Button(compositeDialog, SWT.PUSH);
-		Image icon = new Image(compositeDialog.getDisplay(), ResourceLoader.load("img/add.png"));
+		Button btnAddCond = new Button(composite, SWT.PUSH);
+		Image icon = new Image(composite.getDisplay(), ResourceLoader.load("img/add.png"));
 		btnAddCond.setImage(icon);
 
 		btnAddCond.addListener(SWT.Selection, getAddListener());
+		newPrec.addListener(SWT.FocusIn, new Listener() {
+			public void handleEvent(Event e) {
+				setDefaultButton (btnAddCond);	
+			}
+		});
 		
+		list = new List (composite, SWT.BORDER | SWT.MULTI | SWT.V_SCROLL|SWT.H_SCROLL);
 		
-		list = new List (compositeDialog, SWT.BORDER | SWT.MULTI | SWT.V_SCROLL|SWT.H_SCROLL);
-		
-		Button btnDeletePrec=new Button(compositeDialog, SWT.PUSH);
-		icon = new Image(compositeDialog.getDisplay(), ResourceLoader.load("img/deleteCond.png"));
+		Button btnDeletePrec=new Button(composite, SWT.PUSH);
+		icon = new Image(composite.getDisplay(), ResourceLoader.load("img/deleteCond.png"));
 		btnDeletePrec.setImage(icon);
 		btnDeletePrec.addListener(SWT.Selection, getDelListener());
 		
-		Composite compOrd=new Composite(compositeDialog, SWT.ALL);
+		Composite compOrd=new Composite(composite, SWT.ALL);
 		compOrd.setLayout(new RowLayout(SWT.VERTICAL));
 		
 		Button btnUp=new Button(compOrd, SWT.PUSH);
-		icon = new Image(compositeDialog.getDisplay(), ResourceLoader.load("img/up.png"));
+		icon = new Image(composite.getDisplay(), ResourceLoader.load("img/up.png"));
 		btnUp.setImage(icon);
 		btnUp.setToolTipText("Up");
 		implementBtnUpDown(btnUp);
 		
 		Button btnDown=new Button(compOrd, SWT.PUSH);
-		icon = new Image(compositeDialog.getDisplay(), ResourceLoader.load("img/down.png"));
+		icon = new Image(composite.getDisplay(), ResourceLoader.load("img/down.png"));
 		btnDown.setImage(icon);
 		btnDown.setToolTipText("Down");
 		implementBtnUpDown(btnDown);
 
 		
-
-		newCond=new Text(compositeDialog,  SWT.SINGLE | SWT.BORDER);
-		btnEdit=new Button(compositeDialog, SWT.PUSH);
-		icon = new Image(compositeDialog.getDisplay(),ResourceLoader.load( "img/edit.png"));
+		newCond=new Text(composite,  SWT.SINGLE | SWT.BORDER);
+		newCond.setLayoutData(gd);
+		btnEdit=new Button(composite, SWT.PUSH);
+		icon = new Image(composite.getDisplay(),ResourceLoader.load( "img/edit.png"));
 		btnEdit.setImage(icon);
 		
-		btnEdit.setVisible(false);
+		//btnEdit.setVisible(false);
 		btnEdit.addListener(SWT.Selection, addBtnEditListener());
-		newCond.setVisible(false);
+		//newCond.setVisible(false);
 
 		list.addListener(SWT.Selection,addListListener());
-		GridData gd = new GridData ();
-		gd.widthHint = 50;
-		gd.heightHint=50;
+		gd = new GridData ();
+		gd.heightHint=100;
+		gd.widthHint=100;
 		list.setLayoutData(gd);
-
-		pack();
+		//pack();
 		
 	}
 
@@ -129,9 +130,12 @@ public abstract class IDialogNewState extends IDialog{
 				int index=list.getSelectionIndex();
 				
 				if(index!= -1) {
-					list.setItem(index, newCond.getText());
-					listPCond.set(index, newCond.getText());
-					list.pack();
+					boolean atleastOneAlpha = newCond.getText().matches(".*[a-zA-Z]+.*");
+					if(atleastOneAlpha && !(listPCond.contains(newCond.getText()))) {
+						list.setItem(index, newCond.getText());
+						listPCond.set(index, newCond.getText());
+					}
+					
 				}
 				
 			}
@@ -187,7 +191,8 @@ public abstract class IDialogNewState extends IDialog{
 			public void handleEvent(Event event) {
 				String cond = newPrec.getText();
 				boolean isChecked = buttonNeg.getSelection();
-				if (!(listPCond.contains(cond)) && !cond.equals("")) {
+				boolean atleastOneAlpha = cond.matches(".*[a-zA-Z]+.*");
+				if (!(listPCond.contains(cond)) && atleastOneAlpha) {
 					if (isChecked) {
 						cond = "¬" + cond;
 					}

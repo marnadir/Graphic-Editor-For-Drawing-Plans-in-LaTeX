@@ -45,37 +45,28 @@ public class GoalStateCanvas extends IStateCanvas {
 				if(state.isText) {
 					state.setLenIn(300);
 				}else {
-					state.setLenIn(numCond*30);
+					state.setLenIn(state.getHeight());
 				}
 
 				if(state.isText()) {
 					int val=getTextPosition(avergWidth);
-
-					Rectangle r=new Rectangle(startX-22, startY,20, startY + state.getLenIn());
-					
+					Rectangle r=new Rectangle(startX-22, startY,20, (int) (startY + state.getLenIn()));	
 					e.gc.drawRectangle(r);	  
 					Transform t=new Transform(getDisplay());
-					t.rotate(90);
-					
-					e.gc.setTransform(t);
-					
+					t.rotate(90);	
+					e.gc.setTransform(t);	
 					e.gc.drawString(state.getText(), val, -startX+2);
-					
-					
 					t.rotate(-90);
 					e.gc.setTransform(t);
-					
-					startX=parent.getClientArea().width-22;
-					
+					startX=parent.getClientArea().width-22;	
 				}else {
 					e.gc.setLineWidth(5);
-					e.gc.drawLine(startX-2, startY, startX-2, startY + state.getLenIn());
+					e.gc.drawLine(startX-2, startY, startX-2, (int) (startY + state.getLenIn()));
 					e.gc.setLineWidth(1);
 				}
 				
-				
-				int posY=5+(state.getLenIn()/numCond)/2; 
-				int incr=state.getLenIn()/numCond;
+				int posY=(int) (5+(state.getLenIn()/numCond)/2); 
+				int incr=(int) (state.getLenIn()/numCond);
 				for (int i = 0; i < numCond; i++) {
 					String string = state.getConds().get(i);
 
@@ -96,12 +87,7 @@ public class GoalStateCanvas extends IStateCanvas {
 				}
 			
 				resizeParent();
-				computeSize(getParent().getSize().x,getParent().getSize().y);
-				if(state.getConds().size()==1) {
-					//pack();
-					computeSize(getParent().getSize().x,getParent().getSize().y);
-				}
-				
+				computeSize(getParent().getSize().x,getParent().getSize().y);	
 			}
 		});
 
@@ -115,7 +101,7 @@ public class GoalStateCanvas extends IStateCanvas {
    		  state.setLenIn(stringLenght);
    		  return i;
    	  }else {
-   		  i=(state.getLenIn()-stringLenght)/2;
+   		  i=(int) ((state.getLenIn()-stringLenght)/2);
    		  return i;
    	  }
    	  

@@ -33,7 +33,7 @@ public class LaTexGeneratorStateDomain {
 	/*
 	 * get the source code for STARTL, which represents  conditions 
 	 */
-	public String getSoCodeL(IState stateCanvas) {
+	public String getSoCodeL(IState state) {
 		StringBuilder sb = new StringBuilder();
 		String space="  ";
 		sb.append("% PRIMITIVE");
@@ -46,10 +46,10 @@ public class LaTexGeneratorStateDomain {
 		sb.append(space+"text="+"{\\hspace*"+"{-2mm}"+"},"+"\n");
 		sb.append(space+"pres = {},"+"\n");
 		sb.append(space+"effs = {");
-		sb.append(getTextPrecEffL(stateCanvas.getConds())+"},"+"\n");
-		sb.append(space+"eff length =  "+getLenghtCondL(stateCanvas)+"\n");
-		sb.append(space+"height = 5.5cm"+","+"\n");
-		sb.append(space+"width = 1mm"+""+"\n"+"}"+"\n");
+		sb.append(getTextPrecEffL(state.getConds())+"},"+"\n");
+		sb.append(space+"eff length =  "+getLenghtCondL(state)+"\n");
+		sb.append(space+"height = "+state.getHeiInCm()+"cm,"+"\n");
+		sb.append(space+"width = "+state.getWidInCm()+"cm \n"+"}"+"\n");
 
 		return sb.toString();
 	}
@@ -72,8 +72,8 @@ public class LaTexGeneratorStateDomain {
 		sb.append(space+"effs = {");
 		sb.append(getTextPrecEff(state.getConds())+"},"+"\n");
 		sb.append(space+"eff length =  "+getLenghtConds(state)+"\n");
-		sb.append(space+"height = 5.5cm"+","+"\n");
-		sb.append(space+"width = 1mm"+""+"\n"+"}"+"\n");
+		sb.append(space+"height = "+state.getHeiInCm()+"cm,"+"\n");
+		sb.append(space+"width = "+state.getWidInCm()+"cm \n"+"}"+"\n");
 
 		return sb.toString();
 	}
@@ -93,8 +93,8 @@ public class LaTexGeneratorStateDomain {
 		sb.append(getTextPrecEffL(state.getConds())+"},"+"\n");
 		sb.append(space+"effs = {},"+"\n");
 		sb.append(space+"pre length =  "+getLenghtCondL(state)+"\n");
-		sb.append(space+"height = 5.5cm"+","+"\n");
-		sb.append(space+"width = 1mm"+""+"\n"+"}"+"\n");
+		sb.append(space+"height = "+state.getHeiInCm()+"cm,"+"\n");
+		sb.append(space+"width = "+state.getWidInCm()+"cm \n"+"}"+"\n");
 
 		return sb.toString();
 	}
@@ -114,8 +114,8 @@ public class LaTexGeneratorStateDomain {
 		sb.append(getTextPrecEff(state.getConds())+"},"+"\n");
 		sb.append(space+"effs = {},"+"\n");
 		sb.append(space+"pre length =  "+getLenghtConds(state)+"\n");
-		sb.append(space+"height = 5.5cm"+","+"\n");
-		sb.append(space+"width = 1mm"+""+"\n"+"}"+"\n");
+		sb.append(space+"height = "+state.getHeiInCm()+"cm,"+"\n");
+		sb.append(space+"width = "+state.getWidInCm()+"cm \n"+"}"+"\n");
 
 		return sb.toString();
 	}

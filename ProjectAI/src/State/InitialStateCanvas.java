@@ -39,7 +39,7 @@ public class InitialStateCanvas extends IStateCanvas  {
 				if(state.isText) {
 					state.setLenIn(300);
 				}else {
-					state.setLenIn(state.getWidth());
+					state.setLenIn(state.getHeight());
 				}
 				if(state.isText) {
 					int val=getTextPosition(avergWidth);
@@ -89,10 +89,6 @@ public class InitialStateCanvas extends IStateCanvas  {
 				
 				resizeParent();
 				computeSize(getParent().getSize().x,getParent().getSize().y);
-				if(state.getConds().size()==1) {
-					pack();
-				}
-				// e.gc.drawRectangle(r);
 			}
 		});
 	}

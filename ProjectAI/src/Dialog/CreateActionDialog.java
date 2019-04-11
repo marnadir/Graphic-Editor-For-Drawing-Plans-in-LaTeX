@@ -4,11 +4,14 @@ import java.util.ArrayList;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
@@ -19,6 +22,9 @@ import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
 
 import Action.Action;
+import Action.CanvasAction;
+import View.ActionView;
+import View.TreeActioDomainView;
 import resourceLoader.ResourceLoader;
 
 public class CreateActionDialog extends IDialog {
@@ -42,11 +48,17 @@ public class CreateActionDialog extends IDialog {
 	ArrayList<String> prec;
 	ArrayList<String> effect;
 	Action action;
-	Tree treeActions;
+	TreeActioDomainView treeActions;
 	ArrayList<Action> actions;
+	protected Text newPrecEd;
+	protected Text newEffEd;
+	Button btnEditPrec;
+
+	
+	
 	
 
-	public CreateActionDialog(Tree list,ArrayList<Action> actions) {
+	public CreateActionDialog(TreeActioDomainView list,ArrayList<Action> actions) {
 		super(list.getShell(),SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL | SWT.CENTER);
 		this.treeActions=list;
 		this.actions=actions;
@@ -113,14 +125,21 @@ public class CreateActionDialog extends IDialog {
 
 		actionName = new Text(composite, SWT.SINGLE | SWT.BORDER);
 		gridData = new GridData(GridData.FILL, GridData.FILL, false, false);
-		// gridData.horizontalSpan = 3;
 		actionName.setLayoutData(gridData);
+		actionName.addListener(SWT.FocusIn, new Listener() {
+			public void handleEvent(Event e) {
+				setDefaultButton (okButton);	
+			}
+		});
 
 		Group groupPrec = new Group(composite, SWT.ALL);
 		groupPrec.setText("Precondition");
 		groupPrec.setLayout(new GridLayout(3, false));
 
 		newPrec = new Text(groupPrec, SWT.BORDER);
+		GridData gd1 = new GridData ();
+		gd1.widthHint=100;
+		newPrec.setLayoutData(gd1);
 		buttonNegPrec = new Button(groupPrec, SWT.CHECK);
 		buttonNegPrec.setText("neg");
 
@@ -129,18 +148,54 @@ public class CreateActionDialog extends IDialog {
 		addPrec.setImage(icon);
 		addPrec.addListener(SWT.Selection, addPrecListener());
 
-		listPrec = new List(groupPrec, SWT.BORDER | SWT.MULTI | SWT.V_SCROLL);
-
+		newPrec.addListener(SWT.FocusIn, new Listener() {
+			public void handleEvent(Event e) {
+				setDefaultButton (addPrec);	
+			}
+		});
+		
+		
+		listPrec = new List(groupPrec, SWT.BORDER | SWT.MULTI | SWT.V_SCROLL | SWT.H_SCROLL);
 		Button btnDeletePrec = new Button(groupPrec, SWT.PUSH);
 		icon = new Image(groupPrec.getDisplay(), ResourceLoader.load("img/deleteCond.png"));
 		btnDeletePrec.setImage(icon);
 		btnDeletePrec.addListener(SWT.Selection, getDelPrecListener());
+		
+		
+		Composite compOrd=new Composite(groupPrec, SWT.ALL);
+		compOrd.setLayout(new RowLayout(SWT.VERTICAL));
+		
+		Button btnUp=new Button(compOrd, SWT.PUSH);
+		icon = new Image(composite.getDisplay(), ResourceLoader.load("img/up.png"));
+		btnUp.setImage(icon);
+		btnUp.setToolTipText("Up");
+		implementBtnUpDown(btnUp,listPrec,prec);
+		
+		Button btnDown=new Button(compOrd, SWT.PUSH);
+		icon = new Image(composite.getDisplay(), ResourceLoader.load("img/down.png"));
+		btnDown.setImage(icon);
+		btnDown.setToolTipText("Down");
+		implementBtnUpDown(btnDown,listPrec,prec);
+		
+		
+		newPrecEd=new Text(groupPrec,  SWT.SINGLE | SWT.BORDER);
+		newPrecEd.setLayoutData(gd1);
+		btnEditPrec=new Button(groupPrec, SWT.PUSH);
+		icon = new Image(composite.getDisplay(),ResourceLoader.load( "img/edit.png"));
+		btnEditPrec.setImage(icon);
+		btnEditPrec.addListener(SWT.Selection, addBtnEditListener(listPrec,prec,newPrecEd));
 
+		listPrec.addListener(SWT.Selection,addListListener(listPrec,newPrecEd));
+
+		
+		//Effects part
+		
 		Group groupEff = new Group(composite, SWT.ALL);
 		groupEff.setText("Effect");
 		groupEff.setLayout(new GridLayout(3, false));
 
 		newEff = new Text(groupEff, SWT.BORDER);
+		newEff.setLayoutData(gd1);
 		buttonNegEff = new Button(groupEff, SWT.CHECK);
 		buttonNegEff.setText("neg");
 
@@ -149,13 +204,50 @@ public class CreateActionDialog extends IDialog {
 		addEff.setImage(icon);
 		addEff.addListener(SWT.Selection, addEffListener());
 
-		listEff = new List(groupEff, SWT.BORDER | SWT.MULTI | SWT.V_SCROLL);
+		listEff = new List(groupEff, SWT.BORDER | SWT.MULTI | SWT.V_SCROLL|SWT.H_SCROLL);
+		
+		GridData gd2=new GridData();
+		gd2.heightHint=100;
+		gd2.widthHint=100;
+		listEff.setLayoutData(gd2);
+		listPrec.setLayoutData(gd2);
 
 		Button btnDeleteEff = new Button(groupEff, SWT.PUSH);
 		icon = new Image(composite.getDisplay(), ResourceLoader.load("img/deleteCond.png"));
 		btnDeleteEff.setImage(icon);
 		btnDeleteEff.addListener(SWT.Selection, getDelEffListener());
+		newEff.addListener(SWT.FocusIn, new Listener() {
+			public void handleEvent(Event e) {
+				setDefaultButton (addEff);	
+			}
+		});
+		
+		Composite compOrd2=new Composite(groupEff, SWT.ALL);
+		compOrd2.setLayout(new RowLayout(SWT.VERTICAL));
+		
+		btnUp=new Button(compOrd2, SWT.PUSH);
+		icon = new Image(composite.getDisplay(), ResourceLoader.load("img/up.png"));
+		btnUp.setImage(icon);
+		btnUp.setToolTipText("Up");
+		implementBtnUpDown(btnUp,listEff,effect);
+		
+		btnDown=new Button(compOrd2, SWT.PUSH);
+		icon = new Image(composite.getDisplay(), ResourceLoader.load("img/down.png"));
+		btnDown.setImage(icon);
+		btnDown.setToolTipText("Down");
+		implementBtnUpDown(btnDown,listEff,effect);
+		
+		
+		newEffEd=new Text(groupEff,  SWT.SINGLE | SWT.BORDER);
+		newEffEd.setLayoutData(gd1);
+		btnEditPrec=new Button(groupEff, SWT.PUSH);
+		icon = new Image(composite.getDisplay(),ResourceLoader.load( "img/edit.png"));
+		btnEditPrec.setImage(icon);
+		btnEditPrec.addListener(SWT.Selection, addBtnEditListener(listEff,effect,newEffEd));
+		listEff.addListener(SWT.Selection,addListListener(listEff,newEffEd));
 
+		
+		
 		pack();
 	}
 
@@ -177,6 +269,68 @@ public class CreateActionDialog extends IDialog {
 
 	}
 
+	private Listener addBtnEditListener(List list,ArrayList<String> listCond,Text newCond) {
+		Listener l;
+		l=new Listener() {
+			
+			@Override
+			public void handleEvent(Event event) {
+				 
+				int index=list.getSelectionIndex();
+				String cond=newCond.getText();
+				boolean atleastOneAlpha = cond.matches(".*[a-zA-Z]+.*");
+				if(atleastOneAlpha && !(listCond.contains(cond))) {
+					list.setItem(index, cond);
+					listCond.set(index, cond);
+				}
+				
+			}
+		};
+		return l;
+	}
+	
+	
+	private void implementBtnUpDown(Button btn,List list,ArrayList<String> listPCond) {
+		btn.addListener(SWT.Selection, new Listener() {
+			
+			@Override
+			public void handleEvent(Event event) {
+				
+				int index = list.getSelectionIndex();
+				if(index != -1) {
+					if(btn.getToolTipText().equals("Up")){
+						
+						if(index !=0) {
+							listPCond.add(index-1, listPCond.get(index));
+							listPCond.remove(index+1);
+							String[] stockArr = new String[listPCond.size()];
+							stockArr = listPCond.toArray(stockArr);
+							list.setItems(stockArr);
+							
+						}
+							
+						}else if (btn.getToolTipText().equals("Down")){
+							if(index!= list.getItemCount()-1) {
+								String temp=listPCond.get(index);
+								listPCond.remove(index);
+								listPCond.add(index+1, temp);
+								
+								String[] stockArr = new String[listPCond.size()];
+								stockArr = listPCond.toArray(stockArr);
+								list.setItems(stockArr);
+
+							}
+							
+						}
+				}
+
+				
+				
+				
+			}
+		});
+	}
+	
 	public Listener getDelEffListener() {
 		Listener buttonListener = new Listener() {
 
@@ -249,7 +403,9 @@ public class CreateActionDialog extends IDialog {
 
 			@Override
 			public void handleEvent(Event event) {
-				if (!actionName.equals("") && !isAlreadyCreated(actionName.getText())) {
+				boolean atleastOneAlpha = actionName.getText().matches(".*[a-zA-Z]+.*");
+
+				if (atleastOneAlpha && !isAlreadyCreated(actionName.getText())) {
 						action = new Action(actionName.getText(), prec, effect);
 						if(btnPrim.getSelection()) {
 							action.setIsFett(true);
@@ -285,6 +441,7 @@ public class CreateActionDialog extends IDialog {
 						
 						setVisible(false);
 						treeActions.pack();
+						drawAction();
 				}
 			}
 		};
@@ -292,7 +449,26 @@ public class CreateActionDialog extends IDialog {
 		return btn;
 	}
 
-	public boolean isAlreadyCreated(String actionName) {
+	private void drawAction() {
+		ActionView actionView=treeActions.getActionView();
+		Composite containerAction=actionView.getContainerAction();
+		
+		
+		for (Control child : containerAction.getChildren()) {
+			child.dispose();
+		}
+	
+		CanvasAction canvasAction = new CanvasAction(containerAction,
+				SWT.DOUBLE_BUFFERED | SWT.NO_REDRAW_RESIZE, action);
+		canvasAction.draw();
+		canvasAction.addDNDListener();
+		canvasAction.resizeParent();
+		actionView.setContainerAction(containerAction);
+
+	}
+	
+	
+	private boolean isAlreadyCreated(String actionName) {
 		TreeItem[] items=treeActions.getItems();
 
 			for(int i=0;i<items.length;i++) {
@@ -301,6 +477,19 @@ public class CreateActionDialog extends IDialog {
 			}
 			return false;
 	}
+	private Listener addListListener(List list,Text newCond) {
+		Listener l;
+		l=new Listener() {
+			
+			@Override
+			public void handleEvent(Event event) {
+				newCond.setText(list.getItem(list.getSelectionIndex()));
+				
+			}
+		};
+		return l;
+		
+	}
 
-
+	
 }

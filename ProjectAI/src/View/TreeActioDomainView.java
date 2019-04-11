@@ -4,9 +4,8 @@ import java.util.ArrayList;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
-import org.eclipse.swt.layout.FillLayout;
-import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Menu;
@@ -28,17 +27,16 @@ public class TreeActioDomainView extends Tree {
 	MenuItem modifAction;
 	ScrolledComposite parent;
 	ArrayList<Action> actionList;
-	Composite containerAction;
-	Composite domainViewAction;
+	ActionView actionView;
 	
 	
 
 	
-	public TreeActioDomainView(ScrolledComposite parent, int style,Composite domainViewAction) {
+	public TreeActioDomainView(ScrolledComposite parent, int style,ActionView actionView) {
 		super(parent, style);
 		this.parent=parent;
 		actionList=new ArrayList<>();
-		this.domainViewAction=domainViewAction;
+		this.actionView=actionView;
 		createMenu();
 		addListener(SWT.MouseDoubleClick, getListenerList());
 		
@@ -110,23 +108,25 @@ public class TreeActioDomainView extends Tree {
 
 			@Override
 			public void handleEvent(Event event) {
+			
 				TreeItem[] actions =getSelection();
 				if (actions.length > 0) {
+					Composite containerAction=actionView.getContainerAction();
 					TreeItem actionItem = getRoot(actions[0]);
 					Action action = findAction(actionItem.getText());
-					if (containerAction != null) {
-						containerAction.dispose();
-					}
-					containerAction = new Composite(domainViewAction, SWT.BORDER);
-					containerAction.setLayoutData(new GridData(GridData.FILL, GridData.FILL, false, false));
-					containerAction.setLayout(new FillLayout());
-					containerAction.setLocation(15, 150);
 
-					CanvasAction canvasAction = new CanvasAction(containerAction,
-							SWT.DOUBLE_BUFFERED | SWT.NO_REDRAW_RESIZE, action);
-					canvasAction.draw();
-					canvasAction.addDNDListener();
-					canvasAction.resizeParent();
+					if(!alreadyShow(action, containerAction)) {
+						for (Control child : containerAction.getChildren()) {
+							child.dispose();
+						}
+						CanvasAction canvasAction = new CanvasAction(containerAction,
+								 SWT.NO_REDRAW_RESIZE, action);
+						canvasAction.draw();
+						canvasAction.addDNDListener();
+						canvasAction.resizeParent();
+						actionView.setContainerAction(containerAction);
+					}
+					
 
 				}
 
@@ -137,7 +137,16 @@ public class TreeActioDomainView extends Tree {
 		return l;
 	}
 	
-	
+	private boolean alreadyShow(Action action,Composite containerAction) {
+		boolean result = false;
+		if(containerAction.getChildren().length>0) {
+			CanvasAction canvasAction=(CanvasAction) containerAction.getChildren()[0];
+			if(action.getName().equals(canvasAction.getAction().getName())) {
+				result=true;
+			}
+		}
+		return result;
+	}
 	
 	public Listener getListenerModifName() {
 		Listener l = new Listener() {
@@ -228,12 +237,12 @@ public class TreeActioDomainView extends Tree {
 		this.actionList = actionList;
 	}
 	
-	
-	
 
-	public Composite getContainerAction() {
-		return containerAction;
+	public ActionView getActionView() {
+		return actionView;
 	}
+
+
 
 	@Override
 	protected void checkSubclass() {

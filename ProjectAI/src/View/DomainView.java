@@ -110,6 +110,7 @@ public class DomainView {
 		scrolledComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		
 		actionView = new ActionView(part2, SWT.BORDER);
+		actionView.creareContent();
 		
 		
 		treeAction=new TreeActioDomainView(scrolledComposite, SWT.BORDER, actionView);

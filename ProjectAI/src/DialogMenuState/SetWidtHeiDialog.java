@@ -32,12 +32,12 @@ public class SetWidtHeiDialog extends IDialog {
 		Label width = new Label(composite, SWT.ALL);
 		width.setText("Lenght in cm: ");
 		textWidth = new Text(composite, SWT.BORDER);
-		textWidth.setText(state.getWidthInCm());
+		textWidth.setText(state.getHeiInCm());
 	
 		Label height = new Label(composite, SWT.ALL);
 		height.setText("Lenght in cm: ");
 		textHeight = new Text(composite, SWT.BORDER);
-		textHeight.setText(state.getHeiInCm());
+		textHeight.setText(state.getWidInCm());
 		
 		pack();
 		
@@ -52,8 +52,8 @@ public class SetWidtHeiDialog extends IDialog {
 			public void handleEvent(Event event) {
 				
 					if (isNumeric(textWidth.getText())&&isNumeric(textHeight.getText())) {
-						state.setWidFromCm(Double.parseDouble(textWidth.getText()));
-						state.setHeiFromCm(Double.parseDouble(textHeight.getText()));
+						state.setHeigthFromCm(Double.parseDouble(textWidth.getText()));
+						state.setWidFromCm(Double.parseDouble(textHeight.getText()));
 						setVisible(false);
 					}
 			}

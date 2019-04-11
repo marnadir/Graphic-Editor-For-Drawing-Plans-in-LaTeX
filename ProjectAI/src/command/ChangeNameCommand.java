@@ -3,7 +3,6 @@ package command;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
@@ -61,8 +60,8 @@ public class ChangeNameCommand implements ICommand {
 									a.setName(textName.getText());
 									actionTree.setText(textName.getText());
 									TreeActioDomainView tree=(TreeActioDomainView)actionTree.getParent();
-									if(tree.getContainerAction()!=null) {
-										tree.getContainerAction().redraw();
+									if(tree.getActionView().getContainerAction()!=null) {
+										tree.getActionView().getContainerAction().redraw();
 									}
 									//shell.dispose();
 								}

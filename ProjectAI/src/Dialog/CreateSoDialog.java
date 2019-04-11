@@ -30,7 +30,7 @@ public class CreateSoDialog extends IDialogNewState{
 	public void createContent() {
 		super.createContent();
 		label.setText("Create a new initial state");
-		
+		pack();
 	}
 
 	@Override
@@ -42,18 +42,16 @@ public class CreateSoDialog extends IDialogNewState{
 				listPrec=getCond();
 				if (initialStateCanvas == null) {
 					initialState = new InitialState(listPrec);
-					initialStateCanvas = new InitialStateCanvas(compCanvas, SWT.ALL, initialState);
+					initialStateCanvas = new InitialStateCanvas(compCanvas, SWT.BORDER, initialState);
 					initialStateCanvas.addDNDListener();
 					initialStateCanvas.getState().generateLatexCodeDomain();
 					initialStateCanvas.getState().getLatexCodeDomain();
 				}
 				if (listPrec != null) {
 					initialState.updateConds(listPrec);
-					if (listPrec.size() > 0) {
-						initialStateCanvas.draw();
-						//initialStateCanvas.pack();
-						setVisible(false);
-					}
+					initialStateCanvas.draw();
+					setVisible(false);
+					
 				}
 
 			}
