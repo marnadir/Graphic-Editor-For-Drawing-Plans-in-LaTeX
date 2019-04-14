@@ -3,6 +3,7 @@ package View;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.RowData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 
@@ -13,11 +14,12 @@ public class InitialStateView extends Group{
 	
 	public InitialStateView(Composite parent, int style) {
 		super(parent, style);
-		
+		this.parent=parent;
+		//setLayout();
 	}
 
 	public void setLayout() {
-		
+		setLayoutData(new RowData(200, 200));
 	}
 
 	public void createContent() {

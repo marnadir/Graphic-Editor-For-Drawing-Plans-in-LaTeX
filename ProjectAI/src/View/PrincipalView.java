@@ -59,6 +59,7 @@ public class PrincipalView {
 
 		domainView = new DomainView(sashForm);
 		domainView.createContent();
+		domainView.setPrincipalView(this);
 
 		sashForm2 = new SashForm(sashForm, SWT.VERTICAL);
 		sashForm.setWeights(new int[] { 1, 3 });
@@ -166,6 +167,10 @@ public class PrincipalView {
 			}
 		}
 
+	}
+
+	public PlanView getPlanView() {
+		return planView;
 	}
 
 

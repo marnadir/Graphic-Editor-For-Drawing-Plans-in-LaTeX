@@ -8,6 +8,7 @@ import org.eclipse.swt.widgets.Composite;
 public class ActionView extends Composite {
 	
 	Composite containerAction;
+	DomainView domainView;
 
 	public ActionView(Composite parent, int style) {
 		super(parent, style);
@@ -35,8 +36,16 @@ public class ActionView extends Composite {
 	public void setContainerAction(Composite containerAction) {
 		this.containerAction = containerAction;
 	}
+
+	public void setDomainView(DomainView domainView) {
+		this.domainView = domainView;
+	}
+
+	public DomainView getDomainView() {
+		return domainView;
+	}
 	
-	
+
 	
 	
 }

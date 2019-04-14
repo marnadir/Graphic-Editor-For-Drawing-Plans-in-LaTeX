@@ -1,14 +1,17 @@
 package Dialog;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.layout.FormLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
+import org.eclipse.swt.widgets.Monitor;
 import org.eclipse.swt.widgets.Shell;
 
 public abstract class IDialog  extends Shell{
@@ -46,21 +49,36 @@ public abstract class IDialog  extends Shell{
 		setLayout (form);
 		
 		FormData compositeData = new FormData ();
-		compositeData.top = new FormAttachment (label, 8);
-		composite.setLayoutData (compositeData);
-		
-		FormData okData = new FormData ();
-		okData.top = new FormAttachment (composite, 8);
-		okButton.setLayoutData (okData);
-		
-		FormData cancelData = new FormData ();
-		cancelData.left = new FormAttachment (okButton, 8);
-		cancelData.top = new FormAttachment (okButton, 0, SWT.TOP);
-		cancelButton.setLayoutData (cancelData);
+		compositeData.top = new FormAttachment(label, 8);
+		composite.setLayoutData(compositeData);
 
-		setDefaultButton (okButton);
-		pack ();
-		open ();
+		FormData okData = new FormData();
+		okData.top = new FormAttachment(composite, 8);
+		okButton.setLayoutData(okData);
+
+		FormData cancelData = new FormData();
+		cancelData.left = new FormAttachment(okButton, 8);
+		cancelData.top = new FormAttachment(okButton, 0, SWT.TOP);
+		cancelButton.setLayoutData(cancelData);
+
+		setDefaultButton(okButton);
+		pack();
+
+		Monitor primary = getShell().getDisplay().getPrimaryMonitor();
+
+		/** get the size of the screen */
+		Rectangle bounds = getParent().getBounds();
+
+		/** get the size of the window */
+		Rectangle rect = getBounds();
+
+		/** calculate the centre */
+		int x = bounds.x + (bounds.width - rect.width) / 3;
+		int y = bounds.y + (bounds.height - rect.height) / 3;
+		
+		setLocation(x,y);
+
+		open();
 	}
 	
 	public abstract void createContent();	

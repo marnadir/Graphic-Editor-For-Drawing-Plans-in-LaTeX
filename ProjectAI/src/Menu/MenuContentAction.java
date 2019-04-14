@@ -3,6 +3,7 @@ package Menu;
 
 import java.util.ArrayList;
 
+import org.bouncycastle.tsp.GenTimeAccuracy;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MenuDetectEvent;
 import org.eclipse.swt.events.MenuDetectListener;
@@ -15,12 +16,17 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
+import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Text;
 
+import Action.Action;
 import Action.GlobalValue;
 import Action.ICanvasNode;
 import Action.Node;
 import Dialog.IDialog;
+import Dialog.InitializationVariableDialog;
+import PlanPart.LinkCanvas;
+import PlanPart.OrderConstrain;
 import PlanPart.Oval;
 import PlanPart.PlanContent;
 
@@ -39,29 +45,96 @@ public class MenuContentAction implements MenuDetectListener {
 		canvas.setMenu(m);
 
 		MenuItem c = new MenuItem(m, SWT.ALL);
-		c.setText("Clear");
+		c.setText("Remove Action");
 		c.addListener(SWT.Selection, new Listener() {
 
 			@Override
 			public void handleEvent(Event event) {
 				if(canvas instanceof Node) {
 					if(canvas.getParent().getParent() instanceof PlanContent) {
-						PlanContent contentAction=(PlanContent)canvas.getParent().getParent();
-						contentAction.getActionInPlan().remove(canvas);
+						PlanContent plan=(PlanContent)canvas.getParent().getParent();
+						plan.getActionInPlan().remove(canvas);
 						canvas.getParent().setVisible(false);
 						for (Oval oval : canvas.getOvalList()) {
-							contentAction.getOvalCounter().getListOval().remove(oval);
+							plan.getOvalCounter().getListOval().remove(oval);
 							oval.dispose();
 
 						}
 						canvas.setOvalList(new ArrayList<>());
+						Action a=canvas.getAction();
+						ArrayList<LinkCanvas> links=plan.getLink();
+						ArrayList<LinkCanvas> linksToDelete=new ArrayList<>();
+						for(LinkCanvas link:links) {
+							if(link.getOval1().getNode().getAction().getName().equals(a.getName()) || 
+									link.getOval2().getNode().getAction().getName().equals(a.getName())) {
+								
+								link.setOval1(null);
+								link.setOval2(null);
+								linksToDelete.add(link);
+							}
+						}
+						links.removeAll(linksToDelete);
+						
+						ArrayList<OrderConstrain> orderConstrains=plan.getOrds();
+						ArrayList<OrderConstrain> orderConstrainsToDelete=new ArrayList<>();
+						for(OrderConstrain orderConstrain:orderConstrains) {
+							if(orderConstrain.getCond1().getAction().getName().equals(a.getName()) || 
+									orderConstrain.getCond2().getAction().getName().equals(a.getName())) {
+								
+								orderConstrainsToDelete.add(orderConstrain);
+								orderConstrain.getParent().dispose();
+							}
+						}
+
+						
+						
+						
+						MessageBox messageBox = new MessageBox(canvas
+								.getShell(),
+								SWT.ICON_WARNING |  SWT.OK);
+
+						messageBox.setText("Message");
+						messageBox.setMessage("Removed Action");
+						messageBox.open();
 						canvas.clearDisplay();
 						return;
 					}
 				}
+				
+				MessageBox messageBox = new MessageBox(canvas
+						.getShell(),
+						SWT.ICON_WARNING |  SWT.OK);
+
+				messageBox.setText("Remove Action");
+				messageBox.setMessage("Removed Action");
+				messageBox.open();
 				canvas.clearDisplay();
 			}
 		});
+		
+		
+		
+		if ((canvas.getParent().getParent() instanceof PlanContent)) {
+
+			MenuItem setvariable = new MenuItem(m, SWT.ALL);
+			setvariable.setText("Set-Variables");
+			setvariable.addListener(SWT.Selection, new Listener() {
+
+				@Override
+				public void handleEvent(Event event) {
+					
+					if (actionHasVariable(canvas.getAction())) {
+						InitializationVariableDialog dialog = new InitializationVariableDialog(
+								canvas.getShell(), SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL | SWT.CENTER);
+						dialog.setAction(canvas.getAction());
+						dialog.createContent();
+						dialog.pack();
+					}
+					canvas.redraw();
+
+				}
+			});
+		}
 
 		if (!(canvas.getParent().getParent() instanceof PlanContent)) {
 
@@ -645,6 +718,18 @@ public class MenuContentAction implements MenuDetectListener {
 			});
 		}
 	}
+	
+	private boolean actionHasVariable(Action a) {
+		boolean result=false;
+		String name=a.getName();
+		if(name.contains("(")&& name.contains(",")) {
+			result=true;
+		}
+		
+		return result;
+	
+	}
+	
 	
 	public boolean isNumeric(String str)  
 	{  

@@ -27,7 +27,7 @@ public class MenuConstrain implements MenuDetectListener  {
 		constrain.setMenu(m);
 
 		MenuItem c = new MenuItem(m, SWT.ALL);
-		c.setText("Clear");
+		c.setText("Clear Ordering Constrain");
 		
 		c.addListener(SWT.Selection, new Listener() {
 

@@ -7,20 +7,16 @@ import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontData;
-import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Group;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.TreeItem;
 
 import Action.Action;
 import State.IStateCanvas;
-import resourceLoader.ResourceLoader;
 
 public class DomainView {
 
@@ -38,6 +34,8 @@ public class DomainView {
 	ActionView actionView;
 	TreeActioDomainView treeAction;
 	GlobalOptionView globalOptionView;
+	PrincipalView principalView;
+	
 
 
 
@@ -77,25 +75,16 @@ public class DomainView {
 		firstData.heightHint = 750;
 		stateGroup.setLayoutData(firstData);
 
-		contentCanvas = new Composite(stateGroup, SWT.ALL);
+		ScrolledComposite firstScroll = new ScrolledComposite(stateGroup, SWT.V_SCROLL | SWT.H_SCROLL);
+		firstScroll.setLayout(new GridLayout(1, false));
+		firstScroll.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+
+		contentCanvas = new Composite(firstScroll, SWT.ALL);
 		FillLayout fillLayout = new FillLayout();
 		fillLayout.type = SWT.VERTICAL;
 		contentCanvas.setLayout(fillLayout);
-		
-		
-		Composite test=new Composite(contentCanvas, SWT.BORDER);
-		fillLayout = new FillLayout();
-		fillLayout.type = SWT.VERTICAL;
-		test.setLayout(fillLayout);
-		
-		
-		Composite test2=new Composite(test, SWT.BORDER);
-//		test2.setLayout(new FillLayout());
-		Label initialState = new Label(test2, SWT.ALL);
-		initialState.setText("Initial State: ");
-		initialState.pack();
-		
-		part1 = new Composite(test, SWT.ALL);
+
+		part1 = new Composite(contentCanvas, SWT.ALL);
 		fillLayout = new FillLayout();
 		fillLayout.type = SWT.HORIZONTAL;
 		part1.setLayout(fillLayout);
@@ -124,6 +113,7 @@ public class DomainView {
 		
 		actionView = new ActionView(part2, SWT.BORDER);
 		actionView.creareContent();
+		actionView.setDomainView(this);
 		
 		
 		treeAction=new TreeActioDomainView(scrolledComposite, SWT.BORDER, actionView);
@@ -135,13 +125,10 @@ public class DomainView {
 		scrolledComposite.setAlwaysShowScrollBars(true);
 		scrolledComposite.setMinSize(treeAction.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 		
-		
-		test.setSize(contentCanvas.getSize().x, contentCanvas.getSize().y/2);
-		test.pack();
-//		firstScroll.setContent(contentCanvas);
-//		firstScroll.setExpandHorizontal(true);
-//		firstScroll.setExpandVertical(true);
-//		firstScroll.setMinSize(contentCanvas.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+		firstScroll.setContent(contentCanvas);
+		firstScroll.setExpandHorizontal(true);
+		firstScroll.setExpandVertical(true);
+		firstScroll.setMinSize(contentCanvas.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 
 			
 	}
@@ -216,6 +203,14 @@ public class DomainView {
 
 	public void setGlobalOptionView(GlobalOptionView globalOptionView) {
 		this.globalOptionView = globalOptionView;
+	}
+
+	public void setPrincipalView(PrincipalView principalView) {
+		this.principalView = principalView;
+	}
+
+	public PrincipalView getPrincipalView() {
+		return principalView;
 	}
 
 

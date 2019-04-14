@@ -167,7 +167,7 @@ public class LinkCanvas {
 							if ((p1.x - 11 < pMenu.x && pMenu.x < p1.x + 11)
 									&& (p1.y - 11 < pMenu.y && pMenu.y < p1.y + 11)) {
 								links.get(i).setOval1(null);
-								links.get(i).setOval1(null);
+								links.get(i).setOval2(null);
 								canvasContainer.getLink().remove(links.get(i));
 								MessageBox messageBox = new MessageBox(canvasContainer.getShell(),
 										SWT.ICON_WARNING |  SWT.OK);
@@ -186,7 +186,7 @@ public class LinkCanvas {
 								MessageBox messageBox = new MessageBox(canvasContainer.getShell(),
 										SWT.ICON_WARNING |  SWT.OK);
 
-								messageBox.setText("Clear Link");
+								messageBox.setText("Remove Link");
 								messageBox.setMessage("Link removed");
 								messageBox.open();
 								

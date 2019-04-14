@@ -405,6 +405,8 @@ public class PlanView  extends CTabFolder{
 		
 	}
 
+	
+	
 
 	public DomainView getDomainView() {
 		return domainView;
