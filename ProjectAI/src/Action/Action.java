@@ -1,7 +1,6 @@
 package Action;
 
 import java.io.Serializable;
-import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Locale;
@@ -23,7 +22,6 @@ public class Action implements Serializable {
 	ArrayList<String> effect;
 	CanvasAction paintCanvas;
 	String latexCode;
-	boolean fett;//true fett, false normal
 
 	
 	double widthRect;
@@ -48,14 +46,17 @@ public class Action implements Serializable {
 	
 	boolean isPrimitive;
 	boolean isAbstract;
-	boolean rectRound;
+	boolean borderIsSquare;
+	boolean isFat;//true fett, false normal
+	boolean Isborder;//true is black, false is white
+	boolean defaultAction=true;
+
 
 
 	int numPrec;
 	int numEff;
 	boolean shownCond = false;
 	boolean shownName = true;
-	boolean Isborder=true;
 	boolean isFillColor=false;
 	String colorString;
 	
@@ -89,8 +90,8 @@ public class Action implements Serializable {
 		colorString=a.colorString;
 		isPrimitive=a.isPrimitive;
 		isAbstract=a.isAbstract;
-		fett=a.fett;
-		rectRound=a.rectRound;
+		isFat=a.isFat;
+		borderIsSquare=a.borderIsSquare;
 		
 		
 		
@@ -541,20 +542,30 @@ public class Action implements Serializable {
 	}
 
 	public boolean isFett() {
-		return fett;
+		return isFat;
 	}
 
 	public void setIsFett(boolean fett) {
-		this.fett = fett;
+		this.isFat = fett;
 	}
 
-	public boolean isRectRound() {
-		return rectRound;
+	public boolean isBorderIsSquare() {
+		return borderIsSquare;
 	}
 
-	public void setRectRound(boolean rectRound) {
-		this.rectRound = rectRound;
+	public void setBorderIsSquare(boolean borderIsSquare) {
+		this.borderIsSquare = borderIsSquare;
 	}
+
+	public boolean isDefaultAction() {
+		return defaultAction;
+	}
+
+	public void setDefaultAction(boolean defaultPrim) {
+		this.defaultAction = defaultPrim;
+	}
+
+
 	
 	
 	

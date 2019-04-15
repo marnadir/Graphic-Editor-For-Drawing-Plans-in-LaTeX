@@ -1,16 +1,20 @@
 package View;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Text;
 
 import Action.GlobalValue;
+import resourceLoader.ResourceLoader;
 
 
 public class GlobalOptionView extends Composite{
@@ -20,6 +24,10 @@ public class GlobalOptionView extends Composite{
 	Text tWidth,tHeight,tLenEff,tLenPre,tLenEmpty,tLenCond;
 	Label confermW,confermH,confermP,confermE,confermEmtpy,lEmpty,confermC;
 	Button bntWidth,bntHeigt,bntPrec,bntEff,bntEmty,bntCond;
+	Group primGroup,abstrGroup;
+	Combo cCornerP,cFormP,cBordP;
+	Combo cCornerA,cFormA,cBordA;
+	Label infoP,infoA;
 	
 	
 	DomainView domainView;
@@ -30,21 +38,23 @@ public class GlobalOptionView extends Composite{
 	}
 	
 	public void setLayout() {
-		setLayout(new GridLayout(2, true));
+		setLayout(new GridLayout(2, false));
 	}
 	
 	public void createContent() {
 			
 		Label l=new Label(this, SWT.ALL);
-		l.setText("enable global values, which you want to used");
+		l.setText("enable global values, which you want to use");
 		GridData gridData = new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false);
 		gridData.horizontalSpan = 2;
-	   l.setLayoutData(gridData);
+		l.setLayoutData(gridData);
 		
 		
 		compListdetail=new Composite(this, SWT.ALL);
 		compListdetail.setLayout(new GridLayout(5, false));
-		
+		gridData = new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false);
+		gridData.horizontalSpan = 2;
+		compListdetail.setLayoutData(gridData);
 
 		bntWidth=new Button(compListdetail, SWT.CHECK | SWT.BORDER);
 		bntWidth.addListener(SWT.Selection, getAddBtnWListener(bntWidth));
@@ -127,8 +137,74 @@ public class GlobalOptionView extends Composite{
 		btnOkEmpty1.addListener(SWT.Selection, getOkBtnEmptyListener());
 		confermEmtpy=new Label(compListdetail, SWT.ALL);
 		confermEmtpy.setText("Insert the value and click OK");
+		
+		
+		primGroup=new Group(this, SWT.ALL);
+		primGroup.setLayout(new GridLayout(2,true));
+		primGroup.setText("Primitive");
+		
+		Label lForm=new Label(primGroup, SWT.ALL);
+		lForm.setText("Border Color: ");
+		cFormP=new Combo(primGroup, SWT.DROP_DOWN | SWT.READ_ONLY);
+		String[] items = new String[] { "Black", "White" };
+		cFormP.setItems(items);
+		cFormP.select(0);
+
+		Label lCorner=new Label(primGroup, SWT.ALL);
+		lCorner.setText("Corner: ");
+		cCornerP=new Combo(primGroup, SWT.DROP_DOWN | SWT.READ_ONLY);
+		items = new String[] { "Round", "Square" };
+		cCornerP.setItems(items);
+		cCornerP.select(1);
+		
+		Label  lBord=new Label(primGroup, SWT.ALL);
+		lBord.setText("Fat Border: ");
+		cBordP=new Combo(primGroup, SWT.DROP_DOWN | SWT.READ_ONLY);
+		items = new String[] { "Fat", "Normal" };
+		cBordP.setItems(items);
+		cBordP.select(0);
+
+		Button btnUpdateP=new Button(primGroup, SWT.PUSH);
+		Image icon = new Image(getDisplay(),ResourceLoader.load("img/refresh.png") );
+		btnUpdateP.setImage(icon);
+		infoP=new Label(primGroup, SWT.ALL);
+		btnUpdateP.addListener(SWT.Selection, getPrimListener());
+		
+		
+		abstrGroup=new Group(this, SWT.ALL);
+		abstrGroup.setLayout(new GridLayout(2, true));
+		abstrGroup.setText("Abstract");
+		
+		lForm=new Label(abstrGroup, SWT.ALL);
+		lForm.setText("Border Color: ");
+		cFormA=new Combo(abstrGroup, SWT.DROP_DOWN | SWT.READ_ONLY);
+		items = new String[] { "Black", "White" };
+		cFormA.setItems(items);
+		cFormA.select(0);
+		
+
+		lCorner=new Label(abstrGroup, SWT.ALL);
+		lCorner.setText("Corner: ");
+		cCornerA=new Combo(abstrGroup, SWT.DROP_DOWN | SWT.READ_ONLY);
+		items = new String[] { "Round", "Square" };
+		cCornerA.setItems(items);
+		cCornerA.select(0);
+		
+		lBord=new Label(abstrGroup, SWT.ALL);
+		lBord.setText("Fat Border: ");
+		cBordA=new Combo(abstrGroup, SWT.DROP_DOWN | SWT.READ_ONLY);
+		items = new String[] { "Fat", "Normal" };
+		cBordA.setItems(items);
+		cBordA.select(1);
+		
+		Button btnUpdateA=new Button(abstrGroup, SWT.PUSH);
+		btnUpdateA.setImage(icon);
+		infoA=new Label(abstrGroup, SWT.ALL);
+		btnUpdateA.addListener(SWT.Selection, getAbstrListener());
 		pack();
 		tLenEmpty.setSize(tLenEff.getSize().x, tLenEff.getSize().y);
+		
+		
 	}
 	
 	
@@ -181,6 +257,81 @@ public class GlobalOptionView extends Composite{
 		
 		
 	}
+	
+	
+	
+	private Listener getPrimListener() {
+		Listener l;
+
+		l = new Listener() {
+
+			@Override
+			public void handleEvent(Event event) {
+				infoP.setText("Successfully update");
+				//infoP.pack();
+				if(cFormP.getText().equals("Black")) {
+					GlobalValue.formIsBlackPr=true;
+				}else {
+					GlobalValue.formIsBlackPr=false;
+				}
+				
+				if(cBordP.getText().equals("Fat")) {
+					GlobalValue.borderIsFatPr=true;
+
+				}else {
+					GlobalValue.borderIsFatPr=false;
+
+				}
+				if(cCornerP.getText().equals("Square")) {
+					GlobalValue.cornerIsSquarePr=true;
+				}else {
+					GlobalValue.cornerIsSquarePr=false;
+				}
+				domainView.getContentCanvas().pack();
+
+
+			}
+		};
+
+		return l;
+	}
+	
+	private Listener getAbstrListener() {
+		Listener l;
+
+		l = new Listener() {
+
+			@Override
+			public void handleEvent(Event event) {
+				infoA.setText("Successfully update");
+				//infoA.pack();
+				if(cFormA.getText().equals("Black")) {
+					GlobalValue.formIsBlackAbst=true;
+				}else {
+					GlobalValue.formIsBlackAbst=false;
+				}
+				
+				if(cBordA.getText().equals("Fat")) {
+					GlobalValue.borderIsFatAbst=true;
+
+				}else {
+					GlobalValue.borderIsFatAbst=false;
+
+				}
+				if(cCornerA.getText().equals("Square")) {
+					GlobalValue.cornerIsSquareAbst=true;
+				}else {
+					GlobalValue.cornerIsSquareAbst=false;
+				}
+				domainView.getContentCanvas().pack();
+
+
+			}
+		};
+
+		return l;
+	}
+	
 	
 	private Listener getAddBtnWListener(Button b1) {
 		Listener l;

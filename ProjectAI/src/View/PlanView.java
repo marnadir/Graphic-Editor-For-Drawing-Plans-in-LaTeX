@@ -106,7 +106,7 @@ public class PlanView  extends CTabFolder{
 		
 		ToolItem newConnection=new ToolItem(t, SWT.PUSH);
 		Image icon = new Image(getDisplay(), ResourceLoader.load("img/connection.png"));
-		newConnection.setToolTipText("new Link/Constrain");
+		newConnection.setToolTipText("new Link/Constraint");
 		newConnection.setImage(icon);
 		newConnection.addListener(SWT.Selection, new Listener() {
 			
@@ -121,7 +121,7 @@ public class PlanView  extends CTabFolder{
 		
 		showCondition=new ToolItem(t, SWT.CHECK);
 		icon = new Image(getDisplay(), ResourceLoader.load("img/eye.png"));
-		showCondition.setToolTipText("show/hide condition");
+		showCondition.setToolTipText("show/hide conditions");
 		showCondition.setImage(icon);
 		showCondition.addListener(SWT.Selection,new Listener() {
 			

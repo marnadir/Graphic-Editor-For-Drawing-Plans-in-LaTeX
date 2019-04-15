@@ -64,7 +64,7 @@ public class MenuPrincipalView extends IMenu{
 
 
 		MenuItem menuLines = new MenuItem(menuOption, SWT.PUSH);
-		menuLines.setText("Create Connection");
+		menuLines.setText("Add Ordering/Link");
 		
 		MenuItem tutorial = new MenuItem(menuHelp, SWT.PUSH);
 		tutorial.setText("&Tutorial");

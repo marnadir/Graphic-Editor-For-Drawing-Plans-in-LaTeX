@@ -64,15 +64,9 @@ public abstract class IDialog  extends Shell{
 		setDefaultButton(okButton);
 		pack();
 
-		Monitor primary = getShell().getDisplay().getPrimaryMonitor();
 
-		/** get the size of the screen */
 		Rectangle bounds = getParent().getBounds();
-
-		/** get the size of the window */
 		Rectangle rect = getBounds();
-
-		/** calculate the centre */
 		int x = bounds.x + (bounds.width - rect.width) / 3;
 		int y = bounds.y + (bounds.height - rect.height) / 3;
 		

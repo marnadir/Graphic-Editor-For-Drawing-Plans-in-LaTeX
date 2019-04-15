@@ -66,6 +66,18 @@ public class CanvasAction  extends ICanvasNode{
 
 				int posY = 30;
 				int y = 25;
+				
+				if(action.isDefaultAction()) {
+					if(action.isPrimitive) {
+						action.setIsFett(GlobalValue.borderIsFatPr);
+						action.setIsborder(GlobalValue.formIsBlackPr);
+						action.setBorderIsSquare(GlobalValue.cornerIsSquarePr);
+					}else {
+						action.setIsFett(GlobalValue.borderIsFatAbst);
+						action.setIsborder(GlobalValue.formIsBlackAbst);
+						action.setBorderIsSquare(GlobalValue.cornerIsSquareAbst);
+					}
+				}
 
 
 				for (int i = 0; i < action.getNumPrec(); i++) {
@@ -100,13 +112,13 @@ public class CanvasAction  extends ICanvasNode{
 				if (action.Isborder()) {
 					if(action.isFillColor()) {
 						e.gc.setBackground(getColorSWT());
-						if(action.isRectRound()) {
+						if(!action.isBorderIsSquare()) {
 							e.gc.fillRoundRectangle(rect.x, rect.y, rect.width, rect.height, 10, 10);
 						}else {
 							e.gc.fillRectangle(rect);
 						}
 					}else {
-						if(action.isRectRound()) {
+						if(!action.isBorderIsSquare()) {
 							e.gc.drawRoundRectangle(rect.x, rect.y, rect.width, rect.height, 10, 10);
 
 						}else {

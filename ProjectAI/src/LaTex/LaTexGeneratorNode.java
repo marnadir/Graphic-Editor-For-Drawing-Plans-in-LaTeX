@@ -99,7 +99,7 @@ public class LaTexGeneratorNode {
 	
 	private String isRound(Action a) {
 		StringBuilder sb=new StringBuilder();
-		if(a.isRectRound()) {
+		if(!(a.isBorderIsSquare())) {
 			if(a.isPrimitive()) {
 				sb.append("rounded corners,");
 			}

@@ -39,54 +39,33 @@ public class PositionInPlanView extends Composite{
 
 	public void createContent() {
 		Label l = new Label(this, SWT.ALL);
-		l.setText("setting up of actions/state cordinate ");
+		l.setText("Setting up of actions/state cordinate "+"\n"+"\n"+
+		"-Through the button 'Add new setting' it is possible to align different actions."+"\n"+
+		"Check the actions that you want to align and select the action which the other actions"+"\n"+
+		" must have the same X/Y-cordinate "+"\n"+
+		"-Through the button 'Synchronization State' it possible to align the goal-state to the Y-cordinate of Iniatal-state"+"\n");
 		GridData gridData = new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false);
 		gridData.horizontalSpan = 2;
 		l.setLayoutData(gridData);
 
 		addBtnAction = new Button(this, SWT.ALL);
-		addBtnAction.setText("add new setting");
-//		gridData = new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false);
-//		gridData.horizontalSpan = 2;
-//		addBtnAction.setLayoutData(gridData);
+		addBtnAction.setText("Add new setting");
 		addBtnAction.addListener(SWT.Selection, getAddListener());
 		
 		addBtnState=new Button(this, SWT.ALL);
-		addBtnState.setText("synchronization State");
+		addBtnState.setText("Synchronization state");
 		addBtnState.addListener(SWT.Selection, getAddStateListener());
 		
 		
 
 		Group listSetting=new Group(this, SWT.ALL);
-		listSetting.setText("List of recent Setting");
+		listSetting.setText("List of recent settings");
 		gridData = new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false);
 		gridData.horizontalSpan = 2;
 	    listSetting.setLayoutData(gridData);
 		
 		compositeSetting = new Composite(listSetting, SWT.ALL);
 	    compositeSetting.setLayout(new GridLayout(2, false));
-//		compositeSetting.setLayout(new FillLayout());
-		
-//		compBtn=new Composite(compositeSetting, SWT.BORDER);
-//	    compBtn.setLayout(new FillLayout(SWT.VERTICAL));
-//	    Label l1=new Label(listSetting, SWT.ALL);
-//	    l1.setText("Remove?");
-//	    l1.pack();
-	    
-	    
-//	    compList=new Composite(compositeSetting, SWT.BORDER);
-//	    compList.setLayout(new FillLayout(SWT.VERTICAL));
-//		Label l2=new Label(listSetting, SWT.ALL);
-//		l2.setText("list of Action/state");
-//		l2.pack();
-		
-//		compRef=new Composite(compositeSetting, SWT.BORDER);
-//		compRef.setLayout(new FillLayout(SWT.VERTICAL));
-//		Label l3=new Label(listSetting, SWT.ALL);
-//		l3.setText("reference");
-//		l3.pack();
-		
-		//compositeSetting.pack();
 		compositeSetting.pack();
 		pack();
 	}

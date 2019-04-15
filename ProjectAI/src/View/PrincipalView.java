@@ -74,7 +74,7 @@ public class PrincipalView {
 		consoleView = new ConsoleView(folder, SWT.SCROLL_LINE);
 		consoleView.setLayout();
 		consoleView.createContent(domainView, planView);
-		itemConsole.setText("Console");
+		itemConsole.setText("LaTeX Code");
 		itemConsole.setControl(consoleView);
 		folder.setSelection(itemConsole);
 		
@@ -83,7 +83,7 @@ public class PrincipalView {
 		GlobalOptionView globalOptionView=new GlobalOptionView(folder, SWT.SCROLL_LINE);
 		globalOptionView.setLayout();
 		globalOptionView.createContent();
-		itemGlobal.setText("Global Option");
+		itemGlobal.setText("Global Options");
 		itemGlobal.setControl(globalOptionView);
 		globalOptionView.setDomainView(domainView);
 		

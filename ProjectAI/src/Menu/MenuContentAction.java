@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import org.bouncycastle.tsp.GenTimeAccuracy;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.browser.Browser;
 import org.eclipse.swt.events.MenuDetectEvent;
 import org.eclipse.swt.events.MenuDetectListener;
 import org.eclipse.swt.layout.GridData;
@@ -218,12 +219,12 @@ public class MenuContentAction implements MenuDetectListener {
 			
 			
 			MenuItem frame = new MenuItem(m, SWT.CASCADE);
-			frame.setText("frame");
+			frame.setText("Frame");
 			Menu subM = new Menu(m);
 			frame.setMenu(subM);
 			
 			MenuItem form = new MenuItem(subM, SWT.CASCADE);
-			form.setText("form");
+			form.setText("Border Color");
 			Menu subForm = new Menu(m);
 			form.setMenu(subForm);
 			MenuItem black = new MenuItem(subForm, SWT.ALL);
@@ -238,6 +239,7 @@ public class MenuContentAction implements MenuDetectListener {
 				@Override
 				public void handleEvent(Event event) {
 					canvas.getAction().setIsborder(true);
+					canvas.getAction().setDefaultAction(false);
 					canvas.redraw();
 					
 				}
@@ -248,13 +250,14 @@ public class MenuContentAction implements MenuDetectListener {
 				@Override
 				public void handleEvent(Event event) {
 					canvas.getAction().setIsborder(false);
+					canvas.getAction().setDefaultAction(false);
 					canvas.redraw();
 
 				}
 			});
 			
 			MenuItem menufett = new MenuItem(subM, SWT.CASCADE);
-			menufett.setText("normal/fett");
+			menufett.setText("Fat Border");
 			Menu subfett = new Menu(m);
 			menufett.setMenu(subfett);
 			MenuItem normal = new MenuItem(subfett, SWT.ALL);
@@ -264,18 +267,20 @@ public class MenuContentAction implements MenuDetectListener {
 				@Override
 				public void handleEvent(Event event) {
 					canvas.getAction().setIsFett(false);
+					canvas.getAction().setDefaultAction(false);
 					canvas.redraw();
 					
 				}
 			});
 			
 			MenuItem fett = new MenuItem(subfett, SWT.ALL);
-			fett.setText("fett");
+			fett.setText("Fat");
 			fett.addListener(SWT.Selection, new Listener() {
 				
 				@Override
 				public void handleEvent(Event event) {
 					canvas.getAction().setIsFett(true);
+					canvas.getAction().setDefaultAction(false);
 					canvas.redraw();
 					
 				}
@@ -294,7 +299,9 @@ public class MenuContentAction implements MenuDetectListener {
 				
 				@Override
 				public void handleEvent(Event event) {
-					canvas.getAction().setRectRound(true);
+					canvas.getAction().setBorderIsSquare(false);
+					canvas.getAction().setDefaultAction(false);
+
 					canvas.redraw();
 					
 				}
@@ -307,12 +314,27 @@ public class MenuContentAction implements MenuDetectListener {
 				
 				@Override
 				public void handleEvent(Event event) {
-					canvas.getAction().setRectRound(false);
+					canvas.getAction().setBorderIsSquare(true);
+					canvas.getAction().setDefaultAction(false);
+
 					canvas.redraw();
 					
 				}
 			});
 			
+			
+			MenuItem menuDefault = new MenuItem(subM, SWT.CASCADE);
+			menuDefault.setText("Set as Default Action");
+			menuDefault.addListener(SWT.Selection, new Listener() {
+				
+				@Override
+				public void handleEvent(Event event) {
+					canvas.getAction().setDefaultAction(true);
+					canvas.redraw();
+					
+				}
+			});
+		
 			
 			MenuItem setSize = new MenuItem(m, SWT.CASCADE);
 			setSize.setText("Set Size...");

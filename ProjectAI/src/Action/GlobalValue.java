@@ -21,6 +21,12 @@ public class GlobalValue implements Serializable{
 	public static String lengthsOfEffs;
 	public static boolean isLengthsOfConds;
 	public static String lengthsOfConds;
+	public static boolean  formIsBlackPr=true;
+	public static boolean cornerIsSquarePr=true;
+	public static boolean borderIsFatPr=true;
+	public static boolean  formIsBlackAbst=true;
+	public static boolean cornerIsSquareAbst=false;
+	public static boolean borderIsFatAbst=false;
 	
 	
 	public static void setValue(ArrayList<Object> g) {
@@ -36,6 +42,14 @@ public class GlobalValue implements Serializable{
 		lengthsOfEffs = (String)g.get(9);
 		isLengthsOfConds =(boolean)g.get(10);
 		lengthsOfConds =(String)g.get(11);
+		formIsBlackPr=(boolean)g.get(12);
+		cornerIsSquarePr=(boolean)g.get(13);
+		borderIsFatPr=(boolean)g.get(14);
+		formIsBlackAbst=(boolean)g.get(15);
+		cornerIsSquareAbst=(boolean)g.get(16);
+		borderIsFatAbst=(boolean)g.get(17);
+
+		
 
 	}
 	

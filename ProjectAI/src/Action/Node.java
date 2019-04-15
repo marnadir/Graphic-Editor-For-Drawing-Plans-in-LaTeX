@@ -76,13 +76,13 @@ public class Node extends ICanvasNode {
 				if (action.Isborder()) {
 					if(action.isFillColor()) {
 						e.gc.setBackground(getColorSWT());
-						if(action.isRectRound()) {
+						if(!action.isBorderIsSquare()) {
 							e.gc.fillRoundRectangle(rect.x, rect.y, rect.width, rect.height, 10, 10);
 						}else {
 							e.gc.fillRectangle(rect);
 						}
 					}else {
-						if(action.isRectRound()) {
+						if(!action.isBorderIsSquare()) {
 							e.gc.drawRoundRectangle(rect.x, rect.y, rect.width, rect.height, 10, 10);
 
 						}else {

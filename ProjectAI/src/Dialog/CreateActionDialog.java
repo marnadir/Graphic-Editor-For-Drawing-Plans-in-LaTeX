@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.RowLayout;
@@ -18,11 +17,11 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
 
 import Action.Action;
 import Action.CanvasAction;
+import Action.GlobalValue;
 import View.ActionView;
 import View.TreeActioDomainView;
 import resourceLoader.ResourceLoader;
@@ -408,9 +407,13 @@ public class CreateActionDialog extends IDialog {
 				if (atleastOneAlpha && !isAlreadyCreated(actionName.getText())) {
 						action = new Action(actionName.getText(), prec, effect);
 						if(btnPrim.getSelection()) {
-							action.setIsFett(true);
+							action.setIsFett(GlobalValue.borderIsFatPr);
+							action.setIsborder(GlobalValue.formIsBlackPr);
+							action.setBorderIsSquare(GlobalValue.cornerIsSquarePr);
 						}else {
-							action.setRectRound(true);
+							action.setIsFett(GlobalValue.borderIsFatAbst);
+							action.setIsborder(GlobalValue.formIsBlackAbst);
+							action.setBorderIsSquare(GlobalValue.cornerIsSquareAbst);
 						}
 						TreeItem item=new TreeItem(treeActions, SWT.BORDER);
 						item.setText(actionName.getText());

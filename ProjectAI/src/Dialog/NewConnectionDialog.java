@@ -42,7 +42,7 @@ public class NewConnectionDialog extends IDialog {
 	@Override
 	public void createContent() {
 
-		label.setText("Create Connection");
+		label.setText("Add Ordering/Link");
 		this.label.pack();
 		composite.setLayout(new GridLayout(1, false));
 		compButton = new Composite(composite, SWT.ALL);

@@ -92,6 +92,16 @@ public class SaveDomainCommand  implements ICommand{
 		
 		arrayList.add(GlobalValue.isLengthsOfConds);
 		arrayList.add(GlobalValue.lengthsOfConds);
+		
+		arrayList.add(GlobalValue.formIsBlackPr);
+		arrayList.add(GlobalValue.cornerIsSquarePr);
+		arrayList.add(GlobalValue.borderIsFatPr);
+		
+		arrayList.add(GlobalValue.formIsBlackAbst);
+		arrayList.add(GlobalValue.cornerIsSquareAbst);
+		arrayList.add(GlobalValue.borderIsFatAbst);
+		
+		
 		return arrayList;
 	}
 
