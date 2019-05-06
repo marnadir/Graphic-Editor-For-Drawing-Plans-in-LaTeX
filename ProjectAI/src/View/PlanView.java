@@ -106,7 +106,7 @@ public class PlanView  extends CTabFolder{
 		
 		ToolItem newConnection=new ToolItem(t, SWT.PUSH);
 		Image icon = new Image(getDisplay(), ResourceLoader.load("img/connection.png"));
-		newConnection.setToolTipText("new Link/Constraint");
+		newConnection.setToolTipText("New link/constraint");
 		newConnection.setImage(icon);
 		newConnection.addListener(SWT.Selection, new Listener() {
 			
@@ -121,7 +121,7 @@ public class PlanView  extends CTabFolder{
 		
 		showCondition=new ToolItem(t, SWT.CHECK);
 		icon = new Image(getDisplay(), ResourceLoader.load("img/eye.png"));
-		showCondition.setToolTipText("show/hide conditions");
+		showCondition.setToolTipText("Show/hide conditions");
 		showCondition.setImage(icon);
 		showCondition.addListener(SWT.Selection,new Listener() {
 			
@@ -193,7 +193,7 @@ public class PlanView  extends CTabFolder{
 		ToolItem savePlan=new ToolItem(t,SWT.PUSH);
 		icon = new Image(getDisplay(), ResourceLoader.load("img/save.ico"));
 		savePlan.setImage(icon);
-		savePlan.setToolTipText("Save Plan");
+		savePlan.setToolTipText("Save plan");
 		savePlan.addListener(SWT.Selection, new Listener() {
 			
 			@Override
@@ -221,7 +221,7 @@ public class PlanView  extends CTabFolder{
 		ToolItem PDFPreview=new ToolItem(t,SWT.PUSH);
 		icon = new Image(getDisplay(),ResourceLoader.load("img/pdf.ico") );
 		PDFPreview.setImage(icon);
-		PDFPreview.setToolTipText("Generete pdf into PdfView");
+		PDFPreview.setToolTipText("Generete pdf into pdfView");
 		
 		PDFPreview.addListener(SWT.Selection, new Listener() {
 			
@@ -337,7 +337,7 @@ public class PlanView  extends CTabFolder{
 		});
 		
 		ToolItem i = new ToolItem(t, SWT.PUSH);
-		i.setToolTipText("add a new Plan");
+		i.setToolTipText("Add a new plan");
 		 icon = new Image(getDisplay(),ResourceLoader.load("img/add-documents.png") );
 		i.setImage(icon);
 		i.addSelectionListener(new SelectionListener() {

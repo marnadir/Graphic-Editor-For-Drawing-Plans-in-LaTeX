@@ -1,16 +1,6 @@
 package View;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
-import java.nio.file.Files;
-import java.nio.file.StandardCopyOption;
-import java.nio.file.attribute.BasicFileAttributes;
-import java.nio.file.attribute.FileTime;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import org.eclipse.swt.SWT;
@@ -62,19 +52,13 @@ public class ConsoleViewPlan extends Group {
 		ToolBar toolBarPlan = new ToolBar(this, SWT.FLAT | SWT.WRAP | SWT.RIGHT);
 
 		ToolItem updateTextPlan = new ToolItem(toolBarPlan, SWT.PUSH);
-		updateTextPlan.setText("update");
+		updateTextPlan.setText("Update");
 		Image icon = new Image(getDisplay(),ResourceLoader.load("img/refresh.png") );
 		updateTextPlan.setImage(icon);
 		
 	
-//
-//		ToolItem saveLatex=new ToolItem(toolBarPlan,SWT.PUSH);
-//		saveLatex.setText("save");
-//		icon = new Image(getDisplay(),ResourceLoader.load("img/save.ico") );
-//		saveLatex.setImage(icon);
-		
 		textPlan = new Text(this, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL | SWT.READ_ONLY);
-		textPlan.insert("update data...");
+//		textPlan.insert("");
 		textPlan.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		textPlan.pack();
 
@@ -91,16 +75,6 @@ public class ConsoleViewPlan extends Group {
 			}
 		});
 	
-//		
-//		saveLatex.addListener(SWT.Selection, new Listener() {
-//			
-//			@Override
-//			public void handleEvent(Event event) {
-//				updateView();
-//				
-//				
-//			}
-//		});
 					
 	}
 	public void updateView() {

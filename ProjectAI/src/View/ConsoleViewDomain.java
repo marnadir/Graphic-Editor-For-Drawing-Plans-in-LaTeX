@@ -54,7 +54,7 @@ public class ConsoleViewDomain extends Group{
 		ToolBar toolBarDomain = new ToolBar(this, SWT.FLAT | SWT.WRAP | SWT.RIGHT);
 
 		ToolItem updateTextDomain = new ToolItem(toolBarDomain, SWT.PUSH);
-		updateTextDomain.setText("update");
+		updateTextDomain.setText("Update");
 		Image icon = new Image(getDisplay(), ResourceLoader.load("img/refresh.png"));
 		updateTextDomain.setImage(icon);
 		textDomain = new Text(this, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL | SWT.READ_ONLY);
