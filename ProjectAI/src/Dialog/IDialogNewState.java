@@ -47,8 +47,10 @@ public abstract class IDialogNewState extends IDialog{
 
 		GridData gd = new GridData ();
 		gd.widthHint=100;
-		newPrec = new Text(mainComposite, SWT.SINGLE | SWT.BORDER);
+		newPrec = new Text(mainComposite, SWT.SINGLE | SWT.BORDER | SWT.RESIZE);
 		newPrec.setLayoutData(gd);
+		newPrec.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+
 
 		buttonNeg = new Button(mainComposite, SWT.CHECK);
 		buttonNeg.setText("neg");
@@ -64,8 +66,9 @@ public abstract class IDialogNewState extends IDialog{
 			}
 		});
 		
-		list = new List (mainComposite, SWT.BORDER | SWT.MULTI | SWT.V_SCROLL|SWT.H_SCROLL);
+		list = new List (mainComposite, SWT.BORDER | SWT.MULTI | SWT.V_SCROLL|SWT.H_SCROLL| SWT.RESIZE);
 		
+
 		Button btnDeletePrec=new Button(mainComposite, SWT.PUSH);
 		icon = new Image(mainComposite.getDisplay(), ResourceLoader.load("img/deleteCond.png"));
 		btnDeletePrec.setImage(icon);
@@ -87,8 +90,11 @@ public abstract class IDialogNewState extends IDialog{
 		implementBtnUpDown(btnDown);
 
 		
-		newCond=new Text(mainComposite,  SWT.SINGLE | SWT.BORDER);
+		newCond=new Text(mainComposite,  SWT.SINGLE | SWT.BORDER | SWT.RESIZE);
 		newCond.setLayoutData(gd);
+		newCond.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+
+		
 		btnEdit=new Button(mainComposite, SWT.PUSH);
 		icon = new Image(mainComposite.getDisplay(),ResourceLoader.load( "img/edit.png"));
 		btnEdit.setImage(icon);
@@ -102,6 +108,8 @@ public abstract class IDialogNewState extends IDialog{
 		gd.heightHint=100;
 		gd.widthHint=100;
 		list.setLayoutData(gd);
+		list.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+
 		//pack();
 		
 	}
@@ -201,7 +209,7 @@ public abstract class IDialogNewState extends IDialog{
 					list.pack();
 					layout();
 					newPrec.requestLayout();
-					pack();
+//					pack();
 					newPrec.requestLayout();
 					list.setSize(SWT.MAX, list.getSize().y);
 					setSize(getSize().x+15,getSize().y);

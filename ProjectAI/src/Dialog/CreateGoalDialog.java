@@ -23,7 +23,7 @@ public class CreateGoalDialog extends IDialogNewState{
 	IState goalState;
 	
 	public CreateGoalDialog(Composite compCanvas) {
-		super(compCanvas.getShell(),SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL | SWT.CENTER);
+		super(compCanvas.getShell(),SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL | SWT.CENTER | SWT.RESIZE);
 		this.compCanvas=compCanvas;
 		listEff=this.getCond();
 		

@@ -58,7 +58,7 @@ public class CreateActionDialog extends IDialog {
 	
 
 	public CreateActionDialog(TreeActioDomainView list,ArrayList<Action> actions) {
-		super(list.getShell(),SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL | SWT.CENTER);
+		super(list.getShell(),SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL | SWT.CENTER | SWT.RESIZE);
 		this.treeActions=list;
 		this.actions=actions;
 		prec = new ArrayList<>();
@@ -122,8 +122,8 @@ public class CreateActionDialog extends IDialog {
 		// gridData.horizontalSpan = 3;
 		lNameAct.setLayoutData(gridData);
 
-		actionName = new Text(mainComposite, SWT.SINGLE | SWT.BORDER);
-		gridData = new GridData(GridData.FILL, GridData.FILL, false, false);
+		actionName = new Text(mainComposite, SWT.SINGLE | SWT.BORDER | SWT.RESIZE);
+		gridData = new GridData(GridData.FILL, GridData.FILL, true, true);
 		actionName.setLayoutData(gridData);
 		actionName.addListener(SWT.FocusIn, new Listener() {
 			public void handleEvent(Event e) {
@@ -131,14 +131,16 @@ public class CreateActionDialog extends IDialog {
 			}
 		});
 
-		Group groupPrec = new Group(mainComposite, SWT.ALL);
+		Group groupPrec = new Group(mainComposite, SWT.ALL | SWT.RESIZE);
 		groupPrec.setText("Precondition");
 		groupPrec.setLayout(new GridLayout(3, false));
+		groupPrec.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, true));
 
-		newPrec = new Text(groupPrec, SWT.BORDER);
+		newPrec = new Text(groupPrec, SWT.BORDER | SWT.RESIZE);
 		GridData gd1 = new GridData ();
 		gd1.widthHint=100;
 		newPrec.setLayoutData(gd1);
+		newPrec.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, true));
 		buttonNegPrec = new Button(groupPrec, SWT.CHECK);
 		buttonNegPrec.setText("neg");
 
@@ -154,7 +156,7 @@ public class CreateActionDialog extends IDialog {
 		});
 		
 		
-		listPrec = new List(groupPrec, SWT.BORDER | SWT.MULTI | SWT.V_SCROLL | SWT.H_SCROLL);
+		listPrec = new List(groupPrec, SWT.BORDER | SWT.MULTI | SWT.V_SCROLL | SWT.H_SCROLL |SWT.RESIZE);
 		Button btnDeletePrec = new Button(groupPrec, SWT.PUSH);
 		icon = new Image(groupPrec.getDisplay(), ResourceLoader.load("img/deleteCond.png"));
 		btnDeletePrec.setImage(icon);
@@ -177,8 +179,9 @@ public class CreateActionDialog extends IDialog {
 		implementBtnUpDown(btnDown,listPrec,prec);
 		
 		
-		newPrecEd=new Text(groupPrec,  SWT.SINGLE | SWT.BORDER);
+		newPrecEd=new Text(groupPrec,  SWT.SINGLE | SWT.BORDER | SWT.RESIZE);
 		newPrecEd.setLayoutData(gd1);
+		newPrecEd.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, true));
 		btnEditPrec=new Button(groupPrec, SWT.PUSH);
 		icon = new Image(mainComposite.getDisplay(),ResourceLoader.load( "img/edit.png"));
 		btnEditPrec.setImage(icon);
@@ -189,27 +192,36 @@ public class CreateActionDialog extends IDialog {
 		
 		//Effects part
 		
-		Group groupEff = new Group(mainComposite, SWT.ALL);
+		Group groupEff = new Group(mainComposite, SWT.ALL | SWT.RESIZE);
 		groupEff.setText("Effect");
 		groupEff.setLayout(new GridLayout(3, false));
+		groupEff.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, true));
 
-		newEff = new Text(groupEff, SWT.BORDER);
+
+
+		newEff = new Text(groupEff, SWT.BORDER | SWT.RESIZE);
 		newEff.setLayoutData(gd1);
 		buttonNegEff = new Button(groupEff, SWT.CHECK);
 		buttonNegEff.setText("neg");
+		newEff.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, true));
+
 
 		Button addEff = new Button(groupEff, SWT.PUSH);
 		icon = new Image(mainComposite.getDisplay(), ResourceLoader.load("img/add.png"));
 		addEff.setImage(icon);
 		addEff.addListener(SWT.Selection, addEffListener());
 
-		listEff = new List(groupEff, SWT.BORDER | SWT.MULTI | SWT.V_SCROLL|SWT.H_SCROLL);
+		listEff = new List(groupEff, SWT.BORDER | SWT.MULTI | SWT.V_SCROLL|SWT.H_SCROLL | SWT.RESIZE);
 		
 		GridData gd2=new GridData();
 		gd2.heightHint=100;
 		gd2.widthHint=100;
 		listEff.setLayoutData(gd2);
 		listPrec.setLayoutData(gd2);
+		listPrec.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, true));
+		listEff.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, true));
+
+		
 
 		Button btnDeleteEff = new Button(groupEff, SWT.PUSH);
 		icon = new Image(mainComposite.getDisplay(), ResourceLoader.load("img/deleteCond.png"));
@@ -237,8 +249,10 @@ public class CreateActionDialog extends IDialog {
 		implementBtnUpDown(btnDown,listEff,effect);
 		
 		
-		newEffEd=new Text(groupEff,  SWT.SINGLE | SWT.BORDER);
+		newEffEd=new Text(groupEff,  SWT.SINGLE | SWT.BORDER | SWT.RESIZE);
 		newEffEd.setLayoutData(gd1);
+		newEffEd.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, true));
+
 		btnEditPrec=new Button(groupEff, SWT.PUSH);
 		icon = new Image(mainComposite.getDisplay(),ResourceLoader.load( "img/edit.png"));
 		btnEditPrec.setImage(icon);

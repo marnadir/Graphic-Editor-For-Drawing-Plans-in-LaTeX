@@ -20,7 +20,7 @@ public class CreateSoDialog extends IDialogNewState{
 	IState initialState;
 	
 	public CreateSoDialog(Composite compCanvas) {
-		super(compCanvas.getShell(),SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL | SWT.CENTER);
+		super(compCanvas.getShell(),SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL | SWT.CENTER | SWT.RESIZE);
 		this.compCanvas=compCanvas;
 		
 		
