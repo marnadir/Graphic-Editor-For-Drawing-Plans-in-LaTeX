@@ -1,6 +1,9 @@
 package DialogMenuState;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.ControlAdapter;
+import org.eclipse.swt.events.ControlEvent;
+import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Button;
@@ -17,8 +20,8 @@ import State.IState;
 public class LineVsTextDialog extends IDialog {
 
 	
-	Composite compButton;
 	Composite textButton;
+	Composite compoButton;
 	Button btnText;
 	Text text;
 	IState state;
@@ -58,28 +61,46 @@ public class LineVsTextDialog extends IDialog {
 	@Override
 	public void createContent() {
 		label.setText("Line vs Text");
-		this.label.pack();
-		composite.setLayout(new GridLayout(1, false));
-		compButton = new Composite(composite, SWT.ALL);
-		compButton.setLayout(new RowLayout(SWT.HORIZONTAL));
+		//this.label.pack();
 
-		btnText = new Button(compButton, SWT.RADIO);
+
+		compoButton = new Composite(mainComposite, SWT.NONE );
+		compoButton.setLayout(new RowLayout(SWT.HORIZONTAL));
+		compoButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+
+
+		btnText = new Button(compoButton, SWT.RADIO);
 		btnText.setText("Text");
 
-		Button btnLine = new Button(compButton, SWT.RADIO);
+		Button btnLine = new Button(compoButton, SWT.RADIO);
 		btnLine.setText("Line");
 
-		textButton = new Composite(composite, SWT.ALL);
+		textButton = new Composite(mainComposite, SWT.NONE );
 		textButton.setLayout(new GridLayout(2, false));
+		textButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+
 
 		Label l = new Label(textButton, SWT.ALL);
 		l.setText("Name of state:");
 
-		text = new Text(textButton, SWT.BORDER);
+		text = new Text(textButton, SWT.BORDER| SWT.RESIZE);
+		text.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		text.setText("state");
-		text.setSize(20, 10);
 	
-		btnText.setSelection(true);
+		
+		if(state.isText()) {
+			btnText.setSelection(true);	
+			text.setText(state.getText());
+			text.pack();
+			
+			
+		}else {
+			
+			btnLine.setSelection(true);
+			textButton.setVisible(false);
+
+			
+		}
 
 
 		btnText.addListener(SWT.Selection, new Listener() {
@@ -100,7 +121,10 @@ public class LineVsTextDialog extends IDialog {
 			}
 		});
 
-		pack();
+		
+		mainComposite.requestLayout();
+		
+		
 
 	}
 

@@ -47,7 +47,7 @@ public class ChangePrecDialog extends IDialogNewState{
 		setListPCond(a.getPrec());
 		pack();
 		setSize(250,300);
-		composite.pack();		
+		mainComposite.pack();		
 
 	}
 

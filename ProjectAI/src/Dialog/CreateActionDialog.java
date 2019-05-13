@@ -77,12 +77,12 @@ public class CreateActionDialog extends IDialog {
 	public void createContent() {
 		label.setText("Create a new action");
 
-		composite.setLayout(new GridLayout(2, false));
+		mainComposite.setLayout(new GridLayout(2, false));
 		
-		btnPrim=new  Button(composite, SWT.CHECK);
+		btnPrim=new  Button(mainComposite, SWT.CHECK);
 		btnPrim.setText("Primitive");
 		
-		btnAbst=new  Button(composite, SWT.CHECK);
+		btnAbst=new  Button(mainComposite, SWT.CHECK);
 		btnAbst.setText("Abstract");
 		
 		btnPrim.setSelection(true);
@@ -115,14 +115,14 @@ public class CreateActionDialog extends IDialog {
 		});
 		
 
-		Label lNameAct = new Label(composite, SWT.ALL);
+		Label lNameAct = new Label(mainComposite, SWT.ALL);
 		lNameAct.setText("Name of the action: ");
 
 		GridData gridData = new GridData(GridData.FILL, GridData.FILL, false, false);
 		// gridData.horizontalSpan = 3;
 		lNameAct.setLayoutData(gridData);
 
-		actionName = new Text(composite, SWT.SINGLE | SWT.BORDER);
+		actionName = new Text(mainComposite, SWT.SINGLE | SWT.BORDER);
 		gridData = new GridData(GridData.FILL, GridData.FILL, false, false);
 		actionName.setLayoutData(gridData);
 		actionName.addListener(SWT.FocusIn, new Listener() {
@@ -131,7 +131,7 @@ public class CreateActionDialog extends IDialog {
 			}
 		});
 
-		Group groupPrec = new Group(composite, SWT.ALL);
+		Group groupPrec = new Group(mainComposite, SWT.ALL);
 		groupPrec.setText("Precondition");
 		groupPrec.setLayout(new GridLayout(3, false));
 
@@ -143,7 +143,7 @@ public class CreateActionDialog extends IDialog {
 		buttonNegPrec.setText("neg");
 
 		Button addPrec = new Button(groupPrec, SWT.PUSH);
-		Image icon = new Image(composite.getDisplay(),ResourceLoader.load("img/add.png"));
+		Image icon = new Image(mainComposite.getDisplay(),ResourceLoader.load("img/add.png"));
 		addPrec.setImage(icon);
 		addPrec.addListener(SWT.Selection, addPrecListener());
 
@@ -165,13 +165,13 @@ public class CreateActionDialog extends IDialog {
 		compOrd.setLayout(new RowLayout(SWT.VERTICAL));
 		
 		Button btnUp=new Button(compOrd, SWT.PUSH);
-		icon = new Image(composite.getDisplay(), ResourceLoader.load("img/up.png"));
+		icon = new Image(mainComposite.getDisplay(), ResourceLoader.load("img/up.png"));
 		btnUp.setImage(icon);
 		btnUp.setToolTipText("Up");
 		implementBtnUpDown(btnUp,listPrec,prec);
 		
 		Button btnDown=new Button(compOrd, SWT.PUSH);
-		icon = new Image(composite.getDisplay(), ResourceLoader.load("img/down.png"));
+		icon = new Image(mainComposite.getDisplay(), ResourceLoader.load("img/down.png"));
 		btnDown.setImage(icon);
 		btnDown.setToolTipText("Down");
 		implementBtnUpDown(btnDown,listPrec,prec);
@@ -180,7 +180,7 @@ public class CreateActionDialog extends IDialog {
 		newPrecEd=new Text(groupPrec,  SWT.SINGLE | SWT.BORDER);
 		newPrecEd.setLayoutData(gd1);
 		btnEditPrec=new Button(groupPrec, SWT.PUSH);
-		icon = new Image(composite.getDisplay(),ResourceLoader.load( "img/edit.png"));
+		icon = new Image(mainComposite.getDisplay(),ResourceLoader.load( "img/edit.png"));
 		btnEditPrec.setImage(icon);
 		btnEditPrec.addListener(SWT.Selection, addBtnEditListener(listPrec,prec,newPrecEd));
 
@@ -189,7 +189,7 @@ public class CreateActionDialog extends IDialog {
 		
 		//Effects part
 		
-		Group groupEff = new Group(composite, SWT.ALL);
+		Group groupEff = new Group(mainComposite, SWT.ALL);
 		groupEff.setText("Effect");
 		groupEff.setLayout(new GridLayout(3, false));
 
@@ -199,7 +199,7 @@ public class CreateActionDialog extends IDialog {
 		buttonNegEff.setText("neg");
 
 		Button addEff = new Button(groupEff, SWT.PUSH);
-		icon = new Image(composite.getDisplay(), ResourceLoader.load("img/add.png"));
+		icon = new Image(mainComposite.getDisplay(), ResourceLoader.load("img/add.png"));
 		addEff.setImage(icon);
 		addEff.addListener(SWT.Selection, addEffListener());
 
@@ -212,7 +212,7 @@ public class CreateActionDialog extends IDialog {
 		listPrec.setLayoutData(gd2);
 
 		Button btnDeleteEff = new Button(groupEff, SWT.PUSH);
-		icon = new Image(composite.getDisplay(), ResourceLoader.load("img/deleteCond.png"));
+		icon = new Image(mainComposite.getDisplay(), ResourceLoader.load("img/deleteCond.png"));
 		btnDeleteEff.setImage(icon);
 		btnDeleteEff.addListener(SWT.Selection, getDelEffListener());
 		newEff.addListener(SWT.FocusIn, new Listener() {
@@ -225,13 +225,13 @@ public class CreateActionDialog extends IDialog {
 		compOrd2.setLayout(new RowLayout(SWT.VERTICAL));
 		
 		btnUp=new Button(compOrd2, SWT.PUSH);
-		icon = new Image(composite.getDisplay(), ResourceLoader.load("img/up.png"));
+		icon = new Image(mainComposite.getDisplay(), ResourceLoader.load("img/up.png"));
 		btnUp.setImage(icon);
 		btnUp.setToolTipText("Up");
 		implementBtnUpDown(btnUp,listEff,effect);
 		
 		btnDown=new Button(compOrd2, SWT.PUSH);
-		icon = new Image(composite.getDisplay(), ResourceLoader.load("img/down.png"));
+		icon = new Image(mainComposite.getDisplay(), ResourceLoader.load("img/down.png"));
 		btnDown.setImage(icon);
 		btnDown.setToolTipText("Down");
 		implementBtnUpDown(btnDown,listEff,effect);
@@ -240,7 +240,7 @@ public class CreateActionDialog extends IDialog {
 		newEffEd=new Text(groupEff,  SWT.SINGLE | SWT.BORDER);
 		newEffEd.setLayoutData(gd1);
 		btnEditPrec=new Button(groupEff, SWT.PUSH);
-		icon = new Image(composite.getDisplay(),ResourceLoader.load( "img/edit.png"));
+		icon = new Image(mainComposite.getDisplay(),ResourceLoader.load( "img/edit.png"));
 		btnEditPrec.setImage(icon);
 		btnEditPrec.addListener(SWT.Selection, addBtnEditListener(listEff,effect,newEffEd));
 		listEff.addListener(SWT.Selection,addListListener(listEff,newEffEd));

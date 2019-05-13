@@ -34,13 +34,13 @@ public class InitializationVariableDialog extends IDialog{
 	@Override
 	public void createContent() {
 		label.setText("Set the name of variables");
-		composite.setLayout(new GridLayout(2, false));
+		mainComposite.setLayout(new GridLayout(2, false));
 		String[] variable2=getVariable(action.getName());
 		
 		for(int i=0;i<variable2.length;i++) {
-			Label l1=new Label(composite, SWT.ALL);
+			Label l1=new Label(mainComposite, SWT.ALL);
 			l1.setText(variable2[i]);
-			Text t1=new Text(composite, SWT.BORDER);
+			Text t1=new Text(mainComposite, SWT.BORDER);
 			textList.add(t1);
 		}
 		

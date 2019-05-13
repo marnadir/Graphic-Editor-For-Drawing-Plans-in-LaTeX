@@ -27,16 +27,16 @@ public class SetWidtHeiDialog extends IDialog {
 	public void createContent() {
 		this.label.setText("set the Conditions-size  ");
 		this.label.pack();
-		composite.setLayout(new GridLayout(2, false));
+		mainComposite.setLayout(new GridLayout(2, false));
 		Button btnCond;	
-		Label width = new Label(composite, SWT.ALL);
+		Label width = new Label(mainComposite, SWT.ALL);
 		width.setText("Lenght in cm: ");
-		textWidth = new Text(composite, SWT.BORDER);
+		textWidth = new Text(mainComposite, SWT.BORDER);
 		textWidth.setText(state.getHeiInCm());
 	
-		Label height = new Label(composite, SWT.ALL);
+		Label height = new Label(mainComposite, SWT.ALL);
 		height.setText("Lenght in cm: ");
-		textHeight = new Text(composite, SWT.BORDER);
+		textHeight = new Text(mainComposite, SWT.BORDER);
 		textHeight.setText(state.getWidInCm());
 		
 		pack();

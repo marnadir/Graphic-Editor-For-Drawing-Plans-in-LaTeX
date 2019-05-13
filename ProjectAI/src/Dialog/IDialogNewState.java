@@ -43,18 +43,18 @@ public abstract class IDialogNewState extends IDialog{
 	public void createContent() {
 		// TODO Auto-generated method stub
 		label.setText("Create a new  state");
-		composite.setLayout(new GridLayout(3, false));
+		mainComposite.setLayout(new GridLayout(3, false));
 
 		GridData gd = new GridData ();
 		gd.widthHint=100;
-		newPrec = new Text(composite, SWT.SINGLE | SWT.BORDER);
+		newPrec = new Text(mainComposite, SWT.SINGLE | SWT.BORDER);
 		newPrec.setLayoutData(gd);
 
-		buttonNeg = new Button(composite, SWT.CHECK);
+		buttonNeg = new Button(mainComposite, SWT.CHECK);
 		buttonNeg.setText("neg");
 
-		Button btnAddCond = new Button(composite, SWT.PUSH);
-		Image icon = new Image(composite.getDisplay(), ResourceLoader.load("img/add.png"));
+		Button btnAddCond = new Button(mainComposite, SWT.PUSH);
+		Image icon = new Image(mainComposite.getDisplay(), ResourceLoader.load("img/add.png"));
 		btnAddCond.setImage(icon);
 
 		btnAddCond.addListener(SWT.Selection, getAddListener());
@@ -64,33 +64,33 @@ public abstract class IDialogNewState extends IDialog{
 			}
 		});
 		
-		list = new List (composite, SWT.BORDER | SWT.MULTI | SWT.V_SCROLL|SWT.H_SCROLL);
+		list = new List (mainComposite, SWT.BORDER | SWT.MULTI | SWT.V_SCROLL|SWT.H_SCROLL);
 		
-		Button btnDeletePrec=new Button(composite, SWT.PUSH);
-		icon = new Image(composite.getDisplay(), ResourceLoader.load("img/deleteCond.png"));
+		Button btnDeletePrec=new Button(mainComposite, SWT.PUSH);
+		icon = new Image(mainComposite.getDisplay(), ResourceLoader.load("img/deleteCond.png"));
 		btnDeletePrec.setImage(icon);
 		btnDeletePrec.addListener(SWT.Selection, getDelListener());
 		
-		Composite compOrd=new Composite(composite, SWT.ALL);
+		Composite compOrd=new Composite(mainComposite, SWT.ALL);
 		compOrd.setLayout(new RowLayout(SWT.VERTICAL));
 		
 		Button btnUp=new Button(compOrd, SWT.PUSH);
-		icon = new Image(composite.getDisplay(), ResourceLoader.load("img/up.png"));
+		icon = new Image(mainComposite.getDisplay(), ResourceLoader.load("img/up.png"));
 		btnUp.setImage(icon);
 		btnUp.setToolTipText("Up");
 		implementBtnUpDown(btnUp);
 		
 		Button btnDown=new Button(compOrd, SWT.PUSH);
-		icon = new Image(composite.getDisplay(), ResourceLoader.load("img/down.png"));
+		icon = new Image(mainComposite.getDisplay(), ResourceLoader.load("img/down.png"));
 		btnDown.setImage(icon);
 		btnDown.setToolTipText("Down");
 		implementBtnUpDown(btnDown);
 
 		
-		newCond=new Text(composite,  SWT.SINGLE | SWT.BORDER);
+		newCond=new Text(mainComposite,  SWT.SINGLE | SWT.BORDER);
 		newCond.setLayoutData(gd);
-		btnEdit=new Button(composite, SWT.PUSH);
-		icon = new Image(composite.getDisplay(),ResourceLoader.load( "img/edit.png"));
+		btnEdit=new Button(mainComposite, SWT.PUSH);
+		icon = new Image(mainComposite.getDisplay(),ResourceLoader.load( "img/edit.png"));
 		btnEdit.setImage(icon);
 		
 		//btnEdit.setVisible(false);

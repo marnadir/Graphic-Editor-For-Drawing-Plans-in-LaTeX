@@ -378,17 +378,17 @@ public class MenuContentAction implements MenuDetectListener {
 						public void createContent() {
 							label.setText("set the Box-size: " + canvas.getAction().getName());
 							label.pack();
-							composite.setLayout(new GridLayout(3, false));
+							mainComposite.setLayout(new GridLayout(3, false));
 
-							Label lWidth = new Label(composite, SWT.ALL);
+							Label lWidth = new Label(mainComposite, SWT.ALL);
 							lWidth.setText("Width in cm: ");
 							
-							textWid = new Text(composite, SWT.BORDER);
+							textWid = new Text(mainComposite, SWT.BORDER);
 							textWid.setText(canvas.getAction().getWidthRectInCm());
 							textWid.setLayoutData(new GridData(40, 20));
 							
 
-							Button btnWidth=new Button(composite, SWT.CHECK);
+							Button btnWidth=new Button(mainComposite, SWT.CHECK);
 							btnWidth.setText("global");
 							btnWidth.setVisible(false);
 							
@@ -422,13 +422,13 @@ public class MenuContentAction implements MenuDetectListener {
 							});
 							
 
-							Label lHeight = new Label(composite, SWT.ALL);
+							Label lHeight = new Label(mainComposite, SWT.ALL);
 							lHeight.setText("Height in cm: ");
-							textHei = new Text(composite, SWT.BORDER);
+							textHei = new Text(mainComposite, SWT.BORDER);
 						    textHei.setText(canvas.getAction().getHeightRectInCm());
 							textHei.setLayoutData(new GridData(40, 20));
 							
-							Button btnHeight=new Button(composite, SWT.CHECK);
+							Button btnHeight=new Button(mainComposite, SWT.CHECK);
 							btnHeight.setText("global");
 							btnHeight.setVisible(false);
 							
@@ -515,16 +515,16 @@ public class MenuContentAction implements MenuDetectListener {
 						public void createContent() {
 							label.setText("set the PrecLine-size of the action: " + canvas.getAction().getName());
 							label.pack();
-							composite.setLayout(new GridLayout(3, false));
+							mainComposite.setLayout(new GridLayout(3, false));
 
 							Button btnPrec;
 							
 							if (canvas.getAction().isShownCond()) {
-								Label lWidth = new Label(composite, SWT.ALL);
+								Label lWidth = new Label(mainComposite, SWT.ALL);
 								lWidth.setText("Lenght in cm: ");
-								textPrec = new Text(composite, SWT.BORDER);
+								textPrec = new Text(mainComposite, SWT.BORDER);
 								textPrec.setText(canvas.getAction().getLengthPrecInCm());
-								btnPrec=new Button(composite, SWT.CHECK);
+								btnPrec=new Button(mainComposite, SWT.CHECK);
 								btnPrec.setText("global");
 								btnPrec.setVisible(false);
 //								Label info = new Label(composite, SWT.BORDER);
@@ -533,11 +533,11 @@ public class MenuContentAction implements MenuDetectListener {
 //								gridData.horizontalSpan = 2;
 //								info.setLayoutData(gridData);
 							} else {
-								Label lWidth = new Label(composite, SWT.ALL);
+								Label lWidth = new Label(mainComposite, SWT.ALL);
 								lWidth.setText("Lenght in cm: ");
-								textPrec = new Text(composite, SWT.BORDER);
+								textPrec = new Text(mainComposite, SWT.BORDER);
 								textPrec.setText(canvas.getAction().getStandardLengthPrecInCm());
-								btnPrec=new Button(composite, SWT.CHECK);
+								btnPrec=new Button(mainComposite, SWT.CHECK);
 								btnPrec.setText("global");
 								btnPrec.setVisible(false);
 //								Label info = new Label(composite, SWT.BORDER);
@@ -647,7 +647,7 @@ public class MenuContentAction implements MenuDetectListener {
 									.setText("set the EffectLine-size of the action: " + canvas.getAction().getName());
 							label.pack();
 							Button btnEff;
-							Composite c = composite;
+							Composite c = mainComposite;
 							c.setLayout(new GridLayout(3, false));
 
 							if (canvas.getAction().isShownCond()) {
@@ -655,7 +655,7 @@ public class MenuContentAction implements MenuDetectListener {
 								lWidth.setText("Lenght in cm: ");
 								textEff = new Text(c, SWT.BORDER);
 								textEff.setText(canvas.getAction().getLengthEffInCm());
-								btnEff=new Button(composite, SWT.CHECK);
+								btnEff=new Button(mainComposite, SWT.CHECK);
 								btnEff.setText("global");
 								btnEff.setVisible(false);
 //								Label info = new Label(c, SWT.BORDER);
@@ -668,7 +668,7 @@ public class MenuContentAction implements MenuDetectListener {
 								lWidth.setText("Lenght in cm: ");
 								textEff = new Text(c, SWT.BORDER);
 								textEff.setText(canvas.getAction().getStandardLengthEffInCm());
-								btnEff=new Button(composite, SWT.CHECK);
+								btnEff=new Button(mainComposite, SWT.CHECK);
 								btnEff.setText("global");
 								btnEff.setVisible(false);
 //								Label info = new Label(c, SWT.BORDER);

@@ -44,8 +44,8 @@ public class NewConnectionDialog extends IDialog {
 
 		label.setText("Add Ordering/Link");
 		this.label.pack();
-		composite.setLayout(new GridLayout(1, false));
-		compButton = new Composite(composite, SWT.ALL);
+		mainComposite.setLayout(new GridLayout(1, false));
+		compButton = new Composite(mainComposite, SWT.ALL);
 		compButton.setLayout(new RowLayout(SWT.HORIZONTAL));
 
 		archBtn = new Button(compButton, SWT.PUSH);
@@ -54,13 +54,13 @@ public class NewConnectionDialog extends IDialog {
 		Button ordBtn = new Button(compButton, SWT.PUSH);
 		ordBtn.setText("Draw Ord");
 
-		compPoint = new Composite(composite, SWT.ALL);
+		compPoint = new Composite(mainComposite, SWT.ALL);
 		compPoint.setLayout(new GridLayout());
 		l1 = new Label(compPoint, SWT.ALL);
 		l2 = new Label(compPoint, SWT.ALL);
 		compPoint.setVisible(false);
 		
-		compInfo=new Group(composite, SWT.ALL);
+		compInfo=new Group(mainComposite, SWT.ALL);
 		compInfo.setLayout(new GridLayout());
 		compInfo.setText("Info");
 		info=new Label(compInfo, SWT.ALL);
@@ -91,7 +91,7 @@ public class NewConnectionDialog extends IDialog {
 				compPoint.setVisible(true);
 				info.setText("For creating the casual link select"+"\n"+" with double-click the point(cirle)"+"\n"+"of pre/eff cond.");
 				info.pack();
-				composite.pack();
+				mainComposite.pack();
 				pack();
 				link = new LinkCanvas(planView.getPlan());
 				link.addlistener(l1, l2, archBtn);
@@ -119,7 +119,7 @@ public class NewConnectionDialog extends IDialog {
 				compPoint.setVisible(true);
 				info.setText("For creating the ordering constrain"+"\n"+"select with double-click the action ");
 				info.pack();
-				composite.pack();
+				mainComposite.pack();
 				pack();
 
 				Composite comp = new Composite(planView.getPlan(), SWT.ALL);

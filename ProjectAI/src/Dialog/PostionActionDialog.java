@@ -56,14 +56,14 @@ public class PostionActionDialog extends IDialog{
 		label.setText("list of action in Plan");
 
 		
-		composite.setLayout(new GridLayout(1, false));
+		mainComposite.setLayout(new GridLayout(1, false));
 
 		GridData gridData;
 		gridData = new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false);
 		gridData.horizontalSpan = 2;
 		
 		for(Node node:nodes) {
-			Button btn =new Button(composite, SWT.CHECK);
+			Button btn =new Button(mainComposite, SWT.CHECK);
 			btn.setText(node.getAction().getName()+" ["+node.getID()+"]");
 			btn.addListener(SWT.Selection, getbtnSelectionListener(btn));
 			//btn.setLayoutData(gridData);
@@ -77,13 +77,13 @@ public class PostionActionDialog extends IDialog{
 
 		
 		
-		composite.pack();
+		mainComposite.pack();
 		
-		combo=new Combo(composite, SWT.READ_ONLY);
-		combo.setSize(composite.getSize().x,combo.getSize().y);
+		combo=new Combo(mainComposite, SWT.READ_ONLY);
+		combo.setSize(mainComposite.getSize().x,combo.getSize().y);
 		combo.setLayoutData(gridData);
 		
-		Composite comp=new Composite(composite, SWT.ALL);
+		Composite comp=new Composite(mainComposite, SWT.ALL);
 		comp.setLayout(new GridLayout(2, false));
 		
 		btnX=new  Button(comp, SWT.CHECK);
@@ -136,7 +136,7 @@ public class PostionActionDialog extends IDialog{
 			public void handleEvent(Event event) {
 				if(btn.getSelection()) {
 					combo.add(btn.getText());
-					combo.setSize(composite.getSize().x,combo.getSize().y);
+					combo.setSize(mainComposite.getSize().x,combo.getSize().y);
 					
 				}else {
 					combo.remove(btn.getText());

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MenuDetectEvent;
 import org.eclipse.swt.events.MenuDetectListener;
+import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Menu;
@@ -73,7 +74,9 @@ public class MenuContentState implements MenuDetectListener {
 				@Override
 				public void handleEvent(Event event) {
 					LineVsTextDialog dialog = new LineVsTextDialog(canvas.getShell(),
-							SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL | SWT.CENTER);
+							SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL | SWT.CENTER|SWT.RESIZE);
+					dialog.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+
 					dialog.setState(state);
 					dialog.createContent();
 

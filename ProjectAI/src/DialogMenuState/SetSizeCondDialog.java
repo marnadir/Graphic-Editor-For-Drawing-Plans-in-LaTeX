@@ -54,23 +54,23 @@ public class SetSizeCondDialog extends IDialog {
 	public void createContent() {
 		this.label.setText("set the Conditions-size  ");
 		this.label.pack();
-		composite.setLayout(new GridLayout(3, false));
+		mainComposite.setLayout(new GridLayout(3, false));
 		Button btnCond;
 
 		if (state.isShownCond()) {
-			Label lPrec = new Label(composite, SWT.ALL);
+			Label lPrec = new Label(mainComposite, SWT.ALL);
 			lPrec.setText("Lenght in cm: ");
-			textConds = new Text(composite, SWT.BORDER);
+			textConds = new Text(mainComposite, SWT.BORDER);
 			textConds.setText(state.getLengthCondInCm());
-			btnCond = new Button(composite, SWT.CHECK);
+			btnCond = new Button(mainComposite, SWT.CHECK);
 			btnCond.setText("global");
 			btnCond.setVisible(false);
 		} else {
-			Label lWidth = new Label(composite, SWT.ALL);
+			Label lWidth = new Label(mainComposite, SWT.ALL);
 			lWidth.setText("Lenght in cm: ");
-			textConds = new Text(composite, SWT.BORDER);
+			textConds = new Text(mainComposite, SWT.BORDER);
 			textConds.setText((state.getStandardLengthInCm()));
-			btnCond = new Button(composite, SWT.CHECK);
+			btnCond = new Button(mainComposite, SWT.CHECK);
 			btnCond.setText("global");
 			btnCond.setVisible(false);
 
