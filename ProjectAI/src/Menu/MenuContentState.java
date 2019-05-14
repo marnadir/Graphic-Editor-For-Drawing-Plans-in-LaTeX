@@ -123,7 +123,7 @@ public class MenuContentState implements MenuDetectListener {
 				@Override
 				public void handleEvent(Event event) {
 					SetSizeCondDialog dialog = new SetSizeCondDialog(canvas.getShell(),
-							SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL | SWT.CENTER);
+							SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL | SWT.CENTER | SWT.RESIZE);
 					dialog.setState(state);
 					dialog.createContent();
 				}
@@ -136,7 +136,7 @@ public class MenuContentState implements MenuDetectListener {
 				@Override
 				public void handleEvent(Event event) {
 					SetWidtHeiDialog dialog=new SetWidtHeiDialog(canvas.getShell(),
-							SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL | SWT.CENTER);
+							SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL | SWT.CENTER | SWT.RESIZE);
 					dialog.setState(state);
 					dialog.createContent();
 					

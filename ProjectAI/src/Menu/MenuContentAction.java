@@ -126,7 +126,8 @@ public class MenuContentAction implements MenuDetectListener {
 					
 					if (actionHasVariable(canvas.getAction())) {
 						InitializationVariableDialog dialog = new InitializationVariableDialog(
-								canvas.getShell(), SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL | SWT.CENTER);
+								canvas.getShell(), 
+								SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL | SWT.CENTER | SWT.RESIZE);
 						dialog.setAction(canvas.getAction());
 						dialog.createContent();
 						dialog.pack();
@@ -348,7 +349,8 @@ public class MenuContentAction implements MenuDetectListener {
 
 				@Override
 				public void handleEvent(Event event) {
-					IDialog dialog = new IDialog(boxSize.getParent().getShell(),SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL | SWT.CENTER) {
+					IDialog dialog = new IDialog(boxSize.getParent().getShell(),
+							SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL | SWT.CENTER |SWT.RESIZE) {
 
 						Text textWid;
 						Text textHei;
@@ -385,7 +387,7 @@ public class MenuContentAction implements MenuDetectListener {
 							
 							textWid = new Text(mainComposite, SWT.BORDER);
 							textWid.setText(canvas.getAction().getWidthRectInCm());
-							textWid.setLayoutData(new GridData(40, 20));
+							textWid.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 							
 
 							Button btnWidth=new Button(mainComposite, SWT.CHECK);
@@ -426,7 +428,8 @@ public class MenuContentAction implements MenuDetectListener {
 							lHeight.setText("Height in cm: ");
 							textHei = new Text(mainComposite, SWT.BORDER);
 						    textHei.setText(canvas.getAction().getHeightRectInCm());
-							textHei.setLayoutData(new GridData(40, 20));
+						    textHei.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+
 							
 							Button btnHeight=new Button(mainComposite, SWT.CHECK);
 							btnHeight.setText("global");
@@ -484,7 +487,8 @@ public class MenuContentAction implements MenuDetectListener {
 
 				@Override
 				public void handleEvent(Event event) {
-					IDialog dialog = new IDialog(boxSize.getParent().getShell(),SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL | SWT.CENTER) {
+					IDialog dialog = new IDialog(boxSize.getParent().getShell(),
+							SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL | SWT.CENTER | SWT.RESIZE) {
 
 						Text textPrec;
 
@@ -524,27 +528,22 @@ public class MenuContentAction implements MenuDetectListener {
 								lWidth.setText("Lenght in cm: ");
 								textPrec = new Text(mainComposite, SWT.BORDER);
 								textPrec.setText(canvas.getAction().getLengthPrecInCm());
+								textPrec.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+
 								btnPrec=new Button(mainComposite, SWT.CHECK);
 								btnPrec.setText("global");
 								btnPrec.setVisible(false);
-//								Label info = new Label(composite, SWT.BORDER);
-//								info.setText("the minimum lenght is: " + canvas.getAction().getLengthPrecInCm()+"cm");
-//								GridData gridData = new GridData(GridData.CENTER, GridData.CENTER, false, false);
-//								gridData.horizontalSpan = 2;
-//								info.setLayoutData(gridData);
+
 							} else {
 								Label lWidth = new Label(mainComposite, SWT.ALL);
 								lWidth.setText("Lenght in cm: ");
 								textPrec = new Text(mainComposite, SWT.BORDER);
 								textPrec.setText(canvas.getAction().getStandardLengthPrecInCm());
+								textPrec.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+
 								btnPrec=new Button(mainComposite, SWT.CHECK);
 								btnPrec.setText("global");
 								btnPrec.setVisible(false);
-//								Label info = new Label(composite, SWT.BORDER);
-//								info.setText("the default lenght is: " + canvas.getAction().getStandardLengthPrecInCm()+"cm");
-//								GridData gridData = new GridData(GridData.CENTER, GridData.CENTER, false, false);
-//								gridData.horizontalSpan = 2;
-//								info.setLayoutData(gridData);
 
 							}
 							
@@ -567,7 +566,7 @@ public class MenuContentAction implements MenuDetectListener {
 								}
 							}
 							
-							
+
 							btnPrec.addListener(SWT.Selection, new Listener() {
 								
 								@Override
@@ -613,7 +612,8 @@ public class MenuContentAction implements MenuDetectListener {
 
 				@Override
 				public void handleEvent(Event event) {
-					IDialog dialog = new IDialog(boxSize.getParent().getShell(),SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL | SWT.CENTER) {
+					IDialog dialog = new IDialog(boxSize.getParent().getShell(),
+							SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL | SWT.CENTER | SWT.RESIZE) {
 
 						Text textEff;
 
@@ -655,6 +655,8 @@ public class MenuContentAction implements MenuDetectListener {
 								lWidth.setText("Lenght in cm: ");
 								textEff = new Text(c, SWT.BORDER);
 								textEff.setText(canvas.getAction().getLengthEffInCm());
+								textEff.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+
 								btnEff=new Button(mainComposite, SWT.CHECK);
 								btnEff.setText("global");
 								btnEff.setVisible(false);
@@ -668,6 +670,8 @@ public class MenuContentAction implements MenuDetectListener {
 								lWidth.setText("Lenght in cm: ");
 								textEff = new Text(c, SWT.BORDER);
 								textEff.setText(canvas.getAction().getStandardLengthEffInCm());
+								textEff.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+
 								btnEff=new Button(mainComposite, SWT.CHECK);
 								btnEff.setText("global");
 								btnEff.setVisible(false);
@@ -744,7 +748,7 @@ public class MenuContentAction implements MenuDetectListener {
 	private boolean actionHasVariable(Action a) {
 		boolean result=false;
 		String name=a.getName();
-		if(name.contains("(")&& name.contains(",")) {
+		if(name.contains("(") || name.contains(",")) {
 			result=true;
 		}
 		

@@ -112,7 +112,8 @@ public class PlanView  extends CTabFolder{
 			
 			@Override
 			public void handleEvent(Event event) {
-				NewConnectionDialog dialog=new NewConnectionDialog(getShell(), SWT.DIALOG_TRIM | SWT.CENTER);
+				NewConnectionDialog dialog=new NewConnectionDialog(getShell(), 
+						SWT.DIALOG_TRIM | SWT.CENTER | SWT.RESIZE);
 				dialog.setPlanView(getPlanView());
 				dialog.createContent();
 				

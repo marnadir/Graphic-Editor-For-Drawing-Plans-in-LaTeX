@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
@@ -42,6 +43,7 @@ public class InitializationVariableDialog extends IDialog{
 			l1.setText(variable2[i]);
 			Text t1=new Text(mainComposite, SWT.BORDER);
 			textList.add(t1);
+			t1.setLayoutData(new GridData(SWT.FILL,SWT.FILL,true,true));
 		}
 		
 	

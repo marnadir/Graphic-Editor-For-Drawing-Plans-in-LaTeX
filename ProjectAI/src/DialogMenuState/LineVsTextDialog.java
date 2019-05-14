@@ -123,7 +123,8 @@ public class LineVsTextDialog extends IDialog {
 
 		
 		mainComposite.requestLayout();
-		
+		setSize(300,200);
+
 		
 
 	}

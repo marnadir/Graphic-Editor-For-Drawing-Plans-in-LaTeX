@@ -1,6 +1,7 @@
 package DialogMenuState;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Event;
@@ -38,6 +39,10 @@ public class SetWidtHeiDialog extends IDialog {
 		height.setText("Lenght in cm: ");
 		textHeight = new Text(mainComposite, SWT.BORDER);
 		textHeight.setText(state.getWidInCm());
+		
+		textWidth.setLayoutData(new GridData(SWT.FILL, SWT.FILL,true,true));
+		textHeight.setLayoutData(new GridData(SWT.FILL, SWT.FILL,true,true));
+
 		
 		pack();
 		

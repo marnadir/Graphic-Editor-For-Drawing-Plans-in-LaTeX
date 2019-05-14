@@ -26,9 +26,11 @@ public class ChangePrecCommand implements ICommand {
 			if (var2 instanceof TreeItem) {
 				itemRoot = (TreeItem) var2;
 				a = (Action) var1;
-				ChangePrecDialog dialog=new ChangePrecDialog(itemRoot.getParent().getShell(),SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL | SWT.CENTER);
+				ChangePrecDialog dialog=new ChangePrecDialog(itemRoot.getParent().getShell(),
+						SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL | SWT.CENTER | SWT.RESIZE);
 				dialog.setVariable(a, itemRoot);
 				dialog.createContent();
+				dialog.pack();
 			}
 
 		}

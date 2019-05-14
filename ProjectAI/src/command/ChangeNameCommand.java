@@ -31,7 +31,8 @@ public class ChangeNameCommand implements ICommand {
 			TreeItem actionTree = (TreeItem) var1;
 			if (var2 instanceof Action) {
 				Action a = (Action) var2;
-				IDialog dialof = new IDialog(actionTree.getParent().getShell(),SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL | SWT.CENTER) {
+				IDialog dialof = new IDialog(actionTree.getParent().getShell(),
+						SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL | SWT.CENTER |SWT.RESIZE) {
 
 					@Override
 					public void createContent() {
@@ -40,11 +41,7 @@ public class ChangeNameCommand implements ICommand {
 						mainComposite.setLayout(new GridLayout(1, true));
 						textName = new Text(mainComposite, SWT.BORDER);
 						textName.setText(a.getName());
-						textName.setLayoutData(new GridData(200, 20));
-				
-						
-						
-					
+						textName.setLayoutData(new GridData(SWT.FILL, SWT.FILL,true,true));
 						pack();
 						
 

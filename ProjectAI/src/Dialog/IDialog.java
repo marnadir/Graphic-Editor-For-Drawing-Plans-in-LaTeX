@@ -73,7 +73,6 @@ public abstract class IDialog  extends Shell{
 //		open();
 		
 		setLayout(new GridLayout(1, false));
-		setSize(500,250);
 		
 		Composite COMP=new Composite(this, SWT.BORDER);
 		COMP.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));

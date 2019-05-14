@@ -69,8 +69,8 @@ public class PostionActionDialog extends IDialog{
 			//btn.setLayoutData(gridData);
 			buttonList.add(btn);
 			nodeList.add(node);
-			btn.pack();
-			
+			//btn.pack();
+
 			
 		}
 		
@@ -80,8 +80,10 @@ public class PostionActionDialog extends IDialog{
 		mainComposite.pack();
 		
 		combo=new Combo(mainComposite, SWT.READ_ONLY);
-		combo.setSize(mainComposite.getSize().x,combo.getSize().y);
+//		combo.setSize(mainComposite.getSize().x,combo.getSize().y);
 		combo.setLayoutData(gridData);
+		combo.setLayoutData(new GridData(SWT.FILL,SWT.FILL,true,true));
+
 		
 		Composite comp=new Composite(mainComposite, SWT.ALL);
 		comp.setLayout(new GridLayout(2, false));

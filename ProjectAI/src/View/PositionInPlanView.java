@@ -80,7 +80,7 @@ public class PositionInPlanView extends Composite{
 			public void handleEvent(Event event) {
 				
 				PostionActionDialog dialog=new PostionActionDialog(contentPlan.getShell()
-						, SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL | SWT.CENTER);
+						, SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL | SWT.CENTER | SWT.RESIZE);
 				dialog.setNodes(contentPlan.getActionInPlan());
 				dialog.setCompList(compositeSetting);
 				dialog.setContentPlan(contentPlan);

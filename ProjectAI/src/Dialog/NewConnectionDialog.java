@@ -2,6 +2,7 @@ package Dialog;
 
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Button;
@@ -67,6 +68,8 @@ public class NewConnectionDialog extends IDialog {
 		info.setText("Creation of casual link"+"\n"+"or ordering constrain");
 		ordBtn.addListener(SWT.Selection, getOrdBtnList());
 		archBtn.addListener(SWT.Selection, getArchBtnList());
+
+		compInfo.setLayoutData(new GridData(SWT.FILL,SWT.FILL,true,true));
 
 		
 		pack();

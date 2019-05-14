@@ -132,7 +132,8 @@ public class MenuPrincipalView extends IMenu{
 			
 			@Override
 			public void handleEvent(Event event) {
-				NewConnectionDialog dialog=new NewConnectionDialog(getShell(), SWT.DIALOG_TRIM | SWT.CENTER);
+				NewConnectionDialog dialog=new NewConnectionDialog(getShell(), 
+						SWT.DIALOG_TRIM | SWT.CENTER | SWT.RESIZE);
 				dialog.setPlanView(planView);
 				dialog.createContent();
 				
