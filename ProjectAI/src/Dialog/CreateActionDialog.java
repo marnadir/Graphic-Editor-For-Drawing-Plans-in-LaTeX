@@ -457,7 +457,7 @@ public class CreateActionDialog extends IDialog {
 						actions.add(action);
 						
 						setVisible(false);
-						treeActions.pack();
+//						treeActions.pack();
 						drawAction();
 				}
 			}

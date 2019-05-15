@@ -61,6 +61,7 @@ public class ChangeNameCommand implements ICommand {
 										tree.getActionView().getContainerAction().redraw();
 									}
 									//shell.dispose();
+									dispose();
 								}
 
 							}

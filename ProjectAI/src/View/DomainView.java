@@ -13,10 +13,13 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Group;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.TreeItem;
 
 import Action.Action;
 import State.IStateCanvas;
+import State.CreateActionComposite;
+import State.CreateStateComposite;
 
 public class DomainView {
 
@@ -28,7 +31,7 @@ public class DomainView {
 	Composite contentCanvas;
 	InitialStateView initStateView;
 	GoalStateView goalStateView;
-	Composite part1;
+	Group part1;
 	Group part2;
 	Composite contentGoalState;
 	ActionView actionView;
@@ -65,71 +68,83 @@ public class DomainView {
 
 	public void createContent() {
 
-		createStateGroup subOption=new createStateGroup(inside, SWT.ALL,"Creation");
-		subOption.createContent();
 
 		stateGroup = new Group(inside, SWT.NONE);
 		stateGroup.setText("Items for the plan");
 		stateGroup.setLayout(new GridLayout(1, true));
 		GridData firstData = new GridData(SWT.FILL, SWT.FILL, true, true);
-		firstData.heightHint = 750;
 		stateGroup.setLayoutData(firstData);
-
-		ScrolledComposite firstScroll = new ScrolledComposite(stateGroup, SWT.V_SCROLL | SWT.H_SCROLL);
-		firstScroll.setLayout(new GridLayout(1, false));
-		firstScroll.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-
-		contentCanvas = new Composite(firstScroll, SWT.ALL);
+		
+		contentCanvas = new Composite(stateGroup, SWT.NONE);
 		FillLayout fillLayout = new FillLayout();
 		fillLayout.type = SWT.VERTICAL;
 		contentCanvas.setLayout(fillLayout);
-
-		part1 = new Composite(contentCanvas, SWT.ALL);
-		fillLayout = new FillLayout();
-		fillLayout.type = SWT.HORIZONTAL;
-		part1.setLayout(fillLayout);
 		
+		contentCanvas.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
-		initStateView=new InitialStateView(part1, SWT.BORDER);
+		
+		
+		part1 = new Group(contentCanvas, SWT.NONE);
+		part1.setLayout(new GridLayout(1, false));
+		part1.setText("So/Goal state");
+
+
+
+		CreateStateComposite newStateComp=new CreateStateComposite(part1, SWT.ALL,"Initial/Goal");
+		newStateComp.createContent();
+		
+		Composite compViewState=new Composite(part1, SWT.ALL);	
+		compViewState.setLayout(new GridLayout(2, false));
+		compViewState.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+
+		
+		initStateView=new InitialStateView(compViewState, SWT.NONE);
 		initStateView.createContent();
-		//initStateView.setFont(new Font(initStateView.getDisplay(), "Consolas", 10, SWT.CENTER));
 
 		initStateView.setText("Initial State");
-		subOption.setContainerInitialState(initStateView.getContainerInitState());
+		newStateComp.setContainerInitialState(initStateView.getContainerInitState());
+		initStateView.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
 
-		goalStateView=new GoalStateView(part1, SWT.BORDER);
+
+		goalStateView=new GoalStateView(compViewState, SWT.NONE);
 		goalStateView.createContent();
 		goalStateView.setText("Goal State");
-		subOption.setContainerGoalState(goalStateView.getContainerGoalState());
+		newStateComp.setContainerGoalState(goalStateView.getContainerGoalState());
+		goalStateView.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
-		part2 = new Group(contentCanvas, SWT.BORDER);
-		part2.setLayout(new GridLayout(3, true));
+		
+		
+		part2 = new Group(contentCanvas, SWT.NONE);
+		part2.setLayout(new GridLayout(1, false));
 		part2.setText("Actions");
 
-		final ScrolledComposite scrolledComposite = new ScrolledComposite(part2, SWT.V_SCROLL);
-		scrolledComposite.setLayout(new GridLayout());
-		scrolledComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		
-		actionView = new ActionView(part2, SWT.BORDER);
+		CreateActionComposite newActComp=new CreateActionComposite(part2, SWT.ALL, "Action");
+		newActComp.createContent();
+		
+		Composite compViewAction=new Composite(part2, SWT.ALL);	
+		compViewAction.setLayout(new GridLayout(3, true));
+		compViewAction.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		
+		
+		
+		
+		treeAction=new TreeActioDomainView(compViewAction, SWT.BORDER);
+		treeAction.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+
+		actionView = new ActionView(compViewAction, SWT.BORDER);
 		actionView.creareContent();
 		actionView.setDomainView(this);
+		GridData gridData = new GridData(GridData.FILL, GridData.FILL, true, true);
+		gridData.horizontalSpan = 2;
+		actionView.setLayoutData(gridData);
 		
-		
-		treeAction=new TreeActioDomainView(scrolledComposite, SWT.BORDER, actionView);
-		subOption.setTreeAction(treeAction);
-		
-		scrolledComposite.setContent(treeAction);
-		scrolledComposite.setExpandHorizontal(true);
-		scrolledComposite.setExpandVertical(true);
-		scrolledComposite.setAlwaysShowScrollBars(true);
-		scrolledComposite.setMinSize(treeAction.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-		
-		firstScroll.setContent(contentCanvas);
-		firstScroll.setExpandHorizontal(true);
-		firstScroll.setExpandVertical(true);
-		firstScroll.setMinSize(contentCanvas.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+		treeAction.setActionView(actionView);
 
+		newActComp.setTreeAction(treeAction);
+
+	
 			
 	}
 

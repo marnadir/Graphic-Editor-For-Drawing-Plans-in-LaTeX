@@ -32,18 +32,17 @@ public class TreeActioDomainView extends Tree {
 	MenuItem showActionW;
 	MenuItem elimAction;
 	MenuItem modifAction;
-	ScrolledComposite parent;
+	Composite parent;
 	ArrayList<Action> actionList;
 	ActionView actionView;
 	
 	
 
 	
-	public TreeActioDomainView(ScrolledComposite parent, int style,ActionView actionView) {
+	public TreeActioDomainView(Composite parent, int style) {
 		super(parent, style);
 		this.parent=parent;
 		actionList=new ArrayList<>();
-		this.actionView=actionView;
 		createMenu();
 		addListener(SWT.MouseDoubleClick, getListenerList());
 		
@@ -322,6 +321,10 @@ public class TreeActioDomainView extends Tree {
 	}
 
 
+
+	public void setActionView(ActionView actionView) {
+		this.actionView = actionView;
+	}
 
 	@Override
 	protected void checkSubclass() {
