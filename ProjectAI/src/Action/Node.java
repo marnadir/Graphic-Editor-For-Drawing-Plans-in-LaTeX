@@ -99,6 +99,9 @@ public class Node extends ICanvasNode {
 					e.gc.drawString(action.getName(), l, rect.y + rect.height / 3);
 				}
 
+				e.gc.setBackground(getDisplay().getSystemColor(SWT.COLOR_WHITE));
+
+				
 				posY = rect.y + 10;
 				resizeParent();
 				for (int i = 0; i < action.getEffect().size(); i++) {

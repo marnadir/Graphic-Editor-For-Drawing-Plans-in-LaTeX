@@ -47,75 +47,70 @@ public class MenuContentAction implements MenuDetectListener {
 		Menu m = new Menu(canvas);
 		canvas.setMenu(m);
 
-		MenuItem c = new MenuItem(m, SWT.ALL);
-		c.setText("Remove Action");
-		c.addListener(SWT.Selection, new Listener() {
+		if (canvas.getParent().getParent() instanceof PlanContent) {
 
-			@Override
-			public void handleEvent(Event event) {
-				if(canvas instanceof Node) {
-					if(canvas.getParent().getParent() instanceof PlanContent) {
-						PlanContent plan=(PlanContent)canvas.getParent().getParent();
-						plan.getActionInPlan().remove(canvas);
-						canvas.getParent().setVisible(false);
-						for (Oval oval : canvas.getOvalList()) {
-							plan.getOvalCounter().getListOval().remove(oval);
-							oval.dispose();
+			MenuItem c = new MenuItem(m, SWT.ALL);
+			c.setText("Remove Action");
+			c.addListener(SWT.Selection, new Listener() {
 
-						}
-						canvas.setOvalList(new ArrayList<>());
-						Action a=canvas.getAction();
-						ArrayList<LinkCanvas> links=plan.getLink();
-						ArrayList<LinkCanvas> linksToDelete=new ArrayList<>();
-						for(LinkCanvas link:links) {
-							if(link.getOval1().getNode().getAction().getName().equals(a.getName()) || 
-									link.getOval2().getNode().getAction().getName().equals(a.getName())) {
-								
-								link.setOval1(null);
-								link.setOval2(null);
-								linksToDelete.add(link);
+				@Override
+				public void handleEvent(Event event) {
+					if (canvas instanceof Node) {
+						if (canvas.getParent().getParent() instanceof PlanContent) {
+							PlanContent plan = (PlanContent) canvas.getParent().getParent();
+							plan.getActionInPlan().remove(canvas);
+							canvas.getParent().setVisible(false);
+							for (Oval oval : canvas.getOvalList()) {
+								plan.getOvalCounter().getListOval().remove(oval);
+								oval.dispose();
+
 							}
-						}
-						links.removeAll(linksToDelete);
-						
-						ArrayList<OrderConstrain> orderConstrains=plan.getOrds();
-						ArrayList<OrderConstrain> orderConstrainsToDelete=new ArrayList<>();
-						for(OrderConstrain orderConstrain:orderConstrains) {
-							if(orderConstrain.getCond1().getAction().getName().equals(a.getName()) || 
-									orderConstrain.getCond2().getAction().getName().equals(a.getName())) {
-								
-								orderConstrainsToDelete.add(orderConstrain);
-								orderConstrain.getParent().dispose();
+							canvas.setOvalList(new ArrayList<>());
+							Action a = canvas.getAction();
+							ArrayList<LinkCanvas> links = plan.getLink();
+							ArrayList<LinkCanvas> linksToDelete = new ArrayList<>();
+							for (LinkCanvas link : links) {
+								if (link.getOval1().getNode().getAction().getName().equals(a.getName())
+										|| link.getOval2().getNode().getAction().getName().equals(a.getName())) {
+
+									link.setOval1(null);
+									link.setOval2(null);
+									linksToDelete.add(link);
+								}
 							}
+							links.removeAll(linksToDelete);
+
+							ArrayList<OrderConstrain> orderConstrains = plan.getOrds();
+							ArrayList<OrderConstrain> orderConstrainsToDelete = new ArrayList<>();
+							for (OrderConstrain orderConstrain : orderConstrains) {
+								if (orderConstrain.getCond1().getAction().getName().equals(a.getName())
+										|| orderConstrain.getCond2().getAction().getName().equals(a.getName())) {
+
+									orderConstrainsToDelete.add(orderConstrain);
+									orderConstrain.getParent().dispose();
+								}
+							}
+
+							MessageBox messageBox = new MessageBox(canvas.getShell(), SWT.ICON_WARNING | SWT.OK);
+
+							messageBox.setText("Message");
+							messageBox.setMessage("Removed Action");
+							messageBox.open();
+							canvas.getParent().setVisible(false);
+							return;
 						}
-
-						
-						
-						
-						MessageBox messageBox = new MessageBox(canvas
-								.getShell(),
-								SWT.ICON_WARNING |  SWT.OK);
-
-						messageBox.setText("Message");
-						messageBox.setMessage("Removed Action");
-						messageBox.open();
-						canvas.clearDisplay();
-						return;
 					}
-				}
-				
-				MessageBox messageBox = new MessageBox(canvas
-						.getShell(),
-						SWT.ICON_WARNING |  SWT.OK);
 
-				messageBox.setText("Remove Action");
-				messageBox.setMessage("Removed Action");
-				messageBox.open();
-				canvas.clearDisplay();
-			}
-		});
-		
-		
+					MessageBox messageBox = new MessageBox(canvas.getShell(), SWT.ICON_WARNING | SWT.OK);
+
+					messageBox.setText("Remove Action");
+					messageBox.setMessage("Removed Action");
+					messageBox.open();
+					canvas.clearDisplay();
+				}
+			});
+
+		}
 		
 		if ((canvas.getParent().getParent() instanceof PlanContent)) {
 			

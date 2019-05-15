@@ -80,11 +80,8 @@ public class TreeActioDomainView extends Tree {
 
 
 		elimAction.addListener(SWT.Selection, getListenerElimAction());
-
 		modifName.addListener(SWT.Selection, getListenerModifName());
-
 		modifPrec.addListener(SWT.Selection, getListenerModifPrec());
-
 		modifEff.addListener(SWT.Selection, getListenerModifEff());
 	}
 		
@@ -194,11 +191,12 @@ public class TreeActioDomainView extends Tree {
 					Action action = findAction(actionItem.getText());
 
 					if(!alreadyShow(action, containerAction)) {
+						containerAction.setVisible(true);
 						for (Control child : containerAction.getChildren()) {
 							child.dispose();
 						}
 						CanvasAction canvasAction = new CanvasAction(containerAction,
-								 SWT.NO_REDRAW_RESIZE, action);
+								SWT.DOUBLE_BUFFERED | SWT.NO_REDRAW_RESIZE, action);
 						canvasAction.draw();
 						canvasAction.addDNDListener();
 						canvasAction.resizeParent();

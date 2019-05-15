@@ -130,6 +130,7 @@ public class CanvasAction  extends ICanvasNode{
 
 				}
 				
+				
 				e.gc.setLineWidth(0);
 
 				if (action.isShownName()) {
@@ -137,6 +138,9 @@ public class CanvasAction  extends ICanvasNode{
 					e.gc.drawString(action.getName(), l, rect.y + rect.height / 3);
 				}
 
+				e.gc.setBackground(getDisplay().getSystemColor(SWT.COLOR_WHITE));
+
+				
 				posY = rect.y + 10;				
 				for (int i = 0; i < action.getEffect().size(); i++) {
 					int x = rect.x + rect.width;
