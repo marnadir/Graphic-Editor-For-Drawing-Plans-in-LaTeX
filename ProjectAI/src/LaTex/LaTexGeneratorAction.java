@@ -26,7 +26,7 @@ public class LaTexGeneratorAction {
 		if(actionHasVariable(action)) {
 			sb.append(generatAction(action));
 			sb.append("\n");
-			sb.append(generatActionE(action));
+			sb.append(generatActionNoop(action));
 		}else {
 			sb.append(generateActionWoVariable(action));
 			sb.append("\n");
@@ -86,18 +86,18 @@ public class LaTexGeneratorAction {
 //		if(!(a.getName().toLowerCase().contains("No-Op".toLowerCase()) || a.getName().toLowerCase().contains("NoOp".toLowerCase()))) {
 			String space="  ";
 			sb.append("\\scheme");
-			sb.append("{"+a.getName()+"-E}{0}{");
+			sb.append("{"+a.getName()+"-noop}{0}{");
 			sb.append("\n");
 			sb.append(space+"text = " +"{\\textbf{"+(a.getName())+"}()},"+"\n");
 			sb.append(space+"pres = {");
-			sb.append(getTextPrecEffE(a.getPrec())+"},"+"\n");
+			sb.append(getTextPrecEffNoop(a.getPrec())+"},"+"\n");
 			sb.append(space+"effs = {");
-			sb.append(getTextPrecEffE(a.getEffect())+"},"+"\n");
+			sb.append(getTextPrecEffNoop(a.getEffect())+"},"+"\n");
 			if(a.getPrec().size()>0 && a.getPrec()!=null) {
-				sb.append(space+"pre length = "+getLenghtPrecsE(a)+"\n");
+				sb.append(space+"pre length = "+getLenghtPrecsNoop(a)+"\n");
 			}
 			if(a.getEffect().size()>0 && a.getEffect()!=null) {
-				sb.append(space+"eff length = "+getLenghtEffsE(a)+"\n");
+				sb.append(space+"eff length = "+getLenghtEffsNoop(a)+"\n");
 			}
 			sb.append(space+"height = "+getHeigthRect(a)+"\n");
 			sb.append(space+"width = "+getWidthRect(a)+"\n"+"}"+"\n");
@@ -133,7 +133,7 @@ public class LaTexGeneratorAction {
 	}
 	
 	
-	public String generatActionE(Action a) {
+	public String generatActionNoop(Action a) {
 		StringBuilder sb = new StringBuilder();
 		String space="  ";
 		sb.append("% PRIMITIVE");
@@ -145,11 +145,11 @@ public class LaTexGeneratorAction {
 		
 		sb.append(space+"text = "+"{\\textbf"+getText(a.getName())+"},"+"\n");
 		sb.append(space+"pres = {");
-		sb.append(getTextPrecEffE(a.getPrec())+"},"+"\n");
+		sb.append(getTextPrecEffNoop(a.getPrec())+"},"+"\n");
 		sb.append(space+"effs = {");
-		sb.append(getTextPrecEffE(a.getEffect())+"},"+"\n");
-		sb.append(space+"pre length = "+getLenghtPrecsE(a)+"\n");
-		sb.append(space+"eff length = "+getLenghtEffsE(a)+"\n");
+		sb.append(getTextPrecEffNoop(a.getEffect())+"},"+"\n");
+		sb.append(space+"pre length = "+getLenghtPrecsNoop(a)+"\n");
+		sb.append(space+"eff length = "+getLenghtEffsNoop(a)+"\n");
 		sb.append(space+"height = "+getHeigthRect(a)+"\n");
 		sb.append(space+"width = "+getWidthRect(a)+"\n"+"}"+"\n");
 
@@ -167,7 +167,7 @@ public class LaTexGeneratorAction {
 		StringBuilder sb=new StringBuilder();
 		sb.append("{"+name[0]);
 		if(E) {
-			sb.append("-E");
+			sb.append("-noop");
 		}
 		sb.append("}");
 		sb.append("{"+num+"}");
@@ -224,7 +224,7 @@ public class LaTexGeneratorAction {
 		return sb.toString();
 	}
 	
-	public String getTextPrecEffE(ArrayList<String> cond) {
+	public String getTextPrecEffNoop(ArrayList<String> cond) {
 		String space="  ";
 		StringBuilder sb=new StringBuilder();
 		if(cond.size()>0) {
@@ -323,7 +323,7 @@ public class LaTexGeneratorAction {
 		return sb.toString();		
 	}
 	
-	public String getLenghtPrecsE(Action a) {
+	public String getLenghtPrecsNoop(Action a) {
 		
 		StringBuilder sb=new StringBuilder();
 		
@@ -349,7 +349,7 @@ public class LaTexGeneratorAction {
 		return sb.toString();
 	}
 	
-	public String getLenghtEffsE(Action a) {
+	public String getLenghtEffsNoop(Action a) {
 
 		StringBuilder sb = new StringBuilder();
 

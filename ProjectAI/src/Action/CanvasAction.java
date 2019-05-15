@@ -23,6 +23,7 @@ public class CanvasAction  extends ICanvasNode{
 	
 	public CanvasAction(Composite parent, int style, Action a) {
 		super(parent, style, a);
+		this.action = a;
 		this.style=style;
 		// TODO Auto-generated constructor stub
 	}

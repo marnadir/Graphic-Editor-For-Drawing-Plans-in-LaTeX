@@ -53,7 +53,7 @@ public class PostionActionDialog extends IDialog{
 
 	@Override
 	public void createContent() {
-		label.setText("list of action in Plan");
+		label.setText("List of actions in plan");
 
 		
 		mainComposite.setLayout(new GridLayout(1, false));

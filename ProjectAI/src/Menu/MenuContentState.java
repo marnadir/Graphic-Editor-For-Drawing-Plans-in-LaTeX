@@ -11,10 +11,6 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 
-
-import DialogMenuState.LineVsTextDialog;
-import DialogMenuState.SetSizeCondDialog;
-import DialogMenuState.SetWidtHeiDialog;
 import PlanPart.Oval;
 import PlanPart.PlanContent;
 import State.GoalStateCanvas;
@@ -22,6 +18,9 @@ import State.IState;
 import State.IStateCanvas;
 import State.InitialStateCanvas;
 import command.ChangeCondCommand;
+import dialogMenuState.LineVsTextDialog;
+import dialogMenuState.SetSizeCondDialog;
+import dialogMenuState.SetWidtHeiDialog;
 
 public class MenuContentState implements MenuDetectListener {
 

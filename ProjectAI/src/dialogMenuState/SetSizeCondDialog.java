@@ -1,4 +1,4 @@
-package DialogMenuState;
+package dialogMenuState;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;

@@ -1,6 +1,5 @@
 package LaTex;
 
-import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Locale;
@@ -26,10 +25,11 @@ public class LaTexGeneratorStatePlan {
 		InitialStateCanvas initialStateCanvas=graphContent.getInitialStateCanvas();
 		GoalStateCanvas goalStateCanvas=graphContent.getGoalStateCanvas();
 		if(initialStateCanvas!=null) {
-			if(initialStateCanvas.getState().isText()) {
-				sb.append(generatexTogheter(graphContent));
-				return sb.toString();
-
+			if(initialStateCanvas!=null && goalStateCanvas!=null) {
+				if(initialStateCanvas.getState().isText()) {
+					sb.append(generatexTogheter(graphContent));
+					return sb.toString();
+				}
 			}else {
 				sb.append(generatexSo(initialStateCanvas));
 				sb.append("\n");
@@ -56,13 +56,15 @@ public class LaTexGeneratorStatePlan {
 		StringBuilder sb = new StringBuilder();
 		InitialStateCanvas initialStateCanvas=graphContent.getInitialStateCanvas();
 		GoalStateCanvas goalStateCanvas =graphContent.getGoalStateCanvas();
-
-		sb.append("\\stage{35em}{26em}"+"\n");
-		sb.append("{effs="+getEffPrec(initialStateCanvas.getState())+"}"+"\n");
-		sb.append("{pres="+getEffPrec(goalStateCanvas.getState())+"}"+"\n");
 		
-		sb.append("{"+initialStateCanvas.getState().getText()+"}");
-		sb.append("{"+goalStateCanvas.getState().getText()+"}"+"\n");
+			sb.append("\\stage{35em}{26em}"+"\n");
+			sb.append("{effs="+getEffPrec(initialStateCanvas.getState())+"}"+"\n");
+			sb.append("{pres="+getEffPrec(goalStateCanvas.getState())+"}"+"\n");
+			
+			sb.append("{"+initialStateCanvas.getState().getText()+"}");
+			sb.append("{"+goalStateCanvas.getState().getText()+"}"+"\n");
+		
+		
 		
 		return sb.toString();
 		
@@ -73,9 +75,9 @@ public class LaTexGeneratorStatePlan {
 		StringBuilder sb = new StringBuilder();
 		sb.append("\\action{start}{");
 		if(initialStateCanvas.getState().isShownCond()) {
-			sb.append("STARTL,");
+			sb.append("INIT,");
 		}else {
-			sb.append("START,");
+			sb.append("INIT-noop,");
 		}
 		
 		
@@ -91,9 +93,9 @@ public class LaTexGeneratorStatePlan {
 		StringBuilder sb = new StringBuilder();
 		sb.append("\\action{goal}{");
 		if(goalStateCanvas.getState().isShownCond()) {
-			sb.append("GOALL,");
-		}else {
 			sb.append("GOAL,");
+		}else {
+			sb.append("GOAL-noop,");
 		}
 		
 		

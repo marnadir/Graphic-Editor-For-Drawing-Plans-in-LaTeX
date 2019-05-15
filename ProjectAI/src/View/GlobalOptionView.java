@@ -59,7 +59,7 @@ public class GlobalOptionView extends Composite{
 		bntWidth=new Button(compListdetail, SWT.CHECK | SWT.BORDER);
 		bntWidth.addListener(SWT.Selection, getAddBtnWListener(bntWidth));
 		Label lWidth=new Label(compListdetail, SWT.ALL);
-		lWidth.setText("Width of Action");
+		lWidth.setText("Width of actions");
 		tWidth=new Text(compListdetail, SWT.BORDER );
 		tWidth.setEditable(false);
 		tWidth.setText("NONE");
@@ -73,7 +73,7 @@ public class GlobalOptionView extends Composite{
 		bntHeigt=new Button(compListdetail, SWT.CHECK | SWT.BORDER);
 		bntHeigt.addListener(SWT.Selection, getAddBtnHListener(bntHeigt));
 		Label lHeight=new Label(compListdetail, SWT.ALL);
-		lHeight.setText("Height of Action");
+		lHeight.setText("Height of action");
 		tHeight=new Text(compListdetail, SWT.BORDER );
 		tHeight.setEditable(false);
 		tHeight.setText("NONE");
@@ -129,7 +129,7 @@ public class GlobalOptionView extends Composite{
 		bntEmty.setSelection(true);
 		bntEmty.setEnabled(false);
 		lEmpty=new Label(compListdetail, SWT.ALL);
-		lEmpty.setText("Lenght of Empty Tssks");
+		lEmpty.setText("Lenght of empty tasks");
 		tLenEmpty=new Text(compListdetail, SWT.BORDER );
 		tLenEmpty.setText(GlobalValue.lengthsOfEmptyTasks);
 		Button btnOkEmpty1=new Button(compListdetail, SWT.ALL);
@@ -144,7 +144,7 @@ public class GlobalOptionView extends Composite{
 		primGroup.setText("Primitive");
 		
 		Label lForm=new Label(primGroup, SWT.ALL);
-		lForm.setText("Border Color: ");
+		lForm.setText("Border color: ");
 		cFormP=new Combo(primGroup, SWT.DROP_DOWN | SWT.READ_ONLY);
 		String[] items = new String[] { "Black", "White" };
 		cFormP.setItems(items);
@@ -176,7 +176,7 @@ public class GlobalOptionView extends Composite{
 		abstrGroup.setText("Abstract");
 		
 		lForm=new Label(abstrGroup, SWT.ALL);
-		lForm.setText("Border Color: ");
+		lForm.setText("Border color: ");
 		cFormA=new Combo(abstrGroup, SWT.DROP_DOWN | SWT.READ_ONLY);
 		items = new String[] { "Black", "White" };
 		cFormA.setItems(items);
@@ -286,9 +286,9 @@ public class GlobalOptionView extends Composite{
 					GlobalValue.cornerIsSquarePr=true;
 				}else {
 					GlobalValue.cornerIsSquarePr=false;
-				}
+				}			
+				domainView.getContentCanvas().redraw();
 				domainView.getContentCanvas().pack();
-
 
 			}
 		};

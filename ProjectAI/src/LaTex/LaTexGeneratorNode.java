@@ -228,7 +228,7 @@ public class LaTexGeneratorNode {
 		StringBuilder sb=new StringBuilder();
 		sb.append(name[0]);
 		if(!action.isShownCond()) {
-			sb.append("-E");
+			sb.append("-noop");
 		}
 		
 		return sb.toString();

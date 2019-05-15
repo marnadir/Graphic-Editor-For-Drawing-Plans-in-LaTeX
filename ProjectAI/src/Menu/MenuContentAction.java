@@ -11,6 +11,7 @@ import org.eclipse.swt.events.MenuDetectListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
@@ -30,6 +31,7 @@ import PlanPart.LinkCanvas;
 import PlanPart.OrderConstrain;
 import PlanPart.Oval;
 import PlanPart.PlanContent;
+import dialogMenuState.EditLayoutAction;
 
 public class MenuContentAction implements MenuDetectListener {
 
@@ -116,26 +118,29 @@ public class MenuContentAction implements MenuDetectListener {
 		
 		
 		if ((canvas.getParent().getParent() instanceof PlanContent)) {
+			
+			if(actionHasVariable(canvas.getAction())) {
+				MenuItem setvariable = new MenuItem(m, SWT.ALL);
+				setvariable.setText("Set Variables");
+				setvariable.addListener(SWT.Selection, new Listener() {
 
-			MenuItem setvariable = new MenuItem(m, SWT.ALL);
-			setvariable.setText("Set-Variables");
-			setvariable.addListener(SWT.Selection, new Listener() {
+					@Override
+					public void handleEvent(Event event) {
+						
+						if (actionHasVariable(canvas.getAction())) {
+							InitializationVariableDialog dialog = new InitializationVariableDialog(
+									canvas.getShell(), 
+									SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL | SWT.CENTER | SWT.RESIZE);
+							dialog.setAction(canvas.getAction());
+							dialog.createContent();
+							dialog.pack();
+						}
+						canvas.redraw();
 
-				@Override
-				public void handleEvent(Event event) {
-					
-					if (actionHasVariable(canvas.getAction())) {
-						InitializationVariableDialog dialog = new InitializationVariableDialog(
-								canvas.getShell(), 
-								SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL | SWT.CENTER | SWT.RESIZE);
-						dialog.setAction(canvas.getAction());
-						dialog.createContent();
-						dialog.pack();
 					}
-					canvas.redraw();
-
-				}
-			});
+				});
+			}
+		
 		}
 
 		if (!(canvas.getParent().getParent() instanceof PlanContent)) {
@@ -163,180 +168,23 @@ public class MenuContentAction implements MenuDetectListener {
 
 				}
 			});
-
-			
-			MenuItem fillColor= new MenuItem(m, SWT.CASCADE);
-			fillColor.setText("fillColor");
-			
-			Menu subMe = new Menu(m);
-			fillColor.setMenu(subMe);
-			
-			MenuItem cyan=new MenuItem(subMe, SWT.ALL);
-			cyan.setText("Cyan");
-			
-			
-			cyan.addListener(SWT.Selection, new Listener() {
-				
-				@Override
-				public void handleEvent(Event event) {
-					canvas.getAction().setIsFillColor(true);	
-					canvas.getAction().setColorString("cyan");;
-					canvas.redraw();
-
-				}
-			});
-			
 		
-			
-			MenuItem yellow=new MenuItem(subMe, SWT.ALL);
-			yellow.setText("Yellow");
-			
-			yellow.addListener(SWT.Selection, new Listener() {
-				
-				@Override
-				public void handleEvent(Event event) {
-					canvas.getAction().setIsFillColor(true);	
-					canvas.getAction().setColorString("yellow");;
-					canvas.redraw();
+			MenuItem editLayout = new MenuItem(m, SWT.ALL);
+			editLayout.setText("Edit layout");
+			editLayout.addListener(SWT.Selection, new Listener() {
 
-				}
-			});
-			
-			
-			
-			MenuItem none=new MenuItem(subMe, SWT.ALL);
-			none.setText("None");
-			
-			none.addListener(SWT.Selection, new Listener() {
-				
 				@Override
 				public void handleEvent(Event event) {
-					canvas.getAction().setIsFillColor(false);
-					canvas.redraw();
-
+					EditLayoutAction dialog;
+					dialog=new EditLayoutAction(m.getShell(), 
+							SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL | SWT.CENTER|SWT.RESIZE);
+					dialog.setCanvas(canvas);
+					dialog.createContent();
 				}
 			});
-			
-			
-			
-			MenuItem frame = new MenuItem(m, SWT.CASCADE);
-			frame.setText("Frame");
-			Menu subM = new Menu(m);
-			frame.setMenu(subM);
-			
-			MenuItem form = new MenuItem(subM, SWT.CASCADE);
-			form.setText("Border Color");
-			Menu subForm = new Menu(m);
-			form.setMenu(subForm);
-			MenuItem black = new MenuItem(subForm, SWT.ALL);
-			black.setText("Black");
-			
-			MenuItem white = new MenuItem(subForm, SWT.ALL);
-			white.setText("White");
-			
-			
-			black.addListener(SWT.Selection, new Listener() {
-				
-				@Override
-				public void handleEvent(Event event) {
-					canvas.getAction().setIsborder(true);
-					canvas.getAction().setDefaultAction(false);
-					canvas.redraw();
-					
-				}
-			});
-			
-			white.addListener(SWT.Selection, new Listener() {
-				
-				@Override
-				public void handleEvent(Event event) {
-					canvas.getAction().setIsborder(false);
-					canvas.getAction().setDefaultAction(false);
-					canvas.redraw();
-
-				}
-			});
-			
-			MenuItem menufett = new MenuItem(subM, SWT.CASCADE);
-			menufett.setText("Fat Border");
-			Menu subfett = new Menu(m);
-			menufett.setMenu(subfett);
-			MenuItem normal = new MenuItem(subfett, SWT.ALL);
-			normal.setText("Normal");
-			normal.addListener(SWT.Selection, new Listener() {
-				
-				@Override
-				public void handleEvent(Event event) {
-					canvas.getAction().setIsFett(false);
-					canvas.getAction().setDefaultAction(false);
-					canvas.redraw();
-					
-				}
-			});
-			
-			MenuItem fett = new MenuItem(subfett, SWT.ALL);
-			fett.setText("Fat");
-			fett.addListener(SWT.Selection, new Listener() {
-				
-				@Override
-				public void handleEvent(Event event) {
-					canvas.getAction().setIsFett(true);
-					canvas.getAction().setDefaultAction(false);
-					canvas.redraw();
-					
-				}
-			});
-			
 			
 
-			MenuItem menuEckig = new MenuItem(subM, SWT.CASCADE);
-			menuEckig.setText("Corner");
-		
-			Menu subeckig = new Menu(m);
-			menuEckig.setMenu(subeckig);
-			MenuItem round = new MenuItem(subeckig, SWT.ALL);
-			round.setText("Round");
-			round.addListener(SWT.Selection, new Listener() {
 				
-				@Override
-				public void handleEvent(Event event) {
-					canvas.getAction().setBorderIsSquare(false);
-					canvas.getAction().setDefaultAction(false);
-
-					canvas.redraw();
-					
-				}
-			});
-			
-			MenuItem square = new MenuItem(subeckig, SWT.ALL);
-			square.setText("Square");
-			
-			square.addListener(SWT.Selection, new Listener() {
-				
-				@Override
-				public void handleEvent(Event event) {
-					canvas.getAction().setBorderIsSquare(true);
-					canvas.getAction().setDefaultAction(false);
-
-					canvas.redraw();
-					
-				}
-			});
-			
-			
-			MenuItem menuDefault = new MenuItem(subM, SWT.CASCADE);
-			menuDefault.setText("Set as Default Action");
-			menuDefault.addListener(SWT.Selection, new Listener() {
-				
-				@Override
-				public void handleEvent(Event event) {
-					canvas.getAction().setDefaultAction(true);
-					canvas.redraw();
-					
-				}
-			});
-		
-			
 			MenuItem setSize = new MenuItem(m, SWT.CASCADE);
 			setSize.setText("Set Size...");
 
@@ -660,11 +508,6 @@ public class MenuContentAction implements MenuDetectListener {
 								btnEff=new Button(mainComposite, SWT.CHECK);
 								btnEff.setText("global");
 								btnEff.setVisible(false);
-//								Label info = new Label(c, SWT.BORDER);
-//								info.setText("the minimum lenght is: " + canvas.getAction().getLengthEffInCm()+"cm");
-//								GridData gridData = new GridData(GridData.CENTER, GridData.CENTER, false, false);
-//								gridData.horizontalSpan = 2;
-//								info.setLayoutData(gridData);
 							} else {
 								Label lWidth = new Label(c, SWT.ALL);
 								lWidth.setText("Lenght in cm: ");
@@ -675,12 +518,6 @@ public class MenuContentAction implements MenuDetectListener {
 								btnEff=new Button(mainComposite, SWT.CHECK);
 								btnEff.setText("global");
 								btnEff.setVisible(false);
-//								Label info = new Label(c, SWT.BORDER);
-//								info.setText("the default lenght is: " +canvas.getAction().getStandardLengthEffInCm()+"cm");
-//								GridData gridData = new GridData(GridData.CENTER, GridData.CENTER, false, false);
-//								gridData.horizontalSpan = 2;
-//								info.setLayoutData(gridData);
-
 							}
 							
 							if(canvas.getAction().isShownCond()) {

@@ -1,9 +1,6 @@
 package LaTex;
 
-import java.beans.FeatureDescriptor;
 import java.util.ArrayList;
-
-import Action.Action;
 import State.IState;
 
 public class LaTexGeneratorStateDomain {
@@ -14,48 +11,24 @@ public class LaTexGeneratorStateDomain {
 	
 	public String getLatexSocode(IState stateCanvas) {
 		StringBuilder sb = new StringBuilder();
-		sb.append(getSoCode(stateCanvas));
+		sb.append(getSoCodeNoop(stateCanvas));
 		sb.append("\n");
-		sb.append(getSoCodeL(stateCanvas));
+		sb.append(getSoCode(stateCanvas));
 		return sb.toString();
 	}
 	
 	public String getLatexGoalcode(IState stateCanvas) {
 		StringBuilder sb = new StringBuilder();
-		sb.append(getGoalCode(stateCanvas));
+		sb.append(getGoalCodeNoop(stateCanvas));
 		sb.append("\n");
-		sb.append(getGoalCodeL(stateCanvas));
+		sb.append(getGoalCode(stateCanvas));
 		return sb.toString();
 	}
 	
 	/*1cm=37,7957517575025 pixel*/
 	
 	/*
-	 * get the source code for STARTL, which represents  conditions 
-	 */
-	public String getSoCodeL(IState state) {
-		StringBuilder sb = new StringBuilder();
-		String space="  ";
-		sb.append("% PRIMITIVE");
-		sb.append("\n");
-		sb.append("\\scheme");
-		sb.append("{STARTL}{3}");
-		sb.append("{");
-		sb.append("\n");
-		
-		sb.append(space+"text="+"{\\hspace*"+"{-2mm}"+"},"+"\n");
-		sb.append(space+"pres = {},"+"\n");
-		sb.append(space+"effs = {");
-		sb.append(getTextPrecEffL(state.getConds())+"},"+"\n");
-		sb.append(space+"eff length =  "+getLenghtCondL(state)+"\n");
-		sb.append(space+"height = "+state.getHeiInCm()+"cm,"+"\n");
-		sb.append(space+"width = "+state.getWidInCm()+"cm \n"+"}"+"\n");
-
-		return sb.toString();
-	}
-	
-	/*
-	 * get the source code for STARTL, which represents  just the empty conditions 
+	 * get the source code for INIT which represents  conditions 
 	 */
 	public String getSoCode(IState state) {
 		StringBuilder sb = new StringBuilder();
@@ -63,7 +36,7 @@ public class LaTexGeneratorStateDomain {
 		sb.append("% PRIMITIVE");
 		sb.append("\n");
 		sb.append("\\scheme");
-		sb.append("{START}{3}");
+		sb.append("{INIT}{3}");
 		sb.append("{");
 		sb.append("\n");
 		
@@ -71,28 +44,31 @@ public class LaTexGeneratorStateDomain {
 		sb.append(space+"pres = {},"+"\n");
 		sb.append(space+"effs = {");
 		sb.append(getTextPrecEff(state.getConds())+"},"+"\n");
-		sb.append(space+"eff length =  "+getLenghtConds(state)+"\n");
+		sb.append(space+"eff length =  "+getLenghtCond(state)+"\n");
 		sb.append(space+"height = "+state.getHeiInCm()+"cm,"+"\n");
 		sb.append(space+"width = "+state.getWidInCm()+"cm \n"+"}"+"\n");
 
 		return sb.toString();
 	}
 	
-	public String getGoalCodeL(IState state) {
+	/*
+	 * get the source code for INIT-noop,, which represents  just the empty conditions 
+	 */
+	public String getSoCodeNoop(IState state) {
 		StringBuilder sb = new StringBuilder();
 		String space="  ";
 		sb.append("% PRIMITIVE");
 		sb.append("\n");
 		sb.append("\\scheme");
-		sb.append("{GOALL}{3}");
+		sb.append("{INIT-noop}{3}");
 		sb.append("{");
 		sb.append("\n");
 		
 		sb.append(space+"text="+"{\\hspace*"+"{-2mm}"+"},"+"\n");
-		sb.append(space+"pres = {");
-		sb.append(getTextPrecEffL(state.getConds())+"},"+"\n");
-		sb.append(space+"effs = {},"+"\n");
-		sb.append(space+"pre length =  "+getLenghtCondL(state)+"\n");
+		sb.append(space+"pres = {},"+"\n");
+		sb.append(space+"effs = {");
+		sb.append(getTextPrecEffNoop(state.getConds())+"},"+"\n");
+		sb.append(space+"eff length =  "+getLenghtCondsNoop(state)+"\n");
 		sb.append(space+"height = "+state.getHeiInCm()+"cm,"+"\n");
 		sb.append(space+"width = "+state.getWidInCm()+"cm \n"+"}"+"\n");
 
@@ -113,7 +89,28 @@ public class LaTexGeneratorStateDomain {
 		sb.append(space+"pres = {");
 		sb.append(getTextPrecEff(state.getConds())+"},"+"\n");
 		sb.append(space+"effs = {},"+"\n");
-		sb.append(space+"pre length =  "+getLenghtConds(state)+"\n");
+		sb.append(space+"pre length =  "+getLenghtCond(state)+"\n");
+		sb.append(space+"height = "+state.getHeiInCm()+"cm,"+"\n");
+		sb.append(space+"width = "+state.getWidInCm()+"cm \n"+"}"+"\n");
+
+		return sb.toString();
+	}
+	
+	public String getGoalCodeNoop(IState state) {
+		StringBuilder sb = new StringBuilder();
+		String space="  ";
+		sb.append("% PRIMITIVE");
+		sb.append("\n");
+		sb.append("\\scheme");
+		sb.append("{GOAL-noop}{3}");
+		sb.append("{");
+		sb.append("\n");
+		
+		sb.append(space+"text="+"{\\hspace*"+"{-2mm}"+"},"+"\n");
+		sb.append(space+"pres = {");
+		sb.append(getTextPrecEffNoop(state.getConds())+"},"+"\n");
+		sb.append(space+"effs = {},"+"\n");
+		sb.append(space+"pre length =  "+getLenghtCondsNoop(state)+"\n");
 		sb.append(space+"height = "+state.getHeiInCm()+"cm,"+"\n");
 		sb.append(space+"width = "+state.getWidInCm()+"cm \n"+"}"+"\n");
 
@@ -124,7 +121,7 @@ public class LaTexGeneratorStateDomain {
 
 
 	/*take the prec and affect actions and trasform into latex code*/
-	public String getTextPrecEff(ArrayList<String> cond) {
+	public String getTextPrecEffNoop(ArrayList<String> cond) {
 		String space="  ";
 		StringBuilder sb=new StringBuilder();
 		sb.append("\n"+"\t");
@@ -140,7 +137,7 @@ public class LaTexGeneratorStateDomain {
 		return sb.toString();
 	}
 	
-	public String getTextPrecEffL(ArrayList<String> cond) {
+	public String getTextPrecEff(ArrayList<String> cond) {
 		String space="  ";
 		StringBuilder sb=new StringBuilder();
 		
@@ -169,7 +166,7 @@ public class LaTexGeneratorStateDomain {
 	}
 
 	
-	public String getLenghtCondL(IState state) {
+	public String getLenghtCond(IState state) {
 
 		StringBuilder sb = new StringBuilder();
 
@@ -182,7 +179,7 @@ public class LaTexGeneratorStateDomain {
 		return sb.toString();
 	}
 	
-	public String getLenghtConds(IState state) {
+	public String getLenghtCondsNoop(IState state) {
 
 		StringBuilder sb = new StringBuilder();
 
