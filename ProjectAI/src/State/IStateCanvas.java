@@ -18,7 +18,7 @@ import Menu.MenuContentState;
 import PlanPart.PlanContent;
 import PlanPart.Oval;
 
-public abstract class IStateCanvas extends Canvas implements Serializable {
+public abstract class IStateCanvas extends Canvas {
 
 	/**
 	 * 
