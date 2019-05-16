@@ -82,6 +82,7 @@ public class Action implements Serializable {
 		defaultValuePrecLenght=a.defaultValuePrecLenght;
 		defaultValueEffLenght=a.defaultValueEffLenght;
 		defaultValueWid=a.defaultValueWid;
+		defaultValueHeig=a.defaultValueHeig;
 
 		shownCond=a.shownCond;
 		shownName=a.shownName;
@@ -92,6 +93,13 @@ public class Action implements Serializable {
 		isAbstract=a.isAbstract;
 		isFat=a.isFat;
 		borderIsSquare=a.borderIsSquare;
+		
+		 globalWidth=a.globalWidth;
+		 globalHeight=a.globalHeight;
+		 globalPrec=a.globalPrec;
+		 globalEff=a.globalEff;
+		 globalEmptyPrec=a.globalEmptyPrec;
+		 globalEmptyEff=a.globalEmptyEff;
 		
 		
 		

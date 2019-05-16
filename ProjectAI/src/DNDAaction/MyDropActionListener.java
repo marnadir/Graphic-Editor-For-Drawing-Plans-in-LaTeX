@@ -99,7 +99,7 @@ public class MyDropActionListener extends DropTargetAdapter {
 							comp.setLayoutData(new GridData(GridData.FILL, GridData.FILL, false, false));
 							comp.setLayout(new FillLayout());
 							comp.setLocation(comp.toControl(event.x, event.y));
-							node = new Node(comp, SWT.ALL, action);
+							node = new Node(comp, SWT.BORDER, action);
 							node.draw();
 							node.pack();
 							comp.pack();

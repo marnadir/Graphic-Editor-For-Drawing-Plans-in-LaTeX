@@ -201,6 +201,7 @@ public class TreeActioDomainView extends Tree {
 						canvasAction.addDNDListener();
 						canvasAction.resizeParent();
 						actionView.setContainerAction(containerAction);
+						actionView.getContainerAction().pack();
 					}
 					
 

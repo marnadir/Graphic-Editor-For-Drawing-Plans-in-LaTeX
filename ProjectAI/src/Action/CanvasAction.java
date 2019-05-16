@@ -8,6 +8,7 @@ import org.eclipse.swt.dnd.DragSource;
 import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Composite;
@@ -62,11 +63,12 @@ public class CanvasAction  extends ICanvasNode{
 
 				action.resize();
 		
-				Font font = new Font(getDisplay(), "Arabic Transparent", 9, SWT.NORMAL);
+				Font font = new Font(getDisplay(), "Arabic Transparent", 6, SWT.NORMAL);
+				Color colorNull=e.gc.getBackground();
 				e.gc.setFont(font);
 
-				int posY = 30;
-				int y = 25;
+//				int posY = 30;
+				int y = 20;
 				
 				if(action.isDefaultAction()) {
 					if(action.isPrimitive) {
@@ -80,6 +82,9 @@ public class CanvasAction  extends ICanvasNode{
 					}
 				}
 
+				
+				int posY=(int) ((action.getHeightRect()/action.getNumPrec())/2)+y; 
+				int incr=(int) (action.getHeightRect()/action.getNumPrec());
 
 				for (int i = 0; i < action.getNumPrec(); i++) {
 
@@ -92,7 +97,7 @@ public class CanvasAction  extends ICanvasNode{
 						e.gc.drawLine(0, posY, (int) action.getStandardLengthPrec(), posY);
 					}
 
-					posY = posY + 30;
+					posY = posY + incr;
 				}
 
 				/* Drawing rectangle w/o name */
@@ -104,9 +109,9 @@ public class CanvasAction  extends ICanvasNode{
 
 				}
 				if (action.isShownCond()) {
-					rect = new Rectangle((int)(action.getLengthPrec()), y - 5,(int) action.getWidthRect(), (int)action.getHeightRect());
+					rect = new Rectangle((int)(action.getLengthPrec()),y,(int) action.getWidthRect(), (int)action.getHeightRect());
 				} else {
-					rect = new Rectangle((int)(action.getStandardLengthPrec()), y - 5, (int)action.getWidthRect(),(int) action.getHeightRect());	
+					rect = new Rectangle((int)(action.getStandardLengthPrec()), y, (int)action.getWidthRect(),(int) action.getHeightRect());	
 				}
 
 
@@ -138,10 +143,13 @@ public class CanvasAction  extends ICanvasNode{
 					e.gc.drawString(action.getName(), l, rect.y + rect.height / 3);
 				}
 
-				e.gc.setBackground(getDisplay().getSystemColor(SWT.COLOR_WHITE));
-
+				e.gc.setBackground(colorNull);
 				
-				posY = rect.y + 10;				
+				
+				
+				posY=(int) ((action.getHeightRect()/action.getNumEff())/2)+y; 
+				incr=(int) (action.getHeightRect()/action.getNumEff());	
+				
 				for (int i = 0; i < action.getEffect().size(); i++) {
 					int x = rect.x + rect.width;
 
@@ -156,7 +164,7 @@ public class CanvasAction  extends ICanvasNode{
 
 					}
 
-					posY = posY + 30;
+					posY = posY + incr;
 
 				}
 

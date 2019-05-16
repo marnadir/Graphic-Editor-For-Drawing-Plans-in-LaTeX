@@ -1,7 +1,6 @@
 package State;
 
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 import org.eclipse.swt.SWT;
@@ -51,7 +50,12 @@ public abstract class IStateCanvas extends Canvas {
 		this.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		int numCond = state.getConds().size();
 		state.setLenIn(numCond*30);
-		state.setLengthCond(getLenght(state.getConds())*7+10);
+		if((state.isDefaultValuePrec())) {
+			state.setLengthCond(getLenght(state.getConds())*7+10);
+
+		}
+
+	
 		this.addMenuDetectListener(new MenuContentState(this));
 		resizeParent();
 		

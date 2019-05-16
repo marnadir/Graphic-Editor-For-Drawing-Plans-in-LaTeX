@@ -2,7 +2,6 @@ package State;
 
 import java.awt.Toolkit;
 import java.io.Serializable;
-import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Locale;
@@ -16,17 +15,16 @@ public class IState  implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = -2082191482890474964L;
-	ArrayList<String> conds;
-	String name="state";
-	boolean shownCond = false;
-	double lengthCond;
-	double standardCondLength=53;
-	boolean defaultValue;
-	double lenIn;
-	String latexCodeDomain;
 	float dpi = Toolkit.getDefaultToolkit().getScreenResolution();
 	final double PIXEL_MEASUREMNT= 2.54/dpi;
-	final double CM_MEASUREMNT= dpi/2.54;
+	final double CM_MEASUREMNT= dpi/2.54;	ArrayList<String> conds;
+	String name="state";
+	boolean shownCond = false;
+	double lengthCond=0.0;
+	double standardCondLength=(CM_MEASUREMNT*Double.parseDouble(GlobalValue.lengthsOfEmptyTasks)); ;
+	boolean defaultValue;
+	double lenIn;
+	String latexCodeDomain;	
 	boolean isText=false;
 	String text;
 	boolean globalCond;

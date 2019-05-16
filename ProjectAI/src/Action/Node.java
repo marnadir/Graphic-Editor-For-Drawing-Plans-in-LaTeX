@@ -3,6 +3,7 @@ package Action;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Composite;
@@ -33,11 +34,17 @@ public class Node extends ICanvasNode {
 
 				/* draw precs with their "point" */
 
-				int posY = 30;
-				int y = 25;
-				Font font = new Font(getDisplay(), "Arabic Transparent", 9, SWT.NORMAL);
+				int y = 20;
+				
+				Font font = new Font(getDisplay(), "Arabic Transparent", 6, SWT.NORMAL);
 				e.gc.setFont(font);
-
+				Color colorNull=e.gc.getBackground();
+				
+				int posY=(int) (-5+(action.getHeightRect()/action.getNumPrec())/2)+y; 
+				int incr=(int) (action.getHeightRect()/action.getNumPrec());
+				
+				
+				
 				for (int i = 0; i < action.getPrec().size(); i++) {
 					String string = action.getPrec().get(i);
 
@@ -52,7 +59,7 @@ public class Node extends ICanvasNode {
 
 					}
 
-					posY = posY + 30;
+					posY = posY + incr;
 				}
 
 				/* Drawing rectangle w/o name */
@@ -99,10 +106,12 @@ public class Node extends ICanvasNode {
 					e.gc.drawString(action.getName(), l, rect.y + rect.height / 3);
 				}
 
-				e.gc.setBackground(getDisplay().getSystemColor(SWT.COLOR_WHITE));
+				e.gc.setBackground(colorNull);
 
 				
-				posY = rect.y + 10;
+				posY=(int) (-5+(action.getHeightRect()/action.getNumEff())/2)+y; 
+				incr=(int) (action.getHeightRect()/action.getNumEff());	
+				
 				resizeParent();
 				for (int i = 0; i < action.getEffect().size(); i++) {
 					int x = rect.x + rect.width;
@@ -120,7 +129,7 @@ public class Node extends ICanvasNode {
 
 					}
 
-					posY = posY + 30;
+					posY = posY + incr;
 
 				}
 				resizeParent();

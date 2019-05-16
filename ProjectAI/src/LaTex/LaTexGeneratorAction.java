@@ -58,7 +58,7 @@ public class LaTexGeneratorAction {
 		sb.append("\\scheme");
 		sb.append("{"+a.getName()+"}{0}{");
 		sb.append("\n");
-		sb.append(space+"text = " +"{\\textbf{"+(a.getName())+"}()},"+"\n");
+		sb.append(space+"text = " +"{\\textbf{"+(a.getName())+"}},"+"\n");
 		sb.append(space+"pres = {");
 		sb.append(getTextPrecEff(a.getPrec(),false)+"},"+"\n");
 		sb.append(space+"effs = {");
@@ -88,7 +88,7 @@ public class LaTexGeneratorAction {
 			sb.append("\\scheme");
 			sb.append("{"+a.getName()+"-noop}{0}{");
 			sb.append("\n");
-			sb.append(space+"text = " +"{\\textbf{"+(a.getName())+"}()},"+"\n");
+			sb.append(space+"text = " +"{\\textbf{"+(a.getName())+"}},"+"\n");
 			sb.append(space+"pres = {");
 			sb.append(getTextPrecEffNoop(a.getPrec())+"},"+"\n");
 			sb.append(space+"effs = {");

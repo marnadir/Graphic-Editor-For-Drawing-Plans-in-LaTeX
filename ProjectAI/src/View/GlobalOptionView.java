@@ -288,7 +288,7 @@ public class GlobalOptionView extends Composite{
 					GlobalValue.cornerIsSquarePr=false;
 				}			
 				domainView.getContentCanvas().redraw();
-				domainView.getContentCanvas().pack();
+//				domainView.getContentCanvas().pack();
 
 			}
 		};
@@ -323,7 +323,7 @@ public class GlobalOptionView extends Composite{
 				}else {
 					GlobalValue.cornerIsSquareAbst=false;
 				}
-				domainView.getContentCanvas().pack();
+//				domainView.getContentCanvas().pack();
 
 
 			}
@@ -332,7 +332,7 @@ public class GlobalOptionView extends Composite{
 		return l;
 	}
 	
-	
+	//insert  global width (Button+Label)
 	private Listener getAddBtnWListener(Button b1) {
 		Listener l;
 
@@ -355,12 +355,14 @@ public class GlobalOptionView extends Composite{
 				}
 				confermW.pack();
 				tWidth.pack();
+				
 			}
 		};
 
 		return l;
 	}
 
+	//Global width of action
 	private Listener getOkBtnWListener() {
 		Listener l;
 
@@ -373,7 +375,8 @@ public class GlobalOptionView extends Composite{
 					GlobalValue.isWidthOfAction=true;
 					GlobalValue.widthOfAction=tWidth.getText();
 					confermW.setText("Update successfully");
-					domainView.getContentCanvas().pack();
+					domainView.getContentCanvas().redraw();
+
 				}
 				
 			}
@@ -382,6 +385,8 @@ public class GlobalOptionView extends Composite{
 		return l;
 	}
 	
+	
+	//insert  global height (Button+Label)
 	private Listener getAddBtnHListener(Button b1) {
 		Listener l;
 
@@ -411,6 +416,7 @@ public class GlobalOptionView extends Composite{
 		return l;
 	}
 
+	//Global height of action
 	private Listener getOkBtnHListener() {
 		Listener l;
 
@@ -423,7 +429,7 @@ public class GlobalOptionView extends Composite{
 					GlobalValue.isHeightOfAction=true;
 					GlobalValue.heightOfAction=tHeight.getText();
 					confermH.setText("Update successfully");
-					domainView.getContentCanvas().pack();
+					domainView.getContentCanvas().redraw();
 
 					
 				}
@@ -434,7 +440,7 @@ public class GlobalOptionView extends Composite{
 		return l;
 	}
 	
-	
+	//insert  global Prec (Button+Label)
 	private Listener getAddBtnPListener(Button b1) {
 		Listener l;
 
@@ -465,6 +471,7 @@ public class GlobalOptionView extends Composite{
 		return l;
 	}
 
+	//Global Prec-Lenght of action
 	private Listener getOkBtnPListener() {
 		Listener l;
 
@@ -477,7 +484,8 @@ public class GlobalOptionView extends Composite{
 					GlobalValue.isLengthsOfPrecs=true;
 					GlobalValue.lengthsOfPrecs=tLenPre.getText();
 					confermP.setText("Update successfully");
-					domainView.getContentCanvas().pack();
+//					domainView.getContentCanvas().pack();
+					domainView.getContentCanvas().redraw();
 
 				}
 				
@@ -488,7 +496,7 @@ public class GlobalOptionView extends Composite{
 	}
 	
 	
-	
+	//insert  global Eff (Button+Label)
 	private Listener getAddBtnEListener(Button b1) {
 		Listener l;
 
@@ -518,7 +526,8 @@ public class GlobalOptionView extends Composite{
 		return l;
 	}
 
-	private Listener getOkBtnCondListener() {
+	//Global Eff-Lenght of action
+	private Listener getOkBtnEListener() {
 		Listener l;
 
 		l = new Listener() {
@@ -526,11 +535,11 @@ public class GlobalOptionView extends Composite{
 			@Override
 			public void handleEvent(Event event) {
 				//CHECK IF TEXT IS NUMERIC
-				if(tLenCond.getEditable()) {
-					GlobalValue.isLengthsOfConds=true;
-					GlobalValue.lengthsOfConds=tLenCond.getText();
-					confermC.setText("Update successfully");
-					domainView.getContentCanvas().pack();
+				if(tLenEff.getEditable()) {
+					GlobalValue.isLengthsOfEffs=true;
+					GlobalValue.lengthsOfEffs=tLenEff.getText();
+					confermE.setText("Update successfully");
+					domainView.getContentCanvas().redraw();
 
 				}
 				
@@ -540,8 +549,8 @@ public class GlobalOptionView extends Composite{
 		return l;
 	}
 	
-	
-	
+		
+	//insert  global Conds (Button+Label)
 	private Listener getAddBtnCondListener(Button b1) {
 		Listener l;
 
@@ -571,7 +580,8 @@ public class GlobalOptionView extends Composite{
 		return l;
 	}
 
-	private Listener getOkBtnEListener() {
+	//Global Cond-Lenght of state
+	private Listener getOkBtnCondListener() {
 		Listener l;
 
 		l = new Listener() {
@@ -579,11 +589,12 @@ public class GlobalOptionView extends Composite{
 			@Override
 			public void handleEvent(Event event) {
 				//CHECK IF TEXT IS NUMERIC
-				if(tLenEff.getEditable()) {
-					GlobalValue.isLengthsOfEffs=true;
-					GlobalValue.lengthsOfEffs=tLenEff.getText();
-					confermE.setText("Update successfully");
-					domainView.getContentCanvas().pack();
+				if(tLenCond.getEditable()) {
+					GlobalValue.isLengthsOfConds=true;
+					GlobalValue.lengthsOfConds=tLenCond.getText();
+					confermC.setText("Update successfully");
+//					domainView.getContentCanvas().pack();
+					domainView.getContentCanvas().redraw();
 
 				}
 				
@@ -594,6 +605,7 @@ public class GlobalOptionView extends Composite{
 	}
 	
 	
+	//Global Empty-Lenght of state
 	private Listener getOkBtnEmptyListener() {
 		Listener l;
 
@@ -605,7 +617,7 @@ public class GlobalOptionView extends Composite{
 
 				GlobalValue.lengthsOfEmptyTasks= tLenEmpty.getText();
 				confermEmtpy.setText("Update successfully");	
-				domainView.getContentCanvas().pack();
+				domainView.getContentCanvas().redraw();
 
 			}
 		};
