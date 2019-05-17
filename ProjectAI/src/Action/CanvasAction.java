@@ -91,7 +91,7 @@ public class CanvasAction  extends ICanvasNode{
 					if (action.isShownCond()) {
 						String string = action.getPrec().get(i);
 						e.gc.drawLine(0, posY, (int) (action.getLengthPrec()), posY);
-						e.gc.drawString(string, 2, posY - 20, false);
+						e.gc.drawString(string, 2, posY - 10, false);
 
 					} else {
 						e.gc.drawLine(0, posY, (int) action.getStandardLengthPrec(), posY);
@@ -138,9 +138,12 @@ public class CanvasAction  extends ICanvasNode{
 				
 				e.gc.setLineWidth(0);
 
+				int val=(int) (getTextPosition(6)+rect.x);
+
+				
 				if (action.isShownName()) {
 					int l = rect.x + rect.width / 6;
-					e.gc.drawString(action.getName(), l, rect.y + rect.height / 3);
+					e.gc.drawString(action.getName(), val, rect.y + rect.height / 3);
 				}
 
 				e.gc.setBackground(colorNull);
@@ -156,7 +159,7 @@ public class CanvasAction  extends ICanvasNode{
 					if (action.isShownCond()) {
 						String string = action.getEffect().get(i);
 						e.gc.drawLine(x, posY, (int) (x + action.getLengthEff()), posY);
-						e.gc.drawString(string, x + 2, posY - 20, false);
+						e.gc.drawString(string, x + 2, posY - 10, false);
 
 					} else {
 
@@ -221,8 +224,18 @@ public class CanvasAction  extends ICanvasNode{
 	    source.addDragListener(new MyDragActionListener(source));
 	}
 	
-	
-	
+    private  int getTextPosition(int avergWidth) {
+  	  int i = 5;
+  	  int stringLenght=action.getName().length()*avergWidth+6;
+  	  if(stringLenght>action.getWidthRect()) {
+     		  action.setWidthRect(stringLenght);
+  		  return i;
+  	  }else {
+  		  i=(int) ((action.getWidthRect()-stringLenght)/2);
+  		  return i;
+  	  }
+  	  
+    }
 	
 }
 

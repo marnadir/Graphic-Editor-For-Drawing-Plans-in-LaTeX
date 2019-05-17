@@ -41,7 +41,7 @@ public class PdfView  extends Composite{
 //		myLabel.setImage( myImage );
 //		myLabel.pack();
 //		pack();
-		image=new Image( getDisplay(),imagePath );
+		image=new Image( getDisplay(),imagePath);
 
 		if(canvas==null) {
 			

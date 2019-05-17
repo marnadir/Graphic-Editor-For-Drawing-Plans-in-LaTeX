@@ -14,6 +14,7 @@ import View.DomainView;
 import View.PlanView;
 import command.ExitCommand;
 import command.LoadDomainCommand;
+import command.LoadPlanCommand;
 
 
 
@@ -44,14 +45,14 @@ public class MenuPrincipalView extends IMenu{
 		help.setMenu(menuHelp);
 		
 
-		MenuItem storeStateDomain = new MenuItem(menuFile, SWT.PUSH);
-		storeStateDomain.setText("&Save Domain\tCtrl+S");
-		storeStateDomain.setAccelerator( SWT.CONTROL + 'S');
+		MenuItem saveStateDomain = new MenuItem(menuFile, SWT.PUSH);
+		saveStateDomain.setText("&Save Domain\tCtrl+S");
+		saveStateDomain.setAccelerator( SWT.CONTROL + 'S');
 
 
-		MenuItem restoreStateDomain = new MenuItem(menuFile, SWT.PUSH);
-		restoreStateDomain.setText("&Load Domain\tCtrl+R");
-		restoreStateDomain.setAccelerator( SWT.CONTROL + 'R');
+		MenuItem loadStateDomain = new MenuItem(menuFile, SWT.PUSH);
+		loadStateDomain.setText("&Load Domain\tCtrl+R");
+		loadStateDomain.setAccelerator( SWT.CONTROL + 'R');
 
 
 		
@@ -80,7 +81,7 @@ public class MenuPrincipalView extends IMenu{
 		};
 
 		
-		Listener listenerStoreDomain = new Listener() {
+		Listener listenerSaveDomain = new Listener() {
 			@Override
 			public void handleEvent(Event event) {
 				
@@ -104,24 +105,27 @@ public class MenuPrincipalView extends IMenu{
 		};
 
 		
-		Listener loadL = new Listener() {
+		Listener listenerLoadPlan = new Listener() {
 
 			@Override
 			public void handleEvent(Event event) {
 				LoadPlanDialog dialog=new LoadPlanDialog(getShell(), SWT.MULTI);
-				//devo creare una nuova pagina dove salvare il nuovo piano
 				dialog.setPlanContent(planView.getPlan());
 				dialog.createContent();
-				//if i saved the plan, otherwise i get a null pointer 
-				if(dialog.getCommand().isLoad()) {
-					planView.getPlan().setSavedPllan(dialog.getCommand().getFilePlan());
-					planView.getPlan().setDirectory(dialog.getCommand().getFilePlan().getParentFile());
-					LoadDomainCommand command=new LoadDomainCommand();
-					String path=dialog.getCommand().getFilePlan().getParentFile()+"/tempDomain.txt";
-					command.execute(path,domainView);
-					
-				}
-			
+				
+
+				//devo creare una nuova pagina dove salvare il nuovo piano
+				
+//				//if i saved the plan, otherwise i get a null pointer 
+//				if(dialog.getCommand().isLoad()) {
+//					planView.getPlan().setSavedPllan(dialog.getCommand().getFilePlan());
+//					planView.getPlan().setDirectory(dialog.getCommand().getFilePlan().getParentFile());
+//					LoadDomainCommand command=new LoadDomainCommand();
+//					String path=dialog.getCommand().getFilePlan().getParentFile()+"/tempDomain.txt";
+//					command.execute(path,domainView);
+//					
+//				}
+//			
 			
 
 			}
@@ -142,10 +146,10 @@ public class MenuPrincipalView extends IMenu{
 		
 		
 		
-		loadPlan.addListener(SWT.Selection, loadL);
+		loadPlan.addListener(SWT.Selection, listenerLoadPlan);
 	
-		restoreStateDomain.addListener(SWT.Selection, listenerLoadDomain);
-		storeStateDomain.addListener(SWT.Selection, listenerStoreDomain);
+		loadStateDomain.addListener(SWT.Selection, listenerLoadDomain);
+		saveStateDomain.addListener(SWT.Selection, listenerSaveDomain);
 		exitItem.addListener(SWT.Selection, listenerExit);
 		menuLines.addListener(SWT.Selection, listenerLink);
 

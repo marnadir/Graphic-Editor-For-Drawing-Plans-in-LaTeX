@@ -23,30 +23,28 @@ public class LaTexGeneratorStatePlan {
 	public String getLatexPlanCode(PlanContent graphContent) {
 		StringBuilder sb = new StringBuilder();
 		InitialStateCanvas initialStateCanvas=graphContent.getInitialStateCanvas();
-		GoalStateCanvas goalStateCanvas=graphContent.getGoalStateCanvas();
-		if(initialStateCanvas!=null) {
-			if(initialStateCanvas!=null && goalStateCanvas!=null) {
-				if(initialStateCanvas.getState().isText()) {
-					sb.append(generatexTogheter(graphContent));
-					return sb.toString();
-				}
-			}else {
+		GoalStateCanvas goalStateCanvas=graphContent.getGoalStateCanvas();;
+		if (initialStateCanvas != null && goalStateCanvas != null) {
+			if (initialStateCanvas.getState().isText()) {
+				sb.append(generatexTogheter(graphContent));
+				return sb.toString();
+			} else {
 				sb.append(generatexSo(initialStateCanvas));
 				sb.append("\n");
-				if(goalStateCanvas!=null) {
-					sb.append(generatexGoal(goalStateCanvas));
-					sb.append("\n");
-					return sb.toString();
-				}
-
+				sb.append(generatexGoal(goalStateCanvas));
+				sb.append("\n");
+				return sb.toString();
 			}
-		}else {
-			if(goalStateCanvas!=null) {
+		} else {
+			if(initialStateCanvas != null) {
+				sb.append(generatexSo(initialStateCanvas));
+				sb.append("\n");
+			}
+			if (goalStateCanvas != null) {
 				sb.append(generatexGoal(goalStateCanvas));
 				sb.append("\n");
 			}
 		}
-		
 		
 		return sb.toString();
 	}
@@ -167,13 +165,15 @@ public class LaTexGeneratorStatePlan {
 	private String getPosition(IStateCanvas iState) {
 		StringBuilder sb=new StringBuilder();	
 		if(iState instanceof InitialStateCanvas) {
-			sb.append("("+convertInCm(iState.getParent().getLocation().x-iState.getParent().getBounds().width)+",");
+			sb.append("(0,");
 
 		}else {
 			sb.append("("+convertInCm( (iState.getParent().getLocation().x)-(iState.getParent().getBounds().width)/2)+",");
 
 		}
-		sb.append(convertInCm(iState.getParent().getParent().getSize().y-iState.getParent().getLocation().y)+")");
+//		sb.append(convertInCm(iState.getParent().getParent().getSize().y-iState.getParent().getLocation().y)+")");
+		sb.append("0)");	
+		System.out.println(convertInCm(iState.getParent().getLocation().y));
 		return sb.toString();
 	}
 	

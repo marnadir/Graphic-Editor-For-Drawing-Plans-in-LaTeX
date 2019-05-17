@@ -6,6 +6,8 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Shell;
 import PlanPart.PlanContent;
+import View.PlanView;
+import command.LoadDomainCommand;
 import command.LoadPlanCommand;
 
 public class LoadPlanDialog extends FileDialog {
@@ -38,8 +40,26 @@ public class LoadPlanDialog extends FileDialog {
 		setFilterPath(filterPath);
 	    path=open();
 	    command=new LoadPlanCommand();
+	    loadDomain();
 	    command.execute(path, planContent);
+	    
 	   
+	}
+	
+	private void loadDomain() {
+		if(path != null) {
+			File filePlan=new File(path);
+			planContent.setSavedPllan(filePlan);
+			planContent.setDirectory(filePlan.getParentFile());
+			LoadDomainCommand command=new LoadDomainCommand();
+			String path2=filePlan.getParentFile()+"/tempDomain.txt";
+			PlanView planView = null;
+			if(planContent.getParent() instanceof PlanView) {
+				 planView=(PlanView) planContent.getParent();
+			}
+			command.execute(path2,planView.getDomainView());
+			
+		}
 	}
 	
 	public void setPlanContent(PlanContent planContent) {

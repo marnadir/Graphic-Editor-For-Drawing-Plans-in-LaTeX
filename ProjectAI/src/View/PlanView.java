@@ -67,13 +67,13 @@ public class PlanView  extends CTabFolder{
 	
 		//TODO Quanto mi consuma sta pezzo di codice
 		
-		Display.getDefault().timerExec(500, new Runnable() {
+		Display.getDefault().timerExec(10, new Runnable() {
 		    @Override
 		    public void run() {
 		    	contentPlan.redraw();
 
 		      // Run again - TODO add logic to stop after correct number of moves
-		      //Display.getDefault().timerExec(500, this);
+		      Display.getDefault().timerExec(10, this);
 		    }
 		   });
 		
@@ -161,33 +161,33 @@ public class PlanView  extends CTabFolder{
 				}
 		
 				
-				if(showCondition.getSelection()) {
-					if(getPlan().getInitialStateCanvas()!=null) {
+				if (showCondition.getSelection()) {
+					if (getPlan().getInitialStateCanvas() != null) {
+
 						getPlan().getInitialStateCanvas().getState().setShownCond(true);
-						getPlan().getInitialStateCanvas().pack();
-				
+						getPlan().getInitialStateCanvas().redraw();
 
-						
 					}
-					if(getPlan().getGoalStateCanvas()!=null) {
+					if (getPlan().getGoalStateCanvas() != null) {
 						getPlan().getGoalStateCanvas().getState().setShownCond(true);
-						getPlan().getGoalStateCanvas().pack();
+						getPlan().getInitialStateCanvas().redraw();
 					}
-					
-				}else {
-					if(getPlan().getInitialStateCanvas()!=null) {
+
+				} else {
+					if (getPlan().getInitialStateCanvas() != null) {
 						getPlan().getInitialStateCanvas().getState().setShownCond(false);
-						getPlan().getInitialStateCanvas().pack();
+						getPlan().getInitialStateCanvas().redraw();
 
 					}
-					if(getPlan().getGoalStateCanvas()!=null) {
+					if (getPlan().getGoalStateCanvas() != null) {
 						getPlan().getGoalStateCanvas().getState().setShownCond(false);
-						getPlan().getGoalStateCanvas().pack();
+						getPlan().getGoalStateCanvas().redraw();
 					}
 				}
 				
 				
-				
+				redraw();
+				contentPlan.redraw();
 
 			}
 		} );

@@ -171,7 +171,7 @@ public class LaTexGeneratorStateDomain {
 		StringBuilder sb = new StringBuilder();
 
 		if (state.isGlobalCond()) {
-			sb.append("\\LenghtOfConds");
+			sb.append("\\LengthsOfConds,");
 		} else {
 			sb.append(state.getLengthCondInCm() + "cm,");
 		}
@@ -184,7 +184,7 @@ public class LaTexGeneratorStateDomain {
 		StringBuilder sb = new StringBuilder();
 
 		if (state.isGlobalEmpty()) {
-			sb.append("\\LengthsOfEmptyTasks");
+			sb.append("\\LengthsOfEmptyTasks,");
 		} else {
 			sb.append(state.getStandardLengthInCm() + "cm,");
 		}

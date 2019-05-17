@@ -50,7 +50,7 @@ public class Node extends ICanvasNode {
 
 					if (action.isShownCond()) {
 						e.gc.drawLine(0, posY, (int) (action.getLengthPrec()), posY);
-						e.gc.drawString(string, 2, posY - 20, false);
+						e.gc.drawString(string, 2, posY - 10, false);
 						addOval(action, string,parent.getLocation().x-6, parent.getLocation().y+ posY-1);
 
 					} else {
@@ -100,10 +100,12 @@ public class Node extends ICanvasNode {
 				}
 				
 				e.gc.setLineWidth(0);
-
+				int val=(int) (getTextPosition(6)+rect.x);
+				
+				
 				if (action.isShownName()) {
 					int l = rect.x + rect.width / 6;
-					e.gc.drawString(action.getName(), l, rect.y + rect.height / 3);
+					e.gc.drawString(action.getName(), val, rect.y + rect.height / 3);
 				}
 
 				e.gc.setBackground(colorNull);
@@ -119,7 +121,7 @@ public class Node extends ICanvasNode {
 
 					if (action.isShownCond()) {
 						e.gc.drawLine(x, posY, (int) (x + action.getLengthEff()), posY);
-						e.gc.drawString(string, x + 2, posY - 20, false);
+						e.gc.drawString(string, x + 2, posY - 10, false);
 						addOval(action,string,parent.getLocation().x+parent.getBounds().width+1,parent.getLocation().y+ posY-1);
 
 					} else {
@@ -151,12 +153,37 @@ public class Node extends ICanvasNode {
 	}
 
 	public void generateLatexCode(PlanContent planContent) {
-		LaTexGeneratorNode generator=new LaTexGeneratorNode(planContent);
-		latexCode=generator.getLatexActionCodePlan(action, this);
-		
+		LaTexGeneratorNode generator = new LaTexGeneratorNode(planContent);
+		latexCode = generator.getLatexActionCodePlan(action, this);
+
 	}
-	
+
 	public String getLatexCode() {
 		return latexCode;
 	}
+
+	public PlanContent getPlan() {
+		PlanContent plan = null;
+		if (getParent().getParent() instanceof PlanContent) {
+			plan = (PlanContent) getParent().getParent();
+		}
+
+		return plan;
+
+	}
+	
+	
+	private int getTextPosition(int avergWidth) {
+		int i = 5;
+		int stringLenght = action.getName().length() * avergWidth + 6;
+		if (stringLenght > action.getWidthRect()) {
+			action.setWidthRect(stringLenght);
+			return i;
+		} else {
+			i = (int) ((action.getWidthRect() - stringLenght) / 2);
+			return i;
+		}
+
+	}
+
 }

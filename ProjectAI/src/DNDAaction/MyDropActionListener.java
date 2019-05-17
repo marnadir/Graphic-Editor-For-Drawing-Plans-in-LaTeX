@@ -145,8 +145,11 @@ public class MyDropActionListener extends DropTargetAdapter {
 	private boolean actionHasVariable(Action a) {
 		boolean result=false;
 		String name=a.getName();
-		if(name.contains("(") || name.contains(",")) {
-			result=true;
+		if(name.contains("(") || name.contains(")")) {
+			String split[] = name.split("\\(");
+			if(!(split[1].equals(")")) && !(split[1].equals(","))) {
+				result=true;
+			}
 		}
 		
 		return result;
