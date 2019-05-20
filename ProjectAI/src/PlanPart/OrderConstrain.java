@@ -86,7 +86,7 @@ public class OrderConstrain{
 				
 				Point point=((Control) event.widget).getParent().getLocation();
 				
-				if (l1.getText().contains("ordering")) {
+				if (l1.getText().contains("Ordering")) {
 					if (nod1 == null) {
 						for (int i = 0; i < canvasContainer.getActionInPlan().size(); i++) {
 							if ((canvasContainer.getActionInPlan().get(i).getParent().getLocation().equals(point))) {

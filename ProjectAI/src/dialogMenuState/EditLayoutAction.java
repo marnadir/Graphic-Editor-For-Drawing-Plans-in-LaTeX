@@ -73,14 +73,14 @@ public class EditLayoutAction extends IDialog{
 		Label  lColor=new Label(mainComposite, SWT.ALL);
 		lColor.setText("Fill color: ");
 		cColor=new Combo(mainComposite, SWT.DROP_DOWN | SWT.READ_ONLY);
-		items = new String[] { "Cyan", "Yellow","None" };
+		items = new String[] { "cyan", "yellow","None" };
 		cColor.setItems(items);
 		if(action.isFillColor()) {
 			switch (action.getColorString()) {
-			case "Cyan":
+			case "cyan":
 				cColor.select(0);
 				break;	
-			case "Yellow":
+			case "yellow":
 				cColor.select(1);
 				break;
 

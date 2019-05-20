@@ -90,9 +90,9 @@ public abstract class ICanvasNode extends Canvas {
 	}
 
 	public Color getColorSWT() {
-		if (action.getColorString().equalsIgnoreCase("Cyan")) {
+		if (action.getColorString().equalsIgnoreCase("cyan")) {
 			return getDisplay().getSystemColor(SWT.COLOR_CYAN);
-		} else if (action.getColorString().equalsIgnoreCase("Yellow")) {
+		} else if (action.getColorString().equalsIgnoreCase("yellow")) {
 			return getDisplay().getSystemColor(SWT.COLOR_YELLOW);
 		}
 

@@ -28,11 +28,15 @@ public class NewConnectionDialog extends IDialog {
 	private LinkCanvas link;
 	private OrderConstrainCanvas constrain;
 	private OrderConstrain orderCond;
+	private Composite compDirect;
+	private Button btnLeft;
+	private Button btnRight;
+
 	Label l1 = null;
 	Label l2 = null;
 	String c1 = "....";
 	String c2 = "....";
-	Button archBtn;
+	Button btnLink;
 	PlanView planView;
 
 	public NewConnectionDialog(Shell shell, int style) {
@@ -49,8 +53,8 @@ public class NewConnectionDialog extends IDialog {
 		compButton = new Composite(mainComposite, SWT.ALL);
 		compButton.setLayout(new RowLayout(SWT.HORIZONTAL));
 
-		archBtn = new Button(compButton, SWT.PUSH);
-		archBtn.setText("Draw Link");
+		btnLink = new Button(compButton, SWT.PUSH);
+		btnLink.setText("Draw Link");
 
 		Button ordBtn = new Button(compButton, SWT.PUSH);
 		ordBtn.setText("Draw Ord");
@@ -59,6 +63,43 @@ public class NewConnectionDialog extends IDialog {
 		compPoint.setLayout(new GridLayout());
 		l1 = new Label(compPoint, SWT.ALL);
 		l2 = new Label(compPoint, SWT.ALL);
+		compDirect=new Composite(compPoint, SWT.ALL);
+		compDirect.setLayout(new GridLayout(2, true));
+		btnLeft=new Button(compDirect, SWT.CHECK);
+		btnLeft.setText("left");
+		btnRight=new Button(compDirect, SWT.CHECK);
+		btnRight.setText("right");
+		btnLeft.addListener(SWT.Selection, new Listener() {
+			
+			@Override
+			public void handleEvent(Event event) {
+				if(btnLeft.getSelection()) {
+					btnRight.setSelection(false);
+				}else {
+					btnRight.setSelection(true);
+				}
+				//link.setRight(false);
+
+				
+			}
+		});
+		
+		
+		btnRight.addListener(SWT.Selection, new Listener() {
+			
+			@Override
+			public void handleEvent(Event event) {
+				if(btnRight.getSelection()) {
+					btnLeft.setSelection(false);
+				}else {
+					btnRight.setSelection(true);
+				}
+				//link.setRight(true);
+				
+			}
+		});
+		
+		btnRight.setSelection(true);
 		compPoint.setVisible(false);
 		
 		compInfo=new Group(mainComposite, SWT.ALL);
@@ -67,7 +108,7 @@ public class NewConnectionDialog extends IDialog {
 		info=new Label(compInfo, SWT.ALL);
 		info.setText("Creation of casual link"+"\n"+"or ordering constrain");
 		ordBtn.addListener(SWT.Selection, getOrdBtnList());
-		archBtn.addListener(SWT.Selection, getArchBtnList());
+		btnLink.addListener(SWT.Selection, getArchBtnList());
 
 		compInfo.setLayoutData(new GridData(SWT.FILL,SWT.FILL,true,true));
 
@@ -84,7 +125,7 @@ public class NewConnectionDialog extends IDialog {
 			public void handleEvent(Event event) {
 
 				orderCond = null;
-
+				compDirect.setVisible(true);
 				l1.setText("PreCond. :" + "Select the point");
 				l1.pack();
 				l2.setText("Effect   :" + "Select the point");
@@ -97,7 +138,7 @@ public class NewConnectionDialog extends IDialog {
 				mainComposite.pack();
 				pack();
 				link = new LinkCanvas(planView.getPlan());
-				link.addlistener(l1, l2, archBtn);
+				link.addlistener(l1, l2, btnLink);
 
 			}
 		};
@@ -112,6 +153,7 @@ public class NewConnectionDialog extends IDialog {
 			public void handleEvent(Event event) {
 
 				link = null;
+				compDirect.setVisible(false);
 				c1 = "null";
 				c2 = "null";
 				l1.setText("Ordering of actions");

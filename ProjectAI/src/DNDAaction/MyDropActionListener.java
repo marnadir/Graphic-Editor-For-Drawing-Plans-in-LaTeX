@@ -95,11 +95,11 @@ public class MyDropActionListener extends DropTargetAdapter {
 							}
 							
 							 
-							Composite comp = new Composite(graphContent, SWT.ALL);
+							Composite comp = new Composite(graphContent, SWT.DRAW_DELIMITER);
 							comp.setLayoutData(new GridData(GridData.FILL, GridData.FILL, false, false));
 							comp.setLayout(new FillLayout());
 							comp.setLocation(comp.toControl(event.x, event.y));
-							node = new Node(comp, SWT.BORDER, action);
+							node = new Node(comp, SWT.NONE, action);
 							node.draw();
 							node.pack();
 							comp.pack();
