@@ -48,14 +48,14 @@ public class OrderConstrain{
 		//parent.pack();
 	}
 
-	public void addlistener(Label l1, Label l2) {
+	public void addlistener(boolean isCon, Label l2) {
 
 		for (int i = 0; i < canvasContainer.getChildren().length; i++) {
 			if (!(canvasContainer.getChildren()[i] instanceof Button)) {
 				Composite comp = (Composite) canvasContainer.getChildren()[i];
 				comp.setEnabled(true);
 				if (comp.getChildren().length > 0) {
-					comp.getChildren()[0].addListener(SWT.MouseDoubleClick, addOrdCond(l1, l2));
+					comp.getChildren()[0].addListener(SWT.MouseDoubleClick, addOrdCond(isCon, l2));
 
 				}
 			}
@@ -66,18 +66,18 @@ public class OrderConstrain{
 		
 	}
 	
-	public void removelistener(Label l1,Label l2,Button btn) {
-
-		for(int i=0;i<canvasContainer.getChildren().length;i++) {
-			Composite comp=(Composite)canvasContainer.getChildren()[i];
-			comp.setEnabled(true);
-			comp.getChildren()[0].addListener(SWT.MouseDoubleClick, addOrdCond(l1,l2));
-			comp.getChildren()[0].removeListener(SWT.MouseDoubleClick, addOrdCond(l1,l2));
-			
-		}
-	}
+//	public void removelistener(Label l1,Label l2,Button btn) {
+//
+//		for(int i=0;i<canvasContainer.getChildren().length;i++) {
+//			Composite comp=(Composite)canvasContainer.getChildren()[i];
+//			comp.setEnabled(true);
+//			comp.getChildren()[0].addListener(SWT.MouseDoubleClick, addOrdCond(l1,l2));
+//			comp.getChildren()[0].removeListener(SWT.MouseDoubleClick, addOrdCond(l1,l2));
+//			
+//		}
+//	}
 	
-	public Listener addOrdCond(Label l1,Label l2) {
+	public Listener addOrdCond(boolean isConstrain,Label l2) {
 		Listener l;
 		l = new Listener() {
 
@@ -86,7 +86,7 @@ public class OrderConstrain{
 				
 				Point point=((Control) event.widget).getParent().getLocation();
 				
-				if (l1.getText().contains("Ordering")) {
+				if (isConstrain) {
 					if (nod1 == null) {
 						for (int i = 0; i < canvasContainer.getActionInPlan().size(); i++) {
 							if ((canvasContainer.getActionInPlan().get(i).getParent().getLocation().equals(point))) {

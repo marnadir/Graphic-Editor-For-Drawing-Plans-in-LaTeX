@@ -90,7 +90,7 @@ public class PrincipalView {
 		domainView.setGlobalOptionView(globalOptionView);
 		
 		CTabItem pdfItem = new CTabItem(folder, SWT.NONE);
-		pdfItem.setText("Pdf View");
+		pdfItem.setText("PDF View");
 		pdfView=new PdfView(folder, SWT.ALL);
 		pdfItem.setControl(pdfView);
 		

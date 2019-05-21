@@ -41,7 +41,7 @@ public class ChangeCondCommand implements ICommand {
 					newCond.setVisible(true);
 
 					
-					label.setText("Add/Remove Conds.. ");
+					label.setText("Add/remove conds.");
 					List l = getList();
 					conds = canvas.getState().getConds();
 

@@ -53,7 +53,7 @@ public class SetSizeCondDialog extends IDialog {
 
 	@Override
 	public void createContent() {
-		this.label.setText("set the Conditions-size  ");
+		this.label.setText("Set the size of conditions  ");
 		this.label.pack();
 		mainComposite.setLayout(new GridLayout(3, false));
 		Button btnCond;
@@ -64,7 +64,7 @@ public class SetSizeCondDialog extends IDialog {
 			textConds = new Text(mainComposite, SWT.BORDER);
 			textConds.setText(state.getLengthCondInCm());
 			btnCond = new Button(mainComposite, SWT.CHECK);
-			btnCond.setText("global");
+			btnCond.setText("Global");
 			btnCond.setVisible(false);
 		} else {
 			Label lWidth = new Label(mainComposite, SWT.ALL);
@@ -72,7 +72,7 @@ public class SetSizeCondDialog extends IDialog {
 			textConds = new Text(mainComposite, SWT.BORDER);
 			textConds.setText((state.getStandardLengthInCm()));
 			btnCond = new Button(mainComposite, SWT.CHECK);
-			btnCond.setText("global");
+			btnCond.setText("Global");
 			btnCond.setVisible(false);
 
 		}
@@ -125,7 +125,8 @@ public class SetSizeCondDialog extends IDialog {
 			}
 		});
 		textConds.setLayoutData(new GridData(SWT.FILL, SWT.FILL,true,true));
-		pack();
+//		pack();
+		setSize(275,150);
 	}
 	
 	

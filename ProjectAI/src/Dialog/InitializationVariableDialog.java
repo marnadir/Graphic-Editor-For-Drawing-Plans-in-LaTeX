@@ -1,12 +1,14 @@
 package Dialog;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.TreeMap;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
@@ -14,10 +16,14 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
 import Action.Action;
+import PlanPart.Oval;
+import PlanPart.OvalCounter;
+import PlanPart.PlanContent;
 
 public class InitializationVariableDialog extends IDialog{
 	
 	Action action;
+	PlanContent plan;
 	Map<String, String> mapping;
 	ArrayList<Text> textList;
 	
@@ -32,6 +38,11 @@ public class InitializationVariableDialog extends IDialog{
 		this.action=a;
 	}
 	
+	
+	public void setPlan(PlanContent plan) {
+		this.plan = plan;
+	}
+
 	@Override
 	public void createContent() {
 		label.setText("Set the name of variables");
@@ -112,12 +123,31 @@ public class InitializationVariableDialog extends IDialog{
 				action.setName(getNewName(action.getName()));
 				action.setPrec(getNewCond(action.getPrec()));
 				action.setEffect(getNewCond(action.getEffect()));
+				changeNameOfOval();
 				dispose();
 
 			}
 		};
 		return l;
 
+	}
+	/*
+	 * when changed name of variable, need also to change the cond of oval
+	 * otherwise we have the double of oval(old and new)
+	 * 
+	 * */
+	private void changeNameOfOval() {
+		OvalCounter ovalCounter=plan.getOvalCounter();
+		
+		Iterator<Oval> iter = ovalCounter.getListOval().iterator();
+		while (iter.hasNext()) {
+		    Oval o = iter.next();
+
+		    if (o.getNode().getAction().equals(action))
+		    	o.dispose();
+		        iter.remove();
+		}
+		System.out.println(ovalCounter.getListOval().size());
 	}
 	
 

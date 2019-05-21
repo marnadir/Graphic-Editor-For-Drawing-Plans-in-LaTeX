@@ -37,7 +37,7 @@ public class ChangeNameCommand implements ICommand {
 					@Override
 					public void createContent() {
 
-						label.setText("Modificy name action: " + a.getName());
+						label.setText("Rename action of " + a.getName());
 						mainComposite.setLayout(new GridLayout(1, true));
 						textName = new Text(mainComposite, SWT.BORDER);
 						textName.setText(a.getName());

@@ -38,7 +38,7 @@ public class ChangePrecDialog extends IDialogNewState{
 		super.createContent();
 		btnEdit.setVisible(true);
 		newCond.setVisible(true);
-	    label.setText("Modify the precondition of " + a.getName());
+	    label.setText("Change preconditions of " + a.getName());
 		List l = getList();
 
 		for (int i = 0; i < a.getPrec().size(); i++) {

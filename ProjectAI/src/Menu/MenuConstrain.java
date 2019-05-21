@@ -1,6 +1,5 @@
 package Menu;
 
-import java.util.ArrayList;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MenuDetectEvent;
@@ -27,7 +26,7 @@ public class MenuConstrain implements MenuDetectListener  {
 		constrain.setMenu(m);
 
 		MenuItem c = new MenuItem(m, SWT.ALL);
-		c.setText("Clear Ordering Constrain");
+		c.setText("Remove Ordering Constrain");
 		
 		c.addListener(SWT.Selection, new Listener() {
 

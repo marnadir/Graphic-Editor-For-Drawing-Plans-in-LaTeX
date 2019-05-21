@@ -86,7 +86,7 @@ public class MenuContentState implements MenuDetectListener {
 		if (!(canvas.getParent().getParent() instanceof PlanContent)) {
 
 			MenuItem showC = new MenuItem(m, SWT.ALL);
-			showC.setText("Show/Hide Cond...");
+			showC.setText("Show/Hide Cond.");
 			showC.addListener(SWT.Selection, new Listener() {
 
 				@Override
@@ -98,7 +98,7 @@ public class MenuContentState implements MenuDetectListener {
 			});
 
 			MenuItem changeCond = new MenuItem(m, SWT.ALL);
-			changeCond.setText("Add/Remove Cond...");
+			changeCond.setText("Add/Remove Cond.");
 			changeCond.addListener(SWT.Selection, new Listener() {
 
 				@Override
@@ -110,7 +110,7 @@ public class MenuContentState implements MenuDetectListener {
 			});
 
 			MenuItem setSize = new MenuItem(m, SWT.CASCADE);
-			setSize.setText("Set Size...");
+			setSize.setText("Set Size");
 
 			Menu subMenu = new Menu(m);
 			setSize.setMenu(subMenu);

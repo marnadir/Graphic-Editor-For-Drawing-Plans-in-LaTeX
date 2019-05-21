@@ -26,7 +26,7 @@ public class SetWidtHeiDialog extends IDialog {
 
 	@Override
 	public void createContent() {
-		this.label.setText("set the Conditions-size  ");
+		this.label.setText("Set the size of the line");
 		this.label.pack();
 		mainComposite.setLayout(new GridLayout(2, false));
 		Button btnCond;	

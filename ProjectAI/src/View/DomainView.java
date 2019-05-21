@@ -24,7 +24,7 @@ import State.CreateStateComposite;
 public class DomainView {
 
 	Group domainGroup;
-	Group stateGroup;
+//	Group stateGroup;
 	SashForm sashForm;
 	Composite outer;
 	Composite inside;
@@ -55,7 +55,7 @@ public class DomainView {
 
 		this.domainGroup = new Group(outer, SWT.BORDER);
 		Font boldFont = new Font(this.domainGroup.getDisplay(), new FontData("Arial", 12, SWT.BOLD));
-		this.domainGroup.setText("Domain Graph");
+		this.domainGroup.setText("Domain Definition");
 		this.domainGroup.setFont(boldFont);
 
 		domainGroup.setLayout(new GridLayout(1, false));
@@ -69,13 +69,13 @@ public class DomainView {
 	public void createContent() {
 
 
-		stateGroup = new Group(inside, SWT.NONE);
-		stateGroup.setText("Items for the plan");
-		stateGroup.setLayout(new GridLayout(1, true));
-		GridData firstData = new GridData(SWT.FILL, SWT.FILL, true, true);
-		stateGroup.setLayoutData(firstData);
+//		stateGroup = new Group(inside, SWT.NONE);
+//		stateGroup.setText("Items for the plan");
+//		this.setLayout(new GridLayout(1, true));
+//		GridData firstData = new GridData(SWT.FILL, SWT.FILL, true, true);
+//		stateGroup.setLayoutData(firstData);
 		
-		contentCanvas = new Composite(stateGroup, SWT.NONE);
+		contentCanvas = new Composite(inside, SWT.NONE);
 		FillLayout fillLayout = new FillLayout();
 		fillLayout.type = SWT.VERTICAL;
 		contentCanvas.setLayout(fillLayout);

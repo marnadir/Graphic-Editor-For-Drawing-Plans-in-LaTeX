@@ -83,6 +83,7 @@ public class MyDropActionListener extends DropTargetAdapter {
 										graphContent.getShell(), 
 										SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL | SWT.CENTER | SWT.RESIZE);
 								dialog.setAction(action);
+								dialog.setPlan(graphContent);
 								dialog.createContent();
 								dialog.pack();
 							}

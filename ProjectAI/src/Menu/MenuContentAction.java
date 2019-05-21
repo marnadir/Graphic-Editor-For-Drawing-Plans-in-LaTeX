@@ -114,6 +114,7 @@ public class MenuContentAction implements MenuDetectListener {
 		
 		if ((canvas.getParent().getParent() instanceof PlanContent)) {
 			
+			PlanContent planContent=(PlanContent) canvas.getParent().getParent();
 			if(actionHasVariable(canvas.getAction())) {
 				MenuItem setvariable = new MenuItem(m, SWT.ALL);
 				setvariable.setText("Set Variables");
@@ -127,6 +128,7 @@ public class MenuContentAction implements MenuDetectListener {
 									canvas.getShell(), 
 									SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL | SWT.CENTER | SWT.RESIZE);
 							dialog.setAction(canvas.getAction());
+							dialog.setPlan(planContent);
 							dialog.createContent();
 							dialog.pack();
 						}
@@ -141,7 +143,7 @@ public class MenuContentAction implements MenuDetectListener {
 		if (!(canvas.getParent().getParent() instanceof PlanContent)) {
 
 			MenuItem showC = new MenuItem(m, SWT.ALL);
-			showC.setText("Show/Hide Cond...");
+			showC.setText("Show/Hide Cond.");
 			showC.addListener(SWT.Selection, new Listener() {
 
 				@Override
@@ -153,7 +155,7 @@ public class MenuContentAction implements MenuDetectListener {
 			});
 
 			MenuItem showN = new MenuItem(m, SWT.ALL);
-			showN.setText("Show/Hide Name..");
+			showN.setText("Show/Hide Name");
 			showN.addListener(SWT.Selection, new Listener() {
 
 				@Override
@@ -165,7 +167,7 @@ public class MenuContentAction implements MenuDetectListener {
 			});
 		
 			MenuItem editLayout = new MenuItem(m, SWT.ALL);
-			editLayout.setText("Edit layout");
+			editLayout.setText("Edit Layout");
 			editLayout.addListener(SWT.Selection, new Listener() {
 
 				@Override
@@ -181,7 +183,7 @@ public class MenuContentAction implements MenuDetectListener {
 
 				
 			MenuItem setSize = new MenuItem(m, SWT.CASCADE);
-			setSize.setText("Set Size...");
+			setSize.setText("Set Size");
 
 			Menu subMenu = new Menu(m);
 			setSize.setMenu(subMenu);
@@ -221,7 +223,7 @@ public class MenuContentAction implements MenuDetectListener {
 
 						@Override
 						public void createContent() {
-							label.setText("set the Box-size: " + canvas.getAction().getName());
+							label.setText("Set the box-size: " + canvas.getAction().getName());
 							label.pack();
 							mainComposite.setLayout(new GridLayout(3, false));
 

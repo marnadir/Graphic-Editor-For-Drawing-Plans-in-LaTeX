@@ -26,10 +26,10 @@ public class InitialStateCanvas extends IStateCanvas  {
 			@Override
 			public void paintControl(PaintEvent e) {
 
-				Font font = new Font(getDisplay(), "Arabic Transparent", 9, SWT.NORMAL);
+				Font font = new Font(getDisplay(), "Arabic Transparent", 6, SWT.NORMAL);
 				e.gc.setFont(font);
 				
-				int avergWidth = 7;
+				int avergWidth = 6;
 				//int avergWidth =e.gc.getFontMetrics().getAverageCharacterWidth();
 
 				int startX = 0;
@@ -73,7 +73,7 @@ public class InitialStateCanvas extends IStateCanvas  {
 
 					if(state.isShownCond()) {
 						e.gc.drawLine(startX, posY, (int) (startX + state.getLengthCond()), posY);
-						e.gc.drawString(string, startX + 5, posY - 20, false);
+						e.gc.drawString(string, startX + 5, posY - 10, false);
 						if(parent.getParent() instanceof PlanContent) {
 							addOval(state,string,parent.getLocation().x+parent.getBounds().width+1,parent.getLocation().y+ posY-1);
 						}

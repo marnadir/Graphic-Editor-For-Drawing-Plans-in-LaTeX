@@ -44,7 +44,7 @@ public class GlobalOptionView extends Composite{
 	public void createContent() {
 			
 		Label l=new Label(this, SWT.ALL);
-		l.setText("Enable global values, which you want to use");
+		l.setText("Enable global values");
 		GridData gridData = new GridData(GridData.BEGINNING, GridData.BEGINNING, false, false);
 		gridData.horizontalSpan = 2;
 		l.setLayoutData(gridData);
@@ -59,7 +59,7 @@ public class GlobalOptionView extends Composite{
 		bntWidth=new Button(compListdetail, SWT.CHECK | SWT.BORDER);
 		bntWidth.addListener(SWT.Selection, getAddBtnWListener(bntWidth));
 		Label lWidth=new Label(compListdetail, SWT.ALL);
-		lWidth.setText("Width of actions");
+		lWidth.setText("Box-Width of Actions");
 		tWidth=new Text(compListdetail, SWT.BORDER );
 		tWidth.setEditable(false);
 		tWidth.setText("NONE");
@@ -73,7 +73,7 @@ public class GlobalOptionView extends Composite{
 		bntHeigt=new Button(compListdetail, SWT.CHECK | SWT.BORDER);
 		bntHeigt.addListener(SWT.Selection, getAddBtnHListener(bntHeigt));
 		Label lHeight=new Label(compListdetail, SWT.ALL);
-		lHeight.setText("Height of action");
+		lHeight.setText("Box-Height of Actions");
 		tHeight=new Text(compListdetail, SWT.BORDER );
 		tHeight.setEditable(false);
 		tHeight.setText("NONE");
@@ -87,7 +87,7 @@ public class GlobalOptionView extends Composite{
 		bntCond=new Button(compListdetail, SWT.CHECK | SWT.BORDER);
 		bntCond.addListener(SWT.Selection, getAddBtnCondListener(bntCond));
 		Label lConds=new Label(compListdetail, SWT.ALL);
-		lConds.setText("Lenght Cond of State");
+		lConds.setText("Lenght Cond. of State");
 		tLenCond=new Text(compListdetail, SWT.BORDER );
 		tLenCond.setEditable(false);
 		tLenCond.setText("NONE");
@@ -100,7 +100,7 @@ public class GlobalOptionView extends Composite{
 		bntPrec=new Button(compListdetail, SWT.CHECK | SWT.BORDER);
 		bntPrec.addListener(SWT.Selection, getAddBtnPListener(bntPrec));
 		Label lPrec=new Label(compListdetail, SWT.ALL);
-		lPrec.setText("Lenght Precs of Action");
+		lPrec.setText("Lenght Precond. of Actions");
 		tLenPre=new Text(compListdetail, SWT.BORDER );
 		tLenPre.setEditable(false);
 		tLenPre.setText("NONE");
@@ -115,7 +115,7 @@ public class GlobalOptionView extends Composite{
 		bntEff=new Button(compListdetail, SWT.CHECK | SWT.BORDER);
 		bntEff.addListener(SWT.Selection, getAddBtnEListener(bntEff));
 		Label lEffs=new Label(compListdetail, SWT.ALL);
-		lEffs.setText("Lenght Effs of Action");
+		lEffs.setText("Lenght Effects of Actions");
 		tLenEff=new Text(compListdetail, SWT.BORDER );
 		tLenEff.setEditable(false);
 		tLenEff.setText("NONE");
@@ -129,7 +129,7 @@ public class GlobalOptionView extends Composite{
 		bntEmty.setSelection(true);
 		bntEmty.setEnabled(false);
 		lEmpty=new Label(compListdetail, SWT.ALL);
-		lEmpty.setText("Lenght of empty tasks");
+		lEmpty.setText("Lenght of Empty Tasks");
 		tLenEmpty=new Text(compListdetail, SWT.BORDER );
 		tLenEmpty.setText(GlobalValue.lengthsOfEmptyTasks);
 		Button btnOkEmpty1=new Button(compListdetail, SWT.ALL);
@@ -144,7 +144,7 @@ public class GlobalOptionView extends Composite{
 		primGroup.setText("Primitive");
 		
 		Label lForm=new Label(primGroup, SWT.ALL);
-		lForm.setText("Border color: ");
+		lForm.setText("Border Color: ");
 		cFormP=new Combo(primGroup, SWT.DROP_DOWN | SWT.READ_ONLY);
 		String[] items = new String[] { "Black", "White" };
 		cFormP.setItems(items);

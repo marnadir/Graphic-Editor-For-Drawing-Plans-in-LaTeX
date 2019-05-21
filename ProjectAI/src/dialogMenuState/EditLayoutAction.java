@@ -31,12 +31,12 @@ public class EditLayoutAction extends IDialog{
 
 	@Override
 	public void createContent() {
-		label.setText("Set layout of action: "+action.getName());
+		label.setText("Set layout action of "+action.getName());
 		mainComposite.setLayout(new GridLayout(2,true));
 		mainComposite.setLayoutData(new GridData(SWT.FILL,SWT.FILL,true,true));
 		
 		Label lForm=new Label(mainComposite, SWT.ALL);
-		lForm.setText("Border color: ");
+		lForm.setText("Border Color: ");
 		cForm=new Combo(mainComposite, SWT.DROP_DOWN | SWT.READ_ONLY);
 		String[] items = new String[] { "Black", "White" };
 		cForm.setItems(items);
@@ -73,14 +73,14 @@ public class EditLayoutAction extends IDialog{
 		Label  lColor=new Label(mainComposite, SWT.ALL);
 		lColor.setText("Fill color: ");
 		cColor=new Combo(mainComposite, SWT.DROP_DOWN | SWT.READ_ONLY);
-		items = new String[] { "cyan", "yellow","None" };
+		items = new String[] { "Cyan", "Yellow","None" };
 		cColor.setItems(items);
 		if(action.isFillColor()) {
 			switch (action.getColorString()) {
-			case "cyan":
+			case "Cyan":
 				cColor.select(0);
 				break;	
-			case "yellow":
+			case "Yellow":
 				cColor.select(1);
 				break;
 
@@ -187,7 +187,7 @@ public class EditLayoutAction extends IDialog{
 					action.setIsFett(false);
 
 				}
-				action.setColorString(cColor.getItem(cColor.getSelectionIndex()));
+				action.setColorString((cColor.getItem(cColor.getSelectionIndex())).toLowerCase());
 				if(!(action.getColorString().equals("None"))) {
 					canvas.getAction().setIsFillColor(true);
 				}

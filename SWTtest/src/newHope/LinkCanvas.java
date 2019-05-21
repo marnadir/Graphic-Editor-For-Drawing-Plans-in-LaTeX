@@ -6,6 +6,7 @@ import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontData;
+import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Path;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Composite;
@@ -92,58 +93,16 @@ public class LinkCanvas  {
 
 				e.gc.drawPath(path);
 				e.gc.dispose();
-//				int arrowLength=5;
-//				int arrowAngle=240;
-//				
-//				double theta = Math.atan2(p2.y - p1.y, p2.x - p1.x);
-//			    double offset = (arrowLength - 2) * Math.cos(arrowAngle);
-//				path.moveTo((float)(p2.x - arrowLength * Math.cos(theta - arrowAngle)), (float)(p2.y - arrowLength * Math.sin(theta - arrowAngle)));
-//		        path.lineTo((float)p2.x, (float)p2.y);
-//			    path.lineTo((float)(p2.x - arrowLength * Math.cos(theta + arrowAngle)), (float)(p2.y - arrowLength * Math.sin(theta + arrowAngle)));	
-//			    path.moveTo((float)(p2.x+p1.x)/2, (float)(p2.y-50));
-//			    e.gc.drawPath(path);
-				
-				
-				
-		        //path.lineTo((float)p2.x, (float)p2.y);
-			    
-			    // scambio p2.x con p1.y per scegliere left o right inclation for te link
-			    
-			    
-			    
-			    
 
-			   // path.moveTo((float)(p2.x+p1.x)/2, (float)(p2.y-50));
-			   // path.lineTo((float)(p1.x), (float)(p1.y ));				
-
-			    
-			    
-			    
-//			    int x1=p1.x;
-//			    int x2=p2.x;
-//			    int y1=p1.y;
-//			    int y2=p2.y;
-//			    
-//			    int x0=(p1.x+p2.x)/2;
-//			    int y0=p2.y;
-//			    
-//			    
-//			    int r = (int)Math.sqrt((x1-x0)*(x1-x0) + (y1-y0)*(y1-y0));
-//			    int x = x0-r;
-//			    int y = y0-r;
-//			    int width = 2*r;
-//			    int height = 2*r;
-//			    int startAngle = (int) (180/Math.PI*Math.atan2(y1-y0, x1-x0));
-//			    int endAngle = (int) (180/Math.PI*Math.atan2(y2-y0, x2-x0));
-//			    e.gc.drawArc(x, y, width, height, 0, 180);
-				
-				
-				//e.gc.drawLine(p1.x, p1.y+5, (int)(p2.x - offset * Math.cos(theta)), (int)(p2.y - offset * Math.sin(theta)));
 			}
 		});
 		
 	}
 	
+
+
+	
+
 
 	
 }

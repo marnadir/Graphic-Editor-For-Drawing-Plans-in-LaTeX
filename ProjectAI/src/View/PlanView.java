@@ -79,7 +79,7 @@ public class PlanView  extends CTabFolder{
 		
 		contentPlan.addDndListener(domainView.getTreeAction());
 		Button b1=new Button(contentPlan, SWT.PUSH);
-		b1.setText("Load link");
+		b1.setText("Load Link");
 		b1.pack();
 		b1.setVisible(false);
 		b1.addListener(SWT.Selection, new Listener() {
@@ -106,7 +106,7 @@ public class PlanView  extends CTabFolder{
 		
 		ToolItem newConnection=new ToolItem(t, SWT.PUSH);
 		Image icon = new Image(getDisplay(), ResourceLoader.load("img/connection.png"));
-		newConnection.setToolTipText("New link/constraint");
+		newConnection.setToolTipText("New Link/Constraint");
 		newConnection.setImage(icon);
 		newConnection.addListener(SWT.Selection, new Listener() {
 			
@@ -122,7 +122,7 @@ public class PlanView  extends CTabFolder{
 		
 		showCondition=new ToolItem(t, SWT.CHECK);
 		icon = new Image(getDisplay(), ResourceLoader.load("img/eye.png"));
-		showCondition.setToolTipText("Show/hide conditions");
+		showCondition.setToolTipText("Show/Hide Conditions");
 		showCondition.setImage(icon);
 		showCondition.addListener(SWT.Selection,new Listener() {
 			
@@ -194,7 +194,7 @@ public class PlanView  extends CTabFolder{
 		ToolItem savePlan=new ToolItem(t,SWT.PUSH);
 		icon = new Image(getDisplay(), ResourceLoader.load("img/save.ico"));
 		savePlan.setImage(icon);
-		savePlan.setToolTipText("Save plan");
+		savePlan.setToolTipText("Save Plan");
 		savePlan.addListener(SWT.Selection, new Listener() {
 			
 			@Override
@@ -222,7 +222,7 @@ public class PlanView  extends CTabFolder{
 		ToolItem PDFPreview=new ToolItem(t,SWT.PUSH);
 		icon = new Image(getDisplay(),ResourceLoader.load("img/pdf.ico") );
 		PDFPreview.setImage(icon);
-		PDFPreview.setToolTipText("Generete pdf into pdfView");
+		PDFPreview.setToolTipText("Generete PDF");
 		
 		PDFPreview.addListener(SWT.Selection, new Listener() {
 			
@@ -338,7 +338,7 @@ public class PlanView  extends CTabFolder{
 		});
 		
 		ToolItem i = new ToolItem(t, SWT.PUSH);
-		i.setToolTipText("Add a new plan");
+		i.setToolTipText("Add a New Plan");
 		 icon = new Image(getDisplay(),ResourceLoader.load("img/add-documents.png") );
 		i.setImage(icon);
 		i.addSelectionListener(new SelectionListener() {

@@ -38,6 +38,7 @@ public class NewConnectionDialog extends IDialog {
 	String c2 = "....";
 	Button btnLink;
 	PlanView planView;
+	boolean isConstrain;
 
 	public NewConnectionDialog(Shell shell, int style) {
 		super(shell, style);
@@ -123,10 +124,10 @@ public class NewConnectionDialog extends IDialog {
 
 			@Override
 			public void handleEvent(Event event) {
-
+				isConstrain=false;
 				orderCond = null;
 				compDirect.setVisible(true);
-				l1.setText("PreCond. :" + "Select the point");
+				l1.setText("Precond. :" + "Select the point");
 				l1.pack();
 				l2.setText("Effect   :" + "Select the point");
 				l2.pack();
@@ -138,7 +139,7 @@ public class NewConnectionDialog extends IDialog {
 				mainComposite.pack();
 				pack();
 				link = new LinkCanvas(planView.getPlan());
-				link.addlistener(l1, l2, btnLink);
+				link.addlistener(l1, l2, isConstrain,btnLink);
 
 			}
 		};
@@ -171,9 +172,9 @@ public class NewConnectionDialog extends IDialog {
 				// sulla definizione di cio, ce qualcosa che mi turba!!
 				comp.setSize(50, 50);
 				comp.setLocation(20, 30);
-
+				isConstrain=true;
 				orderCond = new OrderConstrain(comp);
-				orderCond.addlistener(l1, l2);
+				orderCond.addlistener(isConstrain, l2);
 			}
 		};
 

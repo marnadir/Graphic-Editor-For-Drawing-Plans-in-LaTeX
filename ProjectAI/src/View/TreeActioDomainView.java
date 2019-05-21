@@ -63,7 +63,7 @@ public class TreeActioDomainView extends Tree {
 		elimAction.setText("Eliminate Action");
 
 		modifAction = new MenuItem(menu, SWT.CASCADE);
-		modifAction.setText("Set...");
+		modifAction.setText("Setting");
 
 		Menu subMenu = new Menu(menu);
 		modifAction.setMenu(subMenu);

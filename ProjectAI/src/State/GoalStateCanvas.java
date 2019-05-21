@@ -32,10 +32,10 @@ public class GoalStateCanvas extends IStateCanvas {
 			@Override
 			public void paintControl(PaintEvent e) {
 			
-				Font font = new Font(getDisplay(), "Arabic Transparent", 9, SWT.NORMAL);
+				Font font = new Font(getDisplay(), "Arabic Transparent", 6, SWT.NORMAL);
 				e.gc.setFont(font);
 				
-				int avergWidth = 7;	
+				int avergWidth = 6;	
 				//int avergWidth =e.gc.getFontMetrics().getAverageCharacterWidth();
 				int numCond = state.getConds().size();
 
@@ -72,7 +72,7 @@ public class GoalStateCanvas extends IStateCanvas {
 
 					if(state.isShownCond()) {
 						e.gc.drawLine(startX, posY, (int) (-2+startX - state.getLengthCond()), posY);
-						e.gc.drawString(string, (int) (startX+3 - state.getLengthCond()), posY - 20, false);
+						e.gc.drawString(string, (int) (startX+3 - state.getLengthCond()), posY - 10, false);
 						if(parent.getParent() instanceof PlanContent) {
 							addOval(state,string,parent.getLocation().x-6, parent.getLocation().y+ posY-2);
 						}

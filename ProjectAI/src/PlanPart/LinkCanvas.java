@@ -55,7 +55,7 @@ public class LinkCanvas {
 		this.p2 = p2;
 	}
 
-	public void addlistener(Label l1, Label l2, Button btn) {
+	public void addlistener(Label l1, Label l2, boolean isConstrain,Button btn) {
 
 		for (int i = 0; i < canvasContainer.getChildren().length; i++) {
 			if (!(canvasContainer.getChildren()[i] instanceof Button)) {
@@ -69,11 +69,11 @@ public class LinkCanvas {
 			}
 
 		}
-		canvasContainer.addListener(SWT.MouseDoubleClick, addLink(l1, l2, btn));
+		canvasContainer.addListener(SWT.MouseDoubleClick, addLink(l1, l2, isConstrain,btn));
 
 	}
 
-	public Listener addLink(Label l1, Label l2, Button btn) {
+	public Listener addLink(Label l1, Label l2, boolean isConstrain,Button btn) {
 		Listener l;
 		l = new Listener() {
 
@@ -83,7 +83,7 @@ public class LinkCanvas {
 					return;
 				}
 
-				if (!(l1.getText().contains("ordering"))) {
+				if (!(isConstrain)) {
 					if (oval1 == null) {
 						int d = canvasContainer.getOvalCounter().getListOval().size();
 						for (int i = 0; i < canvasContainer.getOvalCounter().getListOval().size(); i++) {
@@ -245,7 +245,13 @@ public class LinkCanvas {
 							isRight = true;
 
 						} else {
-							path.quadTo(temp2.x, temp1.y, temp2.x, temp2.y);
+//							path.quadTo(temp2.x, temp1.y, temp2.x, temp2.y);
+							Point temp = null;
+							temp = temp1;
+							temp1 = temp2;
+							temp2 = temp;
+							path.quadTo(temp1.x, temp2.y, temp1.x, temp1.y);
+							isRight = true;
 							isRight = false;
 
 						}

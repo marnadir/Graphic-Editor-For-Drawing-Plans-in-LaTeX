@@ -100,7 +100,10 @@ public class Node extends ICanvasNode {
 				}
 				
 				e.gc.setLineWidth(0);
-				int val=(int) (getTextPosition(6)+rect.x);
+				
+				int widthSize = (int)e.gc.getFontMetrics().getAverageCharacterWidth();
+				int val=(int) (getTextPosition(widthSize)+rect.x);
+				
 				
 				
 				if (action.isShownName()) {

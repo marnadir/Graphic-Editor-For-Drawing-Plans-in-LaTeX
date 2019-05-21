@@ -64,6 +64,7 @@ public class CanvasAction  extends ICanvasNode{
 				action.resize();
 		
 				Font font = new Font(getDisplay(), "Arabic Transparent", 6, SWT.NORMAL);
+			
 				Color colorNull=e.gc.getBackground();
 				e.gc.setFont(font);
 
@@ -138,11 +139,12 @@ public class CanvasAction  extends ICanvasNode{
 				
 				e.gc.setLineWidth(0);
 
-				int val=(int) (getTextPosition(6)+rect.x);
+				int widthSize = (int)e.gc.getFontMetrics().getAverageCharacterWidth();
+
+				int val=(int) (getTextPosition(widthSize)+rect.x);
 
 				
 				if (action.isShownName()) {
-					int l = rect.x + rect.width / 6;
 					e.gc.drawString(action.getName(), val, rect.y + rect.height / 3);
 				}
 
@@ -182,7 +184,7 @@ public class CanvasAction  extends ICanvasNode{
 	public void resizeParent() {
 		if(action.isShownCond()) {
 			double x1=action.getLengthPrec()+action.getLengthEff()+action.getWidthRect();
-			if(action.getPrec().size()==0 || action.getEffect().size()==0) {
+			if(action.getPrec().size()==0 && action.getEffect().size()==0) {
 				x1=x1+3;
 			}
 			double y1=action.getHeightRect()+40;
@@ -190,7 +192,7 @@ public class CanvasAction  extends ICanvasNode{
 			
 		}else {
 			double x1=action.getStandardLengthPrec()+action.getStandardLengthEff()+action.getWidthRect();
-			if(action.getPrec().size()==0 || action.getEffect().size()==0) {
+			if(action.getPrec().size()==0 && action.getEffect().size()==0) {
 				x1=x1+3;
 			}
 			double y1=action.getHeightRect()+40;
