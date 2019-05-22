@@ -31,7 +31,7 @@ public class EditLayoutAction extends IDialog{
 
 	@Override
 	public void createContent() {
-		label.setText("Set layout action of "+action.getName());
+		label.setText("Set layout of the action: "+action.getName());
 		mainComposite.setLayout(new GridLayout(2,true));
 		mainComposite.setLayoutData(new GridData(SWT.FILL,SWT.FILL,true,true));
 		
@@ -60,7 +60,7 @@ public class EditLayoutAction extends IDialog{
 		}
 		
 		Label  lBord=new Label(mainComposite, SWT.ALL);
-		lBord.setText("Fat border: ");
+		lBord.setText("Fat Border: ");
 		cBord=new Combo(mainComposite, SWT.DROP_DOWN | SWT.READ_ONLY);
 		items = new String[] { "Fat", "Normal" };
 		cBord.setItems(items);
@@ -71,7 +71,7 @@ public class EditLayoutAction extends IDialog{
 		}
 		
 		Label  lColor=new Label(mainComposite, SWT.ALL);
-		lColor.setText("Fill color: ");
+		lColor.setText("Fill Color: ");
 		cColor=new Combo(mainComposite, SWT.DROP_DOWN | SWT.READ_ONLY);
 		items = new String[] { "Cyan", "Yellow","None" };
 		cColor.setItems(items);

@@ -262,6 +262,13 @@ public class PlanView  extends CTabFolder{
 					}
 				}
 				
+				//Save Plan&Domain
+				SavePlanCommand command=new SavePlanCommand();
+				command.setPlanContent(getPlan());
+				command.execute(dialog.getFilterPath(),"PlanStore.txt");
+				
+				SaveDomainCommand command2=new SaveDomainCommand();
+				command2.copyFileDomain(dialog.getFilterPath(), domainView);
 				
 				
 				//consoleViewPlan.saveFile();
@@ -305,6 +312,11 @@ public class PlanView  extends CTabFolder{
 
 					}                       
 				
+				
+					
+					
+					
+					//generate PDF file and put it into PDF View	
 					String pdfFile=getPlan().getLatexFile().getName();
 					pdfFile=pdfFile.substring(0, pdfFile.length()-3);
 					pdfFile=pdfFile+"pdf";

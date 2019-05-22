@@ -4,6 +4,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
@@ -37,8 +38,10 @@ public class ChangeNameCommand implements ICommand {
 					@Override
 					public void createContent() {
 
-						label.setText("Rename action of " + a.getName());
-						mainComposite.setLayout(new GridLayout(1, true));
+						label.setText("Rename action: " + a.getName());
+						mainComposite.setLayout(new GridLayout(2, false));
+						Label l=new Label(mainComposite, SWT.NONE);
+						l.setText("New name:");
 						textName = new Text(mainComposite, SWT.BORDER);
 						textName.setText(a.getName());
 						textName.setLayoutData(new GridData(SWT.FILL, SWT.FILL,true,true));

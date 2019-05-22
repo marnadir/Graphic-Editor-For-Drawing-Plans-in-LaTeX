@@ -223,7 +223,7 @@ public class MenuContentAction implements MenuDetectListener {
 
 						@Override
 						public void createContent() {
-							label.setText("Set the box-size: " + canvas.getAction().getName());
+							label.setText("Set the box-size of the action: " + canvas.getAction().getName());
 							label.pack();
 							mainComposite.setLayout(new GridLayout(3, false));
 
@@ -236,7 +236,7 @@ public class MenuContentAction implements MenuDetectListener {
 							
 
 							Button btnWidth=new Button(mainComposite, SWT.CHECK);
-							btnWidth.setText("global");
+							btnWidth.setText("Global");
 							btnWidth.setVisible(false);
 							
 
@@ -277,7 +277,7 @@ public class MenuContentAction implements MenuDetectListener {
 
 							
 							Button btnHeight=new Button(mainComposite, SWT.CHECK);
-							btnHeight.setText("global");
+							btnHeight.setText("Global");
 							btnHeight.setVisible(false);
 							
 
@@ -327,7 +327,7 @@ public class MenuContentAction implements MenuDetectListener {
 			});
 
 			MenuItem precSize = new MenuItem(subMenu, SWT.ALL);
-			precSize.setText("Size Precondition lines");
+			precSize.setText("Size Precondition Lines");
 			precSize.addListener(SWT.Selection, new Listener() {
 
 				@Override
@@ -362,7 +362,7 @@ public class MenuContentAction implements MenuDetectListener {
 
 						@Override
 						public void createContent() {
-							label.setText("set the PrecLine-size of the action: " + canvas.getAction().getName());
+							label.setText("Set the precond. size of the action: " + canvas.getAction().getName());
 							label.pack();
 							mainComposite.setLayout(new GridLayout(3, false));
 
@@ -376,7 +376,7 @@ public class MenuContentAction implements MenuDetectListener {
 								textPrec.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
 								btnPrec=new Button(mainComposite, SWT.CHECK);
-								btnPrec.setText("global");
+								btnPrec.setText("Global");
 								btnPrec.setVisible(false);
 
 							} else {
@@ -387,7 +387,7 @@ public class MenuContentAction implements MenuDetectListener {
 								textPrec.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
 								btnPrec=new Button(mainComposite, SWT.CHECK);
-								btnPrec.setText("global");
+								btnPrec.setText("Global");
 								btnPrec.setVisible(false);
 
 							}
@@ -452,7 +452,7 @@ public class MenuContentAction implements MenuDetectListener {
 			});
 
 			MenuItem effSize = new MenuItem(subMenu, SWT.ALL);
-			effSize.setText("Size Effect lines");
+			effSize.setText("Size Effect Lines");
 			effSize.addListener(SWT.Selection, new Listener() {
 
 				@Override
@@ -489,7 +489,7 @@ public class MenuContentAction implements MenuDetectListener {
 						@Override
 						public void createContent() {
 							label
-									.setText("set the EffectLine-size of the action: " + canvas.getAction().getName());
+									.setText("Set the effects size of the action: " + canvas.getAction().getName());
 							label.pack();
 							Button btnEff;
 							Composite c = mainComposite;
@@ -503,7 +503,7 @@ public class MenuContentAction implements MenuDetectListener {
 								textEff.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
 								btnEff=new Button(mainComposite, SWT.CHECK);
-								btnEff.setText("global");
+								btnEff.setText("Global");
 								btnEff.setVisible(false);
 							} else {
 								Label lWidth = new Label(c, SWT.ALL);
@@ -513,7 +513,7 @@ public class MenuContentAction implements MenuDetectListener {
 								textEff.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
 								btnEff=new Button(mainComposite, SWT.CHECK);
-								btnEff.setText("global");
+								btnEff.setText("Global");
 								btnEff.setVisible(false);
 							}
 							

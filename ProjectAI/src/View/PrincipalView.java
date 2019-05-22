@@ -94,15 +94,15 @@ public class PrincipalView {
 		pdfView=new PdfView(folder, SWT.ALL);
 		pdfItem.setControl(pdfView);
 		
+		//TODO
 		
-		
-		CTabItem positionItem=new CTabItem(folder, SWT.NONE);
-		positionItem.setText("Position View");
-		PositionInPlanView positionInPlanView=new PositionInPlanView(folder, SWT.ALL);
-		positionInPlanView.setContentPlan(planView.getPlan());
-		positionInPlanView.setLayout();
-		positionInPlanView.createContent();
-		positionItem.setControl(positionInPlanView);
+//		CTabItem positionItem=new CTabItem(folder, SWT.NONE);
+//		positionItem.setText("Position View");
+//		PositionInPlanView positionInPlanView=new PositionInPlanView(folder, SWT.ALL);
+//		positionInPlanView.setContentPlan(planView.getPlan());
+//		positionInPlanView.setLayout();
+//		positionInPlanView.createContent();
+//		positionItem.setControl(positionInPlanView);
 		
 		
 		
