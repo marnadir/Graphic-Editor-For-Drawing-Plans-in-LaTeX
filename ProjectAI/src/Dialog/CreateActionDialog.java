@@ -155,7 +155,6 @@ public class CreateActionDialog extends IDialog {
 			}
 		});
 		
-		
 		listPrec = new List(groupPrec, SWT.BORDER | SWT.MULTI | SWT.V_SCROLL | SWT.H_SCROLL |SWT.RESIZE);
 		Button btnDeletePrec = new Button(groupPrec, SWT.PUSH);
 		icon = new Image(groupPrec.getDisplay(), ResourceLoader.load("img/deleteCond.png"));
