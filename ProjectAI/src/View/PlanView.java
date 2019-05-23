@@ -68,14 +68,16 @@ public class PlanView  extends CTabFolder{
 		//TODO Quanto mi consuma sta pezzo di codice
 		
 		Display.getDefault().timerExec(10, new Runnable() {
-		    @Override
-		    public void run() {
-		    	contentPlan.redraw();
+			@Override
+			public void run() {
+				if(!(contentPlan.isDisposed())) {
+					contentPlan.redraw();
+				}
 
-		      // Run again - TODO add logic to stop after correct number of moves
-		      Display.getDefault().timerExec(10, this);
-		    }
-		   });
+				// Run again - TODO add logic to stop after correct number of moves
+				Display.getDefault().timerExec(10, this);
+			}
+		});
 		
 		contentPlan.addDndListener(domainView.getTreeAction());
 		Button b1=new Button(contentPlan, SWT.PUSH);
