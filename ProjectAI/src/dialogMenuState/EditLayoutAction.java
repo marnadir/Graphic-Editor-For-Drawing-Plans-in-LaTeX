@@ -12,14 +12,14 @@ import org.eclipse.swt.widgets.Shell;
 
 import Action.Action;
 import Action.GlobalValue;
-import Action.ICanvasNode;
+import Action.ICanvas;
 import Dialog.IDialog;
 import Menu.MenuContentAction;
 
 public class EditLayoutAction extends IDialog{
 	
 	Action action;
-	ICanvasNode canvas;
+	ICanvas canvas;
 	Combo cCorner,cForm,cBord,cColor;
 	MenuContentAction menu;
 
@@ -201,7 +201,7 @@ public class EditLayoutAction extends IDialog{
 
 
 
-	public void setCanvas(ICanvasNode canvas) {
+	public void setCanvas(ICanvas canvas) {
 		this.canvas = canvas;
 		this.action=canvas.getAction();
 	}

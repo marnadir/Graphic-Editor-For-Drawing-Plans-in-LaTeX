@@ -23,7 +23,7 @@ import org.eclipse.swt.widgets.Text;
 
 import Action.Action;
 import Action.GlobalValue;
-import Action.ICanvasNode;
+import Action.ICanvas;
 import Action.Node;
 import Dialog.IDialog;
 import Dialog.InitializationVariableDialog;
@@ -35,10 +35,10 @@ import dialogMenuState.EditLayoutAction;
 
 public class MenuContentAction implements MenuDetectListener {
 
-	ICanvasNode canvas;
+	ICanvas canvas;
 
 
-	public MenuContentAction(ICanvasNode canvas) {
+	public MenuContentAction(ICanvas canvas) {
 		this.canvas = canvas;
 	}
 

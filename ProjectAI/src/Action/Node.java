@@ -12,7 +12,7 @@ import LaTex.LaTexGeneratorNode;
 import Menu.MenuContentAction;
 import PlanPart.PlanContent;
 
-public class Node extends ICanvasNode {
+public class Node extends ICanvas {
 	
 	public  String ID;
 	String latexCode;

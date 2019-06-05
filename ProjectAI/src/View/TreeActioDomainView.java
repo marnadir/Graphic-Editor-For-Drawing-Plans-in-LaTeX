@@ -16,7 +16,7 @@ import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
 
 import Action.Action;
-import Action.CanvasAction;
+import Action.ActionDomainCanvas;
 import Action.Node;
 import PlanPart.LinkCanvas;
 import PlanPart.OrderConstrain;
@@ -195,7 +195,7 @@ public class TreeActioDomainView extends Tree {
 						for (Control child : containerAction.getChildren()) {
 							child.dispose();
 						}
-						CanvasAction canvasAction = new CanvasAction(containerAction,
+						ActionDomainCanvas canvasAction = new ActionDomainCanvas(containerAction,
 								SWT.DOUBLE_BUFFERED | SWT.NO_REDRAW_RESIZE, action);
 						canvasAction.draw();
 						canvasAction.addDNDListener();
@@ -217,7 +217,7 @@ public class TreeActioDomainView extends Tree {
 	private boolean alreadyShow(Action action,Composite containerAction) {
 		boolean result = false;
 		if(containerAction.getChildren().length>0) {
-			CanvasAction canvasAction=(CanvasAction) containerAction.getChildren()[0];
+			ActionDomainCanvas canvasAction=(ActionDomainCanvas) containerAction.getChildren()[0];
 			if(action.getName().equals(canvasAction.getAction().getName())) {
 				result=true;
 			}

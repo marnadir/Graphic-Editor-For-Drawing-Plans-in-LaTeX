@@ -6,7 +6,7 @@ import org.eclipse.swt.dnd.DragSourceAdapter;
 import org.eclipse.swt.dnd.DragSourceEvent;
 
 import Action.Action;
-import Action.CanvasAction;
+import Action.ActionDomainCanvas;
 import DataTrasfer.MyType;
 
 
@@ -35,8 +35,8 @@ public class MyDragActionListener extends DragSourceAdapter {
     
 	@Override
 	public void dragSetData(DragSourceEvent event) {
-		if (source.getControl() instanceof CanvasAction) {
-			CanvasAction canvasAction = (CanvasAction) source.getControl();
+		if (source.getControl() instanceof ActionDomainCanvas) {
+			ActionDomainCanvas canvasAction = (ActionDomainCanvas) source.getControl();
 			Action action = canvasAction.getAction();
 			MyType myType1 = new MyType();
 			myType1.setName(action.getName());

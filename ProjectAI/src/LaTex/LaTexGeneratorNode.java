@@ -9,7 +9,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.MessageBox;
 
 import Action.Action;
-import Action.ICanvasNode;
+import Action.ICanvas;
 import Action.Node;
 import PlanPart.LinkCanvas;
 import PlanPart.OrderConstrain;
@@ -276,7 +276,7 @@ public class LaTexGeneratorNode {
 		return sb.toString();
 	}
 	
-	private String getPositionToInit(ICanvasNode node) {
+	private String getPositionToInit(ICanvas node) {
 		StringBuilder sb=new StringBuilder();	
 		int y=(node.getParent().getLocation().y)-(planContent.getInitialStateCanvas().getParent().getLocation().y);
 		sb.append("("+convertInCm(y)+"cm and ");
@@ -289,7 +289,7 @@ public class LaTexGeneratorNode {
 	}
 	
 	
-	private String getPosition(ICanvasNode node) {
+	private String getPosition(ICanvas node) {
 		StringBuilder sb=new StringBuilder();		
 		sb.append("("+convertInCm(node.getParent().getLocation().x)+",");
 		int value =0;

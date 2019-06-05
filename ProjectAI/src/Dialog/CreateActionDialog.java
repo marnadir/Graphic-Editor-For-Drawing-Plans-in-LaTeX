@@ -20,7 +20,7 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.TreeItem;
 
 import Action.Action;
-import Action.CanvasAction;
+import Action.ActionDomainCanvas;
 import Action.GlobalValue;
 import View.ActionView;
 import View.TreeActioDomainView;
@@ -474,7 +474,7 @@ public class CreateActionDialog extends IDialog {
 			child.dispose();
 		}
 	
-		CanvasAction canvasAction = new CanvasAction(containerAction,
+		ActionDomainCanvas canvasAction = new ActionDomainCanvas(containerAction,
 				SWT.DOUBLE_BUFFERED | SWT.NO_REDRAW_RESIZE, action);
 		canvasAction.draw();
 		canvasAction.addDNDListener();

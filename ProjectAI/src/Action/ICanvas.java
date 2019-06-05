@@ -10,7 +10,7 @@ import org.eclipse.swt.widgets.Composite;
 import PlanPart.PlanContent;
 import PlanPart.Oval;
 
-public abstract class ICanvasNode extends Canvas {
+public abstract class ICanvas extends Canvas {
 
 	Action action;
 	Composite parent;
@@ -20,7 +20,7 @@ public abstract class ICanvasNode extends Canvas {
 	ArrayList<Oval> ovalList;
 
 
-	public ICanvasNode(Composite parent, int style, Action a) {
+	public ICanvas(Composite parent, int style, Action a) {
 		super(parent, style);
 		this.parent = parent;
 		this.action = a;

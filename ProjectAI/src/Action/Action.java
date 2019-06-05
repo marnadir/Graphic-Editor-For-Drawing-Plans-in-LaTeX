@@ -20,7 +20,7 @@ public class Action implements Serializable {
 	String name;
 	ArrayList<String> prec;
 	ArrayList<String> effect;
-	CanvasAction paintCanvas;
+	ActionDomainCanvas paintCanvas;
 	String latexCode;
 
 	
@@ -63,11 +63,11 @@ public class Action implements Serializable {
 
 	
 
-	public CanvasAction getPaint() {
+	public ActionDomainCanvas getPaint() {
 		return paintCanvas;
 	}
 
-	public void setPaint(CanvasAction paint) {
+	public void setPaint(ActionDomainCanvas paint) {
 		this.paintCanvas = paint;
 	}
 

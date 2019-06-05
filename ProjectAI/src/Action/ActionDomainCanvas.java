@@ -16,13 +16,13 @@ import DNDAaction.MyDragActionListener;
 import DataTrasfer.MyTransfer;
 import Menu.MenuContentAction;
 
-public class CanvasAction  extends ICanvasNode{
+public class ActionDomainCanvas  extends ICanvas{
 
 	int style;
 	PaintListener p;
 
 	
-	public CanvasAction(Composite parent, int style, Action a) {
+	public ActionDomainCanvas(Composite parent, int style, Action a) {
 		super(parent, style, a);
 		this.action = a;
 		this.style=style;
