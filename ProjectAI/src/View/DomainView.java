@@ -16,8 +16,8 @@ import org.eclipse.swt.widgets.TreeItem;
 
 import Action.Action;
 import State.IStateCanvas;
-import state.ContainerGoalState;
-import state.ContainerInitialState;
+import container.ContainerGoalState;
+import container.ContainerInitialState;
 import State.CreateActionComposite;
 import State.CreateStateContainer;
 

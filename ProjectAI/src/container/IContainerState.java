@@ -1,8 +1,9 @@
-package State;
+package container;
 
 import org.eclipse.swt.widgets.Composite;
 
 import PlanPart.PlanContent;
+import State.IStateCanvas;
 import View.IStateView;
 
 public class IContainerState  extends Composite{

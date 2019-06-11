@@ -121,7 +121,6 @@ public class SaveLAtexCode extends FileDialog  {
 
 		// if the directory does not exist, create it
 		if (!directory.exists()) {
-			System.out.println("creating directory: " + directory.getName());
 			boolean result = false;
 
 			try {
@@ -131,12 +130,10 @@ public class SaveLAtexCode extends FileDialog  {
 				// handle it
 			}
 			if (result) {
-				System.out.println("DIR created");
 			}
 		}
 
 		if (!dirLatex.exists()) {
-			System.out.println("creating directory: " + dirLatex.getName());
 			boolean result = false;
 
 			try {
@@ -146,7 +143,6 @@ public class SaveLAtexCode extends FileDialog  {
 				// handle it
 			}
 			if (result) {
-				System.out.println("DIR created");
 			}
 		}
 
@@ -161,18 +157,7 @@ public class SaveLAtexCode extends FileDialog  {
 		 inputStream.read(buffer);
 		
 		File file2=new File(fileLatex.getParentFile(), "tikzlibraryaiplans.code.tex");
-//		try {
-//			if(file.exists()) {
-//				file2.createNewFile();
-//
-//			}
-//			Files.copy(file.toPath(), file2.toPath(),StandardCopyOption.REPLACE_EXISTING);
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			System.out.println(e.getMessage());
-//		}
-		
-		 OutputStream outStream = new FileOutputStream(file2);
+		OutputStream outStream = new FileOutputStream(file2);
 		outStream.write(buffer);
 		outStream.close();
 		
@@ -190,7 +175,6 @@ public class SaveLAtexCode extends FileDialog  {
 				}
 				if (file.isFile()) {
 					consoleViewDomain.updateView();
-					System.out.println(consoleViewDomain.getTextDomain().getText().length());
 					//\newcommand{\LengthsOfEmptyTasks}   {.35cm} has length 44
 					if(consoleViewDomain.getTextDomain().getText().length()>45) {
 						WriteTextToFile(file,consoleViewDomain.getTextDomain().getText());

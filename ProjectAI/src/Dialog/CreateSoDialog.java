@@ -7,10 +7,10 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 
-import State.IContainerState;
 import State.IState;
 import State.InitialState;
 import State.InitialStateCanvas;
+import container.IContainerState;
 
 public class CreateSoDialog extends IDialogNewState{
 	

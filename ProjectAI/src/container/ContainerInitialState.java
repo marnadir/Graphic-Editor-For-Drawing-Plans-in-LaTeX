@@ -1,8 +1,6 @@
-package state;
+package container;
 
 import org.eclipse.swt.widgets.Composite;
-
-import State.IContainerState;
 
 public class ContainerInitialState extends IContainerState{
 

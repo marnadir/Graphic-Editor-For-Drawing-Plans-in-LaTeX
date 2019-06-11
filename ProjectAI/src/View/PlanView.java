@@ -241,7 +241,6 @@ public class PlanView  extends CTabFolder{
 				if(getPlan().getDirectory()==null) {
 					
 					dialog.createContent();
-					System.out.println(dialog.getFileName());
 					if(dialog.getFileLatex()!=null) {
 						getPlan().setLatexFile(dialog.getFileLatex());
 						getPlan().setDirectory(dialog.getFileLatex().getParentFile());
@@ -251,13 +250,11 @@ public class PlanView  extends CTabFolder{
 					File dir=getPlan().getDirectory();
 					if(getPlan().getLatexFile()==null) {
 						dialog.createFilePlan(dir.getAbsolutePath(),"PlanLatex.tex");
-						System.out.println(dialog.getFileName());
 						getPlan().setLatexFile(dialog.getFileLatex());
 
 						
 					}else {
 						dialog.createFilePlan(dir.getAbsolutePath(),"PlanLatex.tex");
-						System.out.println(dialog.getFileName());
 
 						getPlan().setLatexFile(dialog.getFileLatex());
 
@@ -300,10 +297,7 @@ public class PlanView  extends CTabFolder{
 							builder.append(System.getProperty("line.separator"));
 						}
 						String result = builder.toString();
-						System.out.println(result);
 						
-						//process.waitFor();
-
 					}
 					
 					

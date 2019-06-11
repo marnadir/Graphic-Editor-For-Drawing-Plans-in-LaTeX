@@ -35,7 +35,6 @@ public class SavePlanDialog extends FileDialog{
 		setFilterExtensions (filterExtensions);
 		setFilterPath (filterPath);
 		setFileName ("PlanStore");
-		System.out.println ("Save to: " +open ());	
 		command=new SavePlanCommand();
 		command.setPlanContent(planContent);
 		command.execute(getFilterPath(),getFileName());

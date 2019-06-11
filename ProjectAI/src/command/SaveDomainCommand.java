@@ -131,7 +131,6 @@ public class SaveDomainCommand  implements ICommand{
 
 		// if the directory does n exist, create it
 		if (!directory.exists()) {
-			System.out.println("creating directory: " + directory.getAbsolutePath());
 			boolean result = false;
 
 			try {
@@ -141,12 +140,10 @@ public class SaveDomainCommand  implements ICommand{
 				// handle it
 			}
 			if (result) {
-				System.out.println("DIR created");
 			}
 		}
 
 		if (!dirLog.exists()) {
-			System.out.println("creating directory: " + dirLog.getAbsolutePath());
 			boolean result = false;
 
 			try {
@@ -156,7 +153,6 @@ public class SaveDomainCommand  implements ICommand{
 				// handle it
 			}
 			if (result) {
-				System.out.println("DIR created");
 			}
 		}
 

@@ -6,7 +6,7 @@ package command;
 import org.eclipse.swt.widgets.Composite;
 
 import Dialog.CreateSoDialog;
-import State.IContainerState;
+import container.IContainerState;
 
 public class CreateSoDialogCommand implements ICommand {
 

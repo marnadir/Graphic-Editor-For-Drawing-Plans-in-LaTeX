@@ -21,12 +21,7 @@ public class LoadLink {
 		this.planContent=planContent;
 	}
 	public void draw() {
-		
-		System.out.println(planContent.getOvalCounter().getListOval().size());
 		loadLinkStored();
-		
-		
-		
 	}
 
 	private void loadLinkStored() {

@@ -107,7 +107,6 @@ public class ConsoleViewDomain extends Group{
 		 dirLatex = new File(filepath + "/TDP" + "/dirLatex");
 		
 		 if (!directory.exists()) {
-				System.out.println("creating directory: " + directory.getName());
 				boolean result = false;
 
 				try {
@@ -117,7 +116,6 @@ public class ConsoleViewDomain extends Group{
 					// handle it
 				}
 				if (result) {
-					System.out.println("DIR created");
 				}
 			}
 
@@ -125,7 +123,6 @@ public class ConsoleViewDomain extends Group{
 		 
 		 
 		if (!dirLatex.exists()) {
-			System.out.println("creating directory: " + dirLatex.getName());
 			boolean result = false;
 
 			try {
@@ -135,7 +132,6 @@ public class ConsoleViewDomain extends Group{
 				// handle it
 			}
 			if (result) {
-				System.out.println("DIR created");
 			}
 		}
 		

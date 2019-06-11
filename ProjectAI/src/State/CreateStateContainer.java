@@ -18,9 +18,9 @@ import command.CreateActionDialogCommand;
 import command.CreateGoalDialogCommand;
 import command.CreateSoDialogCommand;
 import command.EliminateActionCommand;
+import container.ContainerGoalState;
+import container.ContainerInitialState;
 import resourceLoader.ResourceLoader;
-import state.ContainerGoalState;
-import state.ContainerInitialState;
 
 public class CreateStateContainer extends Composite{
 

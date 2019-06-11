@@ -15,6 +15,7 @@ import DNDstate.MyDragStateListener;
 import DataTrasfer.MyTransfer;
 import Menu.MenuContentState;
 import PlanPart.PlanContent;
+import container.IContainerState;
 import PlanPart.Oval;
 
 public abstract class IStateCanvas extends Canvas {
@@ -160,6 +161,12 @@ public abstract class IStateCanvas extends Canvas {
 
 	public void setOvalList(ArrayList<Oval> ovalList) {
 		this.ovalList = ovalList;
+	}
+
+
+
+	public IContainerState getContainerState() {
+		return containerState;
 	}
 	
 

@@ -87,16 +87,15 @@ public class LoadDomainCommand implements ICommand{
 								domainView.getGoalStateView().getContainerState(), SWT.ALL, goal);
 						domainView.getGoalStateView().getContainerState().setVisible(true);
 						goalStateCanvas.draw();
+						goalStateCanvas.getContainerState().setLocation(30, 30);
 						goalStateCanvas.pack();
 						goalStateCanvas.addDNDListener();
 						goal.generateLatexCodeDomain();
 						goal.getLatexCodeDomain();
 					}
+				
 					
-					
-					
-					System.out.println(GlobalValue.isWidthOfAction);
-					objectIn.close();
+						objectIn.close();
 
 				}else {
 					MessageBox messageBox = new MessageBox(domainView

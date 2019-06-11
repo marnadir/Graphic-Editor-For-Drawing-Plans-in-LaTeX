@@ -3,6 +3,7 @@ package Dialog;
 import java.util.ArrayList;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
@@ -55,6 +56,8 @@ public class CreateGoalDialog extends IDialogNewState{
 				if(listEff != null) {
 					goalState.updateConds(listEff);
 					goalStateCanvas.draw();
+					Rectangle c = goalStateCanvas.getContainerState().getiStateView().getClientArea();
+					goalStateCanvas.getContainerState().setLocation(30, 30);
 					setVisible(false);
 				
 				}

@@ -173,7 +173,6 @@ public class LaTexGeneratorStatePlan {
 		}
 //		sb.append(convertInCm(iState.getParent().getParent().getSize().y-iState.getParent().getLocation().y)+")");
 		sb.append("0)");	
-		System.out.println(convertInCm(iState.getParent().getLocation().y));
 		return sb.toString();
 	}
 	

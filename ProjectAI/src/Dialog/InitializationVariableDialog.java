@@ -147,7 +147,6 @@ public class InitializationVariableDialog extends IDialog{
 		    	o.dispose();
 		        iter.remove();
 		}
-		System.out.println(ovalCounter.getListOval().size());
 	}
 	
 

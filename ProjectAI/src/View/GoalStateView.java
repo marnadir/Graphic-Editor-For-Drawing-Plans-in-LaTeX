@@ -6,8 +6,8 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 
-import State.IContainerState;
-import state.ContainerGoalState;
+import container.ContainerGoalState;
+import container.IContainerState;
 
 public class GoalStateView extends IStateView{
 
@@ -25,7 +25,7 @@ public class GoalStateView extends IStateView{
 		this.containerState=new ContainerGoalState(this, SWT.BORDER);
 		this.containerState.setLayoutData(new GridData(GridData.FILL, GridData.FILL, false, false));
 		this.containerState.setLayout(new FillLayout());
-		this.containerState.setLocation(70,80);
+		this.containerState.setLocation(30,30);
 
 	}
 	

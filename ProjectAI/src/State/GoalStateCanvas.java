@@ -16,7 +16,7 @@ import PlanPart.PlanContent;
 public class GoalStateCanvas extends IStateCanvas {
 
 	
-
+	
 	
 	public GoalStateCanvas(Composite parent, int style, IState state) {
 		super(parent, style, state);
@@ -67,6 +67,10 @@ public class GoalStateCanvas extends IStateCanvas {
 				
 				int posY=(int) (5+(state.getLenIn()/numCond)/2); 
 				int incr=(int) (state.getLenIn()/numCond);
+				
+				state.setLengthCond(getLenght(state.getConds()) *9);
+
+				
 				for (int i = 0; i < numCond; i++) {
 					String string = state.getConds().get(i);
 

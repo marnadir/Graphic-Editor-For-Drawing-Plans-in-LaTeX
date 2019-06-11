@@ -33,7 +33,7 @@ public abstract class ICanvas extends Canvas {
 
 	public void resizeParent() {
 		if (action.isShownCond()) {
-			double x1 = action.getLengthPrec() + action.getLengthEff() + action.getWidthRect();
+			double x1 = action.getLengthPrec() + action.getLengthEff() + action.getWidthRect()+2;
 			if(action.getPrec().size()==0 && action.getEffect().size()==0) {
 				x1=+5;
 			}
@@ -42,7 +42,7 @@ public abstract class ICanvas extends Canvas {
 
 		} else {
 			double x1 ;
-			x1=action.getStandardLengthPrec() + action.getStandardLengthEff() + action.getWidthRect();
+			x1=action.getStandardLengthPrec() + action.getStandardLengthEff() + action.getWidthRect()+2;
 			if(action.getPrec().size()==0 && action.getEffect().size()==0) {
 				x1=x1+5;
 			}

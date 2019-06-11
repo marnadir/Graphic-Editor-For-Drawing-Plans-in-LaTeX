@@ -28,30 +28,14 @@ public class ActionDomainCanvas  extends ICanvas{
 		this.style=style;
 		// TODO Auto-generated constructor stub
 	}
-
-	
-	
 	
 	public void draw() {
-
-		
 		this.addPaintListener(createPaintListener());
-		
 		this.redraw();
 		this.addMenuDetectListener(new MenuContentAction(this));
 		resizeParent();
-	
-		
-
 	}
 	
-	public void removeListener() {	
-		this.removePaintListener(getPaintListener());
-	}
-	
-	public PaintListener getPaintListener() {
-		return p;
-	}
 	
 	public PaintListener createPaintListener() {
 		
@@ -179,25 +163,6 @@ public class ActionDomainCanvas  extends ICanvas{
 		};
 		
 		return p;
-	}
-	
-	public void resizeParent() {
-		if(action.isShownCond()) {
-			double x1=action.getLengthPrec()+action.getLengthEff()+action.getWidthRect();
-			if(action.getPrec().size()==0 && action.getEffect().size()==0) {
-				x1=x1+3;
-			}
-			double y1=action.getHeightRect()+40;
-			parent.setSize((int)x1,(int)y1);
-			
-		}else {
-			double x1=action.getStandardLengthPrec()+action.getStandardLengthEff()+action.getWidthRect();
-			if(action.getPrec().size()==0 && action.getEffect().size()==0) {
-				x1=x1+3;
-			}
-			double y1=action.getHeightRect()+40;
-			parent.setSize((int)x1,(int)y1);
-		}
 	}
 	
 	

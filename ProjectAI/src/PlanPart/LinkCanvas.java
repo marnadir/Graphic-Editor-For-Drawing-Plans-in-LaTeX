@@ -162,7 +162,6 @@ public class LinkCanvas {
 						for(int i=0;i<links.size();i++) {
 							Point p1 = links.get(i).getOval1().getP();
 							Point p2 = links.get(i).getOval2().getP();
-							System.out.println(pMenu+" "+p1);
 							
 							if ((p1.x - 11 < pMenu.x && pMenu.x < p1.x + 11)
 									&& (p1.y - 11 < pMenu.y && pMenu.y < p1.y + 11)) {

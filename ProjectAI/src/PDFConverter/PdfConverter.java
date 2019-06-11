@@ -55,7 +55,6 @@ public class PdfConverter {
 				ImageIOUtil.writeImage(bim, filePath, 300);
 		       
 
-				System.out.println("Image converted");
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

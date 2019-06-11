@@ -6,8 +6,8 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.RowData;
 import org.eclipse.swt.widgets.Composite;
 
-import State.IContainerState;
-import state.ContainerInitialState;
+import container.ContainerInitialState;
+import container.IContainerState;
 
 public class InitialStateView extends IStateView{
 
@@ -27,9 +27,9 @@ public class InitialStateView extends IStateView{
 		this.containerState=new ContainerInitialState(this, SWT.ALL);
 		this.containerState.setLayoutData(new GridData(GridData.FILL, GridData.FILL, false, false));
 		this.containerState.setLayout(new FillLayout());
-		this.containerState.setLocation(30,80);
+		this.containerState.setLocation(30,30);
 	}
-	
+
 	
 	
 

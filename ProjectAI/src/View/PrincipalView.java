@@ -123,7 +123,6 @@ public class PrincipalView {
 
 		// if the directory does not exist, create it
 		if (!directory.exists()) {
-			System.out.println("creating directory: " + directory.getAbsolutePath());
 			boolean result = false;
 
 			try { 
@@ -133,12 +132,10 @@ public class PrincipalView {
 				// handle it
 			}
 			if (result) {
-				System.out.println("DIR created");
 			}
 		}
 
 		if (!dirLog.exists()) {
-			System.out.println("creating directory: " + dirLog.getAbsolutePath());
 			boolean result = false;
 
 			try {
@@ -148,12 +145,10 @@ public class PrincipalView {
 				// handle it
 			}
 			if (result) {
-				System.out.println("DIR created");
 			}
 		}
 
 		if (!dirLatex.exists()) {
-			System.out.println("creating directory: " + dirLatex.getName());
 			boolean result = false;
 
 			try {
@@ -163,7 +158,6 @@ public class PrincipalView {
 				// handle it
 			}
 			if (result) {
-				System.out.println("DIR created");
 			}
 		}
 

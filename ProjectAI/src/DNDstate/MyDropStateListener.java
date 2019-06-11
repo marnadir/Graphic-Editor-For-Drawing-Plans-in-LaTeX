@@ -20,8 +20,8 @@ import State.InitialState;
 import State.InitialStateCanvas;
 import View.DomainView;
 import View.PlanView;
-import state.ContainerGoalState;
-import state.ContainerInitialState;
+import container.ContainerGoalState;
+import container.ContainerInitialState;
 
 public class MyDropStateListener extends DropTargetAdapter {
 	private Composite parentComposite;
