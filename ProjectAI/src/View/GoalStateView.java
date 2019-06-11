@@ -6,10 +6,11 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 
-public class GoalStateView extends Group{
+import State.IContainerState;
+import state.ContainerGoalState;
 
-	Composite containerGoalState;
-	Composite parent;
+public class GoalStateView extends IStateView{
+
 	
 	public GoalStateView(Composite parent, int style) {
 		super(parent, style);
@@ -21,17 +22,14 @@ public class GoalStateView extends Group{
 	}
 
 	public void createContent() {
-		containerGoalState=new Composite(this, SWT.BORDER);
-		containerGoalState.setLayoutData(new GridData(GridData.FILL, GridData.FILL, false, false));
-		containerGoalState.setLayout(new FillLayout());
-		containerGoalState.setLocation(70,80);
+		this.containerState=new ContainerGoalState(this, SWT.BORDER);
+		this.containerState.setLayoutData(new GridData(GridData.FILL, GridData.FILL, false, false));
+		this.containerState.setLayout(new FillLayout());
+		this.containerState.setLocation(70,80);
+
 	}
 	
 	
-	
-	public Composite getContainerGoalState() {
-		return containerGoalState;
-	}
 
 	@Override
 	protected void checkSubclass() {

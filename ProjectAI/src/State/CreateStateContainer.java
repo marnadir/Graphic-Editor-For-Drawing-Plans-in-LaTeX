@@ -19,17 +19,20 @@ import command.CreateGoalDialogCommand;
 import command.CreateSoDialogCommand;
 import command.EliminateActionCommand;
 import resourceLoader.ResourceLoader;
+import state.ContainerGoalState;
+import state.ContainerInitialState;
 
-public class CreateStateComposite extends Composite{
+public class CreateStateContainer extends Composite{
 
 	CreateSoDialogCommand so = new CreateSoDialogCommand();
 	CreateGoalDialogCommand goalCommand = new CreateGoalDialogCommand();
 	CreateActionDialogCommand actionCommnd = new CreateActionDialogCommand();
-	Composite containerInitState;
-	Composite containerGoalState;
+	ContainerInitialState containerInitialState;
+	ContainerGoalState containerGoalState;
+
 	
 	
-	public CreateStateComposite(Composite parent, int style,String name) {
+	public CreateStateContainer(Composite parent, int style,String name) {
 		super(parent, style);
 		this.setLayout();
 		// TODO Auto-generated constructor stub
@@ -39,16 +42,16 @@ public class CreateStateComposite extends Composite{
 		this.setLayout(new GridLayout(2, false));
 	}
 	
-	public void setContainerInitialState(Composite container) {
-		this.containerInitState=container;
-	}
-	
-	public void setContainerGoalState(Composite container) {
-		this.containerGoalState=container;
-	}
-	
+
 	
 
+	public void setContainerInitialState(ContainerInitialState containerInitialState) {
+		this.containerInitialState = containerInitialState;
+	}
+
+	public void setContainerGoalState(ContainerGoalState containerGoalState) {
+		this.containerGoalState = containerGoalState;
+	}
 
 	public void createContent() {
 
@@ -76,7 +79,8 @@ public class CreateStateComposite extends Composite{
 
 			@Override
 			public void handleEvent(Event event) {
-				so.execute(containerInitState);
+				so.execute(containerInitialState);
+
 			}
 		};
 		

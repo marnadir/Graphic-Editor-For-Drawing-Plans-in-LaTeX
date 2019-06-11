@@ -95,6 +95,10 @@ public abstract class IDialogNewState extends IDialog{
 		newCond.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
 		
+		Button btnNegMod=new Button(mainComposite, SWT.PUSH);
+		btnNegMod.setText("neg");
+		btnNegMod.addListener(SWT.Selection, addBtnNegListener());
+		
 		btnEdit=new Button(mainComposite, SWT.PUSH);
 		icon = new Image(mainComposite.getDisplay(),ResourceLoader.load( "img/edit.png"));
 		btnEdit.setImage(icon);
@@ -144,6 +148,22 @@ public abstract class IDialogNewState extends IDialog{
 						listPCond.set(index, newCond.getText());
 					}
 					
+				}
+				
+			}
+		};
+		return l;
+	}
+	
+	private Listener addBtnNegListener() {
+		Listener l;
+		l=new Listener() {
+			
+			@Override
+			public void handleEvent(Event event) {
+				 
+				if(!(newCond.getText().startsWith("¬")) && (newCond.getText().length()>0)) {
+					newCond.setText("¬"+newCond.getText());
 				}
 				
 			}

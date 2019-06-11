@@ -7,6 +7,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 
+import State.IContainerState;
 import State.IState;
 import State.InitialState;
 import State.InitialStateCanvas;
@@ -14,14 +15,14 @@ import State.InitialStateCanvas;
 public class CreateSoDialog extends IDialogNewState{
 	
 
-	Composite compCanvas;
+	IContainerState compCanvas;
 	ArrayList<String> listPrec;
 	InitialStateCanvas initialStateCanvas;
 	IState initialState;
 	
 	public CreateSoDialog(Composite compCanvas) {
 		super(compCanvas.getShell(),SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL | SWT.CENTER | SWT.RESIZE);
-		this.compCanvas=compCanvas;
+		this.compCanvas=(IContainerState) compCanvas;
 		
 		
 	}

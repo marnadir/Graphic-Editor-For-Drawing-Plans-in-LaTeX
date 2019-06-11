@@ -111,7 +111,6 @@ public class LoadPlanCommand  implements ICommand{
 
 						
 						objectIn.close();
-						System.out.println("The Object  was succesfully read from a file");
 					}else {
 						MessageBox messageBox = new MessageBox(planContent.getShell(),
 								SWT.ICON_WARNING |  SWT.OK);

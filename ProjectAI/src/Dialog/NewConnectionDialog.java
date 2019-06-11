@@ -134,7 +134,7 @@ public class NewConnectionDialog extends IDialog {
 				compPoint.pack();
 				pack();
 				compPoint.setVisible(true);
-				info.setText("For creating the casual link select"+"\n"+" with double-click the point(cirle)"+"\n"+"of pre/eff cond.");
+				info.setText("For creating the causual link select"+"\n"+" with double-click the point(cirle)"+"\n"+"of pre/eff cond.");
 				info.pack();
 				mainComposite.pack();
 				pack();

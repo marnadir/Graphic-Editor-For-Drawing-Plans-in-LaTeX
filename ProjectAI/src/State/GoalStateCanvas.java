@@ -39,7 +39,7 @@ public class GoalStateCanvas extends IStateCanvas {
 				//int avergWidth =e.gc.getFontMetrics().getAverageCharacterWidth();
 				int numCond = state.getConds().size();
 
-				int startX = parent.getClientArea().width;
+				int startX = containerState.getClientArea().width;
 				int startY = 0;
 
 				if(state.isText) {
@@ -58,7 +58,7 @@ public class GoalStateCanvas extends IStateCanvas {
 					e.gc.drawString(state.getText(), val, -startX+2);
 					t.rotate(-90);
 					e.gc.setTransform(t);
-					startX=parent.getClientArea().width-22;	
+					startX=containerState.getClientArea().width-22;	
 				}else {
 					e.gc.setLineWidth(5);
 					e.gc.drawLine(startX-2, startY, startX-2, (int) (startY + state.getLenIn()));
@@ -73,13 +73,13 @@ public class GoalStateCanvas extends IStateCanvas {
 					if(state.isShownCond()) {
 						e.gc.drawLine(startX, posY, (int) (-2+startX - state.getLengthCond()), posY);
 						e.gc.drawString(string, (int) (startX+3 - state.getLengthCond()), posY - 10, false);
-						if(parent.getParent() instanceof PlanContent) {
-							addOval(state,string,parent.getLocation().x-6, parent.getLocation().y+ posY-2);
+						if(containerState.getParent() instanceof PlanContent) {
+							addOval(state,string,containerState.getLocation().x-6, containerState.getLocation().y+ posY-2);
 						}
 					}else {
 						e.gc.drawLine(startX, posY, (int) (-2+startX - state.getStandardLengthCond()), posY);
-						if(parent.getParent() instanceof PlanContent) {
-							addOval(state,string,parent.getLocation().x-6, parent.getLocation().y+ posY-2);
+						if(containerState.getParent() instanceof PlanContent) {
+							addOval(state,string,containerState.getLocation().x-6, containerState.getLocation().y+ posY-2);
 						}
 					}
 					posY = posY + incr;

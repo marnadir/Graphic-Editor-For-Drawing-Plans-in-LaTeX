@@ -28,7 +28,7 @@ public abstract class IStateCanvas extends Canvas {
 	 */
 
 	IState state;
-	Composite parent;
+	IContainerState containerState;
 	final double PIXEL_MEASUREMNT= 0.026458;
 	final double CM_MEASUREMNT= 37.7957517575025;
 	ArrayList<Oval> ovalList;
@@ -39,7 +39,7 @@ public abstract class IStateCanvas extends Canvas {
 	public IStateCanvas(Composite parent, int style, IState state) {
 		super(parent, style);
 		this.state = state;
-		this.parent = parent;
+		this.containerState = (IContainerState) parent;
 		ovalList=new ArrayList<>();
 	}
 
@@ -55,8 +55,8 @@ public abstract class IStateCanvas extends Canvas {
 
 		}
 
-	
-		this.addMenuDetectListener(new MenuContentState(this));
+		
+		this.addMenuDetectListener(new MenuContentState(containerState));
 		resizeParent();
 		
 	}
@@ -72,7 +72,7 @@ public abstract class IStateCanvas extends Canvas {
 
 			}
 			int y1=(int) (state.getLenIn()+4);
-			parent.setSize(x1,y1);
+			containerState.setSize(x1,y1);
 			
 		}else {
 			double x1;
@@ -82,7 +82,7 @@ public abstract class IStateCanvas extends Canvas {
 				x1=state.getStandardLengthCond()+3;
 			}
 			int y1=(int) (state.getLenIn()+4);
-			parent.setSize((int) x1,y1);
+			containerState.setSize((int) x1,y1);
 
 		}
 	}
@@ -132,8 +132,8 @@ public abstract class IStateCanvas extends Canvas {
 
 	public void addOval(IState state,String cond,int x, int y) {
 	
-		if(parent.getParent() instanceof PlanContent) {
-			PlanContent graphContent=(PlanContent) parent.getParent();
+		if(containerState.getParent() instanceof PlanContent) {
+			PlanContent graphContent=(PlanContent) containerState.getParent();
 			for(Oval oval:ovalList) {
 				if(oval.getCond().equals(cond)) {
 					if(oval.getP().x != x || oval.getP().y != y) {

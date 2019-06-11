@@ -181,6 +181,12 @@ public class CreateActionDialog extends IDialog {
 		newPrecEd=new Text(groupPrec,  SWT.SINGLE | SWT.BORDER | SWT.RESIZE);
 		newPrecEd.setLayoutData(gd1);
 		newPrecEd.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, true));
+		
+		Button btnNegPrec=new Button(groupPrec, SWT.PUSH);
+		btnNegPrec.setText("neg");
+		btnNegPrec.addListener(SWT.Selection, addBtnNegListener1());
+		
+		
 		btnEditPrec=new Button(groupPrec, SWT.PUSH);
 		icon = new Image(mainComposite.getDisplay(),ResourceLoader.load( "img/edit.png"));
 		btnEditPrec.setImage(icon);
@@ -252,6 +258,11 @@ public class CreateActionDialog extends IDialog {
 		newEffEd.setLayoutData(gd1);
 		newEffEd.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, true));
 
+		Button btnNegEff=new Button(groupEff, SWT.PUSH);
+		btnNegEff.setText("neg");
+		btnNegEff.addListener(SWT.Selection, addBtnNegListener2());
+		
+		
 		btnEditPrec=new Button(groupEff, SWT.PUSH);
 		icon = new Image(mainComposite.getDisplay(),ResourceLoader.load( "img/edit.png"));
 		btnEditPrec.setImage(icon);
@@ -294,6 +305,41 @@ public class CreateActionDialog extends IDialog {
 				if(atleastOneAlpha && !(listCond.contains(cond))) {
 					list.setItem(index, cond);
 					listCond.set(index, cond);
+				}
+				
+			}
+		};
+		return l;
+	}
+	
+	
+	private Listener addBtnNegListener1() {
+		Listener l;
+		l=new Listener() {
+			
+			@Override
+			public void handleEvent(Event event) {
+				 
+				if(!(newPrecEd.getText().startsWith("¬")) && (newPrecEd.getText().length()>0)) {
+					newPrecEd.setText("¬"+newPrecEd.getText());
+				}
+				
+			}
+		};
+		return l;
+	}
+	
+	
+	
+	private Listener addBtnNegListener2() {
+		Listener l;
+		l=new Listener() {
+			
+			@Override
+			public void handleEvent(Event event) {
+				 
+				if(!(newEffEd.getText().startsWith("¬")) && (newEffEd.getText().length()>0)) {
+					newEffEd.setText("¬"+newEffEd.getText());
 				}
 				
 			}

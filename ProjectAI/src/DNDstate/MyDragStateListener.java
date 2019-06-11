@@ -61,8 +61,8 @@ public class MyDragStateListener extends DragSourceAdapter {
 					for (int i = 0; i < c.length; i++) {
 						if (c[i] instanceof GoalStateView) {
 							GoalStateView goalStateView = (GoalStateView) c[i];
-							if (goalStateView.getContainerGoalState().getChildren().length > 0) {
-								GoalStateCanvas canv = (GoalStateCanvas) goalStateView.getContainerGoalState()
+							if (goalStateView.getContainerState().getChildren().length > 0) {
+								GoalStateCanvas canv = (GoalStateCanvas) goalStateView.getContainerState()
 										.getChildren()[0];
 
 								if (canv != null) {

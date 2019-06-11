@@ -81,7 +81,6 @@ public class SavePlanCommand implements ICommand {
 			ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
 			objectOut.writeObject(serObj);
 			objectOut.close();
-			System.out.println("The Object  was succesfully written to a file");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

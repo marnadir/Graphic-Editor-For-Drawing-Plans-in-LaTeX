@@ -20,7 +20,7 @@ public class IState  implements Serializable{
 	final double CM_MEASUREMNT= dpi/2.54;	ArrayList<String> conds;
 	String name="state";
 	boolean shownCond = false;
-	double lengthCond=0.0;
+	double lengthCond;
 	double standardCondLength=(CM_MEASUREMNT*Double.parseDouble(GlobalValue.lengthsOfEmptyTasks)); ;
 	boolean defaultValue;
 	double lenIn;
@@ -45,6 +45,8 @@ public class IState  implements Serializable{
 		this.text=iState.getText();	
 		this.height=iState.getHeight();
 		this.width=iState.getWidth();
+		this.globalCond=iState.isGlobalCond();
+		this.globalEmptyPrec=iState.isGlobalEmpty();
 		
 	
 	}

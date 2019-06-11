@@ -6,6 +6,7 @@ package command;
 import org.eclipse.swt.widgets.Composite;
 
 import Dialog.CreateSoDialog;
+import State.IContainerState;
 
 public class CreateSoDialogCommand implements ICommand {
 
@@ -22,8 +23,8 @@ public class CreateSoDialogCommand implements ICommand {
 	public void execute(Object var1, Object var2) {
 
 		if (canExecute(var1, var2)) {
-			if (var1 instanceof Composite) {
-				Composite comp = (Composite) var1;
+			if (var1 instanceof IContainerState) {
+				IContainerState comp = (IContainerState) var1;
 				
 				/* container of So is empty*/ 
 				if(comp.getChildren().length<1) {

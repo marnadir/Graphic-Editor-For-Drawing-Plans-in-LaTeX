@@ -1,5 +1,7 @@
 package State;
 
+import java.util.ArrayList;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
@@ -68,19 +70,22 @@ public class InitialStateCanvas extends IStateCanvas  {
 				int posY=(int) (5+(state.getLenIn()/numCond)/2); 
 				int incr=(int) (state.getLenIn()/numCond);
 				
+				state.setLengthCond(getLenght(state.getConds()) *9);
+
+				
 				for (int i = 0; i < numCond; i++) {
 					String string = state.getConds().get(i);
 
 					if(state.isShownCond()) {
 						e.gc.drawLine(startX, posY, (int) (startX + state.getLengthCond()), posY);
 						e.gc.drawString(string, startX + 5, posY - 10, false);
-						if(parent.getParent() instanceof PlanContent) {
-							addOval(state,string,parent.getLocation().x+parent.getBounds().width+1,parent.getLocation().y+ posY-1);
+						if(containerState.getParent() instanceof PlanContent) {
+							addOval(state,string,containerState.getLocation().x+containerState.getBounds().width+1,containerState.getLocation().y+ posY-1);
 						}
 					}else {
 						e.gc.drawLine(startX, posY, (int) (startX + state.getStandardLengthCond()), posY);
-						if(parent.getParent() instanceof PlanContent) {
-							addOval(state,string,parent.getLocation().x+parent.getBounds().width+1,parent.getLocation().y+ posY-1);
+						if(containerState.getParent() instanceof PlanContent) {
+							addOval(state,string,containerState.getLocation().x+containerState.getBounds().width+1,containerState.getLocation().y+ posY-1);
 						}
 					}
 					posY = posY + incr;
@@ -106,6 +111,20 @@ public class InitialStateCanvas extends IStateCanvas  {
     	  
     }
     
-  
+	public int getLenght(ArrayList<String> conds) {
+
+		int lenght = 0;
+		if (conds.size() > 0) {
+			String stringa = conds.get(0);
+			lenght=stringa.length();
+			for (String cond : conds) {
+				if (cond.length() > stringa.length()) {
+					stringa = cond;
+					lenght = cond.length();
+				}
+			}
+		}
+		return lenght;
+	}
 
 }

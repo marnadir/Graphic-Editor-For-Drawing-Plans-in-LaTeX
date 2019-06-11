@@ -67,12 +67,12 @@ public class LoadDomainCommand implements ICommand{
 
 					if (data.get(2) != null) {
 						InitialState in = (InitialState) data.get(2);
-						if (domainView.getInitStateView().getContainerInitState().getChildren().length > 0) {
-							domainView.getInitStateView().getContainerInitState().getChildren()[0].dispose();
+						if (domainView.getInitStateView().getContainerState().getChildren().length > 0) {
+							domainView.getInitStateView().getContainerState().getChildren()[0].dispose();
 						}
 						InitialStateCanvas initialStateCanvas = new InitialStateCanvas(
-								domainView.getInitStateView().getContainerInitState(), SWT.ALL, in);
-						domainView.getInitStateView().getContainerInitState().setVisible(true);
+								domainView.getInitStateView().getContainerState(), SWT.ALL, in);
+						domainView.getInitStateView().getContainerState().setVisible(true);
 						initialStateCanvas.draw();
 						initialStateCanvas.addDNDListener();
 						in.generateLatexCodeDomain();
@@ -80,12 +80,12 @@ public class LoadDomainCommand implements ICommand{
 					}
 					if (data.get(3) != null) {
 						GoalState goal = (GoalState) data.get(3);
-						if (domainView.getGoalStateView().getContainerGoalState().getChildren().length > 0) {
-							domainView.getGoalStateView().getContainerGoalState().getChildren()[0].dispose();
+						if (domainView.getGoalStateView().getContainerState().getChildren().length > 0) {
+							domainView.getGoalStateView().getContainerState().getChildren()[0].dispose();
 						}
 						GoalStateCanvas goalStateCanvas = new GoalStateCanvas(
-								domainView.getGoalStateView().getContainerGoalState(), SWT.ALL, goal);
-						domainView.getGoalStateView().getContainerGoalState().setVisible(true);
+								domainView.getGoalStateView().getContainerState(), SWT.ALL, goal);
+						domainView.getGoalStateView().getContainerState().setVisible(true);
 						goalStateCanvas.draw();
 						goalStateCanvas.pack();
 						goalStateCanvas.addDNDListener();
@@ -97,8 +97,6 @@ public class LoadDomainCommand implements ICommand{
 					
 					System.out.println(GlobalValue.isWidthOfAction);
 					objectIn.close();
-					System.out.println("The Object  was succesfully read from a file");
-
 
 				}else {
 					MessageBox messageBox = new MessageBox(domainView

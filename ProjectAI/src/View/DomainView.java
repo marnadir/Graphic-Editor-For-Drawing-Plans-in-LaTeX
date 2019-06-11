@@ -12,13 +12,14 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Group;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.TreeItem;
 
 import Action.Action;
 import State.IStateCanvas;
+import state.ContainerGoalState;
+import state.ContainerInitialState;
 import State.CreateActionComposite;
-import State.CreateStateComposite;
+import State.CreateStateContainer;
 
 public class DomainView {
 
@@ -89,7 +90,7 @@ public class DomainView {
 
 
 
-		CreateStateComposite newStateComp=new CreateStateComposite(part1, SWT.ALL,"Initial/Goal");
+		CreateStateContainer newStateComp=new CreateStateContainer(part1, SWT.ALL,"Initial/Goal");
 		newStateComp.createContent();
 		
 		Composite compViewState=new Composite(part1, SWT.ALL);	
@@ -99,9 +100,8 @@ public class DomainView {
 		
 		initStateView=new InitialStateView(compViewState, SWT.NONE);
 		initStateView.createContent();
-
 		initStateView.setText("Initial State");
-		newStateComp.setContainerInitialState(initStateView.getContainerInitState());
+		newStateComp.setContainerInitialState((ContainerInitialState) (initStateView.getContainerState()));
 		initStateView.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
 
@@ -109,7 +109,7 @@ public class DomainView {
 		goalStateView=new GoalStateView(compViewState, SWT.NONE);
 		goalStateView.createContent();
 		goalStateView.setText("Goal State");
-		newStateComp.setContainerGoalState(goalStateView.getContainerGoalState());
+		newStateComp.setContainerGoalState((ContainerGoalState) goalStateView.getContainerState());
 		goalStateView.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
 		
@@ -175,7 +175,7 @@ public class DomainView {
 	}
 	
 	public IStateCanvas getInitialStateCanvas() {
-		Control[] child=initStateView.getContainerInitState().getChildren();
+		Control[] child=initStateView.getContainerState().getChildren();
 		for(int i=0;i<child.length;i++) {
 			if(child[i] instanceof IStateCanvas) {
 				IStateCanvas iStateCanvas=(IStateCanvas) child[i];
@@ -185,7 +185,7 @@ public class DomainView {
 		return null;
 	}
 	public IStateCanvas getGoalStateCanvas() {
-		Control[] child=goalStateView.getContainerGoalState().getChildren();
+		Control[] child=goalStateView.getContainerState().getChildren();
 		for(int i=0;i<child.length;i++) {
 			if(child[i] instanceof IStateCanvas) {
 				IStateCanvas iStateCanvas=(IStateCanvas) child[i];

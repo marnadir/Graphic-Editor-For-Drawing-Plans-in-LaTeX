@@ -6,6 +6,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MenuDetectEvent;
 import org.eclipse.swt.events.MenuDetectListener;
 import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Menu;
@@ -14,9 +15,12 @@ import org.eclipse.swt.widgets.MenuItem;
 import PlanPart.Oval;
 import PlanPart.PlanContent;
 import State.GoalStateCanvas;
+import State.IContainerState;
 import State.IState;
 import State.IStateCanvas;
 import State.InitialStateCanvas;
+import View.IStateView;
+import View.InitialStateView;
 import command.ChangeCondCommand;
 import dialogMenuState.LineVsTextDialog;
 import dialogMenuState.SetSizeCondDialog;
@@ -26,16 +30,48 @@ public class MenuContentState implements MenuDetectListener {
 
 	IStateCanvas canvas;
 	IState state;
+	IStateView iStateView;
+	PlanContent planContent;
+	IContainerState containerState;
 
-	public MenuContentState(IStateCanvas canvas) {
-		this.canvas = canvas;
-		this.state = canvas.getState();
+	public MenuContentState(Composite containerState) {
+		
+		if(containerState instanceof IStateView) {
+			this.iStateView = (IStateView) containerState;
+		}
+		else if(containerState instanceof IContainerState) {
+			this.containerState=(IContainerState) containerState;
+		}
+			
+//			if(containerState.getParent() instanceof IStateView ) {
+//			this.iStateView = (IStateView) containerState.getParent();
+//		}else if(containerState.getParent() instanceof PlanContent) {
+//			this.planContent=(PlanContent) containerState.getParent();
+//		}
+		
+		
 	}
 
 	@Override
 	public void menuDetected(MenuDetectEvent e) {
-		Menu m = new Menu(canvas);
-		canvas.setMenu(m);
+		
+		
+		Menu m=null;
+		
+		if(iStateView !=null) {
+			this.canvas=iStateView.getIstateCanvas();
+			this.state = canvas.getState();
+			m = new Menu(canvas.getParent().getParent());
+			iStateView.setMenu(m);
+			canvas.setMenu(m);
+			
+		}else {
+			this.canvas=containerState.getCanvas();
+			this.state = canvas.getState();
+			m = new Menu(canvas);
+			canvas.setMenu(m);
+		}
+	
 
 		MenuItem c = new MenuItem(m, SWT.ALL);
 		c.setText("Clear");
