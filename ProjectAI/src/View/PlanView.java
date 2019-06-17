@@ -19,6 +19,7 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
+import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 
@@ -276,7 +277,7 @@ public class PlanView  extends CTabFolder{
 				
 				
 				File dir=getPlan().getDirectory();
-				if(dialog.isIsdomainLoad() ) {
+				if(dialog.isIsdomainLoad() && planHasFigure()) {
 					try {
 
 						String cmd1="cd "+dir.getAbsolutePath();
@@ -335,7 +336,12 @@ public class PlanView  extends CTabFolder{
 					
 					
 				}else {
-					
+					MessageBox messageBox = new MessageBox(getShell(),
+							SWT.ICON_WARNING |  SWT.OK);
+
+					messageBox.setText("Warning");
+					messageBox.setMessage("Empty plan,please fill it");
+					messageBox.open();
 				}
 					
 				
@@ -414,7 +420,17 @@ public class PlanView  extends CTabFolder{
 		
 	}
 
-	
+	private boolean planHasFigure() {
+		boolean result=false;
+		PlanContent plan=getPlan();
+		if(plan.getActionInPlan().size()>0) {
+			result=true;
+		}
+		if(plan.getInitialStateCanvas()!=null || plan.getGoalStateCanvas()!=null) {
+			result=true;
+		}
+		return result;
+	}
 	
 
 	public DomainView getDomainView() {

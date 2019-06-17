@@ -23,8 +23,7 @@ import View.InitialStateView;
 import command.ChangeCondCommand;
 import container.IContainerState;
 import dialogMenuState.LineVsTextDialog;
-import dialogMenuState.SetSizeCondDialog;
-import dialogMenuState.SetWidtHeiDialog;
+import dialogMenuState.SetSizeStateDialog;
 
 public class MenuContentState implements MenuDetectListener {
 
@@ -42,14 +41,7 @@ public class MenuContentState implements MenuDetectListener {
 		else if(containerState instanceof IContainerState) {
 			this.containerState=(IContainerState) containerState;
 		}
-			
-//			if(containerState.getParent() instanceof IStateView ) {
-//			this.iStateView = (IStateView) containerState.getParent();
-//		}else if(containerState.getParent() instanceof PlanContent) {
-//			this.planContent=(PlanContent) containerState.getParent();
-//		}
-		
-		
+				
 	}
 
 	@Override
@@ -147,39 +139,19 @@ public class MenuContentState implements MenuDetectListener {
 
 			MenuItem setSize = new MenuItem(m, SWT.CASCADE);
 			setSize.setText("Set Size");
-
-			Menu subMenu = new Menu(m);
-			setSize.setMenu(subMenu);
-
-			MenuItem precSize = new MenuItem(subMenu, SWT.ALL);
-			precSize.setText("Set Size Condition Lines");
-			precSize.addListener(SWT.Selection, new Listener() {
+			setSize.addListener(SWT.Selection, new Listener() {
 
 				@Override
 				public void handleEvent(Event event) {
-					SetSizeCondDialog dialog = new SetSizeCondDialog(canvas.getShell(),
+					SetSizeStateDialog dialog = new SetSizeStateDialog(canvas.getShell(),
 							SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL | SWT.CENTER | SWT.RESIZE);
 					dialog.setState(state);
 					dialog.createContent();
 				}
 			});
 
-			MenuItem width = new MenuItem(subMenu, SWT.ALL);
-			width.setText("Set Width/Height");
-			width.addListener(SWT.Selection, new Listener() {
-				
-				@Override
-				public void handleEvent(Event event) {
-					SetWidtHeiDialog dialog=new SetWidtHeiDialog(canvas.getShell(),
-							SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL | SWT.CENTER | SWT.RESIZE);
-					dialog.setState(state);
-					dialog.createContent();
-					
-				}
-			});
 
 		
-
 		}
 
 	}

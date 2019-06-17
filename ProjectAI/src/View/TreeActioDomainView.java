@@ -18,10 +18,12 @@ import org.eclipse.swt.widgets.TreeItem;
 import Action.Action;
 import Action.ActionDomainCanvas;
 import Action.Node;
+import DialogAction.ChangeActionDialog;
 import PlanPart.LinkCanvas;
 import PlanPart.OrderConstrain;
 import PlanPart.Oval;
 import PlanPart.PlanContent;
+import command.ChangeActionDialogCommand;
 import command.ChangeEffCommand;
 import command.ChangeNameCommand;
 import command.ChangePrecCommand;
@@ -63,26 +65,10 @@ public class TreeActioDomainView extends Tree {
 		elimAction.setText("Eliminate Action");
 
 		modifAction = new MenuItem(menu, SWT.CASCADE);
-		modifAction.setText("Setting");
-
-		Menu subMenu = new Menu(menu);
-		modifAction.setMenu(subMenu);
-
-		MenuItem modifName = new MenuItem(subMenu, SWT.PUSH);
-		modifName.setText("Name");
-
-		MenuItem modifPrec = new MenuItem(subMenu, SWT.PUSH);
-		modifPrec.setText("Preconditions");
-
-		MenuItem modifEff = new MenuItem(subMenu, SWT.PUSH);
-		modifEff.setText("Effects");
-
-
-
+		modifAction.setText("Modify Action");
 		elimAction.addListener(SWT.Selection, getListenerElimAction());
-		modifName.addListener(SWT.Selection, getListenerModifName());
-		modifPrec.addListener(SWT.Selection, getListenerModifPrec());
-		modifEff.addListener(SWT.Selection, getListenerModifEff());
+		modifAction.addListener(SWT.Selection, getListenerModifAction());
+		
 	}
 		
 
@@ -225,68 +211,27 @@ public class TreeActioDomainView extends Tree {
 		return result;
 	}
 	
-	public Listener getListenerModifName() {
-		Listener l = new Listener() {
-
-			@Override
-			public void handleEvent(Event event) {
-				TreeItem[] actions =getSelection();
-				if (actions.length > 0) {
-					TreeItem actionItem = getRoot(actions[0]);
-					Action action = findAction(actionItem.getText());
-					ChangeNameCommand cmd = new ChangeNameCommand();
-					cmd.execute(actionItem, action);
-
-				}
-
-			}
-		};
-		
-		
-		return l;
-	}
-	
-	public Listener getListenerModifPrec() {
-		Listener l = new Listener() {
-
-			@Override
-			public void handleEvent(Event event) {
-				TreeItem[] actions =getSelection();
-				if (actions.length > 0) {
-					TreeItem actionItem = getRoot(actions[0]);
-					Action action = findAction(actionItem.getText());
-					ChangePrecCommand cmd = new ChangePrecCommand();
-					cmd.execute(action, actionItem);
-
-				}
-
-			}
-		};
-		
-		
-		return l;
-	}
-	public Listener getListenerModifEff() {
+	public Listener getListenerModifAction() {
 		Listener l = new Listener() {
 
 			@Override
 			public void handleEvent(Event event) {
 				TreeItem[] actions = getSelection();
-
 				if (actions.length > 0) {
 					TreeItem actionItem = getRoot(actions[0]);
 					Action action = findAction(actionItem.getText());
-					ChangeEffCommand cmd = new ChangeEffCommand();
+
+					ChangeActionDialogCommand cmd = new ChangeActionDialogCommand();
 					cmd.execute(action, actionItem);
 
 				}
 
 			}
 		};
-		
-		
+
 		return l;
 	}
+
 
 	public TreeItem getRoot(TreeItem a) {
 		while (a.getParentItem() instanceof TreeItem) {

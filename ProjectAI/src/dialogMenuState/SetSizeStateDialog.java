@@ -4,6 +4,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
@@ -14,53 +15,46 @@ import Action.GlobalValue;
 import Dialog.IDialog;
 import State.IState;
 
-public class SetSizeCondDialog extends IDialog {
+public class SetSizeStateDialog extends IDialog {
 
-	Text textConds;
+	Text textWidth;
+	Text textHeight;
 	IState state;
+	Text textConds;
 
-	public SetSizeCondDialog(Shell shell, int style) {
+	
+	
+	public SetSizeStateDialog(Shell shell, int style) {
 		super(shell, style);
 		// TODO Auto-generated constructor stub
 	}
 
 	@Override
-	public Listener getOkbtnListener() {
-		return new Listener() {
-
-			@Override
-			public void handleEvent(Event event) {
-
-				if (state.isShownCond()) {
-					state.setDefaultValue(false);
-					if (isNumeric(textConds.getText())) {
-						state.setLengthFromCm(Double.parseDouble(textConds.getText()));
-						setVisible(false);
-
-					}
-				} else {
-					if (isNumeric(textConds.getText())) {
-						state.setStandardLengthFromCm(Double.parseDouble(textConds.getText()));
-						setVisible(false);
-
-					}
-				}
-				// canvas.resizeParent();
-
-			}
-		};
-	}
-
-	@Override
 	public void createContent() {
-		this.label.setText("Set the size of conditions  ");
+		this.label.setText("Set the size of the line");
 		this.label.pack();
 		mainComposite.setLayout(new GridLayout(3, false));
+		Label width = new Label(mainComposite, SWT.ALL);
+		width.setText("Box-height in cm: ");
+		textWidth = new Text(mainComposite, SWT.BORDER);
+		textWidth.setText(state.getHeiInCm());
+		Label empty=new Label(mainComposite, SWT.ALL);
+		
+		Label height = new Label(mainComposite, SWT.ALL);
+		height.setText("Box-width in cm: ");
+		textHeight = new Text(mainComposite, SWT.BORDER);
+		textHeight.setText(state.getWidInCm());
+		
+		textWidth.setLayoutData(new GridData(SWT.FILL, SWT.FILL,true,true));
+		textHeight.setLayoutData(new GridData(SWT.FILL, SWT.FILL,true,true));
+		empty=new Label(mainComposite, SWT.ALL);
+
+		
 		Button btnCond;
 
 		if (state.isShownCond()) {
 			Label lPrec = new Label(mainComposite, SWT.ALL);
-			lPrec.setText("Lenght in cm: ");
+			lPrec.setText("Conds-lenght in cm: ");
 			textConds = new Text(mainComposite, SWT.BORDER);
 			textConds.setText(state.getLengthCondInCm());
 			btnCond = new Button(mainComposite, SWT.CHECK);
@@ -68,7 +62,7 @@ public class SetSizeCondDialog extends IDialog {
 			btnCond.setVisible(false);
 		} else {
 			Label lWidth = new Label(mainComposite, SWT.ALL);
-			lWidth.setText("Lenght in cm: ");
+			lWidth.setText("Conds-lenght in cm: ");
 			textConds = new Text(mainComposite, SWT.BORDER);
 			textConds.setText((state.getStandardLengthInCm()));
 			btnCond = new Button(mainComposite, SWT.CHECK);
@@ -125,10 +119,48 @@ public class SetSizeCondDialog extends IDialog {
 			}
 		});
 		textConds.setLayoutData(new GridData(SWT.FILL, SWT.FILL,true,true));
-//		pack();
-		setSize(275,150);
+		pack();
+		
 	}
-	
+
+	@Override
+	public Listener getOkbtnListener() {
+		Listener l;
+		l=new Listener() {
+			
+			@Override
+			public void handleEvent(Event event) {
+				
+					if (isNumeric(textWidth.getText())&&isNumeric(textHeight.getText())) {
+						state.setHeigthFromCm(Double.parseDouble(textWidth.getText()));
+						state.setWidFromCm(Double.parseDouble(textHeight.getText()));
+						setVisible(false);
+					}
+					
+					if (state.isShownCond()) {
+						state.setDefaultValue(false);
+						if (isNumeric(textConds.getText())) {
+							state.setLengthFromCm(Double.parseDouble(textConds.getText()));
+							setVisible(false);
+
+						}
+					} else {
+						if (isNumeric(textConds.getText())) {
+							state.setStandardLengthFromCm(Double.parseDouble(textConds.getText()));
+							setVisible(false);
+
+						}
+					}
+			}
+		
+		};
+		return l;
+	}
+
+	public void setState(IState state) {
+		this.state = state;
+	}
+
 	
 	private boolean isNumeric(String str)  
 	{  
@@ -143,12 +175,6 @@ public class SetSizeCondDialog extends IDialog {
 	  return true;  
 	}
 
-	public void setState(IState state) {
-		this.state = state;
-	}
-	
-	
-	
 	
 	
 }

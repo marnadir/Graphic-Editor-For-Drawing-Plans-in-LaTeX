@@ -44,6 +44,7 @@ public class SaveDomainFileLocationDialog extends FileDialog {
 		setFilterExtensions(filterExtensions);
 		setFilterPath(filterPath);
 		setFileName("domain");
+		open();
 		command.execute(getFileName(), domainView);
 
 	}

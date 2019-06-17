@@ -23,50 +23,20 @@ public class LaTexGeneratorStatePlan {
 	public String getLatexPlanCode(PlanContent graphContent) {
 		StringBuilder sb = new StringBuilder();
 		InitialStateCanvas initialStateCanvas=graphContent.getInitialStateCanvas();
-		GoalStateCanvas goalStateCanvas=graphContent.getGoalStateCanvas();;
-		if (initialStateCanvas != null && goalStateCanvas != null) {
-			if (initialStateCanvas.getState().isText()) {
-				sb.append(generatexTogheter(graphContent));
-				return sb.toString();
-			} else {
-				sb.append(generatexSo(initialStateCanvas));
-				sb.append("\n");
-				sb.append(generatexGoal(goalStateCanvas));
-				sb.append("\n");
-				return sb.toString();
-			}
-		} else {
-			if(initialStateCanvas != null) {
-				sb.append(generatexSo(initialStateCanvas));
-				sb.append("\n");
-			}
-			if (goalStateCanvas != null) {
-				sb.append(generatexGoal(goalStateCanvas));
-				sb.append("\n");
-			}
+		GoalStateCanvas goalStateCanvas=graphContent.getGoalStateCanvas();
+		if(initialStateCanvas != null) {
+			sb.append(generatexSo(initialStateCanvas));
+			sb.append("\n");
+
 		}
-		
+		if(goalStateCanvas != null) {
+			sb.append(generatexGoal(goalStateCanvas));
+			sb.append("\n");
+
+		}
 		return sb.toString();
 	}
 	
-	
-	private String generatexTogheter(PlanContent graphContent) {
-		StringBuilder sb = new StringBuilder();
-		InitialStateCanvas initialStateCanvas=graphContent.getInitialStateCanvas();
-		GoalStateCanvas goalStateCanvas =graphContent.getGoalStateCanvas();
-		
-			sb.append("\\stage{35em}{26em}"+"\n");
-			sb.append("{effs="+getEffPrec(initialStateCanvas.getState())+"}"+"\n");
-			sb.append("{pres="+getEffPrec(goalStateCanvas.getState())+"}"+"\n");
-			
-			sb.append("{"+initialStateCanvas.getState().getText()+"}");
-			sb.append("{"+goalStateCanvas.getState().getText()+"}"+"\n");
-		
-		
-		
-		return sb.toString();
-		
-	}
 	
 	
 	private String generatexSo(InitialStateCanvas initialStateCanvas) {
@@ -78,8 +48,12 @@ public class LaTexGeneratorStatePlan {
 			sb.append("INIT-noop,");
 		}
 		
-		
-		sb.append("body = {fill=black,");
+		if(initialStateCanvas.getState().isText()) {
+			sb.append("body = {fill=white,");
+
+		}else {
+			sb.append("body = {fill=black,");
+		}
 		sb.append("at={"+getPosition(initialStateCanvas)+"}}}");
 		
 		return sb.toString();
@@ -95,10 +69,13 @@ public class LaTexGeneratorStatePlan {
 		}else {
 			sb.append("GOAL-noop,");
 		}
-		
-		
-		sb.append("body = {fill=black,");
-		sb.append("at={"+getPosition(goalStateCanvas)+"}}}");
+		if(goalStateCanvas.getState().isText()) {
+			sb.append("body = {fill=white,");
+
+		}else {
+			sb.append("body = {fill=black,");
+		}
+				sb.append("at={"+getPosition(goalStateCanvas)+"}}}");
 		
 		return sb.toString();
 		

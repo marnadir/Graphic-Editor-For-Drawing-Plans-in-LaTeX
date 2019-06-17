@@ -32,22 +32,27 @@ public class LaTexGeneratorStateDomain {
 	 */
 	public String getSoCode(IState state) {
 		StringBuilder sb = new StringBuilder();
-		String space="  ";
+		String space = "  ";
 		sb.append("% PRIMITIVE");
 		sb.append("\n");
 		sb.append("\\scheme");
 		sb.append("{INIT}{3}");
 		sb.append("{");
 		sb.append("\n");
-		
-		sb.append(space+"text="+"{\\hspace*"+"{-2mm}"+"},"+"\n");
-		sb.append(space+"pres = {},"+"\n");
-		sb.append(space+"effs = {");
-		sb.append(getTextPrecEff(state.getConds())+"},"+"\n");
-		sb.append(space+"eff length =  "+getLenghtCond(state)+"\n");
-		sb.append(space+"height = "+state.getHeiInCm()+"cm,"+"\n");
-		sb.append(space+"width = "+state.getWidInCm()+"cm \n"+"}"+"\n");
+		if (state.isText()) {
+			sb.append(space + "text=" + "{{\\rotatebox{90}{\\textbf{" + state.getText() + "}}} }," + "\n");
 
+		} else {
+			sb.append(space + "text=" + "{\\hspace*" + "{-2mm}" + "}," + "\n");
+
+		}
+
+		sb.append(space + "pres = {}," + "\n");
+		sb.append(space + "effs = {");
+		sb.append(getTextPrecEff(state.getConds()) + "}," + "\n");
+		sb.append(space + "eff length =  " + getLenghtCond(state) + "\n");
+		sb.append(space + "height = " + state.getHeiInCm() + "cm," + "\n");
+		sb.append(space + "width = " + state.getWidInCm() + "cm \n" + "}" + "\n");
 		return sb.toString();
 	}
 	
@@ -64,7 +69,14 @@ public class LaTexGeneratorStateDomain {
 		sb.append("{");
 		sb.append("\n");
 		
-		sb.append(space+"text="+"{\\hspace*"+"{-2mm}"+"},"+"\n");
+		if (state.isText()) {
+			sb.append(space + "text=" + "{{\\rotatebox{90}{\\textbf{" + state.getText() + "}}} }," + "\n");
+
+		} else {
+			sb.append(space + "text=" + "{\\hspace*" + "{-2mm}" + "}," + "\n");
+
+		}
+		
 		sb.append(space+"pres = {},"+"\n");
 		sb.append(space+"effs = {");
 		sb.append(getTextPrecEffNoop(state.getConds())+"},"+"\n");
@@ -85,7 +97,14 @@ public class LaTexGeneratorStateDomain {
 		sb.append("{");
 		sb.append("\n");
 		
-		sb.append(space+"text="+"{\\hspace*"+"{-2mm}"+"},"+"\n");
+		if (state.isText()) {
+			sb.append(space + "text=" + "{{\\rotatebox{270}{\\textbf{" + state.getText() + "}}} }," + "\n");
+
+		} else {
+			sb.append(space + "text=" + "{\\hspace*" + "{-2mm}" + "}," + "\n");
+
+		}		
+		
 		sb.append(space+"pres = {");
 		sb.append(getTextPrecEff(state.getConds())+"},"+"\n");
 		sb.append(space+"effs = {},"+"\n");
@@ -106,7 +125,14 @@ public class LaTexGeneratorStateDomain {
 		sb.append("{");
 		sb.append("\n");
 		
-		sb.append(space+"text="+"{\\hspace*"+"{-2mm}"+"},"+"\n");
+		if (state.isText()) {
+			sb.append(space + "text=" + "{{\\rotatebox{270}{\\textbf{" + state.getText() + "}}} }," + "\n");
+
+		} else {
+			sb.append(space + "text=" + "{\\hspace*" + "{-2mm}" + "}," + "\n");
+
+		}
+		
 		sb.append(space+"pres = {");
 		sb.append(getTextPrecEffNoop(state.getConds())+"},"+"\n");
 		sb.append(space+"effs = {},"+"\n");

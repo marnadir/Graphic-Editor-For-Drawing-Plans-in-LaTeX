@@ -1,8 +1,6 @@
 package LaTex;
 
-import java.text.DecimalFormat;
 import java.text.NumberFormat;
-import java.text.ParseException;
 import java.util.Locale;
 
 import org.eclipse.swt.SWT;

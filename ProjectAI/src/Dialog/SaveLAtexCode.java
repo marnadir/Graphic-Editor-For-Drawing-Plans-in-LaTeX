@@ -98,7 +98,7 @@ public class SaveLAtexCode extends FileDialog  {
 						SWT.ICON_WARNING |  SWT.OK);
 
 				messageBox.setText("Warning");
-				messageBox.setMessage("Domain not Present, please load the domain");
+				messageBox.setMessage("Domain not present, please load the domain");
 				messageBox.open();
 			}
 			

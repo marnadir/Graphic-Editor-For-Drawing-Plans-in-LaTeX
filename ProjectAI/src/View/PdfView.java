@@ -31,16 +31,7 @@ public class PdfView  extends Composite{
 	
 	public void draw(String imagePath) {
 		
-//		if(myLabel!=null) {
-//			myLabel.dispose();
-//		}
-//		myImage = new Image( getDisplay(),imagePath );
-//		myLabel = new Label( this, SWT.NONE );
-//		//accentrare
-//		myLabel.setLocation(0, 0);
-//		myLabel.setImage( myImage );
-//		myLabel.pack();
-//		pack();
+		
 		image=new Image( getDisplay(),imagePath);
 
 		if(canvas==null) {

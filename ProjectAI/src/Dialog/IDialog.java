@@ -20,7 +20,7 @@ public abstract class IDialog  extends Shell{
 	protected Composite compButton;
 
 	int style;
-	Button okButton ;
+	protected Button okButton ;
 	Button cancelButton;
 	
 	
