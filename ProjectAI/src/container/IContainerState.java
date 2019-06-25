@@ -33,9 +33,12 @@ public class IContainerState  extends Composite{
 	public IStateCanvas getCanvas() {
 		
 		IStateCanvas canvas=null;
-		if(getChildren()[0] instanceof IStateCanvas) {
-			canvas=(IStateCanvas) getChildren()[0];
+		if(getChildren().length > 0) {
+			if(getChildren()[0] instanceof IStateCanvas) {
+				canvas=(IStateCanvas) getChildren()[0];
+			}
 		}
+		
 		return canvas;
 	}
 	

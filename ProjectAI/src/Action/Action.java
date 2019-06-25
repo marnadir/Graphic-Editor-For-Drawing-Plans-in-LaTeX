@@ -83,6 +83,7 @@ public class Action implements Serializable {
 		defaultValueEffLenght=a.defaultValueEffLenght;
 		defaultValueWid=a.defaultValueWid;
 		defaultValueHeig=a.defaultValueHeig;
+		defaultAction=a.defaultAction;
 
 		shownCond=a.shownCond;
 		shownName=a.shownName;
@@ -319,9 +320,6 @@ public class Action implements Serializable {
 	}
 
 	public String getStandardLengthEffInCm() {
-//		DecimalFormat df = new DecimalFormat("#.00");
-//	    String angleFormated = df.format(standardLengthEff*PIXEL_MEASUREMNT);
-//		return angleFormated;
 		NumberFormat nf_out = NumberFormat.getNumberInstance(Locale.UK);
 		nf_out.setMaximumFractionDigits(2);
 		String result = nf_out.format(standardLengthEff*PIXEL_MEASUREMNT);
@@ -337,8 +335,6 @@ public class Action implements Serializable {
 
 
 	public String getStandardLengthPrecInCm() {
-//		DecimalFormat df = new DecimalFormat("#.00");
-//	    String angleFormated = df.format(standardLengthPrec*PIXEL_MEASUREMNT);
 		NumberFormat nf_out = NumberFormat.getNumberInstance(Locale.UK);
 		nf_out.setMaximumFractionDigits(2);
 		String result = nf_out.format(standardLengthPrec*PIXEL_MEASUREMNT);
@@ -460,6 +456,11 @@ public class Action implements Serializable {
 	}
 
 	public boolean isFillColor() {
+		if(colorString!=null) {
+			if(!(colorString.equals("None"))) {
+				isFillColor=true;
+			}
+		}
 		return isFillColor;
 	}
 

@@ -187,12 +187,17 @@ public class EditLayoutAction extends IDialog{
 					action.setIsFett(false);
 
 				}
-				action.setColorString((cColor.getItem(cColor.getSelectionIndex())).toLowerCase());
+				
+				
+				action.setColorString((cColor.getItem(cColor.getSelectionIndex())));
 				if(!(action.getColorString().equals("None"))) {
 					canvas.getAction().setIsFillColor(true);
 				}
 			
-				canvas.redraw();
+				
+				canvas.getContentCanvas().redraw();
+				
+
 				dispose();
 			}
 		};

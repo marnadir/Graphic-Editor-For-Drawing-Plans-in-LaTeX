@@ -43,7 +43,19 @@ public class Node extends ICanvas {
 				int posY=(int) (-5+(action.getHeightRect()/action.getNumPrec())/2)+y; 
 				int incr=(int) (action.getHeightRect()/action.getNumPrec());
 				
-				
+				if(action.isDefaultAction()) {
+					if(action.isPrimitive) {
+						action.setIsFett(GlobalValue.borderIsFatPr);
+						action.setIsborder(GlobalValue.formIsBlackPr);
+						action.setBorderIsSquare(GlobalValue.cornerIsSquarePr);
+						action.setColorString(GlobalValue.colorP);
+					}else {
+						action.setIsFett(GlobalValue.borderIsFatAbst);
+						action.setIsborder(GlobalValue.formIsBlackAbst);
+						action.setBorderIsSquare(GlobalValue.cornerIsSquareAbst);
+						action.setColorString(GlobalValue.colorAbst);
+					}
+				}
 				
 				for (int i = 0; i < action.getPrec().size(); i++) {
 					String string = action.getPrec().get(i);

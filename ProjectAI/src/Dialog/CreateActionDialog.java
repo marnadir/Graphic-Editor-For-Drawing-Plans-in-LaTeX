@@ -521,7 +521,7 @@ public class CreateActionDialog extends IDialog {
 		}
 	
 		ActionDomainCanvas canvasAction = new ActionDomainCanvas(containerAction,
-				SWT.DOUBLE_BUFFERED | SWT.NO_REDRAW_RESIZE, action);
+				SWT.NONE, action);
 		canvasAction.draw();
 		canvasAction.addDNDListener();
 		canvasAction.resizeParent();

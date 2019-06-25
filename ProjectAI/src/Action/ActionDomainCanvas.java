@@ -60,10 +60,12 @@ public class ActionDomainCanvas  extends ICanvas{
 						action.setIsFett(GlobalValue.borderIsFatPr);
 						action.setIsborder(GlobalValue.formIsBlackPr);
 						action.setBorderIsSquare(GlobalValue.cornerIsSquarePr);
+						action.setColorString(GlobalValue.colorP);
 					}else {
 						action.setIsFett(GlobalValue.borderIsFatAbst);
 						action.setIsborder(GlobalValue.formIsBlackAbst);
 						action.setBorderIsSquare(GlobalValue.cornerIsSquareAbst);
+						action.setColorString(GlobalValue.colorAbst);
 					}
 				}
 

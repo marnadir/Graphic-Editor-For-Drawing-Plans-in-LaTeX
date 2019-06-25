@@ -16,7 +16,7 @@ import Action.Action;
 import Action.ICanvas;
 import Action.Node;
 import Dialog.InitializationVariableDialog;
-import Dialog.SetSizeActionDialog;
+import DialogAction.SetSizeActionDialog;
 import PlanPart.LinkCanvas;
 import PlanPart.OrderConstrain;
 import PlanPart.Oval;

@@ -67,13 +67,6 @@ public class DomainView {
 	}
 
 	public void createContent() {
-
-
-//		stateGroup = new Group(inside, SWT.NONE);
-//		stateGroup.setText("Items for the plan");
-//		this.setLayout(new GridLayout(1, true));
-//		GridData firstData = new GridData(SWT.FILL, SWT.FILL, true, true);
-//		stateGroup.setLayoutData(firstData);
 		
 		contentCanvas = new Composite(inside, SWT.NONE);
 		FillLayout fillLayout = new FillLayout();

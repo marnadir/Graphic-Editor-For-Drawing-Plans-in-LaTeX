@@ -23,7 +23,6 @@ public class SetSizeStateDialog extends IDialog {
 	Text textConds;
 
 	
-	
 	public SetSizeStateDialog(Shell shell, int style) {
 		super(shell, style);
 		// TODO Auto-generated constructor stub
@@ -38,89 +37,34 @@ public class SetSizeStateDialog extends IDialog {
 		width.setText("Box-height in cm: ");
 		textWidth = new Text(mainComposite, SWT.BORDER);
 		textWidth.setText(state.getHeiInCm());
-		Label empty=new Label(mainComposite, SWT.ALL);
-		
+		Label empty = new Label(mainComposite, SWT.ALL);
+
 		Label height = new Label(mainComposite, SWT.ALL);
 		height.setText("Box-width in cm: ");
 		textHeight = new Text(mainComposite, SWT.BORDER);
 		textHeight.setText(state.getWidInCm());
-		
-		textWidth.setLayoutData(new GridData(SWT.FILL, SWT.FILL,true,true));
-		textHeight.setLayoutData(new GridData(SWT.FILL, SWT.FILL,true,true));
-		empty=new Label(mainComposite, SWT.ALL);
 
-		
-		Button btnCond;
+		textWidth.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		textHeight.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		empty = new Label(mainComposite, SWT.ALL);
 
 		if (state.isShownCond()) {
 			Label lPrec = new Label(mainComposite, SWT.ALL);
 			lPrec.setText("Conds-lenght in cm: ");
 			textConds = new Text(mainComposite, SWT.BORDER);
 			textConds.setText(state.getLengthCondInCm());
-			btnCond = new Button(mainComposite, SWT.CHECK);
-			btnCond.setText("Global");
-			btnCond.setVisible(false);
+
 		} else {
 			Label lWidth = new Label(mainComposite, SWT.ALL);
 			lWidth.setText("Conds-lenght in cm: ");
 			textConds = new Text(mainComposite, SWT.BORDER);
 			textConds.setText((state.getStandardLengthInCm()));
-			btnCond = new Button(mainComposite, SWT.CHECK);
-			btnCond.setText("Global");
-			btnCond.setVisible(false);
 
 		}
 
-		if (state.isShownCond()) {
-			if (GlobalValue.isLengthsOfConds) {
-				btnCond.setVisible(true);
-				if (state.isGlobalCond()) {
-					btnCond.setSelection(true);
-					textConds.setEditable(false);
-				}
-
-			}
-		} else {
-			btnCond.setVisible(true);
-			if (state.isGlobalEmpty()) {
-				btnCond.setSelection(true);
-				textConds.setEditable(false);
-
-			}
-		}
-
-		btnCond.addListener(SWT.Selection, new Listener() {
-
-			@Override
-			public void handleEvent(Event event) {
-				if (btnCond.getSelection()) {
-					if (state.isShownCond()) {
-						textConds.setText(GlobalValue.lengthsOfConds);
-						textConds.setEditable(false);
-						state.setGlobalCond(true);
-					} else {
-						textConds.setText(GlobalValue.lengthsOfEmptyTasks);
-						textConds.setEditable(false);
-						state.setGlobalEmpty(true);
-
-					}
-
-				} else {
-					if (state.isShownCond()) {
-						textConds.setEditable(true);
-						state.setGlobalCond(false);
-					} else {
-						textConds.setEditable(true);
-						state.setGlobalEmpty(false);
-					}
-
-				}
-
-			}
-		});
-		textConds.setLayoutData(new GridData(SWT.FILL, SWT.FILL,true,true));
+		textConds.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		pack();
-		
+
 	}
 
 	@Override

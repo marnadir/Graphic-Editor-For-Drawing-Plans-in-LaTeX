@@ -1,4 +1,4 @@
-package Dialog;
+package DialogAction;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
@@ -12,6 +12,7 @@ import org.eclipse.swt.widgets.Text;
 
 import Action.GlobalValue;
 import Action.ICanvas;
+import Dialog.IDialog;
 
 public class SetSizeActionDialog extends IDialog {
 
@@ -33,7 +34,7 @@ public class SetSizeActionDialog extends IDialog {
 	public void createContent() {
 		label.setText("Set the size of the action: " + canvas.getAction().getName());
 		label.pack();
-		mainComposite.setLayout(new GridLayout(3, false));
+		mainComposite.setLayout(new GridLayout(2, false));
 
 		Label lWidth = new Label(mainComposite, SWT.ALL);
 		lWidth.setText("Width in cm: ");
@@ -42,36 +43,7 @@ public class SetSizeActionDialog extends IDialog {
 		textWid.setText(canvas.getAction().getWidthRectInCm());
 		textWid.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
-		Button btnWidth = new Button(mainComposite, SWT.CHECK);
-		btnWidth.setText("Global");
-		btnWidth.setVisible(false);
-
-		if (GlobalValue.isWidthOfAction) {
-			btnWidth.setVisible(true);
-			if (canvas.getAction().isGlobalWid()) {
-				btnWidth.setSelection(true);
-				textWid.setEditable(false);
-
-			}
-
-		}
-
-		btnWidth.addListener(SWT.Selection, new Listener() {
-
-			@Override
-			public void handleEvent(Event event) {
-				if (btnWidth.getSelection()) {
-					textWid.setText(GlobalValue.widthOfAction);
-					textWid.setEditable(false);
-					canvas.getAction().setGlobalWid(true);
-				} else {
-					canvas.getAction().setGlobalWid(false);
-					textWid.setEditable(true);
-
-				}
-
-			}
-		});
+		
 
 		Label lHeight = new Label(mainComposite, SWT.ALL);
 		lHeight.setText("Height in cm: ");
@@ -79,40 +51,9 @@ public class SetSizeActionDialog extends IDialog {
 		textHei.setText(canvas.getAction().getHeightRectInCm());
 		textHei.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
-		Button btnHeight = new Button(mainComposite, SWT.CHECK);
-		btnHeight.setText("Global");
-		btnHeight.setVisible(false);
-
-		if (GlobalValue.isHeightOfAction) {
-			btnHeight.setVisible(true);
-			if (canvas.getAction().isGlobalHeight()) {
-				btnHeight.setSelection(true);
-				textHei.setEditable(false);
-
-			}
-
-		}
-
-		btnHeight.addListener(SWT.Selection, new Listener() {
-
-			@Override
-			public void handleEvent(Event event) {
-				if (btnHeight.getSelection()) {
-					textHei.setText(GlobalValue.heightOfAction);
-					textHei.setEditable(false);
-					canvas.getAction().setGlobalHeight(true);
-				} else {
-					textHei.setEditable(true);
-					canvas.getAction().setGlobalHeight(false);
-
-				}
-
-			}
-		});
-
+	
 		//Size Prec
 		
-		Button btnPrec;
 		
 		if (canvas.getAction().isShownCond()) {
 			Label labPrec = new Label(mainComposite, SWT.ALL);
@@ -121,9 +62,7 @@ public class SetSizeActionDialog extends IDialog {
 			textPrec.setText(canvas.getAction().getLengthPrecInCm());
 			textPrec.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
-			btnPrec=new Button(mainComposite, SWT.CHECK);
-			btnPrec.setText("Global");
-			btnPrec.setVisible(false);
+		
 
 		} else {
 			Label labPrec = new Label(mainComposite, SWT.ALL);
@@ -132,67 +71,13 @@ public class SetSizeActionDialog extends IDialog {
 			textPrec.setText(canvas.getAction().getStandardLengthPrecInCm());
 			textPrec.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
-			btnPrec=new Button(mainComposite, SWT.CHECK);
-			btnPrec.setText("Global");
-			btnPrec.setVisible(false);
-
-		}
 		
-		if(canvas.getAction().isShownCond()) {
-			if(GlobalValue.isLengthsOfPrecs) {
-				btnPrec.setVisible(true);
-				if(canvas.getAction().isGlobalPrec()) {
-					btnPrec.setSelection(true);
-					textPrec.setEditable(false);
-
-				}
-				
-			}
-		}else {
-			btnPrec.setVisible(true);
-			if(canvas.getAction().isGlobalEmptyPrec()) {
-				btnPrec.setSelection(true);
-				textPrec.setEditable(false);
-
-			}
 		}
 		
 
-		btnPrec.addListener(SWT.Selection, new Listener() {
-			
-			@Override
-			public void handleEvent(Event event) {
-				if(btnPrec.getSelection()) {
-					if(canvas.getAction().isShownCond()) {
-						textPrec.setText(GlobalValue.lengthsOfPrecs);
-						textPrec.setEditable(false);
-						canvas.getAction().setGlobalPrec(true);
-					}else {
-						textPrec.setText(GlobalValue.lengthsOfEmptyTasks);
-						textPrec.setEditable(false);
-						canvas.getAction().setGlobalEmptyPrec(true);;
-						
-					}
-					
-				}else {
-					if(canvas.getAction().isShownCond()) {
-						textPrec.setEditable(true);
-						canvas.getAction().setGlobalPrec(false);
-					}else {
-						textPrec.setEditable(true);
-						canvas.getAction().setGlobalEmptyPrec(false);
-					}
-					
-
-				}
-			}
-		});
-		
 		
 		//Size Eff
 		
-
-		Button btnEff;
 		
 		if (canvas.getAction().isShownCond()) {
 			Label labEff = new Label(mainComposite, SWT.ALL);
@@ -201,9 +86,6 @@ public class SetSizeActionDialog extends IDialog {
 			textEff.setText(canvas.getAction().getLengthEffInCm());
 			textEff.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
-			btnEff=new Button(mainComposite, SWT.CHECK);
-			btnEff.setText("Global");
-			btnEff.setVisible(false);
 		} else {
 			Label labEff = new Label(mainComposite, SWT.ALL);
 			labEff.setText("Eff-lenght in cm: ");
@@ -211,65 +93,10 @@ public class SetSizeActionDialog extends IDialog {
 			textEff.setText(canvas.getAction().getStandardLengthEffInCm());
 			textEff.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
-			btnEff=new Button(mainComposite, SWT.CHECK);
-			btnEff.setText("Global");
-			btnEff.setVisible(false);
 		}
 		
-		if(canvas.getAction().isShownCond()) {
-			if(GlobalValue.isLengthsOfEffs) {
-				btnEff.setVisible(true);
-				if(canvas.getAction().isGlobalEff()) {
-					btnEff.setSelection(true);								
-					textEff.setEditable(false);
-
-				}
-				
-			}
-		}else {
-			btnEff.setVisible(true);
-			if(canvas.getAction().isGlobalEmptyEff()) {
-				btnEff.setSelection(true);
-				textEff.setEditable(false);
-
-			}
-		}
-		
-		
-		btnEff.addListener(SWT.Selection, new Listener() {
-			
-			@Override
-			public void handleEvent(Event event) {
-				if(btnEff.getSelection()) {
-					if(canvas.getAction().isShownCond()) {
-						textEff.setText(GlobalValue.lengthsOfEffs);
-						textEff.setEditable(false);
-						canvas.getAction().setGlobalEff(true);	
-					}else {
-						textEff.setText(GlobalValue.lengthsOfEmptyTasks);
-						textEff.setEditable(false);
-						canvas.getAction().setGlobalEmptyEff(true);;
-					}
-				}else {
-					if(canvas.getAction().isShownCond()) {
-						
-						textEff.setEditable(true);
-						canvas.getAction().setGlobalEff(false);
-					}else {
-						textEff.setEditable(true);
-						canvas.getAction().setGlobalEmptyEff(true);
-					}
-				
-
-
-				}
-				
-			}
-		});
-		
-		
-		
-		
+	
+	
 		
 		pack();
 

@@ -28,8 +28,8 @@ import Dialog.NewConnectionDialog;
 import Dialog.SaveLAtexCode;
 import Dialog.SavePlanDialog;
 import PDFConverter.PdfConverter;
+import PlanPart.LoadLink;
 import PlanPart.PlanContent;
-import State.LoadLink;
 import command.SaveDomainCommand;
 import command.SavePlanCommand;
 import resourceLoader.ResourceLoader;
@@ -64,7 +64,7 @@ public class PlanView  extends CTabFolder{
 	public void createContent(DomainView domainView) {
 		this.domainView=domainView;
 		CTabItem item = new CTabItem(this, SWT.CLOSE);
-		contentPlan = new PlanContent(this, SWT.ALL);
+		contentPlan = new PlanContent(this, SWT.BORDER);
 	
 		//TODO Quanto mi consuma sta pezzo di codice
 		

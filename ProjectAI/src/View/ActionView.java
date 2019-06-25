@@ -22,7 +22,7 @@ public class ActionView extends Composite {
 	}
 	
 	public void creareContent() {
-		containerAction = new Composite(this, SWT.ALL);
+		containerAction = new Composite(this, SWT.BORDER);
 		containerAction.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, true));
 		containerAction.setLayout(new FillLayout());
 		containerAction.setLocation(50, 100);

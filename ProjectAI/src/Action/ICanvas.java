@@ -8,6 +8,7 @@ import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
 
 import PlanPart.PlanContent;
+import View.DomainView;
 import PlanPart.Oval;
 
 public abstract class ICanvas extends Canvas {
@@ -98,5 +99,16 @@ public abstract class ICanvas extends Canvas {
 
 		return getDisplay().getSystemColor(SWT.COLOR_WHITE);
 	}
+	
+	public Composite getContentCanvas() {
+		Composite new_name = null; 
+		
+		if (getParent().getParent().getParent().getParent().getParent()  instanceof Composite) {
+			 new_name = (Composite) getParent().getParent().getParent().getParent().getParent();
+			
+		}
+		return new_name;
+	}
+	
 	
 }

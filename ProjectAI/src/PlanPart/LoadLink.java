@@ -1,4 +1,4 @@
-package State;
+package PlanPart;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -6,10 +6,6 @@ import java.io.ObjectInputStream;
 import java.util.ArrayList;
 
 import org.eclipse.swt.graphics.Point;
-
-import PlanPart.LinkCanvas;
-import PlanPart.Oval;
-import PlanPart.PlanContent;
 
 public class LoadLink {
 

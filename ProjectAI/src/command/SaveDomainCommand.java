@@ -100,6 +100,8 @@ public class SaveDomainCommand  implements ICommand{
 		arrayList.add(GlobalValue.formIsBlackAbst);
 		arrayList.add(GlobalValue.cornerIsSquareAbst);
 		arrayList.add(GlobalValue.borderIsFatAbst);
+		arrayList.add(GlobalValue.colorP);
+		arrayList.add(GlobalValue.colorAbst);
 		
 		
 		return arrayList;

@@ -86,6 +86,8 @@ public class PrincipalView {
 		itemGlobal.setText("Global Options");
 		itemGlobal.setControl(globalOptionView);
 		globalOptionView.setDomainView(domainView);
+		globalOptionView.setPlanView(planView);
+		
 		
 		domainView.setGlobalOptionView(globalOptionView);
 		
@@ -94,7 +96,7 @@ public class PrincipalView {
 		pdfView=new PdfView(folder, SWT.ALL);
 		pdfItem.setControl(pdfView);
 		
-		//TODO
+		//TODO allign the position of action
 		
 //		CTabItem positionItem=new CTabItem(folder, SWT.NONE);
 //		positionItem.setText("Position View");
