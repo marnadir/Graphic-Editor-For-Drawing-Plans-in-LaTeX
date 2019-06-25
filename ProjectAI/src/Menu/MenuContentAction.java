@@ -50,26 +50,40 @@ public class MenuContentAction implements MenuDetectListener {
 							PlanContent plan = (PlanContent) canvas.getParent().getParent();
 							plan.getActionInPlan().remove(canvas);
 							canvas.getParent().setVisible(false);
+						
+							Action a = canvas.getAction();
+							ArrayList<LinkCanvas> links = plan.getLink();
+							ArrayList<LinkCanvas> linksToDelete = new ArrayList<>();
+							for (LinkCanvas link : links) {
+								if (link.getOval1().getNode() != null) {
+									if (link.getOval1().getNode().getAction().getName().equals(a.getName())) {
+										link.setOval1(null);
+										link.setOval2(null);
+										linksToDelete.add(link);
+									}
+								}
+								if (link.getOval2().getNode() != null) {
+									if (link.getOval2().getNode().getAction().getName().equals(a.getName())) {
+
+										link.setOval1(null);
+										link.setOval2(null);
+										linksToDelete.add(link);
+									}
+								}
+								
+								
+							
+							}
+							links.removeAll(linksToDelete);
+
 							for (Oval oval : canvas.getOvalList()) {
 								plan.getOvalCounter().getListOval().remove(oval);
 								oval.dispose();
 
 							}
 							canvas.setOvalList(new ArrayList<>());
-							Action a = canvas.getAction();
-							ArrayList<LinkCanvas> links = plan.getLink();
-							ArrayList<LinkCanvas> linksToDelete = new ArrayList<>();
-							for (LinkCanvas link : links) {
-								if (link.getOval1().getNode().getAction().getName().equals(a.getName())
-										|| link.getOval2().getNode().getAction().getName().equals(a.getName())) {
-
-									link.setOval1(null);
-									link.setOval2(null);
-									linksToDelete.add(link);
-								}
-							}
-							links.removeAll(linksToDelete);
-
+							
+							
 							ArrayList<OrderConstrain> orderConstrains = plan.getOrds();
 							ArrayList<OrderConstrain> orderConstrainsToDelete = new ArrayList<>();
 							for (OrderConstrain orderConstrain : orderConstrains) {

@@ -500,10 +500,9 @@ public class CreateActionDialog extends IDialog {
 						}
 						
 						actions.add(action);
+						drawAction();
 						
 						setVisible(false);
-//						treeActions.pack();
-						drawAction();
 				}
 			}
 		};
@@ -520,6 +519,8 @@ public class CreateActionDialog extends IDialog {
 			child.dispose();
 		}
 	
+		
+		
 		ActionDomainCanvas canvasAction = new ActionDomainCanvas(containerAction,
 				SWT.NONE, action);
 		canvasAction.draw();

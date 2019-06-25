@@ -176,19 +176,19 @@ public class TreeActioDomainView extends Tree {
 					TreeItem actionItem = getRoot(actions[0]);
 					Action action = findAction(actionItem.getText());
 
-					if(!alreadyShow(action, containerAction)) {
+//					if(!alreadyShow(action, containerAction)) {
 						containerAction.setVisible(true);
 						for (Control child : containerAction.getChildren()) {
 							child.dispose();
 						}
 						ActionDomainCanvas canvasAction = new ActionDomainCanvas(containerAction,
-								SWT.DOUBLE_BUFFERED | SWT.NO_REDRAW_RESIZE, action);
+								SWT.NONE, action);
 						canvasAction.draw();
 						canvasAction.addDNDListener();
 						canvasAction.resizeParent();
 						actionView.setContainerAction(containerAction);
 						actionView.getContainerAction().pack();
-					}
+//					}
 					
 
 				}

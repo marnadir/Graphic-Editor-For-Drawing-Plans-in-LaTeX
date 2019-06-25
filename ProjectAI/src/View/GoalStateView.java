@@ -22,7 +22,7 @@ public class GoalStateView extends IStateView{
 	}
 
 	public void createContent() {
-		this.containerState=new ContainerGoalState(this, SWT.BORDER);
+		this.containerState=new ContainerGoalState(this, SWT.NONE);
 		this.containerState.setLayoutData(new GridData(GridData.FILL, GridData.FILL, false, false));
 		this.containerState.setLayout(new FillLayout());
 		this.containerState.setLocation(30,30);

@@ -16,7 +16,7 @@ public class InitialStateCanvas extends IStateCanvas  {
 	private static final long serialVersionUID = -1499882871217776674L;
 
 	public InitialStateCanvas(Composite parent, int style, IState state) {
-		super(parent, SWT.BORDER, state);
+		super(parent, SWT.NONE, state);
 	}
 
 	// TODO method allow to draw the initial state

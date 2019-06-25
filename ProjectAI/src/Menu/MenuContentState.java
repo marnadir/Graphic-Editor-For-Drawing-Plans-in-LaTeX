@@ -12,6 +12,7 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 
+import PlanPart.LinkCanvas;
 import PlanPart.Oval;
 import PlanPart.PlanContent;
 import State.GoalStateCanvas;
@@ -66,22 +67,39 @@ public class MenuContentState implements MenuDetectListener {
 	
 
 		MenuItem c = new MenuItem(m, SWT.ALL);
-		c.setText("Clear");
+		c.setText("Remove");
 		c.addListener(SWT.Selection, new Listener() {
 
 			@Override
 			public void handleEvent(Event event) {
 				if (canvas.getParent().getParent() instanceof PlanContent) {
-					PlanContent content = (PlanContent) canvas.getParent().getParent();
+					planContent = (PlanContent) canvas.getParent().getParent();
+					
+					ArrayList<LinkCanvas> links = planContent.getLink();
+					ArrayList<LinkCanvas> linksToDelete = new ArrayList<>();
+					
+					for (LinkCanvas link : links) {
+						if (link.getOval1().getStateCanvas() != null) {
+							if(link.getOval1().getStateCanvas().equals(canvas)) {
+								link.setOval1(null);
+								link.setOval2(null);
+								linksToDelete.add(link);
+							}
+							
+						}
+					
+					}
+					links.removeAll(linksToDelete);
+					
 					if (canvas instanceof InitialStateCanvas) {
-						content.setInitialStateCanvas(null);
+						planContent.setInitialStateCanvas(null);
 
 					} else if (canvas instanceof GoalStateCanvas) {
-						content.setGoalStateCanvas(null);
+						planContent.setGoalStateCanvas(null);
 					}
 
 					for (Oval oval : canvas.getOvalList()) {
-						content.getOvalCounter().getListOval().remove(oval);
+						planContent.getOvalCounter().getListOval().remove(oval);
 						oval.dispose();
 
 					}

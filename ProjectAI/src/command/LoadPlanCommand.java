@@ -21,6 +21,7 @@ import State.GoalState;
 import State.GoalStateCanvas;
 import State.InitialState;
 import State.InitialStateCanvas;
+import container.IContainerState;
 
 public class LoadPlanCommand  implements ICommand{
 
@@ -156,7 +157,7 @@ public class LoadPlanCommand  implements ICommand{
 		ArrayList<Object> info=(ArrayList<Object>) data.get(0);
 		InitialState inState = (InitialState) info.get(0);
 		Point position=(Point) info.get(1);
-		Composite comp = new Composite(planContent, SWT.DRAW_DELIMITER);
+		IContainerState comp = new IContainerState(planContent, SWT.DRAW_DELIMITER);
 		comp.setLayoutData(new GridData(GridData.FILL, GridData.FILL, false, false));
 		comp.setLayout(new FillLayout());
 		comp.setLocation(position.x, position.y);
@@ -170,7 +171,7 @@ public class LoadPlanCommand  implements ICommand{
 		ArrayList<Object> info=(ArrayList<Object>) data.get(1);
 		GoalState inState = (GoalState) info.get(0);
 		Point position=(Point) info.get(1);
-		Composite comp = new Composite(planContent, SWT.DRAW_DELIMITER);
+		IContainerState comp = new IContainerState(planContent, SWT.DRAW_DELIMITER);
 		comp.setLayoutData(new GridData(GridData.FILL, GridData.FILL, false, false));
 		comp.setLayout(new FillLayout());
 		comp.setLocation(position.x, position.y);
