@@ -22,7 +22,6 @@ public class LaTexGeneratorAction {
 	
 	public String getLatexActionCodeDomain(Action action) {
 		StringBuilder sb = new StringBuilder();
-//		if(action.getName().toLowerCase().contains("No-Op".toLowerCase())) {
 		if(actionHasVariable(action)) {
 			sb.append(generatAction(action));
 			sb.append("\n");
@@ -79,36 +78,30 @@ public class LaTexGeneratorAction {
 	
 	
 	private String generateActionWoVariableE(Action a) {
-		
+
 		StringBuilder sb = new StringBuilder();
+		String space = "  ";
+		sb.append("\\scheme");
+		sb.append("{" + a.getName() + "-noop}{0}{");
+		sb.append("\n");
+		sb.append(space + "text = " + "{\\textbf{" + (a.getName()) + "}}," + "\n");
+		sb.append(space + "pres = {");
+		sb.append(getTextPrecEffNoop(a.getPrec()) + "}," + "\n");
+		sb.append(space + "effs = {");
+		sb.append(getTextPrecEffNoop(a.getEffect()) + "}," + "\n");
+		if (a.getPrec().size() > 0 && a.getPrec() != null) {
+			sb.append(space + "pre length = " + getLenghtPrecsNoop(a) + "\n");
+		}
+		if (a.getEffect().size() > 0 && a.getEffect() != null) {
+			sb.append(space + "eff length = " + getLenghtEffsNoop(a) + "\n");
+		}
+		sb.append(space + "height = " + getHeigthRect(a) + "\n");
+		sb.append(space + "width = " + getWidthRect(a) + "\n" + "}" + "\n");
 
-		
-//		if(!(a.getName().toLowerCase().contains("No-Op".toLowerCase()) || a.getName().toLowerCase().contains("NoOp".toLowerCase()))) {
-			String space="  ";
-			sb.append("\\scheme");
-			sb.append("{"+a.getName()+"-noop}{0}{");
-			sb.append("\n");
-			sb.append(space+"text = " +"{\\textbf{"+(a.getName())+"}},"+"\n");
-			sb.append(space+"pres = {");
-			sb.append(getTextPrecEffNoop(a.getPrec())+"},"+"\n");
-			sb.append(space+"effs = {");
-			sb.append(getTextPrecEffNoop(a.getEffect())+"},"+"\n");
-			if(a.getPrec().size()>0 && a.getPrec()!=null) {
-				sb.append(space+"pre length = "+getLenghtPrecsNoop(a)+"\n");
-			}
-			if(a.getEffect().size()>0 && a.getEffect()!=null) {
-				sb.append(space+"eff length = "+getLenghtEffsNoop(a)+"\n");
-			}
-			sb.append(space+"height = "+getHeigthRect(a)+"\n");
-			sb.append(space+"width = "+getWidthRect(a)+"\n"+"}"+"\n");
-//		}
-		
-
-		
 		return sb.toString();
 
 	}
-	
+
 	public String generatAction(Action a) {
 		StringBuilder sb = new StringBuilder();
 		String space="  ";

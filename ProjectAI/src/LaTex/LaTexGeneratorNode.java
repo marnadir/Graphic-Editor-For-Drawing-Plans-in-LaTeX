@@ -294,7 +294,8 @@ public class LaTexGeneratorNode {
 		if(planContent.getInitialStateCanvas()!=null) {
 			value=(int) (planContent.getInitialStateCanvas().getState().getHeight()-node.getParent().getLocation().y );
 		}else {
-			value=(int) (node.getParent().getLocation().y );
+			int test=planContent.getClientArea().height;
+			value=(int) (test-node.getParent().getLocation().y );
 
 			
 		}

@@ -134,32 +134,13 @@ public class PlanView  extends CTabFolder{
 				
 				ArrayList<Node> updateNodeList = getPlan().getActionInPlan();
 				for(Node node:updateNodeList) {
-//					Iterator<Oval> i = listOval.iterator();
-//					while (i.hasNext()) {
-//							Oval oval = i.next(); // must be called before you can call i.remove()
-//							if(oval!=null) {
-////								if(oval.getNode()  instanceof Node) {
-//									oval.dispose();
-//									 i.remove();
-//									 contentAction.getOvalCounter().setListOval(listOval);
-////								}
-//							}
-//							
-//					}
 					if(showCondition.getSelection()) {
 						node.getAction().setIsShownCond(true);
-						//node.pack();
 						node.redraw();
-					
-
-
 					}else {
 						node.getAction().setIsShownCond(false);
-						//node.pack();
 						node.redraw();					
 					}
-					
-
 				
 				}
 		
@@ -352,7 +333,7 @@ public class PlanView  extends CTabFolder{
 		});
 		
 		ToolItem i = new ToolItem(t, SWT.PUSH);
-		i.setToolTipText("Add a New Plan");
+		i.setToolTipText("Add New Plan");
 		 icon = new Image(getDisplay(),ResourceLoader.load("img/add-documents.png") );
 		i.setImage(icon);
 		i.addSelectionListener(new SelectionListener() {

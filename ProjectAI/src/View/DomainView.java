@@ -53,7 +53,7 @@ public class DomainView {
 		outer = new Composite(sashForm, SWT.ALL);
 		outer.setLayout(new FillLayout());
 
-		this.domainGroup = new Group(outer, SWT.BORDER);
+		this.domainGroup = new Group(outer, SWT.BOLD);
 		Font boldFont = new Font(this.domainGroup.getDisplay(), new FontData("Arial", 12, SWT.BOLD));
 		this.domainGroup.setText("Domain Definition");
 		this.domainGroup.setFont(boldFont);
@@ -86,7 +86,7 @@ public class DomainView {
 		
 		part1 = new Group(contentCanvas, SWT.NONE);
 		part1.setLayout(new GridLayout(1, false));
-		part1.setText("So/Goal state");
+		part1.setText("Initial/Goal state");
 
 
 
