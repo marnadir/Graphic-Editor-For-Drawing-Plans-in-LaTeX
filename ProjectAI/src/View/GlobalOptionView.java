@@ -415,7 +415,6 @@ public class GlobalOptionView extends Composite{
 					confermW.setText("Update successfully");
 					for(int i=0;i<planView.getPlan().getActionInPlan().size();i++) {
 						planView.getPlan().getActionInPlan().get(i).getAction().setGlobalWid(true);
-						domainView.getTreeAction().getActionList().get(i).setGlobalWid(true);
 					}
 					
 					for(int i=0;i<domainView.getTreeAction().getActionList().size();i++) {

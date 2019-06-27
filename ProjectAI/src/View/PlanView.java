@@ -213,7 +213,7 @@ public class PlanView  extends CTabFolder{
 			@Override
 			public void handleEvent(Event event) {
 				
-	
+				String dir=null;
 				ConsoleViewPlan consoleViewPlan=consoleView.getConsoleViewPlan();
 				ConsoleViewDomain consoleViewDomain=consoleView.getConsoleViewDomain();
 				
@@ -226,17 +226,18 @@ public class PlanView  extends CTabFolder{
 					if(dialog.getFileLatex()!=null) {
 						getPlan().setLatexFile(dialog.getFileLatex());
 						getPlan().setDirectory(dialog.getFileLatex().getParentFile());
+						dir=dialog.getFilterPath();
 					}
 			
 				}else {
-					File dir=getPlan().getDirectory();
+					dir=getPlan().getDirectory().getAbsolutePath();
 					if(getPlan().getLatexFile()==null) {
-						dialog.createFilePlan(dir.getAbsolutePath(),"PlanLatex.tex");
+						dialog.createFilePlan(dir,"PlanLatex.tex");
 						getPlan().setLatexFile(dialog.getFileLatex());
 
 						
 					}else {
-						dialog.createFilePlan(dir.getAbsolutePath(),"PlanLatex.tex");
+						dialog.createFilePlan(dir,"PlanLatex.tex");
 
 						getPlan().setLatexFile(dialog.getFileLatex());
 
@@ -246,10 +247,10 @@ public class PlanView  extends CTabFolder{
 				//Save Plan&Domain
 				SavePlanCommand command=new SavePlanCommand();
 				command.setPlanContent(getPlan());
-				command.execute(dialog.getFilterPath(),"PlanStore.txt");
+				command.execute(dir,"PlanStore.txt");
 				
 				SaveDomainCommand command2=new SaveDomainCommand();
-				command2.copyFileDomain(dialog.getFilterPath(), domainView);
+				command2.copyFileDomain(dir, domainView);
 				
 				
 				//consoleViewPlan.saveFile();
@@ -257,11 +258,11 @@ public class PlanView  extends CTabFolder{
 				
 				
 				
-				File dir=getPlan().getDirectory();
+			
 				if(dialog.isIsdomainLoad() && planHasFigure()) {
 					try {
 
-						String cmd1="cd "+dir.getAbsolutePath();
+						String cmd1="cd "+dir;
 						
 						//dialog.getFileName();
 						String cmd2="pdflatex "+dialog.getFileLatex().getName()+" -synctex=1 -interaction=nonstopmode";

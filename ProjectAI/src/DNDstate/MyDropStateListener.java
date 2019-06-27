@@ -1,7 +1,5 @@
 package DNDstate;
 
-
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.dnd.DND;
 import org.eclipse.swt.dnd.DropTarget;
@@ -24,23 +22,22 @@ import container.ContainerGoalState;
 import container.ContainerInitialState;
 
 public class MyDropStateListener extends DropTargetAdapter {
+
+	@SuppressWarnings("unused")
 	private Composite parentComposite;
 	private DropTarget target;
-
-
 	private PlanContent graphContent;
 	private DomainView domainView;
-	
 
 	/**
 	 * @param parentComposite - the composite that holds all pictures
 	 * @param target          - the drop target
 	 */
-	public MyDropStateListener(Composite parentComposite, DropTarget target,DomainView domain) {
+	public MyDropStateListener(Composite parentComposite, DropTarget target, DomainView domain) {
 		this.parentComposite = parentComposite;
 		this.target = target;
-		this.domainView=domain;
-	
+		this.domainView = domain;
+
 	}
 
 	public void dragEnter(DropTargetEvent event) {
@@ -58,14 +55,12 @@ public class MyDropStateListener extends DropTargetAdapter {
 	@Override
 	public void drop(DropTargetEvent event) {
 
-		if (target.getControl() instanceof Composite) {
+		if (target.getControl() instanceof PlanContent) {
 
-		
-			InitialState inState=null;
-			GoalState goalState=null;
-			
+			InitialState inState = null;
+			GoalState goalState = null;
+
 			graphContent = (PlanContent) target.getControl();
-		
 
 			if (event.data != null) {
 				MyType[] myTypes = (MyType[]) event.data;
@@ -73,81 +68,74 @@ public class MyDropStateListener extends DropTargetAdapter {
 					for (int i = 0; i < myTypes.length; i++) {
 						switch (myTypes[i].getName()) {
 						case "start":
-							
-							if (graphContent.getInitialStateCanvas()==null) {
+
+							if (graphContent.getInitialStateCanvas() == null) {
 								inState = new InitialState(myTypes[i].getEff());
-								InitialState initialState=(InitialState)domainView.getInitialStateCanvas().getState();
+								InitialState initialState = (InitialState) domainView.getInitialStateCanvas()
+										.getState();
 								inState.copyAttribute(initialState);
 
 							}
 							break;
 
 						case "goal":
-							if(graphContent.getGoalStateCanvas()==null){
+							if (graphContent.getGoalStateCanvas() == null) {
 								goalState = new GoalState(myTypes[i].getEff());
-								GoalState goal=(GoalState)domainView.getGoalStateCanvas().getState();
+								GoalState goal = (GoalState) domainView.getGoalStateCanvas().getState();
 								goalState.copyAttribute(goal);
 
 							}
-						
+
 							break;
 
-					
 						}
-						
+
 					}
 
-						if(inState!=null) {
-							if (graphContent.getParent() instanceof PlanView) {
-								PlanView planView = (PlanView) graphContent.getParent();
-								if (planView.isShowConditionSelecte()) {
+					if (inState != null) {
+						if (graphContent.getParent() instanceof PlanView) {
+							PlanView planView = (PlanView) graphContent.getParent();
+							if (planView.isShowConditionSelecte()) {
 
-									inState.setShownCond(true);
-								}
+								inState.setShownCond(true);
 							}
-							
-							
-							ContainerInitialState container = new ContainerInitialState(graphContent, SWT.DRAW_TRANSPARENT);
-							container.setLayoutData(new GridData(GridData.FILL, GridData.FILL, false, false));
-							container.setLayout(new FillLayout());
-							container.setLocation(container.toControl(event.x, event.y));
-							
-							
-							InitialStateCanvas stateCanvas = new InitialStateCanvas(container, SWT.ALL, inState);
-							stateCanvas.draw();
-							graphContent.setInitialStateCanvas((InitialStateCanvas) stateCanvas);
-							graphContent.addMoveListener(container);
-
-							
-						}else if(goalState!=null) {
-							
-							
-							if (graphContent.getParent() instanceof PlanView) {
-								PlanView planView = (PlanView) graphContent.getParent();
-								if (planView.isShowConditionSelecte()) {
-
-									goalState.setShownCond(true);
-								}
-							}
-							
-							ContainerGoalState containerGoalState = new ContainerGoalState(graphContent, SWT.ALL);
-							containerGoalState.setLayoutData(new GridData(GridData.FILL, GridData.FILL, false, false));
-							containerGoalState.setLayout(new FillLayout());
-							containerGoalState.setLocation(containerGoalState.toControl(event.x, event.y));
-							
-							IStateCanvas stateCanvas2 = new GoalStateCanvas(containerGoalState, SWT.ALL, goalState);
-							stateCanvas2.draw();
-							graphContent.setGoalStateCanvas((GoalStateCanvas)stateCanvas2);
-							graphContent.addMoveListener(containerGoalState);
-
 						}
-//					}
+
+						ContainerInitialState container = new ContainerInitialState(graphContent, SWT.DRAW_TRANSPARENT);
+						container.setLayoutData(new GridData(GridData.FILL, GridData.FILL, false, false));
+						container.setLayout(new FillLayout());
+						container.setLocation(container.toControl(event.x, event.y));
+
+						InitialStateCanvas stateCanvas = new InitialStateCanvas(container, SWT.ALL, inState);
+						stateCanvas.draw();
+						graphContent.setInitialStateCanvas((InitialStateCanvas) stateCanvas);
+						graphContent.addMoveListener(container);
+
+					} else if (goalState != null) {
+
+						if (graphContent.getParent() instanceof PlanView) {
+							PlanView planView = (PlanView) graphContent.getParent();
+							if (planView.isShowConditionSelecte()) {
+
+								goalState.setShownCond(true);
+							}
+						}
+
+						ContainerGoalState containerGoalState = new ContainerGoalState(graphContent, SWT.ALL);
+						containerGoalState.setLayoutData(new GridData(GridData.FILL, GridData.FILL, false, false));
+						containerGoalState.setLayout(new FillLayout());
+						containerGoalState.setLocation(containerGoalState.toControl(event.x, event.y));
+
+						IStateCanvas stateCanvas2 = new GoalStateCanvas(containerGoalState, SWT.ALL, goalState);
+						stateCanvas2.draw();
+						graphContent.setGoalStateCanvas((GoalStateCanvas) stateCanvas2);
+						graphContent.addMoveListener(containerGoalState);
+
+					}
 				}
 			}
 
 		}
 	}
 
-
-	
 }

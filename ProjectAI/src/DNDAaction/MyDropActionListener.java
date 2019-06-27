@@ -20,8 +20,10 @@ import View.PlanView;
 import View.TreeActioDomainView;
 
 public class MyDropActionListener extends DropTargetAdapter {
-	private Composite parentComposite;
+	
 	private DropTarget target;
+	@SuppressWarnings("unused")
+	private Composite parentComposite;
 	private TreeActioDomainView treeAction;
 	private ArrayList<Action> actionList;
 	private PlanContent graphContent;
@@ -32,7 +34,7 @@ public class MyDropActionListener extends DropTargetAdapter {
 	 * @param target          - the drop target
 	 */
 	public MyDropActionListener(Composite parentComposite, DropTarget target, TreeActioDomainView treeAction) {
-		this.parentComposite = parentComposite;
+		this.parentComposite=parentComposite;
 		this.target = target;
 		this.treeAction = treeAction;
 	}
@@ -52,7 +54,7 @@ public class MyDropActionListener extends DropTargetAdapter {
 	@Override
 	public void drop(DropTargetEvent event) {
 
-		if (target.getControl() instanceof Composite) {
+		if (target.getControl() instanceof PlanContent) {
 
 			Action action = null;
 			graphContent = (PlanContent) target.getControl();
@@ -60,42 +62,41 @@ public class MyDropActionListener extends DropTargetAdapter {
 			if (event.data != null) {
 				MyType[] myTypes = (MyType[]) event.data;
 				if (myTypes != null) {
-					for (int i = 0; i < myTypes.length; i++) {
 
-						actionList = treeAction.getActionList();
-						for (int j = 0; j < actionList.size(); j++) {
-							if (myTypes[i].getName().equals(actionList.get(j).getName())) {
-								if (myTypes[i].getPrec().equals(actionList.get(j).getPrec())
-										&& myTypes[i].getEff().equals(actionList.get(j).getEffect())) {
-									action = actionList.get(j);
+					actionList = treeAction.getActionList();
+					int j = 0;
+					while (j < actionList.size()) {
+						if (myTypes[0].getName().equals(actionList.get(j).getName())) {
+							if (myTypes[0].getPrec().equals(actionList.get(j).getPrec())
+									&& myTypes[0].getEff().equals(actionList.get(j).getEffect())) {
+								action = actionList.get(j);
 
-									action = new Action(actionList.get(j).getName(), actionList.get(j).getPrec(),
-											actionList.get(j).getEffect());
-									action.copyAttribute(actionList.get(j));
+								action = new Action(actionList.get(j).getName(), actionList.get(j).getPrec(),
+										actionList.get(j).getEffect());
+								action.copyAttribute(actionList.get(j));
 
-								}
 							}
+							
 						}
 
 						if (action != null) {
 							if (actionHasVariable(action)) {
 								InitializationVariableDialog dialog = new InitializationVariableDialog(
-										graphContent.getShell(), 
+										graphContent.getShell(),
 										SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL | SWT.CENTER | SWT.RESIZE);
 								dialog.setAction(action);
 								dialog.setPlan(graphContent);
 								dialog.createContent();
 								dialog.pack();
 							}
-							if(graphContent.getParent() instanceof PlanView) {
-								PlanView planView=(PlanView) graphContent.getParent();
-								if(planView.isShowConditionSelecte()) {
-									
+							if (graphContent.getParent() instanceof PlanView) {
+								PlanView planView = (PlanView) graphContent.getParent();
+								if (planView.isShowConditionSelecte()) {
+
 									action.setIsShownCond(true);
 								}
 							}
-							
-							 
+
 							Composite comp = new Composite(graphContent, SWT.NONE);
 							comp.setLayoutData(new GridData(GridData.FILL, GridData.FILL, false, false));
 							comp.setLayout(new FillLayout());
@@ -109,7 +110,7 @@ public class MyDropActionListener extends DropTargetAdapter {
 							graphContent.addMoveListener(comp);
 						}
 
-						break;
+						j++;
 					}
 
 				}
@@ -142,18 +143,18 @@ public class MyDropActionListener extends DropTargetAdapter {
 		sb.append(name[0]);
 		return sb.toString();
 	}
-	
+
 	private boolean actionHasVariable(Action a) {
-		boolean result=false;
-		String name=a.getName();
-		if(name.contains("(") || name.contains(")")) {
+		boolean result = false;
+		String name = a.getName();
+		if (name.contains("(") || name.contains(")")) {
 			String split[] = name.split("\\(");
-			if(!(split[1].equals(")")) && !(split[1].equals(","))) {
-				result=true;
+			if (!(split[1].equals(")")) && !(split[1].equals(","))) {
+				result = true;
 			}
 		}
-		
+
 		return result;
-	
+
 	}
 }
