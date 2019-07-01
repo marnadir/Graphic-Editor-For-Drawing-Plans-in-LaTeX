@@ -8,7 +8,6 @@ import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
 
 import PlanPart.PlanContent;
-import View.DomainView;
 import PlanPart.Oval;
 
 public abstract class ICanvas extends Canvas {
@@ -36,7 +35,7 @@ public abstract class ICanvas extends Canvas {
 		if (action.isShownCond()) {
 			double x1 = action.getLengthPrec() + action.getLengthEff() + action.getWidthRect()+2;
 			if(action.getPrec().size()==0 && action.getEffect().size()==0) {
-				x1=+5;
+				x1=x1+5;
 			}
 			double y1 = action.getHeightRect() + 40;
 			parent.setSize((int)x1,(int) y1);

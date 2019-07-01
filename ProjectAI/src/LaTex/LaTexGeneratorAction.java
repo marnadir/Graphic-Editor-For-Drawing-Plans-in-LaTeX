@@ -105,7 +105,6 @@ public class LaTexGeneratorAction {
 	public String generatAction(Action a) {
 		StringBuilder sb = new StringBuilder();
 		String space="  ";
-		sb.append("% PRIMITIVE");
 		sb.append("\n");
 		sb.append("\\scheme");
 		sb.append(getScheme(a.getName(),false));
@@ -244,23 +243,17 @@ public class LaTexGeneratorAction {
 	 */
 	public String getCond(String string) {
 
-		String name[] = string.split("\\(");
-		String variable[] = name[1].split("\\)");
-		variable = variable[0].split(",");
-		int num = variable.length;
-		String testo = "";
-		for (int i = 0; i < num; i++) {
-			testo += mapping.get(variable[i]) + ",";
+		String testo = string;
+		if(string.startsWith("¬")) {
+			testo=testo.replace("¬","");
 		}
-		testo = testo.substring(0, testo.length() - 1);
-
-		if(name[0].charAt(0)=='¬'){
-			name[0]=name[0].replaceAll("¬", "");
-			name[0]= "{$\\neg$}"+name[0];
+        testo = mapping.get(testo);
+		if(string.startsWith("¬")){
+			testo=testo.replaceAll("¬", "");
+			testo= "{$\\neg$}"+testo;
 		}
 		StringBuilder sb = new StringBuilder();
-		sb.append("{"+name[0]);
-		sb.append("(" + testo + ")"+"}");
+		sb.append("{" + testo +"}");
 
 		return sb.toString();
 	}

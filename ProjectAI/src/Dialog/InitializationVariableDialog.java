@@ -25,11 +25,13 @@ public class InitializationVariableDialog extends IDialog{
 	PlanContent plan;
 	Map<String, String> mapping;
 	ArrayList<Text> textList;
+	ArrayList<Label> labelList;
 	
 
 	public InitializationVariableDialog(Shell shell, int style) {
 		super(shell, style);
 		textList=new ArrayList<>();
+		labelList=new ArrayList<>();
 		// TODO Auto-generated constructor stub
 	}
 
@@ -51,6 +53,7 @@ public class InitializationVariableDialog extends IDialog{
 		for(int i=0;i<variable2.length;i++) {
 			Label l1=new Label(mainComposite, SWT.ALL);
 			l1.setText(variable2[i]);
+			labelList.add(l1);
 			Text t1=new Text(mainComposite, SWT.BORDER);
 			textList.add(t1);
 			t1.setLayoutData(new GridData(SWT.FILL,SWT.FILL,true,true));
@@ -68,35 +71,48 @@ public class InitializationVariableDialog extends IDialog{
 	
 	
 	public String getNewName(String string) {
-		
-		StringBuilder sb=new StringBuilder();
-		
-		String name[]=string.split("\\(");
-		String variable[]=name[1].split("\\)");
-		variable=variable[0].split(",");
-		
-		
-		sb.append(name[0]+"(");
-		for(int i=0;i<variable.length;i++) {
+
+		StringBuilder sb = new StringBuilder();
+
+		String name[] = string.split("\\(");
+		String variable[] = name[1].split("\\)");
+		variable = variable[0].split(",");
+
+		sb.append(name[0] + "(");
+		for (int i = 0; i < variable.length; i++) {
 			sb.append(mapping.get(variable[i]));
-			if(i<variable.length-1) {
+			if (i < variable.length - 1) {
 				sb.append(",");
 			}
-			
+
 		}
 
 		sb.append(")");
+
+		return sb.toString();
+
+	}
+	
+	public String getNewNameCond(String string) {
+		StringBuilder sb = new StringBuilder();
+		String test=string;
+		if(string.contains("¬")) {
+			test=string.replace("¬","");
+			sb.append("¬"+mapping.get(test));
+		}else {
+			sb.append(mapping.get(test));
+
+		}
+	
 		
 		return sb.toString();
-		
-		
 	}
 	
 	public ArrayList<String> getNewCond(ArrayList<String> cond){
 		ArrayList<String> conds=new ArrayList<>();
 		
 		for(String c1:cond) {
-			conds.add(getNewName(c1));			
+			conds.add(getNewNameCond(c1));			
 		}
 		return conds;
 	}
@@ -136,17 +152,24 @@ public class InitializationVariableDialog extends IDialog{
 	 * 
 	 * */
 	private void changeNameOfOval() {
-		OvalCounter ovalCounter=plan.getOvalCounter();
-		
+		OvalCounter ovalCounter = plan.getOvalCounter();
 		Iterator<Oval> iter = ovalCounter.getListOval().iterator();
-		while (iter.hasNext()) {
-		    Oval o = iter.next();
+		for (int i = 0; i < textList.size(); i++) {
+			if (!(labelList.get(i).getText().equals(textList.get(i).getText()))) {
+				while (iter.hasNext()) {
+					Oval o = iter.next();
+					if (o.getNode().getAction().equals(action)) {
+						if (o.getNode().getAction().equals(action)) {
+							o.dispose();
+							iter.remove();
+						}
 
-		    if (o.getNode().getAction().equals(action))
-		    	o.dispose();
-		        iter.remove();
+					}
+
+				}
+			}
 		}
+
 	}
-	
 
 }

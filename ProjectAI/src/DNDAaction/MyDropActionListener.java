@@ -56,7 +56,6 @@ public class MyDropActionListener extends DropTargetAdapter {
 
 		if (target.getControl() instanceof PlanContent) {
 
-			Action action = null;
 			graphContent = (PlanContent) target.getControl();
 
 			if (event.data != null) {
@@ -66,6 +65,7 @@ public class MyDropActionListener extends DropTargetAdapter {
 					actionList = treeAction.getActionList();
 					int j = 0;
 					while (j < actionList.size()) {
+						Action action = null;
 						if (myTypes[0].getName().equals(actionList.get(j).getName())) {
 							if (myTypes[0].getPrec().equals(actionList.get(j).getPrec())
 									&& myTypes[0].getEff().equals(actionList.get(j).getEffect())) {
@@ -97,7 +97,7 @@ public class MyDropActionListener extends DropTargetAdapter {
 								}
 							}
 
-							Composite comp = new Composite(graphContent, SWT.NONE);
+							Composite comp = new Composite(graphContent, SWT.BORDER);
 							comp.setLayoutData(new GridData(GridData.FILL, GridData.FILL, false, false));
 							comp.setLayout(new FillLayout());
 							comp.setLocation(comp.toControl(event.x, event.y));

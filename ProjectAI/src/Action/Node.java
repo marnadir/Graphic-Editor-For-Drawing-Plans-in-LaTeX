@@ -119,7 +119,6 @@ public class Node extends ICanvas {
 				
 				
 				if (action.isShownName()) {
-					int l = rect.x + rect.width / 6;
 					e.gc.drawString(action.getName(), val, rect.y + rect.height / 3);
 				}
 
