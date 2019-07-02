@@ -470,13 +470,8 @@ public class Action implements Serializable {
 
 	
 
-	public boolean isGlobalWid() {
-		return globalWidth;
-	}
 
-	public void setGlobalWid(boolean isGlobalWid) {
-		this.globalWidth = isGlobalWid;
-	}
+
 
 	public String getColorString() {
 		return colorString;

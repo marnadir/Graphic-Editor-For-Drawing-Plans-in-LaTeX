@@ -20,7 +20,6 @@ import State.IState;
 import State.IStateCanvas;
 import State.InitialStateCanvas;
 import View.IStateView;
-import View.InitialStateView;
 import command.ChangeCondCommand;
 import container.IContainerState;
 import dialogMenuState.LineVsTextDialog;
@@ -75,21 +74,6 @@ public class MenuContentState implements MenuDetectListener {
 				if (canvas.getParent().getParent() instanceof PlanContent) {
 					planContent = (PlanContent) canvas.getParent().getParent();
 					
-					ArrayList<LinkCanvas> links = planContent.getLink();
-					ArrayList<LinkCanvas> linksToDelete = new ArrayList<>();
-					
-					for (LinkCanvas link : links) {
-						if (link.getOval1().getStateCanvas() != null) {
-							if(link.getOval1().getStateCanvas().equals(canvas)) {
-								link.setOval1(null);
-								link.setOval2(null);
-								linksToDelete.add(link);
-							}
-							
-						}
-					
-					}
-					links.removeAll(linksToDelete);
 					
 					if (canvas instanceof InitialStateCanvas) {
 						planContent.setInitialStateCanvas(null);
@@ -105,6 +89,29 @@ public class MenuContentState implements MenuDetectListener {
 					}
 					canvas.setOvalList(new ArrayList<>());
 					canvas.getParent().setVisible(false);
+					
+					ArrayList<LinkCanvas> links = planContent.getLink();
+					ArrayList<LinkCanvas> linksToDelete = new ArrayList<>();
+					
+					for (LinkCanvas link : links) {
+						if (link.getOval1().getStateCanvas() != null )  {
+							if(link.getOval1().getStateCanvas().equals(canvas)) {
+								link.setOval1(null);
+								link.setOval2(null);
+								linksToDelete.add(link);
+							}
+							
+						}else if (link.getOval2().getStateCanvas()!=null)  {
+							if(link.getOval2().getStateCanvas().equals(canvas)) {
+								link.setOval1(null);
+								link.setOval2(null);
+								linksToDelete.add(link);
+							}
+							
+						}
+					
+					}
+					links.removeAll(linksToDelete);
 
 				}
 				canvas.clearDisplay();

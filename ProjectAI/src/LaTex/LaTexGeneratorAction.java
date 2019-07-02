@@ -277,7 +277,7 @@ public class LaTexGeneratorAction {
 	public String getWidthRect(Action a) {
 		
 		StringBuilder sb=new StringBuilder();
-		if(a.isGlobalWid()) {
+		if(a.isGlobalWidth()) {
 			sb.append("\\WidthOfActions");
 		}else {
 			sb.append(a.getWidthRectInCm()+"cm");

@@ -40,9 +40,7 @@ public class MenuPrincipalView extends IMenu{
 		IMenu menuOption = new IMenu(getShell(), SWT.DROP_DOWN);
 		option.setMenu(menuOption);
 		
-		MenuItem help = createItem("&Help", SWT.CASCADE);
-		IMenu menuHelp= new IMenu(getShell(), SWT.DROP_DOWN);
-		help.setMenu(menuHelp);
+		
 		
 
 		MenuItem saveStateDomain = new MenuItem(menuFile, SWT.PUSH);
@@ -65,13 +63,9 @@ public class MenuPrincipalView extends IMenu{
 
 
 		MenuItem menuLines = new MenuItem(menuOption, SWT.PUSH);
-		menuLines.setText("Add Ordering/Link");
+		menuLines.setText("Add Constraints");
 		
-		MenuItem tutorial = new MenuItem(menuHelp, SWT.PUSH);
-		tutorial.setText("&Tutorial");
-		
-		
-		
+	
 		Listener listenerExit = new Listener() {
 			@Override
 			public void handleEvent(Event event) {

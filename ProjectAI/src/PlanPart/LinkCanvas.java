@@ -13,7 +13,6 @@ import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
@@ -28,7 +27,6 @@ public class LinkCanvas {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 5962744944510049128L;
 	Point p1 = null;
 	Point p2 = null;
 
@@ -62,7 +60,6 @@ public class LinkCanvas {
 				Composite comp = (Composite) canvasContainer.getChildren()[i];
 				comp.setEnabled(true);
 				if (comp instanceof Oval) {
-					// comp.addListener(SWT.Selection, addLink(l1, l2, comp, btn));
 					Oval oval = (Oval) comp;
 
 				}
@@ -85,7 +82,6 @@ public class LinkCanvas {
 
 				if (!(isConstrain)) {
 					if (oval1 == null) {
-						int d = canvasContainer.getOvalCounter().getListOval().size();
 						for (int i = 0; i < canvasContainer.getOvalCounter().getListOval().size(); i++) {
 							Point p = canvasContainer.getOvalCounter().getListOval().get(i).getP();
 							if ((p.x - 11 < event.x && event.x < p.x + 11)
@@ -148,7 +144,7 @@ public class LinkCanvas {
 
 
 
-				MenuItem c = new MenuItem(m, SWT.CHECK);
+				MenuItem c = new MenuItem(m, SWT.ALL);
 				c.setText("Clear Link");
 
 				c.addListener(SWT.Selection, new Listener() {
@@ -171,9 +167,10 @@ public class LinkCanvas {
 								MessageBox messageBox = new MessageBox(canvasContainer.getShell(),
 										SWT.ICON_WARNING |  SWT.OK);
 
-								messageBox.setText("Clear Link");
+								messageBox.setText("Remove Link");
 								messageBox.setMessage("Link removed");
 								messageBox.open();
+								return;
 								
 							}
 							
@@ -188,9 +185,15 @@ public class LinkCanvas {
 								messageBox.setText("Remove Link");
 								messageBox.setMessage("Link removed");
 								messageBox.open();
-								
+								return;
 							}
 						}
+						MessageBox messageBox = new MessageBox(canvasContainer.getShell(),
+								SWT.ICON_WARNING |  SWT.OK);
+
+						messageBox.setText("Attention");
+						messageBox.setMessage("To remove the link, you need to open the menu in the oval-condition");
+						messageBox.open();
 
 					}
 				});

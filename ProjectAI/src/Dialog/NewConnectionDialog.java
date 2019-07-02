@@ -29,8 +29,7 @@ public class NewConnectionDialog extends IDialog {
 	private OrderConstrainCanvas constrain;
 	private OrderConstrain orderCond;
 	private Composite compDirect;
-	private Button btnLeft;
-	private Button btnRight;
+
 
 	Label l1 = null;
 	Label l2 = null;
@@ -48,7 +47,7 @@ public class NewConnectionDialog extends IDialog {
 	@Override
 	public void createContent() {
 
-		label.setText("Add Ordering/Link");
+		label.setText("Add Constraints");
 		this.label.pack();
 		mainComposite.setLayout(new GridLayout(1, false));
 		compButton = new Composite(mainComposite, SWT.ALL);
@@ -66,41 +65,6 @@ public class NewConnectionDialog extends IDialog {
 		l2 = new Label(compPoint, SWT.ALL);
 		compDirect=new Composite(compPoint, SWT.ALL);
 		compDirect.setLayout(new GridLayout(2, true));
-//		btnLeft=new Button(compDirect, SWT.CHECK);
-//		btnLeft.setText("left");
-//		btnRight=new Button(compDirect, SWT.CHECK);
-//		btnRight.setText("right");
-//		btnLeft.addListener(SWT.Selection, new Listener() {
-//			
-//			@Override
-//			public void handleEvent(Event event) {
-//				if(btnLeft.getSelection()) {
-//					btnRight.setSelection(false);
-//				}else {
-//					btnRight.setSelection(true);
-//				}
-//				//link.setRight(false);
-//
-//				
-//			}
-//		});
-//		
-//		
-//		btnRight.addListener(SWT.Selection, new Listener() {
-//			
-//			@Override
-//			public void handleEvent(Event event) {
-//				if(btnRight.getSelection()) {
-//					btnLeft.setSelection(false);
-//				}else {
-//					btnRight.setSelection(true);
-//				}
-//				//link.setRight(true);
-//				
-//			}
-//		});
-//		
-//		btnRight.setSelection(true);
 		compPoint.setVisible(false);
 		
 		compInfo=new Group(mainComposite, SWT.ALL);
