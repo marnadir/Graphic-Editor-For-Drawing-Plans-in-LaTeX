@@ -3,30 +3,23 @@ package View;
 import java.util.ArrayList;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.Link;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
-import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
 
 import Action.Action;
 import Action.ActionDomainCanvas;
 import Action.Node;
-import DialogAction.ChangeActionDialog;
 import PlanPart.LinkCanvas;
 import PlanPart.OrderConstrain;
 import PlanPart.Oval;
 import PlanPart.PlanContent;
 import command.ChangeActionDialogCommand;
-import command.ChangeEffCommand;
-import command.ChangeNameCommand;
-import command.ChangePrecCommand;
 
 public class TreeActioDomainView extends Tree {
 
@@ -201,7 +194,7 @@ public class TreeActioDomainView extends Tree {
 		
 		return l;
 	}
-	
+	/*
 	private boolean alreadyShow(Action action,Composite containerAction) {
 		boolean result = false;
 		if(containerAction.getChildren().length>0) {
@@ -212,7 +205,7 @@ public class TreeActioDomainView extends Tree {
 		}
 		return result;
 	}
-	
+	*/
 	public Listener getListenerModifAction() {
 		Listener l = new Listener() {
 

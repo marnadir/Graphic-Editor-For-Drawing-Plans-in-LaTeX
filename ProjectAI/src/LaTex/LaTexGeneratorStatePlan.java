@@ -5,12 +5,15 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 import PlanPart.PlanContent;
-import State.GoalStateCanvas;
-import State.IState;
-import State.IStateCanvas;
-import State.InitialState;
-import State.InitialStateCanvas;
-
+import so_goalState.GoalStateCanvas;
+import so_goalState.IState;
+import so_goalState.IStateCanvas;
+import so_goalState.InitialState;
+import so_goalState.InitialStateCanvas;
+/**
+ * Generate the LateX code for the initial/goal state dropped in the plan  view.
+ * @author nadir
+ * */
 public class LaTexGeneratorStatePlan {
 	
 	final double PIXEL_MEASUREMNT= 0.026458;
@@ -82,46 +85,45 @@ public class LaTexGeneratorStatePlan {
 	}
 	
 	
-	private String getEffPrec(IState iState) {
-		StringBuilder sb = new StringBuilder();
-		if(iState.isShownCond()) {
-			sb.append(getTextPrecEff(iState.getConds()));
-
-		}else {
-			sb.append(getTextPrecEffE(iState.getConds()));
-		}
-		if(iState instanceof InitialState) {
-			sb.append(",eff length  = ");
-
-		}else {
-			sb.append(",pre length  = ");
-
-		}
-		
-		if(iState.isShownCond()) {
-			sb.append(iState.getLengthCondInCm()+"em");
-		}else {
-			sb.append(iState.getStandardLengthInCm()+"em");
-		}
-		
-		return sb.toString();
-
-	}
-	
-	private String getTextPrecEff(ArrayList<String> cond) {
-		StringBuilder sb=new StringBuilder();
-		sb.append("{");
-
-		for(int i=0;i<cond.size();i++) {
-			sb.append(cond.get(i));
-			if(i<cond.size()-1) {
-				sb.append(",");
-			}
-		}
-		sb.append("}");
-
-		return sb.toString();
-	}
+//	private String getEffPrec(IState iState) {
+//		StringBuilder sb = new StringBuilder();
+//		if (iState.isShownCond()) {
+//			sb.append(getTextPrecEff(iState.getConds()));
+//
+//		} else {
+//			sb.append(getTextPrecEffE(iState.getConds()));
+//		}
+//		if (iState instanceof InitialState) {
+//			sb.append(",eff length  = ");
+//
+//		} else {
+//			sb.append(",pre length  = ");
+//
+//		}
+//
+//		if (iState.isShownCond()) {
+//			sb.append(iState.getLengthCondInCm() + "em");
+//		} else {
+//			sb.append(iState.getStandardLengthInCm() + "em");
+//		}
+//
+//		return sb.toString();
+//	}
+//	
+//	private String getTextPrecEff(ArrayList<String> cond) {
+//		StringBuilder sb=new StringBuilder();
+//		sb.append("{");
+//
+//		for(int i=0;i<cond.size();i++) {
+//			sb.append(cond.get(i));
+//			if(i<cond.size()-1) {
+//				sb.append(",");
+//			}
+//		}
+//		sb.append("}");
+//
+//		return sb.toString();
+//	}
 	
 	
 	

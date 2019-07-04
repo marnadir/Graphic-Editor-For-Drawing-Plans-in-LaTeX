@@ -11,7 +11,10 @@ import org.eclipse.swt.widgets.MenuItem;
 
 import PlanPart.OrderConstrainCanvas;
 import PlanPart.PlanContent;
-
+/**
+ * menu which is used to remove an ordering constrain.
+ * @author nadir
+ * */
 public class MenuConstrain implements MenuDetectListener  {
 
 	OrderConstrainCanvas constrain;

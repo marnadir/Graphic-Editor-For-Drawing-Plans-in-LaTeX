@@ -13,9 +13,13 @@ import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Composite;
 import DNDAaction.MyDragActionListener;
-import DataTrasfer.MyTransfer;
 import Menu.MenuContentAction;
-
+import dataTrasfer.MyTransfer;
+/**
+ * Represents the graphic part of an action, which is created during the domain definition phase.
+ * @author nadir
+ *
+ */
 public class ActionDomainCanvas  extends ICanvas{
 
 	int style;
@@ -52,7 +56,6 @@ public class ActionDomainCanvas  extends ICanvas{
 				Color colorNull=e.gc.getBackground();
 				e.gc.setFont(font);
 
-//				int posY = 30;
 				int y = 20;
 				
 				if(action.isDefaultAction()) {

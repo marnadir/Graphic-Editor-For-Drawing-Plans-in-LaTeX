@@ -4,9 +4,12 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.TreeItem;
 
 import Action.Action;
-import DialogAction.ChangeActionDialog;
 import View.TreeActioDomainView;
-
+import dialogAction.ChangeActionDialog;
+/**
+ * Command which allows to open the dialog for editing an domain-action(name,preconditions and effects).
+ * @author nadir
+ * */
 public class ChangeActionDialogCommand implements ICommand{
 
 	Action a;

@@ -1,5 +1,8 @@
 package LaTex;
-
+/**
+ * Generate the LateX code for the plan-actions,casual link and ordering constrain.
+ * @author nadir
+ * */
 import java.text.NumberFormat;
 import java.util.Locale;
 
@@ -13,9 +16,9 @@ import PlanPart.LinkCanvas;
 import PlanPart.OrderConstrain;
 import PlanPart.Oval;
 import PlanPart.PlanContent;
-import State.GoalStateCanvas;
-import State.IStateCanvas;
-import State.InitialStateCanvas;
+import so_goalState.GoalStateCanvas;
+import so_goalState.IStateCanvas;
+import so_goalState.InitialStateCanvas;
 
 public class LaTexGeneratorNode {
 
@@ -68,7 +71,7 @@ public class LaTexGeneratorNode {
 	}
 	
 	
-	public String getLatexOrderCodePlan(OrderConstrain order) {
+	public String getLatexOrderingCodePlan(OrderConstrain order) {
 		StringBuilder sb = new StringBuilder();
 		if(!order.getCond1().isDisposed() && !order.getCond2().isDisposed()) {
 			sb.append("\\ordering");
@@ -295,8 +298,6 @@ public class LaTexGeneratorNode {
 			double test1=planContent.getInitialStateCanvas().getState().getHeight();
 			int test3=(int) (test1+planContent.getInitialStateCanvas().getParent().getLocation().y);
 			test3=test3/2;
-			int test2=node.getParent().getLocation().y ;
-			String name=node.getAction().getName();
 			value=(int) (test3-node.getParent().getLocation().y);
 		}else {
 			int test=planContent.getClientArea().height;
@@ -313,8 +314,7 @@ public class LaTexGeneratorNode {
 	}
 	
 	public String convertInCm(int x) {
-//		DecimalFormat df = new DecimalFormat("#.00");
-//	    String result = df.format(x*PIXEL_MEASUREMNT);
+
 	    
 		NumberFormat nf_out = NumberFormat.getNumberInstance(Locale.UK);
 		nf_out.setMaximumFractionDigits(2);

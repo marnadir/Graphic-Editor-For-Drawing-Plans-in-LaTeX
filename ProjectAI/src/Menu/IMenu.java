@@ -1,11 +1,12 @@
 package Menu;
 
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Decorations;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
-
+/**
+ * Super class menu which is used to implement different menus
+ * @author nadir
+ * */
 public class IMenu extends Menu{
 	
 	

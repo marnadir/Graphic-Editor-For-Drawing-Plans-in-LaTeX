@@ -15,15 +15,20 @@ import org.eclipse.swt.widgets.MenuItem;
 import PlanPart.LinkCanvas;
 import PlanPart.Oval;
 import PlanPart.PlanContent;
-import State.GoalStateCanvas;
-import State.IState;
-import State.IStateCanvas;
-import State.InitialStateCanvas;
 import View.IStateView;
 import command.ChangeCondCommand;
 import container.IContainerState;
-import dialogMenuState.LineVsTextDialog;
-import dialogMenuState.SetSizeStateDialog;
+import dialogState.LineVsTextDialog;
+import dialogState.SetSizeStateDialog;
+import so_goalState.GoalStateCanvas;
+import so_goalState.IState;
+import so_goalState.IStateCanvas;
+import so_goalState.InitialStateCanvas;
+/**
+ * menu which is used to manage the initial/goal state
+ * @author nadir
+ * */
+
 
 public class MenuContentState implements MenuDetectListener {
 

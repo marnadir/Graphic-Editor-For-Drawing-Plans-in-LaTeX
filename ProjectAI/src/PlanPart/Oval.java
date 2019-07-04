@@ -11,8 +11,12 @@ import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
 
 import Action.Node;
-import State.IStateCanvas;
-
+import so_goalState.IStateCanvas;
+/**
+ * Class extends of Canvas used to mark the preconditions and effects. Moreover, used to select
+ * which preconditions/effects  should be used for creating/remove a link
+ * @author nadir
+ * */
 
 public class Oval extends Canvas{
 

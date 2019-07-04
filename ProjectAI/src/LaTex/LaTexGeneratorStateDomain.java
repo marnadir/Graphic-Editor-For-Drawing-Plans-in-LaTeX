@@ -1,8 +1,12 @@
 package LaTex;
 
 import java.util.ArrayList;
-import State.IState;
 
+import so_goalState.IState;
+/**
+ * Generate the LateX code for the initial/goal state created in the domain view.
+ * @author nadir
+ * */
 public class LaTexGeneratorStateDomain {
 	
 

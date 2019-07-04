@@ -21,12 +21,13 @@ import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.MessageBox;
 
 import LaTex.LaTexGeneratorNode;
-
+/**
+ * generate the casual link.
+ * @author nadir
+ * */
 public class LinkCanvas {
 
-	/**
-	 * 
-	 */
+	
 	Point p1 = null;
 	Point p2 = null;
 
@@ -44,8 +45,6 @@ public class LinkCanvas {
 
 	public LinkCanvas(PlanContent parent) {
 		this.canvasContainer = parent;
-
-		// TODO Auto-generated constructor stub
 	}
 
 	public void setLine(Point p1, Point p2) {
@@ -53,20 +52,17 @@ public class LinkCanvas {
 		this.p2 = p2;
 	}
 
-	public void addlistener(Label l1, Label l2, boolean isConstrain,Button btn) {
+	public void addlistener(Label l1, Label l2, boolean isConstrain, Button btn) {
 
 		for (int i = 0; i < canvasContainer.getChildren().length; i++) {
 			if (!(canvasContainer.getChildren()[i] instanceof Button)) {
 				Composite comp = (Composite) canvasContainer.getChildren()[i];
 				comp.setEnabled(true);
-				if (comp instanceof Oval) {
-					Oval oval = (Oval) comp;
 
-				}
 			}
 
 		}
-		canvasContainer.addListener(SWT.MouseDoubleClick, addLink(l1, l2, isConstrain,btn));
+		canvasContainer.addListener(SWT.MouseDoubleClick, addLink(l1, l2, isConstrain, btn));
 
 	}
 

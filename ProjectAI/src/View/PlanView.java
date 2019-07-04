@@ -24,14 +24,14 @@ import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 
 import Action.Node;
-import Dialog.NewConnectionDialog;
-import Dialog.SaveLAtexCode;
-import Dialog.SavePlanDialog;
 import PDFConverter.PdfConverter;
 import PlanPart.LoadLink;
 import PlanPart.PlanContent;
 import command.SaveDomainCommand;
 import command.SavePlanCommand;
+import dialog.NewConnectionDialog;
+import dialogSave.SaveLAtexCode;
+import dialogSave.SavePlanDialog;
 import resourceLoader.ResourceLoader;
 
 public class PlanView  extends CTabFolder{

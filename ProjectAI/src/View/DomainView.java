@@ -15,11 +15,11 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.TreeItem;
 
 import Action.Action;
-import State.IStateCanvas;
+import Action.CreateActionComposite;
 import container.ContainerGoalState;
 import container.ContainerInitialState;
-import State.CreateActionComposite;
-import State.CreateStateContainer;
+import so_goalState.CreateStateContainer;
+import so_goalState.IStateCanvas;
 
 public class DomainView {
 

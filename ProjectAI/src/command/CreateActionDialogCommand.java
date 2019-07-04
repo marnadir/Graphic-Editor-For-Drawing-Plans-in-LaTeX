@@ -3,12 +3,13 @@ package command;
 import java.util.ArrayList;
 
 
-import org.eclipse.swt.widgets.Tree;
-
 import Action.Action;
-import Dialog.CreateActionDialog;
 import View.TreeActioDomainView;
-
+import dialogAction.CreateActionDialog;
+/**
+ * Command which allows to open the dialog for creating a new action.
+ * @author nadir
+ * */
 
 public class CreateActionDialogCommand implements ICommand {
 
@@ -18,28 +19,21 @@ public class CreateActionDialogCommand implements ICommand {
 	
 	@Override
 	public boolean canExecute(Object var1, Object var2) {
-		
-//		if (var1 instanceof Combo[]) {
-//			Combo[] comboAction = (Combo[])var1;
-//			Combo comboOption = (Combo) comboAction[0];
-//			if(comboOption.getText().equals("Create")) {
-//				return true;
-//			}
-//		}
+		if (var1 instanceof TreeActioDomainView) {
+			if (var2 instanceof ArrayList<?>) {
+				return true;
+			}
+		}
 		return false;
 	}
 
 	@Override
 	public void execute(Object var1, Object var2) {
-		if (var1 instanceof TreeActioDomainView) {
+		if (canExecute(var1, var2)) {
 			TreeActioDomainView tree = (TreeActioDomainView) var1;
-			if (var2 instanceof ArrayList<?>) {
-				actions=(ArrayList<Action>)var2;
-				dialog = new CreateActionDialog(tree,actions);
-				dialog.createContent();
-
-			}
-
+			actions = (ArrayList<Action>) var2;
+			dialog = new CreateActionDialog(tree, actions);
+			dialog.createContent();
 		}
 
 	}

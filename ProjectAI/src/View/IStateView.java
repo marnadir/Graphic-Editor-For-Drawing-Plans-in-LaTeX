@@ -5,8 +5,8 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 
 import Menu.MenuContentState;
-import State.IStateCanvas;
 import container.IContainerState;
+import so_goalState.IStateCanvas;
 
 public abstract class IStateView extends Group {
 

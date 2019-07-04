@@ -6,12 +6,14 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 import LaTex.LaTexGeneratorAction;
-
+/**
+ * Represents the logical part of an action
+ * @author nadir
+ *
+ */
 public class Action implements Serializable {
 
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 1L;
 	final double PIXEL_MEASUREMNT= 0.026458;
 	final double CM_MEASUREMNT= 37.7957517575025;
@@ -28,9 +30,9 @@ public class Action implements Serializable {
 	double lengthPrec;
 	double lengthEff;
 	double heightRect = 30;
-	double standardLengthEff=(CM_MEASUREMNT*Double.parseDouble(GlobalValue.lengthsOfEmptyTasks)); //Standard lenght of effect line 
+	double standardLengthEff=(CM_MEASUREMNT*Double.parseDouble(GlobalValue.lengthsOfEmptyTasks)); //Standard length of effect line 
 	double standardLengthPrec= (CM_MEASUREMNT*Double.parseDouble(GlobalValue.lengthsOfEmptyTasks));
-	//??default wtf means?
+	//??is not real neccessary
 	boolean defaultValuePrecLenght=true;
 	boolean defaultValueEffLenght=true;
 	boolean defaultValueWid=true;
@@ -71,9 +73,10 @@ public class Action implements Serializable {
 		this.paintCanvas = paint;
 	}
 
-	
-	public void copyAttribute(Action a) {
-		
+	/*
+	 * used during the drag&drop and in the save/load program
+	 */
+	public void copyAttribute(Action a) {	
 		widthRect=a.widthRect;
 		lengthPrec=a.lengthPrec;
 		lengthEff=a.lengthEff;
@@ -100,9 +103,7 @@ public class Action implements Serializable {
 		 globalPrec=a.globalPrec;
 		 globalEff=a.globalEff;
 		 globalEmptyPrec=a.globalEmptyPrec;
-		 globalEmptyEff=a.globalEmptyEff;
-		
-		
+		 globalEmptyEff=a.globalEmptyEff;	
 		
 	}
 	
@@ -224,8 +225,6 @@ public class Action implements Serializable {
 	}
 
 	public String getWidthRectInCm() {
-//		DecimalFormat df = new DecimalFormat("#.00");
-//	    String angleFormated = df.format(widthRect*PIXEL_MEASUREMNT);
 		NumberFormat nf_out = NumberFormat.getNumberInstance(Locale.UK);
 		nf_out.setMaximumFractionDigits(2);
 		String result = nf_out.format(widthRect*PIXEL_MEASUREMNT);
@@ -247,9 +246,6 @@ public class Action implements Serializable {
 	}
 
 	public String getLengthPrecInCm() {
-//		DecimalFormat df = new DecimalFormat("#.00");
-//	    String angleFormated = df.format(lengthPrec*PIXEL_MEASUREMNT);
-//		return angleFormated;
 		NumberFormat nf_out = NumberFormat.getNumberInstance(Locale.UK);
 		nf_out.setMaximumFractionDigits(2);
 		String result = nf_out.format(lengthPrec*PIXEL_MEASUREMNT);
@@ -270,9 +266,6 @@ public class Action implements Serializable {
 	}
 
 	public String getLengthEffInCm() {
-//		DecimalFormat df = new DecimalFormat("#.00");
-//	    String angleFormated = df.format(lengthEff*PIXEL_MEASUREMNT);
-//		return angleFormated;
 		NumberFormat nf_out = NumberFormat.getNumberInstance(Locale.UK);
 		nf_out.setMaximumFractionDigits(2);
 		String result = nf_out.format(lengthEff*PIXEL_MEASUREMNT);
@@ -293,9 +286,6 @@ public class Action implements Serializable {
 	}
 
 	public String getHeightRectInCm() {
-//		DecimalFormat df = new DecimalFormat("#.00");
-//		String angleFormated = df.format(heightRect * PIXEL_MEASUREMNT);
-//		return angleFormated;
 		NumberFormat nf_out = NumberFormat.getNumberInstance(Locale.UK);
 		nf_out.setMaximumFractionDigits(2);
 		String result = nf_out.format(heightRect*PIXEL_MEASUREMNT);
@@ -304,17 +294,15 @@ public class Action implements Serializable {
 	}
 	
 	
-
 	public void setHeightRectFromCm(double heightRect) {
 		this.heightRect =( heightRect*CM_MEASUREMNT);
 	}
 
 
-
 	public double getStandardLengthEff() {
-	
-		if(globalEmptyEff) {
-			setStandardLengthEffFromCm( Double.parseDouble(GlobalValue.lengthsOfEmptyTasks));
+
+		if (globalEmptyEff) {
+			setStandardLengthEffFromCm(Double.parseDouble(GlobalValue.lengthsOfEmptyTasks));
 		}
 		return standardLengthEff;
 	}
@@ -328,7 +316,6 @@ public class Action implements Serializable {
 	
 
 	public void setStandardLengthEffFromCm(double standardLengthEff) {
-		
 		this.standardLengthEff = (standardLengthEff*CM_MEASUREMNT);
 	}
 
@@ -569,10 +556,5 @@ public class Action implements Serializable {
 		this.defaultAction = defaultPrim;
 	}
 
-
-	
-	
-	
-	
 	
 }

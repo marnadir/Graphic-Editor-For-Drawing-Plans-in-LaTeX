@@ -10,13 +10,16 @@ import org.eclipse.swt.widgets.MessageBox;
 
 import Action.Action;
 import Action.GlobalValue;
-import State.GoalState;
-import State.GoalStateCanvas;
-import State.InitialState;
-import State.InitialStateCanvas;
 import View.DomainView;
 import View.GlobalOptionView;
-
+import so_goalState.GoalState;
+import so_goalState.GoalStateCanvas;
+import so_goalState.InitialState;
+import so_goalState.InitialStateCanvas;
+/**
+ * Command which allows to open the dialog for loading a domain which was saved.
+ * @author nadir
+ * */
 public class LoadDomainCommand implements ICommand{
 
 	ArrayList<Action> updateActionListDomain;
@@ -25,24 +28,24 @@ public class LoadDomainCommand implements ICommand{
 	
 	@Override
 	public boolean canExecute(Object var1, Object var2) {
-		// TODO Auto-generated method stub
+		if (var1 instanceof String) {
+			if (var2 instanceof DomainView) {
+				return true;
+			}
+			
+		}
 		return false;
 	}
 
 	@Override
-	public void execute(Object var1, Object var2) {
-		
+	public void execute(Object var1, Object var2) {	
 		String path = null;
-		if (var1 instanceof String) {
+		if (canExecute(var1, var2)) {
 			path = (String) var1;
-		}
-		if (var2 instanceof DomainView) {
 			this.domainView = (DomainView) var2;
+			ReadObjectToFile(path);
+			domainView.restoreActionList(updateActionListDomain);
 		}
-
-		ReadObjectToFile(path);
-		domainView.restoreActionList(updateActionListDomain);
-
 	}
 	
 	public boolean ReadObjectToFile(String path) {

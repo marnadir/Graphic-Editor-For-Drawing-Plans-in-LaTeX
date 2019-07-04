@@ -1,11 +1,18 @@
 package main;
 
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 
 import View.PrincipalView;
-
+import dialog.DialogAreUsure;
+/**
+ * Principal view of the tool
+ * @author nadir
+ * */
 public class StartWindow {
 
 	
@@ -20,11 +27,20 @@ public class StartWindow {
 		principalView.draw();
 
 		shell.open();
+		
+		shell.addListener(SWT.Close, new Listener() {
+			public void handleEvent(Event event) {
+				DialogAreUsure dialog=new DialogAreUsure(shell, "Are you sure?");
+				dialog.getResult(event);
+			}
+		});
+		
 		while (!shell.isDisposed()) {
 			if (!display.readAndDispatch())
 				display.sleep();
 		}
 		display.dispose();
+	
 		
 	}
 	

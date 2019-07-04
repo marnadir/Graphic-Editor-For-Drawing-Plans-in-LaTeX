@@ -13,12 +13,16 @@ import org.eclipse.swt.widgets.Composite;
 
 import Action.Action;
 import Action.Node;
-import DataTrasfer.MyType;
-import Dialog.InitializationVariableDialog;
 import PlanPart.PlanContent;
 import View.PlanView;
 import View.TreeActioDomainView;
-
+import dataTrasfer.MyType;
+import dialog.InitializationVariableDialog;
+/**
+ * extended class of DropTargetAdapter,which is used to drop an action into plan view.
+ * @see MyDragActionListener
+ * @author nadir
+ * */
 public class MyDropActionListener extends DropTargetAdapter {
 	
 	private DropTarget target;

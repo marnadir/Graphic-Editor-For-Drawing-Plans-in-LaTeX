@@ -15,14 +15,17 @@ import org.eclipse.swt.widgets.MessageBox;
 import Action.Action;
 import Action.ICanvas;
 import Action.Node;
-import Dialog.InitializationVariableDialog;
-import DialogAction.SetSizeActionDialog;
 import PlanPart.LinkCanvas;
 import PlanPart.OrderConstrain;
 import PlanPart.Oval;
 import PlanPart.PlanContent;
-import dialogMenuState.EditLayoutAction;
-
+import dialog.InitializationVariableDialog;
+import dialogAction.EditLayoutAction;
+import dialogAction.SetSizeActionDialog;
+/**
+ * Menu which is used to manage an action: <br>  <br>
+ * @author nadir
+ * */
 public class MenuContentAction implements MenuDetectListener {
 
 	ICanvas canvas;
@@ -52,7 +55,7 @@ public class MenuContentAction implements MenuDetectListener {
 							canvas.getParent().setVisible(false);
 						
 							Action a = canvas.getAction();
-							ArrayList<LinkCanvas> links = plan.getLink();
+	 					ArrayList<LinkCanvas> links = plan.getLink();
 							ArrayList<LinkCanvas> linksToDelete = new ArrayList<>();
 							for (LinkCanvas link : links) {
 								if (link.getOval1().getNode() != null) {
@@ -215,7 +218,7 @@ public class MenuContentAction implements MenuDetectListener {
 	{  
 	  try  
 	  {  
-	    double d = Double.parseDouble(str);  
+	     Double.parseDouble(str);  
 	  }  
 	  catch(NumberFormatException nfe)  
 	  {  

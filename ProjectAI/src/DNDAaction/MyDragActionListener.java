@@ -7,9 +7,13 @@ import org.eclipse.swt.dnd.DragSourceEvent;
 
 import Action.Action;
 import Action.ActionDomainCanvas;
-import DataTrasfer.MyType;
+import dataTrasfer.MyType;
 
-
+/**
+ * extended class of DragSourceAdapter,which is used to drag an action from the domain view.
+ * @see MyDropActionListener
+ * @author nadir
+ * */
 
 public class MyDragActionListener extends DragSourceAdapter {
     private DragSource source;

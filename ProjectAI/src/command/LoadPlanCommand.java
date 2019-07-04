@@ -17,12 +17,15 @@ import Action.Node;
 import PlanPart.OrderConstrain;
 import PlanPart.OrderConstrainCanvas;
 import PlanPart.PlanContent;
-import State.GoalState;
-import State.GoalStateCanvas;
-import State.InitialState;
-import State.InitialStateCanvas;
 import container.IContainerState;
-
+import so_goalState.GoalState;
+import so_goalState.GoalStateCanvas;
+import so_goalState.InitialState;
+import so_goalState.InitialStateCanvas;
+/**
+ * Command which allows to open the dialog for loading a plan which was saved.
+ * @author nadir
+ * */
 public class LoadPlanCommand  implements ICommand{
 
 	File filePlan;

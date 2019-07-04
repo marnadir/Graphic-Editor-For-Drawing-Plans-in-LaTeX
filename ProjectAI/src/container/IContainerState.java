@@ -3,8 +3,12 @@ package container;
 import org.eclipse.swt.widgets.Composite;
 
 import PlanPart.PlanContent;
-import State.IStateCanvas;
 import View.IStateView;
+import so_goalState.IStateCanvas;
+/**
+ * represents containers where initial/goal state are drawn 
+ * @author nadir
+ * */
 
 public class IContainerState  extends Composite{
 
@@ -20,28 +24,23 @@ public class IContainerState  extends Composite{
 		}else if(parent instanceof PlanContent){
 			this.planContent=(PlanContent) parent;
 		}
-		// TODO Auto-generated constructor stub
 	}
-
-
-	
 
 	public PlanContent getPlanContent() {
 		return planContent;
 	}
 
+
 	public IStateCanvas getCanvas() {
-		
-		IStateCanvas canvas=null;
-		if(getChildren().length > 0) {
-			if(getChildren()[0] instanceof IStateCanvas) {
-				canvas=(IStateCanvas) getChildren()[0];
+		IStateCanvas canvas = null;
+		if (getChildren().length > 0) {
+			if (getChildren()[0] instanceof IStateCanvas) {
+				canvas = (IStateCanvas) getChildren()[0];
 			}
 		}
-		
+
 		return canvas;
 	}
-	
 
 	public IStateView getiStateView() {
 		return iStateView;

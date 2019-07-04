@@ -19,12 +19,15 @@ import org.eclipse.swt.widgets.Listener;
 import Action.Node;
 import DNDAaction.MyDropActionListener;
 import DNDstate.MyDropStateListener;
-import DataTrasfer.MyTransfer;
-import State.GoalStateCanvas;
-import State.InitialStateCanvas;
 import View.PlanView;
 import View.TreeActioDomainView;
-
+import dataTrasfer.MyTransfer;
+import so_goalState.GoalStateCanvas;
+import so_goalState.InitialStateCanvas;
+/**
+ * Class which contains the plans, so its components.
+ * @author nadir
+ * */
 public class PlanContent extends Canvas {
 
 	private PlanView parent;
@@ -47,12 +50,6 @@ public class PlanContent extends Canvas {
 		actionInPlan=new ArrayList<>();
 		link=new ArrayList<>();
 		orderCon=new ArrayList<>();
-		
-		
-		
-
-		
-		// TODO Auto-generated constructor stub
 	}
 
 	
@@ -194,8 +191,5 @@ public class PlanContent extends Canvas {
 	public void setDirectory(File directory) {
 		this.directory = directory;
 	}
-
-
-
 	
 }

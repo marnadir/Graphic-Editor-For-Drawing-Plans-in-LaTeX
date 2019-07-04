@@ -1,7 +1,10 @@
 package resourceLoader;
 
 import java.io.InputStream;
-
+/**
+ * load the used icon.
+ * @author nadir
+ * */
 public class ResourceLoader {
 
 	public static InputStream load(String path) {

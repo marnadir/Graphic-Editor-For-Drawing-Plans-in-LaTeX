@@ -11,8 +11,8 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 
-import Dialog.PostionActionDialog;
 import PlanPart.PlanContent;
+import dialog.PostionActionDialog;
 
 public class PositionInPlanView extends Composite{
 

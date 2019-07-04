@@ -14,7 +14,10 @@ import org.eclipse.swt.widgets.Listener;
 
 import Action.Node;
 import LaTex.LaTexGeneratorNode;
-
+/**
+ * object which represents the logical part of the ordering constrain.
+ * @author nadir
+ * */
 public class OrderConstrain{
  
 	public void setNod1(Node nod1) {
@@ -155,7 +158,7 @@ public class OrderConstrain{
 	
 	public void generateLatexCode() {
 		LaTexGeneratorNode generator=new LaTexGeneratorNode(canvasContainer);
-		latexCode=generator.getLatexOrderCodePlan(this);
+		latexCode=generator.getLatexOrderingCodePlan(this);
 	
 		
 	}

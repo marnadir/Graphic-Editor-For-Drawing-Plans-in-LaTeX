@@ -8,14 +8,18 @@ import org.eclipse.swt.dnd.DragSourceEvent;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 
-import DataTrasfer.MyType;
-import State.GoalStateCanvas;
-import State.IState;
-import State.IStateCanvas;
-import State.InitialStateCanvas;
 import View.GoalStateView;
+import dataTrasfer.MyType;
+import so_goalState.GoalStateCanvas;
+import so_goalState.IState;
+import so_goalState.IStateCanvas;
+import so_goalState.InitialStateCanvas;
 
-
+/**
+ * extended class of DragSourceAdapter,which is used to drag an initial/goal from the domain view.
+ * @see MyDropStateListener
+ * @author nadir
+ * */
 
 public class MyDragStateListener extends DragSourceAdapter {
     private DragSource source;

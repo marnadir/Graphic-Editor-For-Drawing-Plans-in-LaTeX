@@ -2,8 +2,11 @@ package command;
 
 import org.eclipse.swt.widgets.Composite;
 
-import Dialog.CreateGoalDialog;
-
+import dialogState.CreateGoalDialog;
+/**
+ * Command which allows to open the dialog for creating a the goal state.
+ * @author nadir
+ * */
 public class CreateGoalDialogCommand implements ICommand {
 
 	

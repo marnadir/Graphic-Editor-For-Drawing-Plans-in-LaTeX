@@ -1,7 +1,10 @@
 package LaTex;
 
 import Action.GlobalValue;
-
+/**
+ * Generate the LateX code for the global values.
+ * @author nadir
+ * */
 public class LatexGeneratorGlobalSize {
 	
 	public LatexGeneratorGlobalSize() {

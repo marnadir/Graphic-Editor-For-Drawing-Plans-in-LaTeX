@@ -1,12 +1,12 @@
 package PlanPart;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.ObjectInputStream;
 import java.util.ArrayList;
 
 import org.eclipse.swt.graphics.Point;
-
+/**
+ * load  the saved link.
+ * @author nadir
+ * */
 public class LoadLink {
 
 	PlanContent planContent;

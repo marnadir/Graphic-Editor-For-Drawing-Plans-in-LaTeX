@@ -1,16 +1,14 @@
 package PlanPart;
 
-import java.io.Serializable;
 import java.util.ArrayList;
-
+/**
+ * Used to store all ovals of the plan.
+ * @author nadir
+ * */
 
 
 public class OvalCounter {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -1411680819920336936L;
 	ArrayList<Oval> listOval=new ArrayList<>();
 	
 	public OvalCounter() {
@@ -24,8 +22,7 @@ public class OvalCounter {
 			if ((listOval.get(i).getCond().equals(o.getCond()))) {
 
 				/*
-				 * per non so quale motivo viene chiamato due volte add(Oval o) per cio devo
-				 * inserlo solo una volta
+				 * i don't now why every oval is added two time, so i need to take care to it
 				 */
 
 				/* that means that belongs to action */
@@ -52,8 +49,7 @@ public class OvalCounter {
 			if ((listOval.get(i).getCond().equals(o.getCond()))) {
 
 				/*
-				 * per non so quale motivo viene chiamato due volte add(Oval o) per cio devo
-				 * inserlo solo una volta
+				 * i don't now why every oval is added two time, so i need to take care to it
 				 */
 
 				if (listOval.get(i).getStateCanvas() != null) {

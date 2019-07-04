@@ -12,10 +12,13 @@ import Action.Node;
 import PlanPart.LinkCanvas;
 import PlanPart.OrderConstrain;
 import PlanPart.PlanContent;
-import State.GoalStateCanvas;
-import State.IStateCanvas;
-import State.InitialStateCanvas;
-
+import so_goalState.GoalStateCanvas;
+import so_goalState.IStateCanvas;
+import so_goalState.InitialStateCanvas;
+/**
+ * Command which allows to open the dialog for saving the current plan.
+ * @author nadir
+ * */
 public class SavePlanCommand implements ICommand {
 
 	File planFile;
@@ -30,7 +33,11 @@ public class SavePlanCommand implements ICommand {
 	
 	@Override
 	public boolean canExecute(Object var1, Object var2) {
-		// TODO Auto-generated method stub
+		if(var1 instanceof String) {
+			if(var2 instanceof String) {
+				return true;
+			}
+		}
 		return false;
 	}
 
@@ -40,13 +47,13 @@ public class SavePlanCommand implements ICommand {
 		String path = null;
 		String name = null;
 		
-		if(var1 instanceof String) {
+		if(canExecute(var1, var2)) {
 			path=(String)var1;
-		}
-		if(var2 instanceof String) {
 			name=(String)var2;
+			createFile(path, name);
+
 		}
-		createFile(path, name);
+	
 	}
 
 	public void createFile(String path,String name) {

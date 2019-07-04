@@ -6,17 +6,18 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.MessageBox;
 
-import Dialog.LoadDomainDialog;
-import Dialog.LoadPlanDialog;
-import Dialog.NewConnectionDialog;
-import Dialog.SaveDomainFileLocationDialog;
 import View.DomainView;
 import View.PlanView;
 import command.ExitCommand;
-import command.LoadDomainCommand;
-import command.LoadPlanCommand;
+import dialog.NewConnectionDialog;
+import dialogSave.LoadDomainDialog;
+import dialogSave.LoadPlanDialog;
+import dialogSave.SaveDomainFileLocationDialog;
 
-
+/**
+ * Instance of object that implements the menu of the principal view.
+ * @author nadir
+ * */
 
 
 public class MenuPrincipalView extends IMenu{

@@ -1,12 +1,12 @@
 package command;
 
-
-
-
-import org.eclipse.swt.widgets.Composite;
-
-import Dialog.CreateSoDialog;
 import container.IContainerState;
+import dialogState.CreateSoDialog;
+
+/**
+ * Command which allows to open the dialog for creating the initial state.
+ * @author nadir
+ * */
 
 public class CreateSoDialogCommand implements ICommand {
 
@@ -16,23 +16,24 @@ public class CreateSoDialogCommand implements ICommand {
 	// check if create as option
 	@Override
 	public boolean canExecute(Object var1, Object var2) {
-		return true;
+		if (var1 instanceof IContainerState) {
+			return true;
+		}
+		return false;
 	}
 
 	@Override
 	public void execute(Object var1, Object var2) {
 
-		if (canExecute(var1, var2)) {
-			if (var1 instanceof IContainerState) {
-				IContainerState comp = (IContainerState) var1;
-				
-				/* container of So is empty*/ 
-				if(comp.getChildren().length<1) {
-					dialog = new CreateSoDialog(comp);
-					dialog.createContent();		
-				}
-				
+		if (canExecute(var1, null)) {
+
+			IContainerState comp = (IContainerState) var1;
+			/* container of So is empty */
+			if (comp.getChildren().length < 1) {
+				dialog = new CreateSoDialog(comp);
+				dialog.createContent();
 			}
+
 		}
 	}
 

@@ -11,7 +11,11 @@ import org.eclipse.swt.widgets.Composite;
 import LaTex.LaTexGeneratorNode;
 import Menu.MenuContentAction;
 import PlanPart.PlanContent;
-
+/**
+ * Represents the graphic part of an action, which is created during the plan definition phase.
+ * @author nadir
+ *
+ */
 public class Node extends ICanvas {
 	
 	public  String ID;

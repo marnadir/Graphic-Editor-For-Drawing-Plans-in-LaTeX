@@ -9,7 +9,10 @@ import org.apache.pdfbox.pdmodel.encryption.InvalidPasswordException;
 import org.apache.pdfbox.rendering.ImageType;
 import org.apache.pdfbox.rendering.PDFRenderer;
 import org.apache.pdfbox.tools.imageio.ImageIOUtil;
-
+/**
+ * converts pdf file into png image.
+ * @author nadir
+ * */
 public class PdfConverter {
 
 	String filePath;
@@ -21,7 +24,6 @@ public class PdfConverter {
 	
 	public void execute() {
 		PDDocument document = null;
-		File imageFile = null;
 
 		try {
 			document = PDDocument.load(new File(filePath));

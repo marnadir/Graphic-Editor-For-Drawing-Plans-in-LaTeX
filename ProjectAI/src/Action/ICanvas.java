@@ -9,7 +9,11 @@ import org.eclipse.swt.widgets.Composite;
 
 import PlanPart.PlanContent;
 import PlanPart.Oval;
-
+/**
+ * Represents the abstract class for the graphic representation of an action.
+ * @author nadir
+ *
+ */
 public abstract class ICanvas extends Canvas {
 
 	Action action;

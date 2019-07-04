@@ -8,7 +8,10 @@ import java.util.ArrayList;
 
 import Action.GlobalValue;
 import View.DomainView;
-
+/**
+ * Command which allows to open the dialog for saving the current domain.
+ * @author nadir
+ * */
 public class SaveDomainCommand  implements ICommand{
 
 	private DomainView domainView;
@@ -18,7 +21,11 @@ public class SaveDomainCommand  implements ICommand{
 	
 	@Override
 	public boolean canExecute(Object var1, Object var2) {
-		// TODO Auto-generated method stub
+		if(var1 instanceof String) {
+			if(var2 instanceof DomainView) {
+				return true;
+			}
+		}
 		return false;
 	}
 
@@ -30,33 +37,28 @@ public class SaveDomainCommand  implements ICommand{
 	public void execute(Object var1, Object var2) {
 		
 		String name = null;
-		if(var1 instanceof String) {
+		if(canExecute(var1, var2)) {
 			name=(String)var1;
-		}
-		
-		
-		if(var2 instanceof DomainView) {
 			domainView=(DomainView)var2;
+			createFileLog(name);
+			ArrayList<Object> data = new ArrayList<Object>();
+			data.add(prepareGlobalValueArray());
+			data.add(domainView.getTreeAction().getActionList());
+			if (domainView.getInitialStateCanvas() != null) {
+				data.add(domainView.getInitialStateCanvas().getState());
+			} else {
+				data.add(null);
+			}
+			if (domainView.getGoalStateCanvas() != null) {
+				data.add(domainView.getGoalStateCanvas().getState());
+			} else {
+				data.add(null);
+			}
+			WriteObjectToFile(data);
 		}
 		
-		createFileLog(name);
-		ArrayList<Object> data = new ArrayList<Object>();
-		data.add(prepareGlobalValueArray());
-		data.add(domainView.getTreeAction().getActionList());
-		if (domainView.getInitialStateCanvas() != null) {
-			data.add(domainView.getInitialStateCanvas().getState());
-		} else {
-			data.add(null);
-		}
-		if (domainView.getGoalStateCanvas() != null) {
-			data.add(domainView.getGoalStateCanvas().getState());
-		} else {
-			data.add(null);
-		}
 		
-		
-		WriteObjectToFile(data);
-		
+	
 	}
 
 	public void copyFileDomain(String path,DomainView domainView) {

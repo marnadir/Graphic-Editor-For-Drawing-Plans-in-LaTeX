@@ -1,5 +1,8 @@
 package command;
-
+/**
+ * interface which defines the possible commands.
+ * @author nadir
+ * */
 public interface ICommand {
 		
 	public default boolean canExecute( Object object) {

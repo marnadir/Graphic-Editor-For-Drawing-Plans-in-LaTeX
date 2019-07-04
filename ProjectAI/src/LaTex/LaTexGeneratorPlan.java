@@ -1,6 +1,9 @@
 package LaTex;
 
-
+/**
+ * Generate the LateX code, which consists in necessary library used to draw a plan in LaTex .
+ * @author nadir
+ * */
 
 public class LaTexGeneratorPlan {
 

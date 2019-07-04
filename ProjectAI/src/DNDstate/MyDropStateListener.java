@@ -9,17 +9,24 @@ import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 
-import DataTrasfer.MyType;
+import DNDAaction.MyDragActionListener;
 import PlanPart.PlanContent;
-import State.GoalState;
-import State.GoalStateCanvas;
-import State.IStateCanvas;
-import State.InitialState;
-import State.InitialStateCanvas;
 import View.DomainView;
 import View.PlanView;
 import container.ContainerGoalState;
 import container.ContainerInitialState;
+import dataTrasfer.MyType;
+import so_goalState.GoalState;
+import so_goalState.GoalStateCanvas;
+import so_goalState.IStateCanvas;
+import so_goalState.InitialState;
+import so_goalState.InitialStateCanvas;
+
+/**
+ * extended class of DropTargetAdapter,which is used to drop an initial/goal state into plan view.
+ * @see MyDragStateListener
+ * @author nadir
+ * */
 
 public class MyDropStateListener extends DropTargetAdapter {
 
