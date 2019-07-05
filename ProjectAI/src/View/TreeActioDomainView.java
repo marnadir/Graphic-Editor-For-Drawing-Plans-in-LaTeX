@@ -20,7 +20,10 @@ import PlanPart.OrderConstrain;
 import PlanPart.Oval;
 import PlanPart.PlanContent;
 import command.ChangeActionDialogCommand;
-
+/**
+ * View which represents the tree of the action.
+ * @author nadir
+ * */
 public class TreeActioDomainView extends Tree {
 
 	

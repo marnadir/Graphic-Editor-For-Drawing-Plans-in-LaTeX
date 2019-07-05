@@ -13,16 +13,14 @@ import org.eclipse.swt.widgets.Listener;
 
 import PlanPart.PlanContent;
 import dialog.PostionActionDialog;
-
+/**
+ * View which allows to set the position of the plan's components.
+ * @author nadir
+ * */
 public class PositionInPlanView extends Composite{
 
 	
 	Composite compositeSetting;
-//	Composite compBtn;
-//	Composite compList;
-//	Composite compRef;
-	
-	
 	Button addBtnAction;
 	PlanContent contentPlan;
 	Button addBtnState;

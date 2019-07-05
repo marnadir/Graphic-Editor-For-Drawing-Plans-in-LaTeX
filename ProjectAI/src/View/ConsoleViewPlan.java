@@ -22,7 +22,10 @@ import PlanPart.PlanContent;
 import resourceLoader.ResourceLoader;
 import PlanPart.LinkCanvas;
 import PlanPart.OrderConstrain;
-
+/**
+ * View which represents separately the LaTeX code of the plan.
+ * @author nadir
+ * */
 public class ConsoleViewPlan extends Group {
 	
 	File directory;

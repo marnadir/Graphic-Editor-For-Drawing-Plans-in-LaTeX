@@ -5,7 +5,6 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import Action.Action;
-import DNDAaction.MyDragActionListener;
 
 /**
  * Generate the LateX code for the domain-actions.

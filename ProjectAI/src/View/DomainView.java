@@ -20,7 +20,13 @@ import container.ContainerGoalState;
 import container.ContainerInitialState;
 import so_goalState.CreateStateContainer;
 import so_goalState.IStateCanvas;
-
+/**
+ * View which represents contains the domain components, where is subdivided in 3 subviews.
+ * @see InitialStateView
+ * @see GoalStateView
+ * @see ActionView
+ * @author nadir
+ * */
 public class DomainView {
 
 	Group domainGroup;

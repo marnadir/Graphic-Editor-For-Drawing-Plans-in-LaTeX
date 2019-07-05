@@ -1,14 +1,11 @@
 package LaTex;
 
 import java.text.NumberFormat;
-import java.util.ArrayList;
 import java.util.Locale;
 
 import PlanPart.PlanContent;
 import so_goalState.GoalStateCanvas;
-import so_goalState.IState;
 import so_goalState.IStateCanvas;
-import so_goalState.InitialState;
 import so_goalState.InitialStateCanvas;
 /**
  * Generate the LateX code for the initial/goal state dropped in the plan  view.
@@ -127,20 +124,20 @@ public class LaTexGeneratorStatePlan {
 	
 	
 	
-	private String getTextPrecEffE(ArrayList<String> cond) {
-
-		StringBuilder sb=new StringBuilder();
-		sb.append("{");
-		for(int i=0;i<cond.size();i++) {
-			if(i<cond.size()-1) {
-				sb.append(",");
-			}
-		}
-		sb.append("}");
-
-		return sb.toString();
-	}
-	
+//	private String getTextPrecEffE(ArrayList<String> cond) {
+//
+//		StringBuilder sb=new StringBuilder();
+//		sb.append("{");
+//		for(int i=0;i<cond.size();i++) {
+//			if(i<cond.size()-1) {
+//				sb.append(",");
+//			}
+//		}
+//		sb.append("}");
+//
+//		return sb.toString();
+//	}
+//	
 	private String getPosition(IStateCanvas iState) {
 		StringBuilder sb=new StringBuilder();	
 		if(iState instanceof InitialStateCanvas) {
@@ -150,14 +147,11 @@ public class LaTexGeneratorStatePlan {
 			sb.append("("+convertInCm( (iState.getParent().getLocation().x)-(iState.getParent().getBounds().width)/2)+",");
 
 		}
-//		sb.append(convertInCm(iState.getParent().getParent().getSize().y-iState.getParent().getLocation().y)+")");
 		sb.append("0)");	
 		return sb.toString();
 	}
 	
 	private String convertInCm(int x) {
-//		DecimalFormat df = new DecimalFormat("#.00");
-//	    String result = df.format(x*PIXEL_MEASUREMNT);
 		NumberFormat nf_out = NumberFormat.getNumberInstance(Locale.UK);
 		nf_out.setMaximumFractionDigits(2);
 		String result = nf_out.format(x*PIXEL_MEASUREMNT);

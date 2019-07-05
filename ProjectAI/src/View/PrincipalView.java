@@ -12,7 +12,10 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Shell;
 
 import Menu.MenuPrincipalView;
-
+/**
+ * It is the principal view, which contains all other views.
+ * @author nadir
+ * */
 public class PrincipalView {
 
 	private Shell shell;
@@ -20,7 +23,7 @@ public class PrincipalView {
 	private SashForm sashForm;
 	private SashForm sashForm2;
 	private DomainView domainView;
-	private ConsoleView consoleView;
+	private ConsoleLaTeXView consoleView;
 	PlanView planView;
 	PdfView pdfView;
 
@@ -71,7 +74,7 @@ public class PrincipalView {
 		CTabFolder folder=new CTabFolder(sashForm2, SWT.ALL);
 		
 		CTabItem itemConsole = new CTabItem(folder, SWT.NONE);
-		consoleView = new ConsoleView(folder, SWT.SCROLL_LINE);
+		consoleView = new ConsoleLaTeXView(folder, SWT.SCROLL_LINE);
 		consoleView.setLayout();
 		consoleView.createContent(domainView, planView);
 		itemConsole.setText("LaTeX Code");

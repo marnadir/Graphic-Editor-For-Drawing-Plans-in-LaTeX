@@ -4,7 +4,10 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
-
+/**
+ * View belongs to domain view where the action is drawn.
+ * @author nadir
+ * */
 public class ActionView extends Composite {
 	
 	Composite containerAction;

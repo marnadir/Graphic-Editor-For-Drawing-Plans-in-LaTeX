@@ -17,8 +17,10 @@ import Action.Action;
 import Action.GlobalValue;
 import Action.Node;
 import resourceLoader.ResourceLoader;
-
-
+/**
+ * View which allows to set the global values.
+ * @author nadir
+ * */
 public class GlobalOptionView extends Composite{
 
 	

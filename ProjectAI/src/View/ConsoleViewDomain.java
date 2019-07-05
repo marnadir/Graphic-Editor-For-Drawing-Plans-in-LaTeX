@@ -6,9 +6,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
-
-import javax.swing.Icon;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
@@ -24,7 +21,10 @@ import org.eclipse.swt.widgets.ToolItem;
 import Action.Action;
 import LaTex.LatexGeneratorGlobalSize;
 import resourceLoader.ResourceLoader;
-
+/**
+ * View which represents the LaTeX code of the domain.
+ * @author nadir
+ * */
 public class ConsoleViewDomain extends Group{
 
 	

@@ -7,8 +7,10 @@ import org.eclipse.swt.layout.RowData;
 import org.eclipse.swt.widgets.Composite;
 
 import container.ContainerInitialState;
-import container.IContainerState;
-
+/**
+ * View which contains the initial state.
+ * @author nadir
+ * */
 public class InitialStateView extends IStateView{
 
 	

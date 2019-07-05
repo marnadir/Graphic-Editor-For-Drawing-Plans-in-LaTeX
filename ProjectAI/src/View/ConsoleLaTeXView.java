@@ -4,13 +4,18 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 
-
-public class ConsoleView extends Composite{
+/**
+ * View which represents separately the LaTeX code of the domain and the plan.
+ * @see ConsoleViewDomain
+ * @see ConsoleViewPlan
+ * @author nadir
+ * */
+public class ConsoleLaTeXView extends Composite{
 
 	ConsoleViewDomain consoleViewDomain;
 	ConsoleViewPlan consoleViewPlan;
 	
-	public ConsoleView(Composite parent, int style) {
+	public ConsoleLaTeXView(Composite parent, int style) {
 		super(parent, style);
 		// TODO Auto-generated constructor stub
 	}

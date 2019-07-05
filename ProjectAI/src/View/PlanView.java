@@ -1,7 +1,6 @@
 package View;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -33,10 +32,14 @@ import dialog.NewConnectionDialog;
 import dialogSave.SaveLAtexCode;
 import dialogSave.SavePlanDialog;
 import resourceLoader.ResourceLoader;
-
+/**
+ * View which contains the plan content.
+ * @see PlanContent
+ * @author nadir
+ * */
 public class PlanView  extends CTabFolder{
 	
-	ConsoleView consoleView;
+	ConsoleLaTeXView consoleView;
 	DomainView domainView;
 	PdfView pdfView;
 	ToolItem showCondition;
@@ -279,7 +282,6 @@ public class PlanView  extends CTabFolder{
 							builder.append(line);
 							builder.append(System.getProperty("line.separator"));
 						}
-						String result = builder.toString();
 						
 					}
 					
@@ -367,7 +369,7 @@ public class PlanView  extends CTabFolder{
 	{  
 	  try  
 	  {  
-	    double d = Double.parseDouble(str);  
+		  Double.parseDouble(str);  
 	  }  
 	  catch(NumberFormatException nfe)  
 	  {  
@@ -380,7 +382,7 @@ public class PlanView  extends CTabFolder{
 		return this;
 	}
 	
-	public void setPdfPreView(ConsoleView consoleView) {
+	public void setPdfPreView(ConsoleLaTeXView consoleView) {
 		this.consoleView=consoleView;
 	}
 	

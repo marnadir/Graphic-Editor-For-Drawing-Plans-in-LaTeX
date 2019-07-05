@@ -7,7 +7,10 @@ import org.eclipse.swt.widgets.Group;
 import Menu.MenuContentState;
 import container.IContainerState;
 import so_goalState.IStateCanvas;
-
+/**
+ * Super class  which defines the views for the initial and goal state.
+ * @author nadir
+ * */
 public abstract class IStateView extends Group {
 
 	protected IContainerState containerState;

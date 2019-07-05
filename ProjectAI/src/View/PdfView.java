@@ -11,7 +11,10 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
-
+/**
+ * In this View is represented the PDF file which is the converted LaTex code of the plan and the domain.
+ * @author nadir
+ * */
 public class PdfView  extends Composite{
 
 	

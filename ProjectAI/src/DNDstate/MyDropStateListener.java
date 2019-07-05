@@ -8,8 +8,6 @@ import org.eclipse.swt.dnd.DropTargetEvent;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
-
-import DNDAaction.MyDragActionListener;
 import PlanPart.PlanContent;
 import View.DomainView;
 import View.PlanView;
