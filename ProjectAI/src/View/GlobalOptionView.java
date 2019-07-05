@@ -72,7 +72,7 @@ public class GlobalOptionView extends Composite{
 		btnOkW.setText("Ok");
 		btnOkW.addListener(SWT.Selection, getOkBtnWListener());
 		confermW=new Label(compListdetail, SWT.ALL);
-		confermW.setText("Global value not present,check the box.");
+		confermW.setText("Global value not present, check the box.");
 		
 		
 		bntHeigt=new Button(compListdetail, SWT.CHECK | SWT.BORDER);
@@ -86,7 +86,7 @@ public class GlobalOptionView extends Composite{
 		btnOkH.setText("Ok");
 		btnOkH.addListener(SWT.Selection, getOkBtnHListener());
 		confermH=new Label(compListdetail, SWT.ALL);
-		confermH.setText("Global value not present,check the box.");
+		confermH.setText("Global value not present, check the box.");
 		
 		
 		bntCond=new Button(compListdetail, SWT.CHECK | SWT.BORDER);
@@ -100,7 +100,7 @@ public class GlobalOptionView extends Composite{
 		btnOkCond.setText("Ok");
 		btnOkCond.addListener(SWT.Selection, getOkBtnCondListener());
 		confermC=new Label(compListdetail, SWT.ALL);
-		confermC.setText("Global value not present,check the box.");
+		confermC.setText("Global value not present, check the box.");
 		
 		bntPrec=new Button(compListdetail, SWT.CHECK | SWT.BORDER);
 		bntPrec.addListener(SWT.Selection, getAddBtnPListener(bntPrec));
@@ -113,7 +113,7 @@ public class GlobalOptionView extends Composite{
 		btnOkP.setText("Ok");
 		btnOkP.addListener(SWT.Selection, getOkBtnPListener());
 		confermP=new Label(compListdetail, SWT.ALL);
-		confermP.setText("Global value not present,check the box.");
+		confermP.setText("Global value not present, check the box.");
 		
 		
 		
@@ -128,7 +128,7 @@ public class GlobalOptionView extends Composite{
 		btnOkE.setText("Ok");
 		btnOkE.addListener(SWT.Selection, getOkBtnEListener());
 		confermE=new Label(compListdetail, SWT.ALL);
-		confermE.setText("Global value not present,check the box.");
+		confermE.setText("Global value not present, check the box.");
 		
 		bntEmty=new Button(compListdetail, SWT.CHECK | SWT.BORDER );
 		bntEmty.setSelection(true);
@@ -389,7 +389,7 @@ public class GlobalOptionView extends Composite{
 					tWidth.setEditable(false);
 					tWidth.setText("NONE");
 					GlobalValue.isWidthOfAction=false;
-					confermW.setText("Global value not present,check the box.");
+					confermW.setText("Global value not present, check the box.");
 					for(int i=0;i<planView.getPlan().getActionInPlan().size();i++) {
 						planView.getPlan().getActionInPlan().get(i).getAction().setGlobalWidth(false);
 					}
@@ -458,7 +458,7 @@ public class GlobalOptionView extends Composite{
 					tHeight.setEditable(false);
 					tHeight.setText("NONE");
 					GlobalValue.isHeightOfAction=false;
-					confermH.setText("Global value not present,check the box.");
+					confermH.setText("Global value not present, check the box.");
 					for(int i=0;i<planView.getPlan().getActionInPlan().size();i++) {
 						planView.getPlan().getActionInPlan().get(i).getAction().setGlobalHeight(false);
 					}
@@ -526,7 +526,7 @@ public class GlobalOptionView extends Composite{
 					tLenPre.setEditable(false);
 					tLenPre.setText("NONE");
 					GlobalValue.isLengthsOfPrecs=false;
-					confermP.setText("Global value not present,check the box.");
+					confermP.setText("Global value not present, check the box.");
 					for(int i=0;i<planView.getPlan().getActionInPlan().size();i++) {
 						planView.getPlan().getActionInPlan().get(i).getAction().setGlobalPrec(false);
 					}
@@ -595,7 +595,7 @@ public class GlobalOptionView extends Composite{
 					tLenEff.setEditable(false);
 					tLenEff.setText("NONE");
 					GlobalValue.isLengthsOfEffs=false;
-					confermE.setText("Global value not present,check the box.");
+					confermE.setText("Global value not present, check the box.");
 					for(int i=0;i<planView.getPlan().getActionInPlan().size();i++) {
 						planView.getPlan().getActionInPlan().get(i).getAction().setGlobalEff(false);
 					}
@@ -661,7 +661,7 @@ public class GlobalOptionView extends Composite{
 					tLenCond.setEditable(false);
 					tLenCond.setText("NONE");
 					GlobalValue.isLengthsOfConds=false;
-					confermC.setText("Global value not present,check the box.");
+					confermC.setText("Global value not present, check the box.");
 					if(planView.getPlan().getInitialStateCanvas() != null) {
 						planView.getPlan().getInitialStateCanvas().getState().setGlobalCond(false);
 					}
