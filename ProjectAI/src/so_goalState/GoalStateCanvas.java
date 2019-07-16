@@ -4,6 +4,7 @@ package so_goalState;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.graphics.Transform;
@@ -37,7 +38,8 @@ public class GoalStateCanvas extends IStateCanvas {
 			
 				Font font = new Font(getDisplay(), "Arabic Transparent", 6, SWT.NORMAL);
 				e.gc.setFont(font);
-				
+				Color colorNull=e.gc.getBackground();
+
 				int avergWidth = 6;	
 				//int avergWidth =e.gc.getFontMetrics().getAverageCharacterWidth();
 				int numCond = state.getConds().size();
@@ -51,10 +53,19 @@ public class GoalStateCanvas extends IStateCanvas {
 					state.setLenIn(state.getHeight());
 				}
 
+				state.setLenIn(state.getHeight());
+				
 				if(state.isText()) {
 					int val=getTextPosition(avergWidth);
-					Rectangle r=new Rectangle(startX-22, startY,20, (int) (startY + state.getLenIn()));	
-					e.gc.drawRectangle(r);	  
+					Rectangle rect=new Rectangle(startX-22, startY,20, (int) (startY + state.getLenIn()));	
+					if(state.isFillColor()) {
+						e.gc.setBackground(getColorSWT());
+						e.gc.fillRectangle(rect);
+						e.gc.drawRectangle(rect);
+					}else {
+						e.gc.drawRectangle(rect);
+					}
+					
 					Transform t=new Transform(getDisplay());
 					t.rotate(90);	
 					e.gc.setTransform(t);	
@@ -62,6 +73,8 @@ public class GoalStateCanvas extends IStateCanvas {
 					t.rotate(-90);
 					e.gc.setTransform(t);
 					startX=containerState.getClientArea().width-22;	
+					e.gc.setBackground(colorNull);
+
 				}else {
 					e.gc.setLineWidth(5);
 					e.gc.drawLine(startX-2, startY, startX-2, (int) (startY + state.getLenIn()));

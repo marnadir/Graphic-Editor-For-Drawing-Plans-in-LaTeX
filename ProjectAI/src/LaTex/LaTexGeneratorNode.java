@@ -48,11 +48,11 @@ public class LaTexGeneratorNode {
 		sb.append(isFett(action));
 		//we need to take care of init/goal
 		if (planContent.getInitialStateCanvas() != null) {
-			if (planContent.getInitialStateCanvas().getState().isText()) {
-				sb.append(" below right=" + getPositionToInit(node) + "}" + "\n" + "}" + "\n");
-			} else {
-				sb.append("at={" + getPosition(node) + "}}" + "\n" + "}" + "\n");
-			}
+//			if (planContent.getInitialStateCanvas().getState().isText()) {
+//				sb.append(" below right=" + getPositionToInit(node) + "}" + "\n" + "}" + "\n");
+//			} else {
+		sb.append("at={" + getPosition(node) + "}}" + "\n" + "}" + "\n");
+			
 		} else {
 			sb.append("at={" + getPosition(node) + "}}" + "\n" + "}" + "\n");
 
@@ -93,7 +93,7 @@ public class LaTexGeneratorNode {
 	private String isFillColor(Action a) {
 		StringBuilder sb=new StringBuilder();
 		if(a.isFillColor()) {
-			sb.append("fill="+a.getColorString()+",");
+			sb.append("fill="+a.getColorString().toLowerCase()+",");
 		}
 		return sb.toString();
 	}

@@ -101,8 +101,12 @@ public class Node extends ICanvas {
 						e.gc.setBackground(getColorSWT());
 						if(!action.isBorderIsSquare()) {
 							e.gc.fillRoundRectangle(rect.x, rect.y, rect.width, rect.height, 10, 10);
+							e.gc.drawRoundRectangle(rect.x, rect.y, rect.width, rect.height, 10, 10);
+
 						}else {
 							e.gc.fillRectangle(rect);
+							e.gc.drawRectangle(rect);	
+
 						}
 					}else {
 						if(!action.isBorderIsSquare()) {

@@ -3,8 +3,10 @@ package LaTex;
 import java.text.NumberFormat;
 import java.util.Locale;
 
+import Action.Action;
 import PlanPart.PlanContent;
 import so_goalState.GoalStateCanvas;
+import so_goalState.IState;
 import so_goalState.IStateCanvas;
 import so_goalState.InitialStateCanvas;
 /**
@@ -48,11 +50,13 @@ public class LaTexGeneratorStatePlan {
 			sb.append("INIT-noop,");
 		}
 		
+		sb.append("body = {");
+		
 		if(initialStateCanvas.getState().isText()) {
-			sb.append("body = {fill=white,");
+			sb.append(isFillColor(initialStateCanvas.getState()));
 
 		}else {
-			sb.append("body = {fill=black,");
+			sb.append("fill=black,");
 		}
 		sb.append("at={"+getPosition(initialStateCanvas)+"}}}");
 		
@@ -69,11 +73,11 @@ public class LaTexGeneratorStatePlan {
 		}else {
 			sb.append("GOAL-noop,");
 		}
+		sb.append("body = {");
 		if(goalStateCanvas.getState().isText()) {
-			sb.append("body = {fill=white,");
-
+			sb.append(isFillColor(goalStateCanvas.getState()));
 		}else {
-			sb.append("body = {fill=black,");
+			sb.append("fill=black,");
 		}
 				sb.append("at={"+getPosition(goalStateCanvas)+"}}}");
 		
@@ -82,62 +86,17 @@ public class LaTexGeneratorStatePlan {
 	}
 	
 	
-//	private String getEffPrec(IState iState) {
-//		StringBuilder sb = new StringBuilder();
-//		if (iState.isShownCond()) {
-//			sb.append(getTextPrecEff(iState.getConds()));
-//
-//		} else {
-//			sb.append(getTextPrecEffE(iState.getConds()));
-//		}
-//		if (iState instanceof InitialState) {
-//			sb.append(",eff length  = ");
-//
-//		} else {
-//			sb.append(",pre length  = ");
-//
-//		}
-//
-//		if (iState.isShownCond()) {
-//			sb.append(iState.getLengthCondInCm() + "em");
-//		} else {
-//			sb.append(iState.getStandardLengthInCm() + "em");
-//		}
-//
-//		return sb.toString();
-//	}
-//	
-//	private String getTextPrecEff(ArrayList<String> cond) {
-//		StringBuilder sb=new StringBuilder();
-//		sb.append("{");
-//
-//		for(int i=0;i<cond.size();i++) {
-//			sb.append(cond.get(i));
-//			if(i<cond.size()-1) {
-//				sb.append(",");
-//			}
-//		}
-//		sb.append("}");
-//
-//		return sb.toString();
-//	}
+	private String isFillColor(IState state) {
+		StringBuilder sb=new StringBuilder();
+		if(state.isFillColor()) {
+			sb.append("fill="+state.getColor().toLowerCase()+",");
+		}else {
+				sb.append("fill= white,");
+			
+		}
+		return sb.toString();
+	}
 	
-	
-	
-//	private String getTextPrecEffE(ArrayList<String> cond) {
-//
-//		StringBuilder sb=new StringBuilder();
-//		sb.append("{");
-//		for(int i=0;i<cond.size();i++) {
-//			if(i<cond.size()-1) {
-//				sb.append(",");
-//			}
-//		}
-//		sb.append("}");
-//
-//		return sb.toString();
-//	}
-//	
 	private String getPosition(IStateCanvas iState) {
 		StringBuilder sb=new StringBuilder();	
 		if(iState instanceof InitialStateCanvas) {

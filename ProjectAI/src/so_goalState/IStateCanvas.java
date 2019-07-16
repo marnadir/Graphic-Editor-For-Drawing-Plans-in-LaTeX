@@ -10,6 +10,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.dnd.DND;
 import org.eclipse.swt.dnd.DragSource;
 import org.eclipse.swt.dnd.Transfer;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
@@ -168,7 +169,15 @@ public abstract class IStateCanvas extends Canvas {
 	
 
 
+	public Color getColorSWT() {
+		if (state.getColor().equalsIgnoreCase("cyan")) {
+			return getDisplay().getSystemColor(SWT.COLOR_CYAN);
+		} else if (state.getColor().equalsIgnoreCase("yellow")) {
+			return getDisplay().getSystemColor(SWT.COLOR_YELLOW);
+		}
 
+		return getDisplay().getSystemColor(SWT.COLOR_WHITE);
+	}
 	
 	
 

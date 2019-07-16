@@ -34,6 +34,7 @@ public class IState  implements Serializable{
 	boolean globalEmptyPrec;
 	private double height=5.5*CM_MEASUREMNT;
 	double width=0.01*CM_MEASUREMNT;
+	String color;
 
 
 
@@ -50,6 +51,7 @@ public class IState  implements Serializable{
 		this.width=iState.getWidth();
 		this.globalCond=iState.isGlobalCond();
 		this.globalEmptyPrec=iState.isGlobalEmpty();
+		this.color=iState.getColor();
 		
 	
 	}
@@ -92,6 +94,7 @@ public class IState  implements Serializable{
 	
 	public void setHeigthFromCm(double d) {
 		this.height=(d*CM_MEASUREMNT);
+		setLenIn(height);
 	}
 	
 	public void setWidFromCm(double d) {
@@ -249,6 +252,22 @@ public class IState  implements Serializable{
 		this.width = width;
 	}
 
-	
+	public String getColor() {
+		return color;
+	}
+
+	public void setColor(String color) {
+		this.color = color;
+	}
+
+	public boolean isFillColor() {
+		boolean isFillColor=false;
+		if(color!=null) {
+			if(!(color.equalsIgnoreCase("None"))) {
+				isFillColor=true;
+			}
+		}
+		return isFillColor;
+	}
 	
 }

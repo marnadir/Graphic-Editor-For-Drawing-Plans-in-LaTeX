@@ -75,26 +75,27 @@ public class SetSizeStateDialog extends IDialog {
 			@Override
 			public void handleEvent(Event event) {
 				
-					if (isNumeric(textWidth.getText())&&isNumeric(textHeight.getText())) {
+					if (isNumeric(textWidth.getText()) && isNumeric(textHeight.getText())
+							&& isNumeric(textConds.getText())) {
 						state.setHeigthFromCm(Double.parseDouble(textWidth.getText()));
 						state.setWidFromCm(Double.parseDouble(textHeight.getText()));
-						setVisible(false);
-					}
-					
-					if (state.isShownCond()) {
-						state.setDefaultValue(false);
-						if (isNumeric(textConds.getText())) {
+						
+						if (state.isShownCond()) {
+							state.setDefaultValue(false);
 							state.setLengthFromCm(Double.parseDouble(textConds.getText()));
 							setVisible(false);
 
-						}
-					} else {
-						if (isNumeric(textConds.getText())) {
+						} else {
+
 							state.setStandardLengthFromCm(Double.parseDouble(textConds.getText()));
 							setVisible(false);
 
 						}
+						
+						setVisible(false);
 					}
+					
+
 			}
 		
 		};

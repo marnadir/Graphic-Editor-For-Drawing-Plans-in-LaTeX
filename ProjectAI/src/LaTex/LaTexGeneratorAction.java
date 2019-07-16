@@ -60,7 +60,7 @@ public class LaTexGeneratorAction {
 		sb.append("\\scheme");
 		sb.append("{"+a.getName()+"}{0}{");
 		sb.append("\n");
-		sb.append(space+"text = " +"{\\textbf{"+(a.getName())+"}},"+"\n");
+		sb.append(space+"text = " +"{\\textbf{\\footnotesize $"+(a.getName())+"$}},"+"\n");
 		sb.append(space+"pres = {");
 		sb.append(getTextPrecEff(a.getPrec(),false)+"},"+"\n");
 		sb.append(space+"effs = {");
@@ -87,7 +87,7 @@ public class LaTexGeneratorAction {
 		sb.append("\\scheme");
 		sb.append("{" + a.getName() + "-noop}{0}{");
 		sb.append("\n");
-		sb.append(space + "text = " + "{\\textbf{" + (a.getName()) + "}}," + "\n");
+		sb.append(space + "text = " + "{\\textbf{ \\footnotesize $" + (a.getName()) + "$}}," + "\n");
 		sb.append(space + "pres = {");
 		sb.append(getTextPrecEffNoop(a.getPrec()) + "}," + "\n");
 		sb.append(space + "effs = {");
@@ -114,7 +114,7 @@ public class LaTexGeneratorAction {
 		sb.append("{");
 		sb.append("\n");
 		
-		sb.append(space+"text = " +"{\\textbf"+getText(a.getName())+"},"+"\n");
+		sb.append(space+"text = " +"{\\textbf{\\footnotesize"+getText(a.getName())+"}},"+"\n");
 		sb.append(space+"pres = {");
 		sb.append(getTextPrecEff(a.getPrec(),true)+"},"+"\n");
 		sb.append(space+"effs = {");
@@ -190,14 +190,17 @@ public class LaTexGeneratorAction {
 		
 		StringBuilder sb=new StringBuilder();
 		sb.append("{"+name[0]+"}");
-		sb.append("("+testo+")");
+		sb.append("($"+testo+"$)");
 
 		
 		return sb.toString();
 	}
 	
 	
-	/*take the prec and affect actions and trasform into latex code*/
+	/**
+	 * 
+	 * take the prec and affect actions and transform into latex code
+	 * */
 	public String getTextPrecEff(ArrayList<String> cond,boolean hasVariable) {
 		String space="  ";
 		StringBuilder sb=new StringBuilder();
@@ -253,10 +256,16 @@ public class LaTexGeneratorAction {
         testo = mapping.get(testo);
 		if(string.startsWith("¬")){
 			testo=testo.replaceAll("¬", "");
-			testo= "{$\\neg$}"+testo;
+			testo= "{$\\neg$}$"+testo;
 		}
 		StringBuilder sb = new StringBuilder();
-		sb.append("{" + testo +"}");
+		if(string.startsWith("¬")){
+			sb.append("{{\\footnotesize " + testo +"$}}");
+
+		}else {
+			sb.append("{{\\footnotesize $" + testo +"$}}");
+
+		}
 
 		return sb.toString();
 	}
@@ -267,10 +276,16 @@ public class LaTexGeneratorAction {
 		
 		if(string.startsWith("¬")){
 			string=string.replaceAll("¬", "");
-			string= "{$\\neg$}"+string;
+			string= "{$\\neg$}$"+string;
 		}
 		StringBuilder sb = new StringBuilder();
-		sb.append(string);
+		if(string.startsWith("{$\\neg$}")){
+			sb.append("{{\\footnotesize " + string +"$}}");
+
+		}else {
+			sb.append("{{\\footnotesize $" + string +"$}}");
+
+		}
 		
 
 		return sb.toString();

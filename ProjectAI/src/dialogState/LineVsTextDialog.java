@@ -5,6 +5,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
@@ -24,7 +25,8 @@ public class LineVsTextDialog extends IDialog {
 	Composite textButton;
 	Composite compoButton;
 	Button btnText;
-	Text text;
+	Text textState;
+	Combo comboColor;
 	IState state;
 	
 	
@@ -46,8 +48,8 @@ public class LineVsTextDialog extends IDialog {
 			@Override
 			public void handleEvent(Event event) {
 				if (btnText.getSelection()) {
-					state.setText(text.getText());
-					
+					state.setText(textState.getText());
+					state.setColor(comboColor.getText());
 					state.setIsText(true);
 				} else {
 					state.setIsText(false);
@@ -84,21 +86,37 @@ public class LineVsTextDialog extends IDialog {
 		Label l = new Label(textButton, SWT.ALL);
 		l.setText("Name of state:");
 
-		text = new Text(textButton, SWT.BORDER| SWT.RESIZE);
-		text.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-		text.setText("state");
+		textState = new Text(textButton, SWT.BORDER| SWT.RESIZE);
+		textState.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		textState.setText("state");
 	
+		Label lbColor=new Label(textButton, SWT.ALL);
+		lbColor.setText("Color:");
+		comboColor=new Combo(textButton, SWT.DROP_DOWN | SWT.READ_ONLY);
+		String[] items = new String[] { "None", "Cyan","Yellow" };
+		comboColor.setItems(items);
+		comboColor.select(0);
+		
+		
 		
 		if(state.isText()) {
 			btnText.setSelection(true);	
-			text.setText(state.getText());
-			text.pack();
+			textState.setText(state.getText());
+			if(state.getColor().equalsIgnoreCase("None")) {
+				comboColor.select(0);
+			}else if(state.getColor().equalsIgnoreCase("Cyan")) {
+				comboColor.select(1);
+			}else {
+				comboColor.select(2);
+			}
+			textState.pack();
 			
 			
 		}else {
 			
 			btnLine.setSelection(true);
 			textButton.setVisible(false);
+			
 
 			
 		}

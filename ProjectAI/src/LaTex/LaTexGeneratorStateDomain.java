@@ -44,7 +44,7 @@ public class LaTexGeneratorStateDomain {
 		sb.append("{");
 		sb.append("\n");
 		if (state.isText()) {
-			sb.append(space + "text=" + "{{\\rotatebox{90}{\\textbf{" + state.getText() + "}}} }," + "\n");
+			sb.append(space + "text=" + "{{\\rotatebox{90}{\\textbf{\\footnotesize $" + state.getText() + "$}}} }," + "\n");
 
 		} else {
 			sb.append(space + "text=" + "{\\hspace*" + "{-2mm}" + "}," + "\n");
@@ -74,7 +74,7 @@ public class LaTexGeneratorStateDomain {
 		sb.append("\n");
 		
 		if (state.isText()) {
-			sb.append(space + "text=" + "{{\\rotatebox{90}{\\textbf{" + state.getText() + "}}} }," + "\n");
+			sb.append(space + "text=" + "{{\\rotatebox{90}{\\textbf{\\footnotesize $" + state.getText() + "$}}} }," + "\n");
 
 		} else {
 			sb.append(space + "text=" + "{\\hspace*" + "{-2mm}" + "}," + "\n");
@@ -102,7 +102,7 @@ public class LaTexGeneratorStateDomain {
 		sb.append("\n");
 		
 		if (state.isText()) {
-			sb.append(space + "text=" + "{{\\rotatebox{270}{\\textbf{" + state.getText() + "}}} }," + "\n");
+			sb.append(space + "text=" + "{{\\rotatebox{270}{\\textbf{ \\footnotesize $" + state.getText() + "$}}} }," + "\n");
 
 		} else {
 			sb.append(space + "text=" + "{\\hspace*" + "{-2mm}" + "}," + "\n");
@@ -130,7 +130,7 @@ public class LaTexGeneratorStateDomain {
 		sb.append("\n");
 		
 		if (state.isText()) {
-			sb.append(space + "text=" + "{{\\rotatebox{270}{\\textbf{" + state.getText() + "}}} }," + "\n");
+			sb.append(space + "text=" + "{{\\rotatebox{270}{\\textbf{\\footnotesize $" + state.getText() + "$}}} }," + "\n");
 
 		} else {
 			sb.append(space + "text=" + "{\\hspace*" + "{-2mm}" + "}," + "\n");
@@ -180,10 +180,15 @@ public class LaTexGeneratorStateDomain {
 				text=text.replaceAll("¬", "");
 				text= "{$\\neg$}"+text;
 			}
-			text=text.replace("(", "($");
+			if(text.contains("(") && text.contains(")")) {
+				text=text.replace("(", "($");
+				text=text.replace(")","$)");
+				sb.append(text);
+			}else {
+				sb.append("$"+text+"$");
+			}
 			
-			text=text.replace(")","$)");
-			sb.append(text+"}}");
+			sb.append("}}");
 			//cond.get(i)+"}}"
 			if(i<cond.size()-1) {
 				sb.append(",");

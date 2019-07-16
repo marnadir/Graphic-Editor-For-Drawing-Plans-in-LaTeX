@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.graphics.Transform;
 import org.eclipse.swt.widgets.Composite;
 
@@ -33,6 +35,8 @@ public class InitialStateCanvas extends IStateCanvas  {
 
 				Font font = new Font(getDisplay(), "Arabic Transparent", 6, SWT.NORMAL);
 				e.gc.setFont(font);
+				Color colorNull=e.gc.getBackground();
+
 				
 				int avergWidth = 6;
 				//int avergWidth =e.gc.getFontMetrics().getAverageCharacterWidth();
@@ -41,16 +45,27 @@ public class InitialStateCanvas extends IStateCanvas  {
 				int startY =0;
 				
 				int numCond = state.getConds().size();
+				
 				if(state.isText) {
 					state.setLenIn(300);
 				}else {
 					state.setLenIn(state.getHeight());
 				}
+				
+				state.setLenIn(state.getHeight());
+
+				
 				if(state.isText) {
 					int val=getTextPosition(avergWidth);
-
-					e.gc.drawRectangle(startX, startY, 20, (int) (startY + state.getLenIn()));
-				  
+					Rectangle rect=new Rectangle(startX, startY, 20, (int) (startY + state.getLenIn()));
+					if(state.isFillColor()) {
+						e.gc.setBackground(getColorSWT());
+						e.gc.fillRectangle(rect);
+						e.gc.drawRectangle(rect);
+					}else {
+						e.gc.drawRectangle(rect);
+					}
+					
 					Transform t=new Transform(getDisplay());
 					t.rotate(90);
 					
@@ -62,7 +77,8 @@ public class InitialStateCanvas extends IStateCanvas  {
 					t.rotate(-90);
 					e.gc.setTransform(t);
 
-					
+					e.gc.setBackground(colorNull);
+
 				}else {
 					e.gc.setLineWidth(6);
 					e.gc.drawLine(startX, startY, startX, (int) (startY + state.getLenIn()));
