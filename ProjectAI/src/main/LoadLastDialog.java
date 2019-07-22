@@ -28,14 +28,16 @@ public class LoadLastDialog {
 	}
 
 	public void load(PlanView planView) {
-		this.planView=planView;
-		MessageBox dialog = new MessageBox(shell, SWT.OK | SWT.CANCEL | SWT.ICON_QUESTION);
-		dialog.setText("Question");
-		dialog.setMessage(text);
-		if(dialog.open() == SWT.OK) {
-			loadstateProgram();
+		this.planView = planView;
+		if (exitsLastVersion()) {
+			MessageBox dialog = new MessageBox(shell, SWT.OK | SWT.CANCEL | SWT.ICON_QUESTION);
+			dialog.setText("Question");
+			dialog.setMessage(text);
+			if (dialog.open() == SWT.OK) {
+				loadstateProgram();
+			}
 		}
-		
+
 	}
 	
 	private void loadstateProgram() {
@@ -53,11 +55,11 @@ public class LoadLastDialog {
 	
 	private void loadDomain(PlanContent planContent) {
 		if(path != null) {
-			File filePlan=new File(path);
+			File directory=new File(path);
 //			planContent.setSavedPllan(filePlan);
 //			planContent.setDirectory(filePlan.getParentFile());
 			LoadDomainCommand command=new LoadDomainCommand();
-			String path2=filePlan+"/Domain.txt";
+			String path2=directory+"/Domain.txt";
 			PlanView planView = null;
 			if(planContent.getParent() instanceof PlanView) {
 				 planView=(PlanView) planContent.getParent();
@@ -67,7 +69,17 @@ public class LoadLastDialog {
 		}
 	}
 	
-	
+	private boolean exitsLastVersion() {
+		if(path != null) {
+			File directory=new File(path);
+			if(directory.isDirectory()) {
+				if(directory.list().length>0) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
 
 	}
 	

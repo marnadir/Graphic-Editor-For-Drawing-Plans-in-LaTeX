@@ -65,7 +65,7 @@ public class SavePlanCommand implements ICommand {
 			}
 			planFile.createNewFile();
 
-			planContent.setDirectory(planFile.getParentFile());
+			//planContent.setDirectory(planFile.getParentFile());
 			data = new ArrayList<Object>();
 			prepareObject();
 			WriteObjectToFile(data);

@@ -40,7 +40,12 @@ public class SaveDomainCommand  implements ICommand{
 		if(canExecute(var1, var2)) {
 			name=(String)var1;
 			domainView=(DomainView)var2;
-			createFileLog(name);
+			if(name.contains("dirLog")) {
+				createFileLog(name+"/Domain.txt");
+			}else {
+				createFileDomain(name);
+
+			}
 			ArrayList<Object> data = new ArrayList<Object>();
 			data.add(prepareGlobalValueArray());
 			data.add(domainView.getTreeAction().getActionList());
@@ -62,7 +67,7 @@ public class SaveDomainCommand  implements ICommand{
 	}
 
 	public void copyFileDomain(String path,DomainView domainView) {
-		createDirectorLog();
+		createDirectorDomain();
 		execute("tempDomain.txt", domainView);
 		path=path+"/tempDomain.txt";
 		fileLog.renameTo(new File(path));
@@ -110,8 +115,23 @@ public class SaveDomainCommand  implements ICommand{
 	}
 
 
+	private void createFileLog(String path) {
+		fileLog = new File(path);
+		
+		if (!fileLog.exists()) {
+			try {
+				fileLog.createNewFile();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}else {
+			
+		}
+	}
+	
 
-	public void createFileLog(String name) {
+	private void createFileDomain(String name) {
 		String filepath = dirDomain.getAbsolutePath();
 		fileLog = new File(filepath, name);
 		
@@ -128,7 +148,7 @@ public class SaveDomainCommand  implements ICommand{
 
 	}
 	
-	public void createDirectorLog() {
+	public void createDirectorDomain() {
 		String filepath = System.getProperty("user.home");
 		directory = new File(filepath + "/TDP");
 		dirDomain = new File(filepath + "/TDP" + "/dirDomain");

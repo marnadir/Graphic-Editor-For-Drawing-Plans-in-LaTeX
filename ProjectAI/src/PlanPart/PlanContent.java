@@ -184,6 +184,10 @@ public class PlanContent extends Canvas {
 
 
 	public File getDirectory() {
+//		if(LatexFile != null) {
+//			return LatexFile.getParentFile();
+//		}
+			
 		return directory;
 	}
 

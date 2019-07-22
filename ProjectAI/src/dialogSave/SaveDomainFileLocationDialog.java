@@ -33,7 +33,7 @@ public class SaveDomainFileLocationDialog extends FileDialog {
 
 	public void createContent() {
 		SaveDomainCommand command = new SaveDomainCommand();
-		command.createDirectorLog();
+		command.createDirectorDomain();
 		String[] filterNames = new String[] { "*.txt", "All Files (*)" };
 		String[] filterExtensions = new String[] { "*.txt", "*" };
 		String filterPath = System.getProperty("user.home") + "/TDP" + "/dirDomain";

@@ -46,6 +46,7 @@ public class PlanView  extends CTabFolder{
 	PlanContent contentPlan;
 	SaveLAtexCode dialog = null;
 	SavePlanDialog dialogPlan;
+	PlanContent planContent;
 	
 	public PlanView(Composite parent, int style) {
 		super(parent, style);
@@ -234,7 +235,13 @@ public class PlanView  extends CTabFolder{
 			
 				}else {
 					dir=getPlan().getDirectory().getAbsolutePath();
-					if(getPlan().getLatexFile()==null) {
+					if(dir.contains("dirLog")) {
+						dialog.createContent();
+						dir=dialog.getFilterPath();
+						getPlan().setLatexFile(dialog.getFileLatex());
+						planContent.setDirectory(dialog.getFileLatex().getParentFile());
+
+					}else if(getPlan().getLatexFile()==null) {
 						dialog.createFilePlan(dir,"PlanLatex.tex");
 						getPlan().setLatexFile(dialog.getFileLatex());
 
@@ -256,7 +263,6 @@ public class PlanView  extends CTabFolder{
 				command2.copyFileDomain(dir, domainView);
 				
 				
-				//consoleViewPlan.saveFile();
 				
 				
 				
@@ -399,7 +405,7 @@ public class PlanView  extends CTabFolder{
 	}
 	
 	public PlanContent getPlan() {
-		PlanContent planContent=(PlanContent) getSelection().getControl();
+		planContent=(PlanContent) getSelection().getControl();
 		return planContent;
 		
 	}

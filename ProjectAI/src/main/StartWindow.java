@@ -37,16 +37,16 @@ public class StartWindow {
 			}
 		});
 		
-		LoadLastDialog loadDialog=new LoadLastDialog(shell, "Load the last state of the program?");
+		LoadLastDialog loadDialog=new LoadLastDialog(shell, "Load the last autosave?");
 		loadDialog.load(principalView.getPlanView());
 		
 		
 		Timer timer=new Timer();
-		
 		SaveStatePlan exe=new SaveStatePlan();
 		exe.setDomainView(principalView.getPlanView().getDomainView());
-		
-		timer.schedule(exe, 0,5000);
+		timer.schedule(exe, 0,2000);
+
+	
 		
 		
 		while (!shell.isDisposed()) {
