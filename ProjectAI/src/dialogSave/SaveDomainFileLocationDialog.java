@@ -23,7 +23,7 @@ public class SaveDomainFileLocationDialog extends FileDialog {
 	ArrayList<Action> updateActionListDomain;
 	DomainView domainView;
 	PlainView plainView;
-	File dirLog;
+	File dirDomain;
 	File dirPlan;
 
 	public SaveDomainFileLocationDialog(Shell parent, int style) {
@@ -36,7 +36,7 @@ public class SaveDomainFileLocationDialog extends FileDialog {
 		command.createDirectorLog();
 		String[] filterNames = new String[] { "*.txt", "All Files (*)" };
 		String[] filterExtensions = new String[] { "*.txt", "*" };
-		String filterPath = System.getProperty("user.home") + "/TDP" + "/dirLog";
+		String filterPath = System.getProperty("user.home") + "/TDP" + "/dirDomain";
 		String platform = SWT.getPlatform();
 		if (platform.equals("win32")) {
 			filterNames = new String[] { "Image Files", "All Files (*.*)" };

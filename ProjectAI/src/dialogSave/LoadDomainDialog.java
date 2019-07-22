@@ -24,7 +24,7 @@ public class LoadDomainDialog extends FileDialog {
 		
 		String [] filterNames = new String [] {"*.txt","All Files (*)"};
 		String [] filterExtensions = new String [] {"*.txt", "*"};
-		String filterPath = System.getProperty("user.home")+"/TDP"+"/dirLog";
+		String filterPath = System.getProperty("user.home")+"/TDP"+"/dirDomain";
 		String platform = SWT.getPlatform();
 		if (platform.equals("win32")) {
 			filterNames = new String [] {"Image Files", "All Files (*.*)"};

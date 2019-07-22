@@ -2,8 +2,6 @@ package LaTex;
 
 import java.text.NumberFormat;
 import java.util.Locale;
-
-import Action.Action;
 import PlanPart.PlanContent;
 import so_goalState.GoalStateCanvas;
 import so_goalState.IState;

@@ -15,7 +15,7 @@ import View.DomainView;
 public class SaveDomainCommand  implements ICommand{
 
 	private DomainView domainView;
-	File dirLog;
+	File dirDomain;
 	File directory;
 	File fileLog;
 	
@@ -112,7 +112,7 @@ public class SaveDomainCommand  implements ICommand{
 
 
 	public void createFileLog(String name) {
-		String filepath = dirLog.getAbsolutePath();
+		String filepath = dirDomain.getAbsolutePath();
 		fileLog = new File(filepath, name);
 		
 		if (!fileLog.exists()) {
@@ -131,7 +131,7 @@ public class SaveDomainCommand  implements ICommand{
 	public void createDirectorLog() {
 		String filepath = System.getProperty("user.home");
 		directory = new File(filepath + "/TDP");
-		dirLog = new File(filepath + "/TDP" + "/dirLog");
+		dirDomain = new File(filepath + "/TDP" + "/dirDomain");
 
 		// if the directory does n exist, create it
 		if (!directory.exists()) {
@@ -147,11 +147,11 @@ public class SaveDomainCommand  implements ICommand{
 			}
 		}
 
-		if (!dirLog.exists()) {
+		if (!dirDomain.exists()) {
 			boolean result = false;
 
 			try {
-				dirLog.mkdir();
+				dirDomain.mkdir();
 				result = true;
 			} catch (SecurityException se) {
 				// handle it

@@ -123,7 +123,7 @@ public class PrincipalView {
 	public void createDirector() {
 		String filepath = System.getProperty("user.home");
 		directory = new File(filepath + "/TDP");
-		File dirLog = new File(filepath + "/TDP" + "/dirLog");
+		File dirDomain = new File(filepath + "/TDP" + "/dirDomain");
 		File dirLatex = new File(filepath + "/TDP" + "/dirLatex");
 
 		// if the directory does not exist, create it
@@ -140,11 +140,11 @@ public class PrincipalView {
 			}
 		}
 
-		if (!dirLog.exists()) {
+		if (!dirDomain.exists()) {
 			boolean result = false;
 
 			try {
-				dirLog.mkdir();
+				dirDomain.mkdir();
 				result = true;
 			} catch (SecurityException se) {
 				// handle it
