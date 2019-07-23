@@ -78,11 +78,14 @@ public class LineVsTextDialog extends IDialog {
 		Button btnLine = new Button(compoButton, SWT.RADIO);
 		btnLine.setText("Line");
 
+		
 		textButton = new Composite(mainComposite, SWT.NONE );
 		textButton.setLayout(new GridLayout(2, false));
 		textButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
-
+		
+		
+		
 		Label l = new Label(textButton, SWT.ALL);
 		l.setText("Name of state:");
 
@@ -142,7 +145,8 @@ public class LineVsTextDialog extends IDialog {
 
 		
 		mainComposite.requestLayout();
-		setSize(300,200);
+
+		setSize(300,250);
 
 		
 
