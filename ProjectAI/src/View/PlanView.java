@@ -231,6 +231,7 @@ public class PlanView  extends CTabFolder{
 						getPlan().setLatexFile(dialog.getFileLatex());
 						getPlan().setDirectory(dialog.getFileLatex().getParentFile());
 						dir=dialog.getFilterPath();
+
 					}
 			
 				}else {
@@ -263,8 +264,7 @@ public class PlanView  extends CTabFolder{
 				command2.copyFileDomain(dir, domainView);
 				
 				
-				
-				
+				getPlan().setSavedPllan(command.getPlanFile());
 				
 				
 			
