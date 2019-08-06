@@ -18,7 +18,7 @@ import PlanPart.OrderConstrain;
 import PlanPart.OrderConstrainCanvas;
 import View.PlanView;
 /** 
- *dialog used to create a new constrain(casual link/ordering constrain).
+ *dialog used to create a new constrain(causal link/ordering constrain).
  *
  **/
 public class NewConnectionDialog extends IDialog {
@@ -73,7 +73,7 @@ public class NewConnectionDialog extends IDialog {
 		compInfo.setLayout(new GridLayout());
 		compInfo.setText("Info");
 		info=new Label(compInfo, SWT.ALL);
-		info.setText("Creation of casual link"+"\n"+"or ordering constrain");
+		info.setText("Creation of causal link"+"\n"+"or ordering constrain");
 		ordBtn.addListener(SWT.Selection, getOrdBtnList());
 		btnLink.addListener(SWT.Selection, getArchBtnList());
 
@@ -91,9 +91,9 @@ public class NewConnectionDialog extends IDialog {
 				isConstrain=false;
 				orderCond = null;
 				compDirect.setVisible(true);
-				l1.setText("Precond. :" + "Select the point");
+				l1.setText("Producer effect : " + "Select the point");
 				l1.pack();
-				l2.setText("Effect   :" + "Select the point");
+				l2.setText("Consumer precondition : " + "Select the point");
 				l2.pack();
 				compPoint.pack();
 				pack();
@@ -159,13 +159,11 @@ public class NewConnectionDialog extends IDialog {
 							&& !l2.getText().contains("Select the point")) {
 						link.drawLine();
 						planView.getPlan().getLink().add(link);
-						l1.setText("First Cond. :" + "Select the point");
-						l2.setText("Second Cond. :" + "Select the point");
+						l1.setText("Producer effect : " + "Select the point");
+						l2.setText("Consumer precondition : " + "Select the point");
 						l1.pack();
 						l2.pack();
 						link.removeL();
-						// link.removelistener(l1, l2,archBtn);
-
 					}
 				} else if (orderCond != null) {
 					if (!(l1.getText().contains("null")) && !(l2.getText().contains("null"))) {
@@ -182,7 +180,6 @@ public class NewConnectionDialog extends IDialog {
 						l2.setText(c1 + "<" + c2);
 						l1.pack();
 						l2.pack();
-						// orderCond.removelistener(l2);
 
 					}
 				}

@@ -1,6 +1,6 @@
 package LaTex;
 /**
- * Generate the LateX code for the plan-actions,casual link and ordering constrain.
+ * Generate the LateX code for the plan-actions,causal link and ordering constrain.
  * @author nadir
  * */
 import java.text.NumberFormat;
@@ -270,24 +270,17 @@ public class LaTexGeneratorNode {
 			testo +="{$"+variable[i]+"$}";
 		}
 		
+		
 		StringBuilder sb=new StringBuilder();
 		sb.append(testo);
 
+		if(num==1) {
+			sb.append("{}");
+		}
 		
 		return sb.toString();
 	}
 	
-	private String getPositionToInit(ICanvas node) {
-		StringBuilder sb=new StringBuilder();	
-		int y=(node.getParent().getLocation().y)-(planContent.getInitialStateCanvas().getParent().getLocation().y);
-		sb.append("("+convertInCm(y)+"cm and ");
-		int x=node.getParent().getLocation().x-planContent.getInitialStateCanvas().getParent().getLocation().x;
-		sb.append(convertInCm(x)+"cm of init.north east");
-		
-		return sb.toString();
-
-		
-	}
 	
 	
 	private String getPosition(ICanvas node) {
@@ -328,7 +321,7 @@ public class LaTexGeneratorNode {
 	private boolean actionHasVariable(Action a) {
 		boolean result=false;
 		String name=a.getName();
-		if(name.contains("(")&& name.contains(",")) {
+		if(name.contains("(")&& name.contains(")")) {
 			result=true;
 		}
 		

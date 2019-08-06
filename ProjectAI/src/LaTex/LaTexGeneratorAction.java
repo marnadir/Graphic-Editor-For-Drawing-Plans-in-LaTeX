@@ -46,7 +46,7 @@ public class LaTexGeneratorAction {
 	private boolean actionHasVariable(Action a) {
 		boolean result=false;
 		String name=a.getName();
-		if(name.contains("(")&& name.contains(",")) {
+		if(name.contains("(")&& name.contains(")")) {
 			result=true;
 		}
 		
@@ -249,21 +249,33 @@ public class LaTexGeneratorAction {
 	 */
 	public String getCond(String string) {
 
-		String testo = string;
+
+		String name[]=string.split("\\(");
+		String variable[]=name[1].split("\\)");
+		variable=variable[0].split(",");
+		int num=variable.length;
+		
 		if(string.startsWith("¬")) {
-			testo=testo.replace("¬","");
+			name[0]=name[0].replace("¬","");
 		}
-        testo = mapping.get(testo);
+	
+		String testo="";
+		for(int i=0;i<num;i++) {
+			testo +=mapping.get(variable[i])+",";
+		}
+		
+		testo=testo.substring(0, testo.length()-1);
+
+		
 		if(string.startsWith("¬")){
-			testo=testo.replaceAll("¬", "");
-			testo= "{$\\neg$}$"+testo;
+			name[0]= "{$\\neg$}$"+name[0];
 		}
 		StringBuilder sb = new StringBuilder();
 		if(string.startsWith("¬")){
-			sb.append("{{\\footnotesize " + testo +"$}}");
+			sb.append("{{\\footnotesize " + name[0]+"("+testo +")$}}");
 
 		}else {
-			sb.append("{{\\footnotesize $" + testo +"$}}");
+			sb.append("{{\\footnotesize $"+ name[0] + "("+testo +")$}}");
 
 		}
 

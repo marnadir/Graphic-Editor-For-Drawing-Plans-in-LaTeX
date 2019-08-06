@@ -22,7 +22,7 @@ import org.eclipse.swt.widgets.MessageBox;
 
 import LaTex.LaTexGeneratorNode;
 /**
- * generate the casual link.
+ * generate the causal link.
  * @author nadir
  * */
 public class LinkCanvas {
@@ -85,7 +85,7 @@ public class LinkCanvas {
 
 								oval1 = canvasContainer.getOvalCounter().getListOval().get(i);
 //								c1 = comp;
-								l1.setText("First Cond. :" + oval1.getCond());
+								l1.setText("Producer effect :" + oval1.getCond());
 								l1.pack();
 
 							}
@@ -99,7 +99,7 @@ public class LinkCanvas {
 										.getNode()) {
 									oval2 = canvasContainer.getOvalCounter().getListOval().get(i);
 //									c2 = comp;
-									l2.setText("Second Cond. :" + oval2.getCond());
+									l2.setText("Consumer precondition :" + oval2.getCond());
 									l2.pack();
 								}
 //								drawLine();

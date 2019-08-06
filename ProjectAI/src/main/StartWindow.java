@@ -54,7 +54,7 @@ public class StartWindow {
 				display.sleep();
 		}
 		display.dispose();
-	
+		timer.cancel();
 	
 		
 		
