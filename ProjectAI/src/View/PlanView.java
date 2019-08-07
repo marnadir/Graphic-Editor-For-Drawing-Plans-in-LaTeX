@@ -273,9 +273,8 @@ public class PlanView  extends CTabFolder{
 
 						String cmd1="cd "+dir;
 						
-						//dialog.getFileName();
+					
 						String cmd2="pdflatex "+dialog.getFileLatex().getName()+" -synctex=1 -interaction=nonstopmode";
-						//String cmd3="xdg-open LatexPlan.pdf";
 								
 						Process process = Runtime.getRuntime().exec(new String[] { "bash", "-c",
 								cmd1+" && "+cmd2});
@@ -296,7 +295,6 @@ public class PlanView  extends CTabFolder{
 					catch (IOException  e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
-
 					}                       
 				
 				

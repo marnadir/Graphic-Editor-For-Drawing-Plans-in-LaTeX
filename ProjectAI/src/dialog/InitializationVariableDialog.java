@@ -99,20 +99,33 @@ public class InitializationVariableDialog extends IDialog{
 	
 	public String getNewNameCond(String string) {
 		StringBuilder sb = new StringBuilder();
-		String test=string;
-		if(string.contains("¬")) {
-			test=string.replace("¬","");
-			sb.append("¬"+mapping.get(test));
-		}else {
-			sb.append(mapping.get(test));
-
+		String name[]=string.split("\\(");
+		String variable[]=name[1].split("\\)");
+		variable=variable[0].split(",");
+		String test = ""  ;
+		int num=variable.length;
+		for(int i=0;i<num;i++) {
+			if(mapping.get(variable[i])!=null) {
+				test+=mapping.get(variable[i]);
+			}else {
+				test+=(variable[i]);
+			}
+			if(i<num-1) {
+				test=test+",";
+			}
 		}
+		
+	
+		sb.append(name[0]+"("+test+")");
+		
+
+		
 	
 		
 		return sb.toString();
 	}
 	
-	public ArrayList<String> getNewCond(ArrayList<String> cond){
+	private ArrayList<String> getNewCond(ArrayList<String> cond){
 		ArrayList<String> conds=new ArrayList<>();
 		
 		for(String c1:cond) {
@@ -162,18 +175,40 @@ public class InitializationVariableDialog extends IDialog{
 			if (!(labelList.get(i).getText().equals(textList.get(i).getText()))) {
 				while (iter.hasNext()) {
 					Oval o = iter.next();
-					if (o.getNode().getAction().equals(action)) {
+					if (o.getNode() != null) {
 						if (o.getNode().getAction().equals(action)) {
-							o.dispose();
-							iter.remove();
-						}
-
+								if(isVariable(o.getCond(), action)) {
+									o.dispose();
+									iter.remove();
+								}					
+							}	
 					}
-
 				}
 			}
 		}
 
 	}
 
+	private boolean isVariable(String string,Action action) {
+		
+		String name[]=string.split("\\(");
+		String variable[]=name[1].split("\\)");
+		variable=variable[0].split(",");
+		
+		String name2[]=action.getName().split("\\(");
+		String variable2[]=name2[1].split("\\)");
+		variable2=variable2[0].split(",");
+		
+		for(int i=0;i<variable.length;i++) {
+			for(int j=0;j<variable2.length;j++) {
+				if(variable[i]==variable2[j]) {
+					return true;
+
+				}
+			}
+		}
+		return false;
+	}
+	
+	
 }
