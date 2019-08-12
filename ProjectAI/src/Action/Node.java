@@ -5,8 +5,11 @@ import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Listener;
 
 import LaTex.LaTexGeneratorNode;
 import Menu.MenuContentAction;
@@ -20,7 +23,12 @@ public class Node extends ICanvas {
 	
 	public  String ID;
 	String latexCode;
-	
+    private int initialFontSize = -1;
+    private  Font  font;
+	public static float scale = 1;
+
+
+
 
 
 	public Node(Composite parent, int style, Action a) {
@@ -29,6 +37,7 @@ public class Node extends ICanvas {
 
 	@Override
 	public void draw() {
+			
 		this.addPaintListener(new PaintListener() {
 
 			@Override
@@ -39,13 +48,29 @@ public class Node extends ICanvas {
 				/* draw precs with their "point" */
 
 				int y = 20;
+
 				
-				Font font = new Font(getDisplay(), "Arabic Transparent", 6, SWT.NORMAL);
+				Font tempFont = new Font(getDisplay(), "Arabic Transparent", 6, SWT.NORMAL);
+	            FontData data = tempFont.getFontData()[0];
+	            if (initialFontSize == -1)
+	                initialFontSize = tempFont.getFontData()[0].getHeight();
+	            else
+	            {
+	                if(font != null && !font.isDisposed())
+	                    font.dispose();
+
+	                data.setHeight((int)(initialFontSize * scale));
+
+	                font = new Font(getDisplay(), data);
+
+	                e.gc.setFont(font);
+	            }
+
 				e.gc.setFont(font);
 				Color colorNull=e.gc.getBackground();
 				
-				int posY=(int) (-5+(action.getHeightRect()/action.getNumPrec())/2)+y; 
-				int incr=(int) (action.getHeightRect()/action.getNumPrec());
+				int posY=(int) (-5+((action.getHeightRect())/action.getNumPrec())/2)+y; 
+				int incr=(int) ((action.getHeightRect())/action.getNumPrec());
 				
 				if(action.isDefaultAction()) {
 					if(action.isPrimitive) {
@@ -65,13 +90,13 @@ public class Node extends ICanvas {
 					String string = action.getPrec().get(i);
 
 					if (action.isShownCond()) {
-						e.gc.drawLine(0, posY, (int) (action.getLengthPrec()), posY);
-						e.gc.drawString(string, 2, posY - 10, false);
-						addOval(action, string,parent.getLocation().x-6, parent.getLocation().y+ posY-1);
+						e.gc.drawLine(0, (int) (posY*scale), (int) (action.getLengthPrec()*scale), (int) (posY*scale));
+						e.gc.drawString(string, (int) (2*scale), (int) ((posY- 10)*scale), false);
+						addOval(action, string,parent.getLocation().x-6, (int) (parent.getLocation().y+ posY*scale-1));
 
 					} else {
-						e.gc.drawLine(0, posY, (int) action.getStandardLengthPrec(), posY);
-						addOval(action, string,parent.getLocation().x-6, parent.getLocation().y+ posY-1);
+						e.gc.drawLine(0, (int) (posY*scale), (int) (action.getStandardLengthPrec()*scale), (int) (posY*scale));
+						addOval(action, string,parent.getLocation().x-6, parent.getLocation().y+ (int) (posY*scale)-1);
 
 					}
 
@@ -87,12 +112,12 @@ public class Node extends ICanvas {
 
 				}
 				if (action.isShownCond()) {
-					rect = new Rectangle((int)(action.getLengthPrec()), y - 5, (int)action.getWidthRect(),
-							(int)action.getHeightRect());
+					rect = new Rectangle((int)(action.getLengthPrec()*scale), y - 5, (int)(action.getWidthRect()*scale),
+							(int)(action.getHeightRect()*scale));
 
 				} else {
-					rect = new Rectangle((int)(action.getStandardLengthPrec()), y - 5, (int)action.getWidthRect(),
-							(int)action.getHeightRect());
+					rect = new Rectangle((int)(action.getStandardLengthPrec()*scale), y - 5, (int)(action.getWidthRect()*scale),
+							(int)(action.getHeightRect()*scale));
 				}
 
 
@@ -127,14 +152,14 @@ public class Node extends ICanvas {
 				
 				
 				if (action.isShownName()) {
-					e.gc.drawString(action.getName(), val, rect.y + rect.height / 3);
+					e.gc.drawString(action.getName(), (int) (val*scale), rect.y + rect.height / 3);
 				}
 
 				e.gc.setBackground(colorNull);
 
 				
-				posY=(int) (-5+(action.getHeightRect()/action.getNumEff())/2)+y; 
-				incr=(int) (action.getHeightRect()/action.getNumEff());	
+				posY=(int) (-5+((action.getHeightRect())/action.getNumEff())/2)+y; 
+				incr=(int) ((action.getHeightRect())/action.getNumEff());	
 				
 				resizeParent();
 				for (int i = 0; i < action.getEffect().size(); i++) {
@@ -142,25 +167,46 @@ public class Node extends ICanvas {
 					String string = action.getEffect().get(i);
 
 					if (action.isShownCond()) {
-						e.gc.drawLine(x, posY, (int) (x + action.getLengthEff()), posY);
-						e.gc.drawString(string, x + 2, posY - 10, false);
-						addOval(action,string,parent.getLocation().x+parent.getBounds().width+1,parent.getLocation().y+ posY-1);
+						e.gc.drawLine(x, (int) (posY*scale), (int) (x + action.getLengthEff()*scale), (int) (posY*scale));
+						e.gc.drawString(string, x + 2, (int) ((posY- 10)*scale), false);
+						addOval(action,string,parent.getLocation().x+parent.getBounds().width+1,(int) (parent.getLocation().y+ scale*posY-1));
 
 					} else {
 
-						e.gc.drawLine(x, posY, (int) (x + action.getStandardLengthEff()), posY);
-						addOval(action,string,parent.getLocation().x+parent.getBounds().width+1,parent.getLocation().y+ posY-1);
+						e.gc.drawLine(x, (int)(posY*scale), (int) (x + action.getStandardLengthEff()*scale), (int)(posY*scale));
+						addOval(action,string,parent.getLocation().x+parent.getBounds().width+1,(int) (parent.getLocation().y+ posY*scale-1));
 
 					}
 
-					posY = posY + incr;
+					posY = (int) (posY + incr);
 
 				}
 				resizeParent();
 				redraw();
 			}
 		});
+		 this.addListener(SWT.MouseWheel, new Listener()
+		    {
+		        @Override
+		        public void handleEvent(Event event)
+		        {
+		            if (event.count > 0)
+		                scale += .1f;
+		            else
+		                scale -= .1f;
 
+		            if(scale>1.2) {
+		            	scale=1.2f;
+		            }
+		            if(scale<0.6) {
+		            	scale=0.6f;
+		            }
+		            scale = Math.max(scale, 0);
+
+		            redraw();
+		        }
+		    });
+		
 		this.addMenuDetectListener(new MenuContentAction(this));
 		resizeParent();
 
@@ -208,4 +254,24 @@ public class Node extends ICanvas {
 
 	}
 
+	public void resizeParent() {
+		if (action.isShownCond()) {
+			double x1 = action.getLengthPrec()*scale + action.getLengthEff()*scale + (action.getWidthRect()*scale)+2;
+			if(action.getPrec().size()==0 && action.getEffect().size()==0) {
+				x1=x1+5;
+			}
+			double y1 = action.getHeightRect()*scale + 40;
+			parent.setSize((int)x1,(int) y1);
+
+		} else {
+			double x1 ;
+			x1=action.getStandardLengthPrec()*scale + action.getStandardLengthEff()*scale + action.getWidthRect()*scale+2;
+			if(action.getPrec().size()==0 && action.getEffect().size()==0) {
+				x1=x1+5;
+			}
+			double y1 = action.getHeightRect()*scale + 40;
+			parent.setSize((int)x1, (int)y1);
+		}
+	}
+	
 }

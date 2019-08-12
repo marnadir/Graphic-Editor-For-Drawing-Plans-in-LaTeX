@@ -86,21 +86,10 @@ public class PdfView  extends Composite{
 		            canvas.redraw();
 		        }
 		    });
-//		    canvas.addListener(SWT.Dispose, new Listener()
-//		    {
-//		        @Override
-//		        public void handleEvent(Event event)
-//		        {
-//		            if (!image.isDisposed())
-//		                image.dispose();
-//		            if (!font.isDisposed())
-//		                font.dispose();
-//		        }
-//		    });
+
 
 		}
 		canvas.redraw();
-//		canvas = new Canvas(this, SWT.ALL);
 		
 		
 		

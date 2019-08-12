@@ -6,12 +6,18 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.dnd.DND;
 import org.eclipse.swt.dnd.DragSource;
 import org.eclipse.swt.dnd.Transfer;
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.MouseWheelListener;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Listener;
+
 import DNDAaction.MyDragActionListener;
 import Menu.MenuContentAction;
 import dataTrasfer.MyTransfer;
@@ -24,6 +30,10 @@ public class ActionDomainCanvas  extends ICanvas{
 
 	int style;
 	PaintListener p;
+    private int initialFontSize = -1;
+    private  Font  font;
+	public static float scale = 1;
+
 
 	
 	public ActionDomainCanvas(Composite parent, int style, Action a) {
@@ -38,8 +48,36 @@ public class ActionDomainCanvas  extends ICanvas{
 		this.redraw();
 		this.addMenuDetectListener(new MenuContentAction(this));
 		resizeParent();
+		this.addMouseWheelListener(getMouseListener());
+		
 	}
 	
+	private MouseWheelListener getMouseListener() {
+		
+		MouseWheelListener listener=new MouseWheelListener() {
+			
+			@Override
+			public void mouseScrolled(MouseEvent e) {
+				if (e.count > 0)
+	                scale += .2f;
+	            else
+	                scale -= .2f;
+
+	            if(scale>1.2) {
+	            	scale=1.2f;
+	            }
+	            if(scale<0.6) {
+	            	scale=0.6f;
+	            }
+	            scale = Math.max(scale, 0);
+
+	            redraw();
+				
+			}
+		};
+		
+		return listener;
+	}
 	
 	public PaintListener createPaintListener() {
 		
@@ -51,7 +89,23 @@ public class ActionDomainCanvas  extends ICanvas{
 
 				action.resize();
 		
-				Font font = new Font(getDisplay(), "Arabic Transparent", 6, SWT.NORMAL);
+				Font tempFont = new Font(getDisplay(), "Arabic Transparent", 6, SWT.NORMAL);
+	            FontData data = tempFont.getFontData()[0];
+	            if (initialFontSize == -1)
+	                initialFontSize = tempFont.getFontData()[0].getHeight();
+	            else
+	            {
+	                if(font != null && !font.isDisposed())
+	                    font.dispose();
+
+	                data.setHeight((int)(initialFontSize * scale));
+
+	                font = new Font(getDisplay(), data);
+
+	                e.gc.setFont(font);
+	            }
+
+				e.gc.setFont(font);
 			
 				Color colorNull=e.gc.getBackground();
 				e.gc.setFont(font);
@@ -73,18 +127,18 @@ public class ActionDomainCanvas  extends ICanvas{
 				}
 
 				
-				int posY=(int) ((action.getHeightRect()/action.getNumPrec())/2)+y; 
+				int posY=(int) ((10+action.getHeightRect()/action.getNumPrec())/2)+y; 
 				int incr=(int) (action.getHeightRect()/action.getNumPrec());
 
 				for (int i = 0; i < action.getNumPrec(); i++) {
 
 					if (action.isShownCond()) {
 						String string = action.getPrec().get(i);
-						e.gc.drawLine(0, posY, (int) (action.getLengthPrec()), posY);
-						e.gc.drawString(string, 2, posY - 10, false);
+						e.gc.drawLine(0, (int) (posY*scale), (int) (action.getLengthPrec()*scale), (int) (posY*scale));
+						e.gc.drawString(string, 2, (int) ((posY- 10)*scale), false);
 
 					} else {
-						e.gc.drawLine(0, posY, (int) action.getStandardLengthPrec(), posY);
+						e.gc.drawLine(0, (int) (posY*scale), (int) ((int) action.getStandardLengthPrec()*scale), (int) (posY*scale));
 					}
 
 					posY = posY + incr;
@@ -99,9 +153,9 @@ public class ActionDomainCanvas  extends ICanvas{
 
 				}
 				if (action.isShownCond()) {
-					rect = new Rectangle((int)(action.getLengthPrec()),y,(int) action.getWidthRect(), (int)action.getHeightRect());
+					rect = new Rectangle((int)(action.getLengthPrec()*scale),y,(int) ( action.getWidthRect()*scale), (int) (action.getHeightRect()*scale));
 				} else {
-					rect = new Rectangle((int)(action.getStandardLengthPrec()), y, (int)action.getWidthRect(),(int) action.getHeightRect());	
+					rect = new Rectangle((int)(action.getStandardLengthPrec()*scale), y, (int) (action.getWidthRect()*scale),(int) (action.getHeightRect()*scale));	
 				}
 
 
@@ -138,27 +192,28 @@ public class ActionDomainCanvas  extends ICanvas{
 
 				
 				if (action.isShownName()) {
-					e.gc.drawString(action.getName(), val, rect.y + rect.height / 3);
+					e.gc.drawString(action.getName(), (int) (val*scale), rect.y + rect.height / 3);
 				}
 
 				e.gc.setBackground(colorNull);
 				
 				
 				
-				posY=(int) ((action.getHeightRect()/action.getNumEff())/2)+y; 
-				incr=(int) (action.getHeightRect()/action.getNumEff());	
-				
+				posY=(int) (10+(action.getHeightRect())/action.getNumEff())/2+y; 
+				incr=(int) ((action.getHeightRect())/action.getNumEff());	
+				resizeParent();
+
 				for (int i = 0; i < action.getEffect().size(); i++) {
 					int x = rect.x + rect.width;
 
 					if (action.isShownCond()) {
 						String string = action.getEffect().get(i);
-						e.gc.drawLine(x, posY, (int) (x + action.getLengthEff()), posY);
-						e.gc.drawString(string, x + 2, posY - 10, false);
+						e.gc.drawLine(x, (int) (posY*scale), (int) (x + action.getLengthEff()*scale), (int) (posY*scale));
+						e.gc.drawString(string, (int) (x + 2), (int) ((posY- 10)*scale) , false);
 
 					} else {
 
-						e.gc.drawLine(x, posY, (int) (x + action.getStandardLengthEff()), posY);
+						e.gc.drawLine(x,  (int) (posY*scale), (int) (x + action.getStandardLengthEff()*scale),  (int) (posY*scale));
 
 					}
 
@@ -212,6 +267,26 @@ public class ActionDomainCanvas  extends ICanvas{
   	  }
   	  
     }
+     @Override
+	public void resizeParent() {
+		if (action.isShownCond()) {
+			double x1 = action.getLengthPrec()*scale + action.getLengthEff()*scale + (action.getWidthRect()*scale)+2;
+			if(action.getPrec().size()==0 && action.getEffect().size()==0) {
+				x1=x1+5;
+			}
+			double y1 = action.getHeightRect()*scale + 40;
+			parent.setSize((int)x1,(int) y1);
+
+		} else {
+			double x1 ;
+			x1=action.getStandardLengthPrec()*scale + action.getStandardLengthEff()*scale + action.getWidthRect()*scale+2;
+			if(action.getPrec().size()==0 && action.getEffect().size()==0) {
+				x1=x1+5;
+			}
+			double y1 = action.getHeightRect()*scale + 40;
+			parent.setSize((int)x1, (int)y1);
+		}
+	}
 	
 }
 

@@ -242,17 +242,35 @@ public class LaTexGeneratorAction {
 		return sb.toString();
 	}
 	
+	private boolean isFunction(String string) {
+		String name[]=string.split("\\(");
+		if(name.length>1) {
+			return true;
+		}
+		return false;
+	}
+	
 	
 	/*take the PRec/Eff and convert into correct format
 	 * 
 	 * at(Home) ---> at(#1)
 	 */
-	public String getCond(String string) {
+	private String getCond(String string) {
 
 
 		String name[]=string.split("\\(");
-		String variable[]=name[1].split("\\)");
-		variable=variable[0].split(",");
+	
+		String variable[];
+		
+		if(isFunction(string)) {
+			String variable2[]=name[1].split("\\)");
+			variable=variable2[0].split(",");
+		}else {
+			String variable2[]=name[0].split("\\)");
+			variable=variable2[0].split(",");
+		}
+		
+		
 		int num=variable.length;
 		
 		if(string.startsWith("¬")) {
@@ -266,18 +284,35 @@ public class LaTexGeneratorAction {
 		
 		testo=testo.substring(0, testo.length()-1);
 
+		StringBuilder sb=null;
 		
-		if(string.startsWith("¬")){
-			name[0]= "{$\\neg$}$"+name[0];
-		}
-		StringBuilder sb = new StringBuilder();
-		if(string.startsWith("¬")){
-			sb.append("{{\\footnotesize " + name[0]+"("+testo +")$}}");
+		if(isFunction(string)) {
+			if(string.startsWith("¬")){
+				name[0]= "{$\\neg$}$"+name[0];
+			}
+			 sb = new StringBuilder();
+			if(string.startsWith("¬")){
+				sb.append("{{\\footnotesize " + name[0]+"("+testo +")$}}");
 
+			}else {
+				sb.append("{{\\footnotesize $"+ name[0] + "("+testo +")$}}");
+
+			}
 		}else {
-			sb.append("{{\\footnotesize $"+ name[0] + "("+testo +")$}}");
+			if(string.startsWith("¬")){
+				name[0]= "{$\\neg$}$"+name[0];
+			}
+			 sb = new StringBuilder();
+			if(string.startsWith("¬")){
+				sb.append("{{\\footnotesize " + name[0]+"$}}");
 
+			}else {
+				sb.append("{{\\footnotesize $"+ name[0] + "$}}");
+
+			}
 		}
+		
+	
 
 		return sb.toString();
 	}

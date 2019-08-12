@@ -151,11 +151,10 @@ public class InitializationVariableDialog extends IDialog{
 					}
 					mapping.put(variable2[i],textList.get(i).getText());
 				}
-				
+				changeNameOfOval();
 				action.setName(getNewName(action.getName()));
 				action.setPrec(getNewCond(action.getPrec()));
 				action.setEffect(getNewCond(action.getEffect()));
-				changeNameOfOval();
 				dispose();
 
 			}
@@ -201,7 +200,7 @@ public class InitializationVariableDialog extends IDialog{
 		
 		for(int i=0;i<variable.length;i++) {
 			for(int j=0;j<variable2.length;j++) {
-				if(variable[i]==variable2[j]) {
+				if(variable[i].equals(variable2[j])) {
 					return true;
 
 				}

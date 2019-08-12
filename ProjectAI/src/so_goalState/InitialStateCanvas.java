@@ -3,10 +3,13 @@ package so_goalState;
 import java.util.ArrayList;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.MouseWheelListener;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.graphics.Transform;
 import org.eclipse.swt.widgets.Composite;
@@ -20,20 +23,40 @@ import PlanPart.PlanContent;
 
 public class InitialStateCanvas extends IStateCanvas  {
 
+	  private int initialFontSize = -1;
+	    private  Font  font;
+		public  float scale = 1;
 
 	public InitialStateCanvas(Composite parent, int style, IState state) {
-		super(parent, SWT.NONE, state);
+		super(parent, SWT.BORDER, state);
 	}
 
     @Override
 	public void draw() {
 		super.draw();
+		this.addMouseWheelListener(getMouseListener());
+
 		this.addPaintListener(new PaintListener() {
 
 			@Override
 			public void paintControl(PaintEvent e) {
 
-				Font font = new Font(getDisplay(), "Arabic Transparent", 6, SWT.NORMAL);
+				Font tempFont = new Font(getDisplay(), "Arabic Transparent", 6, SWT.NORMAL);
+	            FontData data = tempFont.getFontData()[0];
+	            if (initialFontSize == -1)
+	                initialFontSize = tempFont.getFontData()[0].getHeight();
+	            else
+	            {
+	                if(font != null && !font.isDisposed())
+	                    font.dispose();
+
+	                data.setHeight((int)(initialFontSize * scale));
+
+	                font = new Font(getDisplay(), data);
+
+	                e.gc.setFont(font);
+	            }
+
 				e.gc.setFont(font);
 				Color colorNull=e.gc.getBackground();
 
@@ -57,7 +80,7 @@ public class InitialStateCanvas extends IStateCanvas  {
 				
 				if(state.isText) {
 					int val=getTextPosition(avergWidth);
-					Rectangle rect=new Rectangle(startX, startY, 20, (int) (startY + state.getLenIn()));
+					Rectangle rect=new Rectangle(startX, (int) (startY*scale), (int) (20*scale), (int) ((startY + state.getLenIn())*scale));
 					if(state.isFillColor()) {
 						e.gc.setBackground(getColorSWT());
 						e.gc.fillRectangle(rect);
@@ -71,7 +94,7 @@ public class InitialStateCanvas extends IStateCanvas  {
 					
 					e.gc.setTransform(t);
 					
-					e.gc.drawString(state.getText(), val, -20);
+					e.gc.drawString(state.getText(), (int) (val*scale), (int) (-20*scale));
 					startX=20;
 					
 					t.rotate(-90);
@@ -81,7 +104,7 @@ public class InitialStateCanvas extends IStateCanvas  {
 
 				}else {
 					e.gc.setLineWidth(6);
-					e.gc.drawLine(startX, startY, startX, (int) (startY + state.getLenIn()));
+					e.gc.drawLine((int) (startX), (int) (startY*scale), (int) (startX*scale), (int) ((startY + state.getLenIn())*scale));
 					e.gc.setLineWidth(1);
 				}
 				
@@ -96,15 +119,15 @@ public class InitialStateCanvas extends IStateCanvas  {
 					String string = state.getConds().get(i);
 
 					if(state.isShownCond()) {
-						e.gc.drawLine(startX, posY, (int) (startX + state.getLengthCond()), posY);
-						e.gc.drawString(string, startX + 5, posY - 10, false);
+						e.gc.drawLine((int) (startX*scale), (int) (posY*scale), (int) ((startX + state.getLengthCond())*scale), (int) (posY*scale));
+						e.gc.drawString(string, (int) ((startX + 5)*scale), (int) ((int) (posY- 10)*scale) , false);
 						if(containerState.getParent() instanceof PlanContent) {
-							addOval(state,string,containerState.getLocation().x+containerState.getBounds().width+1,containerState.getLocation().y+ posY-1);
+							addOval(state,string,(int)(containerState.getLocation().x+(containerState.getBounds().width+1)),(int)(containerState.getLocation().y+ ((posY-1)*scale)));
 						}
 					}else {
-						e.gc.drawLine(startX, posY, (int) (startX + state.getStandardLengthCond()), posY);
+						e.gc.drawLine((int) (startX*scale), (int) (posY*scale), (int) ((int) (startX + state.getStandardLengthCond())*scale), (int) (posY*scale));
 						if(containerState.getParent() instanceof PlanContent) {
-							addOval(state,string,containerState.getLocation().x+containerState.getBounds().width+1,containerState.getLocation().y+ posY-1);
+							addOval(state,string,containerState.getLocation().x+containerState.getBounds().width+1,(int) (containerState.getLocation().y+ ((posY-1)*scale)));
 						}
 					}
 					posY = posY + incr;
@@ -130,6 +153,33 @@ public class InitialStateCanvas extends IStateCanvas  {
     	  
     }
     
+	private MouseWheelListener getMouseListener() {
+
+		MouseWheelListener listener = new MouseWheelListener() {
+
+			@Override
+			public void mouseScrolled(MouseEvent e) {
+				if (e.count > 0)
+					scale += .2f;
+				else
+					scale -= .2f;
+
+				if (scale > 1.2) {
+					scale = 1.2f;
+				}
+				if (scale < 0.6) {
+					scale = 0.6f;
+				}
+				scale = Math.max(scale, 0);
+
+				redraw();
+
+			}
+		};
+
+		return listener;
+	}
+
 	public int getLenght(ArrayList<String> conds) {
 
 		int lenght = 0;
@@ -146,4 +196,31 @@ public class InitialStateCanvas extends IStateCanvas  {
 		return lenght;
 	}
 
+	public void resizeParent() {
+		if(state.isShownCond()) {
+			int x1;
+			if(state.isText()) {
+				 x1=(int) ((int) ((int)state.getLengthCond()+22)*scale);
+
+			}else {
+				 x1=(int) ((state.getLengthCond()+3)*scale);
+
+			}
+			int y1=(int) (state.getLenIn()*scale+4);
+			containerState.setSize(x1,y1);
+			
+		}else {
+			double x1;
+			if(state.isText()) {
+				x1=(state.getStandardLengthCond()+22)*scale;
+			}else {
+				x1=(state.getStandardLengthCond()+3)*scale;
+			}
+			int y1=(int) ((state.getLenIn()+4)*scale);
+			containerState.setSize((int) x1,y1);
+
+		}
+	}
+	
+	
 }

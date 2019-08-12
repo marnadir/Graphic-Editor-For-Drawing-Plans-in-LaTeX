@@ -24,6 +24,7 @@ public abstract class ICanvas extends Canvas {
 	ArrayList<Oval> ovalList;
 
 
+
 	public ICanvas(Composite parent, int style, Action a) {
 		super(parent, style);
 		this.parent = parent;
@@ -35,9 +36,10 @@ public abstract class ICanvas extends Canvas {
 
 	public abstract void draw();
 
+
 	public void resizeParent() {
 		if (action.isShownCond()) {
-			double x1 = action.getLengthPrec() + action.getLengthEff() + action.getWidthRect()+2;
+			double x1 = action.getLengthPrec() + action.getLengthEff() + (action.getWidthRect())+2;
 			if(action.getPrec().size()==0 && action.getEffect().size()==0) {
 				x1=x1+5;
 			}

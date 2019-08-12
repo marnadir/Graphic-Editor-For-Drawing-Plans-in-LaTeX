@@ -47,6 +47,8 @@ public class PlanView  extends CTabFolder{
 	SaveLAtexCode dialog = null;
 	SavePlanDialog dialogPlan;
 	PlanContent planContent;
+	private static float scale = 1;
+
 	
 	public PlanView(Composite parent, int style) {
 		super(parent, style);
@@ -84,7 +86,8 @@ public class PlanView  extends CTabFolder{
 			}
 		});
 		
-		contentPlan.addDndListener(domainView.getTreeAction());
+		contentPlan.addDndListener(domainView.getTreeAction());	
+		
 		Button b1=new Button(contentPlan, SWT.PUSH);
 		b1.setText("Load Link");
 		b1.pack();
@@ -113,7 +116,7 @@ public class PlanView  extends CTabFolder{
 		
 		ToolItem newConnection=new ToolItem(t, SWT.PUSH);
 		Image icon = new Image(getDisplay(), ResourceLoader.load("img/connection.png"));
-		newConnection.setToolTipText("New Link/Constraint");
+		newConnection.setToolTipText("New Link/Ordering");
 		newConnection.setImage(icon);
 		newConnection.addListener(SWT.Selection, new Listener() {
 			
@@ -158,7 +161,7 @@ public class PlanView  extends CTabFolder{
 					}
 					if (getPlan().getGoalStateCanvas() != null) {
 						getPlan().getGoalStateCanvas().getState().setShownCond(true);
-						getPlan().getInitialStateCanvas().redraw();
+						getPlan().getGoalStateCanvas().redraw();
 					}
 
 				} else {

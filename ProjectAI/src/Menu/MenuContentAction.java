@@ -55,7 +55,7 @@ public class MenuContentAction implements MenuDetectListener {
 							canvas.getParent().setVisible(false);
 						
 							Action a = canvas.getAction();
-	 					ArrayList<LinkCanvas> links = plan.getLink();
+							ArrayList<LinkCanvas> links = plan.getLink();
 							ArrayList<LinkCanvas> linksToDelete = new ArrayList<>();
 							for (LinkCanvas link : links) {
 								if (link.getOval1().getNode() != null) {
@@ -65,14 +65,18 @@ public class MenuContentAction implements MenuDetectListener {
 										linksToDelete.add(link);
 									}
 								}
-								if (link.getOval2().getNode() != null) {
-									if (link.getOval2().getNode().getAction().getName().equals(a.getName())) {
+								if(link.getOval2()!= null) {
+									if (link.getOval2().getNode() != null) {
+										if (link.getOval2().getNode().getAction().getName().equals(a.getName())) {
 
-										link.setOval1(null);
-										link.setOval2(null);
-										linksToDelete.add(link);
+											link.setOval1(null);
+											link.setOval2(null);
+											linksToDelete.add(link);
+										}
 									}
+									
 								}
+							
 								
 								
 							
