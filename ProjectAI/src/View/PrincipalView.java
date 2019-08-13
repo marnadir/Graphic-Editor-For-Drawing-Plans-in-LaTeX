@@ -172,6 +172,10 @@ public class PrincipalView {
 		return planView;
 	}
 
+	public ConsoleLaTeXView getConsoleView() {
+		return consoleView;
+	}
+
 
 
 

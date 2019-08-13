@@ -52,29 +52,10 @@ public class ConsoleViewDomain extends Group{
 		this.domainView=domainView;
 		
 		ToolBar toolBarDomain = new ToolBar(this, SWT.FLAT | SWT.WRAP | SWT.RIGHT);
-
-		ToolItem updateTextDomain = new ToolItem(toolBarDomain, SWT.PUSH);
-		updateTextDomain.setText("Update");
-		Image icon = new Image(getDisplay(), ResourceLoader.load("img/refresh.png"));
-		updateTextDomain.setImage(icon);
 		textDomain = new Text(this, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL | SWT.READ_ONLY);
 
 		textDomain.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		textDomain.pack();
-
-		/* domain */
-		updateTextDomain.addListener(SWT.Selection, new Listener() {
-
-			@Override
-			public void handleEvent(Event event) {
-				updateView();
-				
-
-			}
-		});
-
-	
-
 		toolBarDomain.pack();
 
 		

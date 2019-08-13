@@ -54,10 +54,7 @@ public class ConsoleViewPlan extends Group {
 
 		ToolBar toolBarPlan = new ToolBar(this, SWT.FLAT | SWT.WRAP | SWT.RIGHT);
 
-		ToolItem updateTextPlan = new ToolItem(toolBarPlan, SWT.PUSH);
-		updateTextPlan.setText("Update");
-		Image icon = new Image(getDisplay(),ResourceLoader.load("img/refresh.png") );
-		updateTextPlan.setImage(icon);
+
 		
 	
 		textPlan = new Text(this, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL | SWT.READ_ONLY);
@@ -66,17 +63,7 @@ public class ConsoleViewPlan extends Group {
 		textPlan.pack();
 
 		toolBarPlan.pack();
-		/* Plan */
-		updateTextPlan.addListener(SWT.Selection, new Listener() {
 
-			@Override
-			public void handleEvent(Event event) {
-				updateView();
-				
-				
-
-			}
-		});
 	
 					
 	}

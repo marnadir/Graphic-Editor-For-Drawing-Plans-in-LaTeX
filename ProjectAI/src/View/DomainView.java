@@ -44,6 +44,7 @@ public class DomainView {
 	TreeActioDomainView treeAction;
 	GlobalOptionView globalOptionView;
 	PrincipalView principalView;
+
 	
 
 
@@ -56,6 +57,7 @@ public class DomainView {
 
 	public void setLayout() {
 
+		
 		outer = new Composite(sashForm, SWT.ALL);
 		outer.setLayout(new FillLayout());
 

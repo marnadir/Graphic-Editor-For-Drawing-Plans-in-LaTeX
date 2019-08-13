@@ -2,12 +2,21 @@ package PlanPart;
 
 
 
+import java.awt.event.MouseWheelEvent;
+
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.MouseWheelListener;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
+import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Path;
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
+
+import Action.Node;
 import Menu.MenuConstrain;
 
 /**
@@ -18,6 +27,11 @@ public class OrderConstrainCanvas extends Canvas{
 
 	public static Composite parent;
 	private OrderConstrain orderConstrain;
+	int initialFontSize = -1;
+    private  Font  font;
+	public static float  scale = 1;
+	PlanContent planContent;
+
 
 	
 	public OrderConstrainCanvas(Composite parent, int style,OrderConstrain orderConstrain) {
@@ -27,15 +41,68 @@ public class OrderConstrainCanvas extends Canvas{
 	}
 	//have to be improved, working just with constant, should be dynamically
 	public void draw() {
-		addPaintListener(getListener());
+		this.addPaintListener(getListener());
+		orderConstrain.setConstrainCanvas(this);
 		addMenuDetectListener(new MenuConstrain(this));
+		if(parent.getParent() instanceof PlanContent) {
+			planContent=(PlanContent)parent.getParent();
+			scale=planContent.getScale();
+		}
+		this.addMouseWheelListener(getMouseListener());
+
 		
 	}
 	
-	
+	private MouseWheelListener getMouseListener() {
 
+		MouseWheelListener listener = new MouseWheelListener() {
+
+			@Override
+			public void mouseScrolled(MouseEvent e) {
+				if(planContent !=null) {
+					scale=planContent.getScale();
+
+				}
+				if (e.count > 0)
+					scale += .2f;
+				else
+					scale -= .2f;
+
+				if (scale > 1.2) {
+					scale = 1.2f;
+				}
+				if (scale < 0.6) {
+					scale = 0.6f;
+				}
+				scale = Math.max(scale, 0);
+				if(planContent!=null) {
+					 planContent.setScale(scale);
+			            if( planContent.getInitialStateCanvas() != null) {
+				            planContent.getInitialStateCanvas().redraw();
+
+			            }
+			            for(Node node:planContent.getActionInPlan()) {
+			            	node.redraw(); 	
+			            }
+			            if( planContent.getInitialStateCanvas() != null) {
+				            planContent.getInitialStateCanvas().redraw();
+
+			            }
+			            
+				}
+				
+		        
+		            
+
+				redraw();
+
+			}
+		};
+
+		return listener;
+	}
 	
-	public static PaintListener getListener() {
+	public PaintListener getListener() {
 		PaintListener p;
 		
 
@@ -44,9 +111,27 @@ public class OrderConstrainCanvas extends Canvas{
 			@Override
 			public void paintControl(PaintEvent e) {
 
-			    e.gc.drawArc(0, 25,80, 35, 0, 180);
-			    drawArrow(e.gc, 60, 0, 82, 44, 8, Math.toRadians(45));    
-				drawArrowE(e.gc, 80, 10, 40, 10, 10, Math.toRadians(45));
+				scale=planContent.getScale();
+
+				Font tempFont = new Font(parent.getDisplay(), "Arabic Transparent", 6, SWT.NORMAL);
+	            FontData data = tempFont.getFontData()[0];
+	            if (initialFontSize == -1)
+	                initialFontSize = tempFont.getFontData()[0].getHeight();
+	            else
+	            {
+	                if(font != null && !font.isDisposed())
+	                    font.dispose();
+
+	                data.setHeight((int)(initialFontSize * scale));
+
+	                font = new Font(getDisplay(), data);
+
+	                e.gc.setFont(font);
+	            }
+				
+			    e.gc.drawArc(0, (int) (25*scale),(int) (80*scale), (int) (35*scale), 0, 180);
+			    drawArrow(e.gc,(int)  (60*scale), 0, (int)  (82*scale), (int)  (44*scale), (int)  (8*scale), Math.toRadians(45));    
+				drawArrowE(e.gc, (int) (80*scale), (int) (10*scale), (int) (40*scale), (int) (10*scale),(int) (10*scale), Math.toRadians(45));
 			    
 			}
 

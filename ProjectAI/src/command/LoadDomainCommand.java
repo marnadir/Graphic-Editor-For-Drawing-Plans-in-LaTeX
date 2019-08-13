@@ -97,7 +97,8 @@ public class LoadDomainCommand implements ICommand{
 						goal.getLatexCodeDomain();
 					}
 				
-					
+					domainView.getPrincipalView().getConsoleView().getConsoleViewDomain().updateView();
+
 						objectIn.close();
 
 				}else {

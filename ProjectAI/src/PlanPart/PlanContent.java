@@ -32,11 +32,12 @@ import so_goalState.InitialStateCanvas;
  * */
 public class PlanContent extends Canvas {
 
-	private PlanView parent;
+	private PlanView planview;
 	private OvalCounter ovalCounter;
 	private ArrayList<Node> actionInPlan;
 	private ArrayList<LinkCanvas> link;
 	private ArrayList<OrderConstrain> orderCon;
+	private ArrayList<OrderConstrainCanvas> orderConstrainCanvas;
 	private InitialStateCanvas initialStateCanvas;
 	private GoalStateCanvas goalStateCanvas;
 	private String text;
@@ -44,14 +45,18 @@ public class PlanContent extends Canvas {
 	private File savedPllan;
 	private File LatexFile;
 	private File directory;
+	private  float scale = 1;
+
 	
 	public PlanContent(Composite parent, int style) {
 		super(parent, style);
-		this.parent=(PlanView)parent;
+		this.planview=(PlanView)parent;
 		this.ovalCounter=new OvalCounter();
 		actionInPlan=new ArrayList<>();
 		link=new ArrayList<>();
 		orderCon=new ArrayList<>();
+		this.addMouseWheelListener(getMouseListener());
+
 	}
 
 	
@@ -99,6 +104,55 @@ public class PlanContent extends Canvas {
 		this.goalStateCanvas = goalStateCanvas;
 	}
 
+	private MouseWheelListener getMouseListener() {
+
+		MouseWheelListener listener = new MouseWheelListener() {
+
+			@Override
+			public void mouseScrolled(MouseEvent e) {
+			
+				if (e.count > 0)
+					scale += .2f;
+				else
+					scale -= .2f;
+
+				if (scale > 1.2) {
+					scale = 1.2f;
+				}
+				if (scale < 0.6) {
+					scale = 0.6f;
+				}
+				scale = Math.max(scale, 0);
+			
+			            if( getInitialStateCanvas() != null) {
+				            getInitialStateCanvas().redraw();
+
+			            }
+			            for(Node node:getActionInPlan()) {
+			            	node.redraw();
+			            	
+			            }
+			            
+			            for(OrderConstrain ordering:getOrds()) {
+			            	ordering.getConstrainCanvas().redraw();
+			            	ordering.setLocationParent();
+			            }
+			            
+			            if( getInitialStateCanvas() != null) {
+				            getInitialStateCanvas().redraw();
+
+			            }
+			            
+				}
+				      
+			
+			
+		};
+
+		return listener;
+	}
+	
+	
 	public void addMoveListener(Composite compi) {
 	
 		final Point[] offset = new Point[1];
@@ -144,13 +198,13 @@ public class PlanContent extends Canvas {
 	public void addDndListener(TreeActioDomainView treeAction) {
 		DropTarget target = new DropTarget(this, DND.DROP_MOVE | DND.DROP_COPY);
 		target.setTransfer(new Transfer[] { MyTransfer.getInstance() });
-		target.addDropListener(new MyDropActionListener(parent, target, treeAction));
+		target.addDropListener(new MyDropActionListener(planview, target, treeAction));
 		
-		target.addDropListener(new MyDropStateListener(parent, target,parent.getDomainView()));
+		target.addDropListener(new MyDropStateListener(planview, target,planview.getDomainView()));
 	}
 
 	public String getText() {
-		text=this.parent.getSelection().getText();
+		text=this.planview.getSelection().getText();
 		return text;
 	}
 
@@ -196,6 +250,31 @@ public class PlanContent extends Canvas {
 
 	public void setDirectory(File directory) {
 		this.directory = directory;
+	}
+
+
+	public  float getScale() {
+		return scale;
+	}
+
+
+	public  void setScale(float scale) {
+		this.scale = scale;
+	}
+
+
+	public PlanView getPlanview() {
+		return planview;
+	}
+
+
+	public ArrayList<OrderConstrainCanvas> getOrderConstrainCanvas() {
+		return orderConstrainCanvas;
+	}
+
+
+	public void setOrderConstrainCanvas(ArrayList<OrderConstrainCanvas> orderConstrainCanvas) {
+		this.orderConstrainCanvas = orderConstrainCanvas;
 	}
 
 

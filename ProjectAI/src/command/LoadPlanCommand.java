@@ -112,7 +112,7 @@ public class LoadPlanCommand  implements ICommand{
 
 						}
 
-
+						planContent.getPlanview().getConsoleView().getConsoleViewPlan().updateView();;
 						
 						objectIn.close();
 					}else {

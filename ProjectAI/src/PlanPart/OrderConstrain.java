@@ -28,7 +28,7 @@ public class OrderConstrain{
 		this.nod2 = nod2;
 	}
 
-	PlanContent canvasContainer;
+	PlanContent planContent;
 	Node nod1=null;
 	Node nod2=null;
 	Point p1;
@@ -41,11 +41,11 @@ public class OrderConstrain{
 	String id1;
 	String id2;
 	
-	OrderConstrainCanvas c;
+	OrderConstrainCanvas constrainCanvas;
 
 	
 	public OrderConstrain(Composite parent) {
-		this.canvasContainer=(PlanContent)parent.getParent();
+		this.planContent=(PlanContent)parent.getParent();
 		this.parent=parent;
 
 		//parent.pack();
@@ -53,9 +53,9 @@ public class OrderConstrain{
 
 	public void addlistener(boolean isCon, Label l2) {
 
-		for (int i = 0; i < canvasContainer.getChildren().length; i++) {
-			if (!(canvasContainer.getChildren()[i] instanceof Button)) {
-				Composite comp = (Composite) canvasContainer.getChildren()[i];
+		for (int i = 0; i < planContent.getChildren().length; i++) {
+			if (!(planContent.getChildren()[i] instanceof Button)) {
+				Composite comp = (Composite) planContent.getChildren()[i];
 				comp.setEnabled(true);
 				if (comp.getChildren().length > 0) {
 					comp.getChildren()[0].addListener(SWT.MouseDoubleClick, addOrdCond(isCon, l2));
@@ -69,16 +69,6 @@ public class OrderConstrain{
 		
 	}
 	
-//	public void removelistener(Label l1,Label l2,Button btn) {
-//
-//		for(int i=0;i<canvasContainer.getChildren().length;i++) {
-//			Composite comp=(Composite)canvasContainer.getChildren()[i];
-//			comp.setEnabled(true);
-//			comp.getChildren()[0].addListener(SWT.MouseDoubleClick, addOrdCond(l1,l2));
-//			comp.getChildren()[0].removeListener(SWT.MouseDoubleClick, addOrdCond(l1,l2));
-//			
-//		}
-//	}
 	
 	public Listener addOrdCond(boolean isConstrain,Label l2) {
 		Listener l;
@@ -91,10 +81,10 @@ public class OrderConstrain{
 				
 				if (isConstrain) {
 					if (nod1 == null) {
-						for (int i = 0; i < canvasContainer.getActionInPlan().size(); i++) {
-							if ((canvasContainer.getActionInPlan().get(i).getParent().getLocation().equals(point))) {
+						for (int i = 0; i < planContent.getActionInPlan().size(); i++) {
+							if ((planContent.getActionInPlan().get(i).getParent().getLocation().equals(point))) {
 
-								nod1 = canvasContainer.getActionInPlan().get(i);
+								nod1 = planContent.getActionInPlan().get(i);
 								//c1=nod1.getParent();
 								l2.setText(nod1.getAction().getName() + "<" + "null");
 								l2.setText(nod1.getID() + "<" + "null");
@@ -105,13 +95,13 @@ public class OrderConstrain{
 							}
 						}
 					} else if (nod2 == null) {
-						for (int i = 0; i < canvasContainer.getActionInPlan().size(); i++) {
+						for (int i = 0; i < planContent.getActionInPlan().size(); i++) {
 
 
-							if ((canvasContainer.getActionInPlan().get(i).getParent().getLocation().equals(point))) {
-								if(canvasContainer.getActionInPlan().get(i)!=nod1) {
+							if ((planContent.getActionInPlan().get(i).getParent().getLocation().equals(point))) {
+								if(planContent.getActionInPlan().get(i)!=nod1) {
 								
-									nod2 = canvasContainer.getActionInPlan().get(i);
+									nod2 = planContent.getActionInPlan().get(i);
 									//c2=nod2.getParent();
 									l2.setText(nod1.getAction().getName() + "<" + nod2.getAction().getName());
 									l2.setText(nod1.getID() + "<" + nod2.getID());
@@ -142,7 +132,7 @@ public class OrderConstrain{
 		c2=nod2.getParent();
 		p2 = c2.getParent().toControl(c2.toDisplay(p.x, p.y));
 		id2=nod2.getID();
-		parent.setSize(90,60);	
+		parent.setSize((int) (90*getScale()),(int) (60*getScale()));	
 		parent.setLocation(p1.x+((p2.x-p1.x-parent.getBounds().width)/2), p1.y - 30);
 
 
@@ -157,7 +147,7 @@ public class OrderConstrain{
 	}
 	
 	public void generateLatexCode() {
-		LaTexGeneratorNode generator=new LaTexGeneratorNode(canvasContainer);
+		LaTexGeneratorNode generator=new LaTexGeneratorNode(planContent);
 		latexCode=generator.getLatexOrderingCodePlan(this);
 	
 		
@@ -179,8 +169,18 @@ public class OrderConstrain{
 		return parent;
 	}
 
+	public OrderConstrainCanvas getConstrainCanvas() {
+		return constrainCanvas;
+	}
 
-	
+	public void setConstrainCanvas(OrderConstrainCanvas constrainCanvas) {
+		this.constrainCanvas = constrainCanvas;
+	}
+
+
+	private float getScale() {
+		return planContent.getScale();
+	}
 	
 	
 }

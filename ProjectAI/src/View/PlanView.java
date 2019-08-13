@@ -47,7 +47,7 @@ public class PlanView  extends CTabFolder{
 	SaveLAtexCode dialog = null;
 	SavePlanDialog dialogPlan;
 	PlanContent planContent;
-	private static float scale = 1;
+
 
 	
 	public PlanView(Composite parent, int style) {
@@ -99,7 +99,7 @@ public class PlanView  extends CTabFolder{
 				b1.setVisible(false);
 				LoadLink loadLink=new LoadLink(getPlan());
 				loadLink.draw();
-				
+				consoleView.getConsoleViewPlan().updateView();
 				
 			}
 		});
@@ -441,5 +441,11 @@ public class PlanView  extends CTabFolder{
 	public boolean isShowConditionSelecte() {
 		return showCondition.getSelection();
 	}
+
+	public ConsoleLaTeXView getConsoleView() {
+		return consoleView;
+	}
+	
+	
 	
 }

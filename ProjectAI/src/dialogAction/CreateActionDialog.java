@@ -23,6 +23,7 @@ import Action.Action;
 import Action.ActionDomainCanvas;
 import Action.GlobalValue;
 import View.ActionView;
+import View.PrincipalView;
 import View.TreeActioDomainView;
 import dialog.IDialog;
 import resourceLoader.ResourceLoader;
@@ -531,6 +532,10 @@ public class CreateActionDialog extends IDialog {
 		canvasAction.addDNDListener();
 		canvasAction.resizeParent();
 		actionView.setContainerAction(containerAction);
+		PrincipalView principalView=actionView.getDomainView().getPrincipalView();
+		principalView.getConsoleView().getConsoleViewDomain().updateView();
+
+		
 
 	}
 	

@@ -132,7 +132,7 @@ public class NewConnectionDialog extends IDialog {
 				mainComposite.pack();
 				pack();
 
-				Composite comp = new Composite(planView.getPlan(), SWT.ALL);
+				Composite comp = new Composite(planView.getPlan(), SWT.BORDER);
 				// sulla definizione di cio, ce qualcosa che mi turba!!
 				comp.setSize(50, 50);
 				comp.setLocation(20, 30);
@@ -159,6 +159,7 @@ public class NewConnectionDialog extends IDialog {
 							&& !l2.getText().contains("Select the point")) {
 						link.drawLine();
 						planView.getPlan().getLink().add(link);
+						updateViewPlan();
 						l1.setText("Producer effect : " + "Select the point");
 						l2.setText("Consumer precondition : " + "Select the point");
 						l1.pack();
@@ -174,6 +175,7 @@ public class NewConnectionDialog extends IDialog {
 						constrain.pack();
 						constrain.setSize(parent.getSize().x,parent.getSize().y);
 						planView.getPlan().getOrds().add(orderCond);
+						updateViewPlan(); 
 						c1 = "null";
 						c2 = "null";
 						l1.setText("ordering of actions");
@@ -198,5 +200,9 @@ public class NewConnectionDialog extends IDialog {
 		this.planView = planView;
 	}
 	
+	private void updateViewPlan() {
+		planView.getConsoleView().getConsoleViewPlan().updateView();
+
+	}
 	
 }

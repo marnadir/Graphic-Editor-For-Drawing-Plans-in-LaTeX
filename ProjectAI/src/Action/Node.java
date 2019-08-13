@@ -13,6 +13,8 @@ import org.eclipse.swt.widgets.Listener;
 
 import LaTex.LaTexGeneratorNode;
 import Menu.MenuContentAction;
+import PlanPart.OrderConstrain;
+import PlanPart.OrderConstrainCanvas;
 import PlanPart.PlanContent;
 /**
  * Represents the graphic part of an action, which is created during the plan definition phase.
@@ -26,6 +28,7 @@ public class Node extends ICanvas {
     private int initialFontSize = -1;
     private  Font  font;
 	public static float scale = 1;
+	PlanContent planContent;
 
 
 
@@ -33,6 +36,10 @@ public class Node extends ICanvas {
 
 	public Node(Composite parent, int style, Action a) {
 		super(parent, style, a);
+		if(parent.getParent() instanceof PlanContent) {
+			planContent=(PlanContent)parent.getParent();
+			scale=planContent.getScale();
+		}
 	}
 
 	@Override
@@ -43,6 +50,8 @@ public class Node extends ICanvas {
 			@Override
 			public void paintControl(PaintEvent e) {
 
+				scale=planContent.getScale();
+				
 				action.resize();
 
 				/* draw precs with their "point" */
@@ -190,6 +199,7 @@ public class Node extends ICanvas {
 		        @Override
 		        public void handleEvent(Event event)
 		        {
+		        	scale=planContent.getScale();
 		            if (event.count > 0)
 		                scale += .1f;
 		            else
@@ -201,8 +211,23 @@ public class Node extends ICanvas {
 		            if(scale<0.6) {
 		            	scale=0.6f;
 		            }
+		           
 		            scale = Math.max(scale, 0);
+		            planContent.setScale(scale);
+		            if( planContent.getInitialStateCanvas() != null) {
+			            planContent.getInitialStateCanvas().redraw();
 
+		            }
+		            if( planContent.getGoalStateCanvas() != null) {
+			            planContent.getGoalStateCanvas().redraw();
+
+		            }
+		            for(OrderConstrain ordering:planContent.getOrds()) {
+		            	ordering.getConstrainCanvas().redraw();
+		            	ordering.setLocationParent();
+		            }
+		            
+		            
 		            redraw();
 		        }
 		    });

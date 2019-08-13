@@ -14,6 +14,8 @@ import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.graphics.Transform;
 import org.eclipse.swt.widgets.Composite;
 
+import Action.Node;
+import PlanPart.OrderConstrain;
 import PlanPart.PlanContent;
 
 /**
@@ -23,12 +25,18 @@ import PlanPart.PlanContent;
 
 public class InitialStateCanvas extends IStateCanvas  {
 
-	  private int initialFontSize = -1;
-	    private  Font  font;
-		public  float scale = 1;
+	private int initialFontSize = -1;
+	private  Font  font;
+	public  float scale = 1;
+	PlanContent planContent;
+
 
 	public InitialStateCanvas(Composite parent, int style, IState state) {
 		super(parent, SWT.BORDER, state);
+		if(parent.getParent() instanceof PlanContent) {
+			planContent=(PlanContent)parent.getParent();
+			scale=planContent.getScale();
+		}
 	}
 
     @Override
@@ -41,6 +49,10 @@ public class InitialStateCanvas extends IStateCanvas  {
 			@Override
 			public void paintControl(PaintEvent e) {
 
+				if(planContent !=null) {
+					scale=planContent.getScale();
+				}
+				
 				Font tempFont = new Font(getDisplay(), "Arabic Transparent", 6, SWT.NORMAL);
 	            FontData data = tempFont.getFontData()[0];
 	            if (initialFontSize == -1)
@@ -159,6 +171,10 @@ public class InitialStateCanvas extends IStateCanvas  {
 
 			@Override
 			public void mouseScrolled(MouseEvent e) {
+				if(planContent !=null) {
+					scale=planContent.getScale();
+
+				}
 				if (e.count > 0)
 					scale += .2f;
 				else
@@ -171,6 +187,24 @@ public class InitialStateCanvas extends IStateCanvas  {
 					scale = 0.6f;
 				}
 				scale = Math.max(scale, 0);
+				if(planContent!=null) {
+					 planContent.setScale(scale);
+			            if( planContent.getInitialStateCanvas() != null) {
+				            planContent.getInitialStateCanvas().redraw();
+
+			            }
+			            for(Node node:planContent.getActionInPlan()) {
+			            	node.redraw(); 	
+			            }
+			            for(OrderConstrain ordering:planContent.getOrds()) {
+			            	ordering.getConstrainCanvas().redraw();
+			            	ordering.setLocationParent();
+			            }
+			            
+				}
+				
+		        
+		            
 
 				redraw();
 

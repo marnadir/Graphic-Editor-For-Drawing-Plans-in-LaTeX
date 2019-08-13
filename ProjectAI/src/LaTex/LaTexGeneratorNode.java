@@ -285,7 +285,7 @@ public class LaTexGeneratorNode {
 	
 	private String getPosition(ICanvas node) {
 		StringBuilder sb=new StringBuilder();		
-		sb.append("("+convertInCm(node.getParent().getLocation().x)+",");
+		sb.append("("+convertInCm((int) (node.getParent().getLocation().x-node.getAction().getLengthPrec()))+",");
 		int value =0;
 		if(planContent.getInitialStateCanvas()!=null) {
 			double test1=planContent.getInitialStateCanvas().getState().getHeight();

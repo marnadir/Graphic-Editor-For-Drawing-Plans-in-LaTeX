@@ -15,6 +15,7 @@ import Action.Action;
 import Action.Node;
 import PlanPart.PlanContent;
 import View.PlanView;
+import View.PrincipalView;
 import View.TreeActioDomainView;
 import dataTrasfer.MyType;
 import dialog.InitializationVariableDialog;
@@ -120,7 +121,8 @@ public class MyDropActionListener extends DropTargetAdapter {
 				}
 
 			}
-
+			PrincipalView view=treeAction.getActionView().getDomainView().getPrincipalView();
+			view.getConsoleView().getConsoleViewPlan().updateView();
 		}
 
 	}

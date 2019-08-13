@@ -11,6 +11,7 @@ import org.eclipse.swt.widgets.Composite;
 import PlanPart.PlanContent;
 import View.DomainView;
 import View.PlanView;
+import View.PrincipalView;
 import container.ContainerGoalState;
 import container.ContainerInitialState;
 import dataTrasfer.MyType;
@@ -141,6 +142,9 @@ public class MyDropStateListener extends DropTargetAdapter {
 			}
 
 		}
+		
+		PrincipalView view=domainView.getPrincipalView();
+		view.getConsoleView().getConsoleViewPlan().updateView();
 	}
 
 }

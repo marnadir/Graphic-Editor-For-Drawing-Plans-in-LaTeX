@@ -120,6 +120,8 @@ public class MenuContentState implements MenuDetectListener {
 
 				}
 				canvas.clearDisplay();
+				updateViewPlaN();
+
 			}
 		});
 
@@ -163,7 +165,7 @@ public class MenuContentState implements MenuDetectListener {
 				public void handleEvent(Event event) {
 					ChangeCondCommand cmd = new ChangeCondCommand();
 					cmd.execute(canvas);
-
+					updateViewDomain();
 				}
 			});
 
@@ -177,6 +179,7 @@ public class MenuContentState implements MenuDetectListener {
 							SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL | SWT.CENTER | SWT.RESIZE);
 					dialog.setState(state);
 					dialog.createContent();
+					updateViewDomain();
 				}
 			});
 
@@ -185,5 +188,20 @@ public class MenuContentState implements MenuDetectListener {
 		}
 
 	}
+	
+	private void updateViewPlaN() {
+		if(canvas.getParent().getParent() instanceof PlanContent) {
+			PlanContent planContent=(PlanContent)canvas.getParent().getParent();
+			planContent.getPlanview().getConsoleView().getConsoleViewPlan().updateView();
+		}
+	}
+	
+	private void updateViewDomain() {
+		if(canvas.getParent().getParent() instanceof PlanContent) {
+			PlanContent planContent=(PlanContent)canvas.getParent().getParent();
+			planContent.getPlanview().getConsoleView().getConsoleViewDomain().updateView();
+		}
+	}
+	
 
 }

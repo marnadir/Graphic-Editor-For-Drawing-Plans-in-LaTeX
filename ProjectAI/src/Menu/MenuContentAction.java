@@ -107,6 +107,7 @@ public class MenuContentAction implements MenuDetectListener {
 							messageBox.setText("Message");
 							messageBox.setMessage("Removed Action");
 							messageBox.open();
+							updateViewPlan();
 							canvas.getParent().setVisible(false);
 							return;
 						}
@@ -116,8 +117,10 @@ public class MenuContentAction implements MenuDetectListener {
 
 					messageBox.setText("Remove Action");
 					messageBox.setMessage("Removed Action");
+					updateViewPlan();
 					messageBox.open();
 					canvas.clearDisplay();
+					
 				}
 			});
 
@@ -144,7 +147,7 @@ public class MenuContentAction implements MenuDetectListener {
 							dialog.pack();
 						}
 						canvas.redraw();
-
+						updateViewPlan();
 					}
 				});
 			}
@@ -188,6 +191,9 @@ public class MenuContentAction implements MenuDetectListener {
 							SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL | SWT.CENTER|SWT.RESIZE);
 					dialog.setCanvas(canvas);
 					dialog.createContent();
+					updateViewDomain();
+					updateViewPlan();
+
 				}
 			});
 			
@@ -201,6 +207,8 @@ public class MenuContentAction implements MenuDetectListener {
 					SetSizeActionDialog dialog=new SetSizeActionDialog(canvas.getShell(),
 							SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL | SWT.CENTER |SWT.RESIZE ,canvas);
 					dialog.createContent();
+					updateViewDomain();
+
 				}
 			});
 		}
@@ -215,6 +223,21 @@ public class MenuContentAction implements MenuDetectListener {
 		
 		return result;
 	
+	}
+	
+	private void updateViewPlan() {
+		if(canvas.getParent().getParent() instanceof PlanContent) {
+			PlanContent planContent=(PlanContent)canvas.getParent().getParent();
+			planContent.getPlanview().getConsoleView().getConsoleViewPlan().updateView();
+		}
+	}
+	
+	
+	private void updateViewDomain() {
+		if(canvas.getParent().getParent() instanceof PlanContent) {
+			PlanContent planContent=(PlanContent)canvas.getParent().getParent();
+			planContent.getPlanview().getConsoleView().getConsoleViewDomain().updateView();
+		}
 	}
 	
 	

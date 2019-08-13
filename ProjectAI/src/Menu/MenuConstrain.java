@@ -40,7 +40,9 @@ public class MenuConstrain implements MenuDetectListener  {
 						PlanContent plan=(PlanContent)constrain.getParent().getParent();	
 						
 						if(plan.getOrds().remove(constrain.getOrderConstrain())) {
+							updateViewPlan();
 							constrain.getParent().dispose();
+
 						}
 						
 						
@@ -52,6 +54,12 @@ public class MenuConstrain implements MenuDetectListener  {
 		
 	}
 
-	
+	private void updateViewPlan() {
+		if(constrain.getParent().getParent() instanceof PlanContent) {
+			PlanContent plan=(PlanContent)constrain.getParent().getParent();	
+			plan.getPlanview().getConsoleView().getConsoleViewPlan().updateView();
+		}
+
+	}
 
 }
