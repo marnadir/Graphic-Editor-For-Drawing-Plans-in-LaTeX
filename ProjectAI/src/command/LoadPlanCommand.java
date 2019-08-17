@@ -229,9 +229,13 @@ public class LoadPlanCommand  implements ICommand{
 		OrderConstrain orderConstrain=new OrderConstrain(parent);
 		orderConstrain.setNod1(nod1);
 		orderConstrain.setNod2(nod2);
+		
 	
 		parent.setSize(90,60);	
 		parent.setLocation(p1.x+((p2.x-p1.x-parent.getBounds().width)/2), p1.y - 30);
+		
+		orderConstrain.setP1(p1);
+		orderConstrain.setP2(p2);
 		
 		OrderConstrainCanvas c=new OrderConstrainCanvas(parent, SWT.ALL,orderConstrain);
 		c.draw();

@@ -32,7 +32,7 @@ public class GoalStateCanvas extends IStateCanvas {
 
 	
 	public GoalStateCanvas(Composite parent, int style, IState state) {
-		super(parent, SWT.BORDER, state);
+		super(parent, SWT.NONE, state);
 		if(parent.getParent() instanceof PlanContent) {
 			planContent=(PlanContent)parent.getParent();
 			scale=planContent.getScale();

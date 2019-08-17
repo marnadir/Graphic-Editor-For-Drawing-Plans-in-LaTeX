@@ -119,8 +119,8 @@ public class MenuContentState implements MenuDetectListener {
 					links.removeAll(linksToDelete);
 
 				}
-				canvas.clearDisplay();
 				updateViewPlaN();
+				canvas.clearDisplay();
 
 			}
 		});

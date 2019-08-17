@@ -41,7 +41,7 @@ public class LaTexGeneratorStatePlan {
 	
 	private String generatexSo(InitialStateCanvas initialStateCanvas) {
 		StringBuilder sb = new StringBuilder();
-		sb.append("\\action{start}{");
+		sb.append("\\action{init}{");
 		if(initialStateCanvas.getState().isShownCond()) {
 			sb.append("INIT,");
 		}else {
