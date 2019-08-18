@@ -125,7 +125,16 @@ public class EditLayoutAction extends IDialog{
 
 					}
 					
-					cColor.select(2);
+					if(GlobalValue.colorP.equalsIgnoreCase("Cyan")) {
+						cColor.select(0);
+
+					}else if(GlobalValue.colorP.equalsIgnoreCase("Yellow")) {
+						cColor.select(1);
+
+					}else {
+						cColor.select(2);
+
+					}
 
 				} else if(action.isAbstract()) {
 					if(GlobalValue.formIsBlackAbst==true) {
@@ -148,8 +157,16 @@ public class EditLayoutAction extends IDialog{
 
 					}
 					
-					cColor.select(2);
-					
+					if(GlobalValue.colorAbst.equalsIgnoreCase("Cyan")) {
+						cColor.select(0);
+
+					}else if(GlobalValue.colorAbst.equalsIgnoreCase("Yellow")) {
+						cColor.select(1);
+
+					}else {
+						cColor.select(2);
+
+					}					
 				}
 
 				action.setDefaultAction(true);

@@ -27,8 +27,8 @@ public class GlobalValue implements Serializable{
 	public static boolean  formIsBlackAbst=true;
 	public static boolean cornerIsSquareAbst=false;
 	public static boolean borderIsFatAbst=false;
-	public static String colorP;
-	public static String colorAbst;
+	public static String colorP="None";
+	public static String colorAbst="None";
 	
 	
 	public static void setValue(ArrayList<Object> g) {
