@@ -8,6 +8,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 
+import View.PrincipalView;
 import so_goalState.GoalState;
 import so_goalState.GoalStateCanvas;
 import so_goalState.IState;
@@ -62,6 +63,8 @@ public class CreateGoalDialog extends IDialogNewState{
 					setVisible(false);
 				
 				}
+				PrincipalView principalView=goalStateCanvas.getContainerState().getiStateView().getDomainView().getPrincipalView();
+				principalView.getConsoleView().getConsoleViewDomain().updateView();
 			}
 		};
 		

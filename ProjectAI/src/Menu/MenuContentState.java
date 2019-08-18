@@ -120,6 +120,7 @@ public class MenuContentState implements MenuDetectListener {
 
 				}
 				updateViewPlaN();
+				updateViewDomain();
 				canvas.clearDisplay();
 
 			}

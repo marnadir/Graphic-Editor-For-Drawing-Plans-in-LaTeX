@@ -14,7 +14,6 @@ import container.ContainerInitialState;
 public class InitialStateView extends IStateView{
 
 	
-	
 	public InitialStateView(Composite parent, int style) {
 		super(parent, style);
 	
@@ -32,7 +31,6 @@ public class InitialStateView extends IStateView{
 		this.containerState.setLocation(30,30);
 	}
 
-	
 	
 
 	@Override

@@ -14,6 +14,8 @@ import so_goalState.IStateCanvas;
 public abstract class IStateView extends Group {
 
 	protected IContainerState containerState;
+	DomainView domainView;
+
 	
 	public IStateView(Composite parent, int style) {
 		super(parent, style);
@@ -48,6 +50,18 @@ public abstract class IStateView extends Group {
 		return canvas;
 	}
 	
+
+	
+	
+	public DomainView getDomainView() {
+		return domainView;
+	}
+
+
+	public void setDomainView(DomainView domainView) {
+		this.domainView = domainView;
+	}
+
 
 	@Override
 	protected void checkSubclass() {

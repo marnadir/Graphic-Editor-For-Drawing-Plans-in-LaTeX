@@ -134,10 +134,12 @@ public class LaTexGeneratorNode {
 	
 	private String isPrimitive(Action a) {
 		StringBuilder sb=new StringBuilder();
-		if(a.isPrimitive()) {
-			sb.append("primitive"+",");
-		}else {
-			sb.append("abstract"+",");
+		if(a.isDefaultAction()) {
+			if(a.isPrimitive()) {
+				sb.append("primitive"+",");
+			}else {
+				sb.append("abstract"+",");
+			}
 		}
 		return sb.toString();
 	}

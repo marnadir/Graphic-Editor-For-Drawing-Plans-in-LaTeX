@@ -83,7 +83,8 @@ public class PrincipalView {
 		
 		
 		CTabItem itemGlobal = new CTabItem(folder, SWT.NONE);
-		GlobalOptionView globalOptionView=new GlobalOptionView(folder, SWT.SCROLL_LINE);
+//		GlobalOptionView globalOptionView=new GlobalOptionView(folder, SWT.H_SCROLL | SWT.V_SCROLL);
+		GlobalOptionView globalOptionView=new GlobalOptionView(folder, SWT.NONE);
 		globalOptionView.setLayout();
 		globalOptionView.createContent();
 		itemGlobal.setText("Global Options");

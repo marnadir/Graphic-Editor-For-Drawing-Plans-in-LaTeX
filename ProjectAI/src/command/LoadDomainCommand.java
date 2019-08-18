@@ -67,6 +67,10 @@ public class LoadDomainCommand implements ICommand{
 					
 					
 					updateActionListDomain = (ArrayList<Action>) data.get(1);
+					if(updateActionListDomain != null) {
+						 domainView.getTreeAction().setActionList(updateActionListDomain);
+
+					}
 
 					if (data.get(2) != null) {
 						InitialState in = (InitialState) data.get(2);

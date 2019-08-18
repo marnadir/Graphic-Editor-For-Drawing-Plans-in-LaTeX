@@ -78,42 +78,8 @@ public class GoalStateCanvas extends IStateCanvas {
 				//int avergWidth =e.gc.getFontMetrics().getAverageCharacterWidth();
 				int numCond = state.getConds().size();
 
-				int startX = containerState.getClientArea().width;
 				int startY = 0;
-
-				if(state.isText) {
-					state.setLenIn(300);
-				}else {
-					state.setLenIn(state.getHeight());
-				}
-
-				state.setLenIn(state.getHeight());
-				
-				if(state.isText()) {
-					int val=getTextPosition(avergWidth);
-					Rectangle rect=new Rectangle((int) ((startX-22)), (int) (startY),(int) (startX-5), (int) ( (startY + state.getLenIn())*scale));	
-					if(state.isFillColor()) {
-						e.gc.setBackground(getColorSWT());
-						e.gc.fillRectangle(rect);
-						e.gc.drawRectangle(rect);
-					}else {
-						e.gc.drawRectangle(rect);
-					}
-					
-					Transform t=new Transform(getDisplay());
-					t.rotate(90);	
-					e.gc.setTransform(t);	
-					e.gc.drawString(state.getText(), (int) (val*scale), -startX+2);
-					t.rotate(-90);
-					e.gc.setTransform(t);
-					startX=containerState.getClientArea().width-22;	
-					e.gc.setBackground(colorNull);
-
-				}else {
-					e.gc.setLineWidth(3);
-					e.gc.drawLine((int) ((startX-2)), (int) (startY*scale), (int) ((startX-2)), (int) ( (startY + state.getLenIn())*scale));
-					e.gc.setLineWidth(1);
-				}
+				int startX = 0;
 				
 				int posY=(int) (5+(state.getLenIn()/numCond)/2); 
 				int incr=(int) (state.getLenIn()/numCond);
@@ -125,13 +91,13 @@ public class GoalStateCanvas extends IStateCanvas {
 					String string = state.getConds().get(i);
 
 					if(state.isShownCond()) {
-						e.gc.drawLine((int) (startX), (int) (posY*scale), (int) ((int) (-10+startX - state.getLengthCond())*scale), (int) (posY*scale));
-						e.gc.drawString(string, (int) ((startX+10*scale - state.getLengthCond()*scale)), (int) ((posY - 10)*scale), false);
+						e.gc.drawLine((int) (startX), (int) (posY*scale), (int) ((int) (state.getLengthCond())*scale), (int) (posY*scale));
+						e.gc.drawString(string, (int) startX+2, (int) ((posY - 10)*scale), false);
 						if(containerState.getParent() instanceof PlanContent) {
 							addOval(state,string,containerState.getLocation().x-6, (int) (containerState.getLocation().y+ (posY-2)*scale));
 						}
 					}else {
-						e.gc.drawLine((int) (startX*scale), (int) (posY*scale), (int) ((int) (-2+startX - state.getStandardLengthCond())*scale), (int) (posY*scale));
+						e.gc.drawLine((int) (startX*scale), (int) (posY*scale), (int) ((int) (state.getStandardLengthCond())*scale), (int) (posY*scale));
 						if(containerState.getParent() instanceof PlanContent) {
 							addOval(state,string,containerState.getLocation().x-6, (int) (containerState.getLocation().y+ (posY-2)*scale));
 						}
@@ -139,6 +105,61 @@ public class GoalStateCanvas extends IStateCanvas {
 					posY = posY + incr;
 
 				}
+				
+				if(state.isText) {
+					state.setLenIn(300);
+				}else {
+					state.setLenIn(state.getHeight());
+				}
+
+				state.setLenIn(state.getHeight());
+				
+				
+				
+				startX = containerState.getClientArea().width;
+
+				if(state.isText()) {
+					int val=getTextPosition(avergWidth);
+					if(state.isShownCond()) {
+						startX=(int) ((state.getLengthCond())*scale);
+					}else {
+						startX=(int) ((state.standardCondLength)*scale);
+
+					}
+					
+					Rectangle rect=new Rectangle((int) (startX), (int) (startY),(int) (19*scale), (int) ( (startY + state.getLenIn())*scale));	
+					if(state.isFillColor()) {
+						e.gc.setBackground(getColorSWT());
+						e.gc.fillRectangle(rect);
+						e.gc.drawRectangle(rect);
+					}else {
+						e.gc.drawRectangle(rect);
+					}
+					
+					Transform t=new Transform(getDisplay());
+					t.rotate(90);	
+					e.gc.setTransform(t);	
+					e.gc.drawString(state.getText(), (int) (val*scale), -startX-11);
+					t.rotate(-90);
+					e.gc.setTransform(t);
+					startX=containerState.getClientArea().width-22;	
+					e.gc.setBackground(colorNull);
+
+				}else {
+					if(state.isShownCond()) {
+						e.gc.setLineWidth(3);
+						e.gc.drawLine((int) ( (state.getLengthCond())*scale), (int) (startY*scale), (int) (int) ( (state.getLengthCond())*scale), (int) ( (startY + state.getLenIn())*scale));
+						e.gc.setLineWidth(1);
+					}else {
+						e.gc.setLineWidth(3);
+						e.gc.drawLine((int) ( (state.getStandardLengthCond())*scale), (int) (startY*scale), (int) (int) ( (state.getStandardLengthCond())*scale), (int) ( (startY + state.getLenIn())*scale));
+						e.gc.setLineWidth(1);
+					}
+					
+				}
+				
+				
+				
 			
 				resizeParent();
 				computeSize(getParent().getSize().x,getParent().getSize().y);	
@@ -201,23 +222,23 @@ public class GoalStateCanvas extends IStateCanvas {
 		if(state.isShownCond()) {
 			int x1;
 			if(state.isText()) {
-				 x1=(int) ((int) ((int)state.getLengthCond()+22)*scale);
+				 x1=(int) ((int) ((int)state.getLengthCond()+30)*scale);
 
 			}else {
 				 x1=(int) ((state.getLengthCond()+3)*scale);
 
 			}
-			int y1=(int) ((int) (state.getLenIn()+4)*scale);
+			int y1=(int) ((int) (state.getLenIn()+6)*scale);
 			containerState.setSize(x1,y1);
 			
 		}else {
 			int x1;
 			if(state.isText()) {
-				x1=(int) ((state.getStandardLengthCond()+22)*scale);
+				x1=(int) ((state.getStandardLengthCond()+30)*scale);
 			}else {
 				x1=(int) ((state.getStandardLengthCond()+3)*scale);
 			}
-			int y1=(int) ((state.getLenIn()+4)*scale);
+			int y1=(int) ((state.getLenIn()+6)*scale);
 			containerState.setSize( x1,y1);
 
 		}

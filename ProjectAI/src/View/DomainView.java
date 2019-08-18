@@ -104,6 +104,8 @@ public class DomainView {
 		initStateView.setText("Initial State");
 		newStateComp.setContainerInitialState((ContainerInitialState) (initStateView.getContainerState()));
 		initStateView.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		initStateView.setDomainView(this);
+		
 
 
 
@@ -112,6 +114,7 @@ public class DomainView {
 		goalStateView.setText("Goal State");
 		newStateComp.setContainerGoalState((ContainerGoalState) goalStateView.getContainerState());
 		goalStateView.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		goalStateView.setDomainView(this);
 
 		
 		

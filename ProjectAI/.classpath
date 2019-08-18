@@ -5,7 +5,7 @@
 	<classpathentry kind="src" path="TikzLibrary"/>
 	<classpathentry kind="src" path="res"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/org.eclipse.swt"/>
-	<classpathentry kind="lib" path="/home/nadir/Documents/pdfbox-app-2.0.14.jar"/>
+	<classpathentry kind="lib" path="/home/nadir/Documents/pdfbox-app-2.0.15.jar"/>
 	<classpathentry kind="lib" path="/home/nadir/Documents/org.eclipse.jface-3.6.0.jar" sourcepath="/home/nadir/Downloads/org.eclipse.jface-3.6.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

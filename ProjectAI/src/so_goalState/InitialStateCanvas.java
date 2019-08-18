@@ -116,7 +116,7 @@ public class InitialStateCanvas extends IStateCanvas  {
 
 				}else {
 					e.gc.setLineWidth(6);
-					e.gc.drawLine((int) (startX), (int) (startY*scale), (int) (startX*scale), (int) ((startY + state.getLenIn())*scale));
+					e.gc.drawLine((int) (startX), (int) (startY), (int) (startX*scale), (int) (( state.getLenIn())*scale));
 					e.gc.setLineWidth(1);
 				}
 				

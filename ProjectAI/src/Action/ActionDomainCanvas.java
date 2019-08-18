@@ -186,7 +186,7 @@ public class ActionDomainCanvas  extends ICanvas{
 				
 				e.gc.setLineWidth(0);
 
-				int widthSize = (int)e.gc.getFontMetrics().getAverageCharacterWidth();
+				int widthSize = (int)e.gc.getFontMetrics().getAverageCharWidth();
 
 				int val=(int) (getTextPosition(widthSize)+rect.x);
 

@@ -7,6 +7,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 
+import View.PrincipalView;
 import container.IContainerState;
 import so_goalState.IState;
 import so_goalState.InitialState;
@@ -57,6 +58,8 @@ public class CreateSoDialog extends IDialogNewState{
 					setVisible(false);
 					
 				}
+				PrincipalView principalView=initialStateCanvas.getContainerState().getiStateView().getDomainView().getPrincipalView();
+				principalView.getConsoleView().getConsoleViewDomain().updateView();
 
 			}
 			

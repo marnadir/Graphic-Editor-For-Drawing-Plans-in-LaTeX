@@ -82,6 +82,9 @@ public class TreeActioDomainView extends Tree {
 						actionView.getContainerAction().getChildren()[0].dispose();
 					}	
 					eliminateItemsInPlan(action);
+					actionView.getDomainView().getPrincipalView().getConsoleView().getConsoleViewPlan().updateView();
+					actionView.getDomainView().getPrincipalView().getConsoleView().getConsoleViewDomain().updateView();
+
 				}
 
 			}

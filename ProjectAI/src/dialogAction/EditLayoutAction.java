@@ -104,7 +104,6 @@ public class EditLayoutAction extends IDialog{
 			@Override
 			public void handleEvent(Event event) {
 				
-				canvas.getAction().setDefaultAction(true);
 				if(action.isPrimitive()) {
 					if(GlobalValue.formIsBlackPr==true) {
 						cForm.select(0);	
@@ -153,8 +152,10 @@ public class EditLayoutAction extends IDialog{
 					
 				}
 
-				
+				action.setDefaultAction(true);
+				dispose();
 			}
+
 		});
 		
 		setSize(350,300);
@@ -199,7 +200,8 @@ public class EditLayoutAction extends IDialog{
 			
 				
 				canvas.getContentCanvas().redraw();
-				
+				canvas.getAction().setDefaultAction(false);
+
 
 				dispose();
 			}
@@ -209,9 +211,9 @@ public class EditLayoutAction extends IDialog{
 
 
 
-	public void setCanvas(ICanvas canvas) {
+	public void setCanvas(ICanvas canvas,Action a) {
 		this.canvas = canvas;
-		this.action=canvas.getAction();
+		this.action=a;
 	}
 
 	
