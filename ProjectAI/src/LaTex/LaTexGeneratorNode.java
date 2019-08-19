@@ -153,7 +153,7 @@ public class LaTexGeneratorNode {
 				if(o.getStateCanvas().getState().isText()) {
 					sb.append("init");
 				}else {
-					sb.append("start");
+					sb.append("init");
 				}
 			}else if(o.getStateCanvas() instanceof GoalStateCanvas)  {
 					sb.append("goal");

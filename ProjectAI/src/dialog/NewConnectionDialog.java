@@ -132,7 +132,7 @@ public class NewConnectionDialog extends IDialog {
 				mainComposite.pack();
 				pack();
 
-				Composite comp = new Composite(planView.getPlan(), SWT.BORDER);
+				Composite comp = new Composite(planView.getPlan(), SWT.NONE);
 				// sulla definizione di cio, ce qualcosa che mi turba!!
 				comp.setSize(50, 50);
 				comp.setLocation(20, 30);

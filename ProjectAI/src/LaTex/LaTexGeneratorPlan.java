@@ -1,7 +1,6 @@
 package LaTex;
 
 import Action.GlobalValue;
-import View.GlobalOptionView;
 
 /**
  * Generate the LateX code, which consists in necessary library used to draw a plan in LaTex .

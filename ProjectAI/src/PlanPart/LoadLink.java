@@ -26,30 +26,48 @@ public class LoadLink {
 		ArrayList<Object> info;
 		for(int j=0;j<arraylink.size();j++) {
 			info=(ArrayList<Object>) arraylink.get(j);
-			Point p1=(Point) info.get(0);
-			Oval oval1=searchOval(p1);
-			Point p2=(Point) info.get(1);
-			Oval oval2=searchOval(p2);
+			if(info.size()>1) {
+				Oval oval1=searchOvalCond((ArrayList<String>) info.get(0));
+				Oval oval2=searchOvalCond((ArrayList<String>) info.get(1));
+				
+				LinkCanvas link=new LinkCanvas(planContent);
+				link.setOval1(oval1);
+				link.setPrec((ArrayList<String>) info.get(0));
+				link.setEff((ArrayList<String>) info.get(1));
+				link.setOval2(oval2);
+				link.drawLine();
+				planContent.getLink().add(link);
+			}
 			
-			LinkCanvas link=new LinkCanvas(planContent);
-			link.setOval1(oval1);
-			link.setOval2(oval2);
-			link.drawLine();
-			planContent.getLink().add(link);
 		}
 		
 	}
 	
 	
-	private Oval searchOval(Point p1) {
+	private Oval searchOvalCond(ArrayList<String> cond) {
 		Oval o = null;
 		ArrayList<Oval> ovalList=planContent.getOvalCounter().getListOval();
 		for(Oval oval:ovalList){
-			if(oval.getP().equals(p1)) {
-				return oval;
+			if(oval.getNode()!=null) {
+				if(cond.get(0).equals(oval.getNode().getAction().getName()) && cond.get(1).equals(oval.getCond())) {
+					return oval;
+				}
+			}else {
+				if(cond.get(0).equals(oval.getStateCanvas().getState().getName()) && cond.get(1).equals(oval.getCond())) {
+					return oval;
+				}
 			}
+			
+			
+			
+			
+			
 		}
 		
 		return o;
 	}
+	
+	
+	
+	
 }

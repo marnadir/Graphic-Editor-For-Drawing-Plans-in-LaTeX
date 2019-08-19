@@ -18,6 +18,7 @@ import Action.Action;
 import PlanPart.Oval;
 import PlanPart.OvalCounter;
 import PlanPart.PlanContent;
+import View.DomainView;
 /** 
  *dialog used to set the variable into constant. 
  *
@@ -52,7 +53,7 @@ public class InitializationVariableDialog extends IDialog{
 	public void createContent() {
 		label.setText("Set the name of variables");
 		mainComposite.setLayout(new GridLayout(2, false));
-		String[] variable2=getVariable(action.getName());
+		String[] variable2=getVariable();
 		
 		for(int i=0;i<variable2.length;i++) {
 			Label l1=new Label(mainComposite, SWT.ALL);
@@ -66,11 +67,36 @@ public class InitializationVariableDialog extends IDialog{
 	
 	}
 
-	public String[] getVariable(String string) {
-		String name[]=string.split("\\(");
-		String variable[]=name[1].split("\\)");
-		variable=variable[0].split(",");
-		return variable;
+	public String[] getVariable() {
+		
+		DomainView domain=plan.getPlanview().getDomainView();
+		String n[] = action.getName().split("\\(");
+		String name2=n[0];
+		for(Action a:domain.getTreeAction().getActionList()) {
+			String name3[] = action.getName().split("\\(");
+			if(name2.equals(name3[0])) {
+				String nameAction = a.getName();
+				if (nameAction.contains("(") || nameAction.contains(")")) {
+					String name[] = a.getName().split("\\(");
+					String variable[] = name[1].split("\\)");
+					variable = variable[0].split(",");
+					for (int i = 0; i < variable.length; i++) {
+						if (variable[i].contains("?")) {
+							return variable;
+
+						}
+					}
+				}
+			}
+		}
+		return n;
+
+
+		
+		
+		
+
+		
 	}
 	
 	
@@ -134,7 +160,12 @@ public class InitializationVariableDialog extends IDialog{
 		return conds;
 	}
 	
-	
+	private String[] getVariabl() {
+		String name[] = action.getName().split("\\(");
+		String variable[] = name[1].split("\\)");
+		variable = variable[0].split(",");
+		return variable;
+	}
 	
 	@Override
 	public Listener getOkbtnListener() {
@@ -143,7 +174,7 @@ public class InitializationVariableDialog extends IDialog{
 
 			@Override
 			public void handleEvent(Event event) {
-				String[] variable2=getVariable(action.getName());
+				String[] variable2=getVariabl();
 				mapping=new TreeMap<String,String>(String.CASE_INSENSITIVE_ORDER);
 				for(int i=0;i<variable2.length;i++) {
 					if(textList.get(i).getText().equals("")) {
@@ -155,6 +186,7 @@ public class InitializationVariableDialog extends IDialog{
 				action.setName(getNewName(action.getName()));
 				action.setPrec(getNewCond(action.getPrec()));
 				action.setEffect(getNewCond(action.getEffect()));
+				plan.getPlanview().getDomainView().getPrincipalView().getConsoleView().getConsoleViewPlan().updateView();
 				dispose();
 
 			}

@@ -19,6 +19,7 @@ import PlanPart.LinkCanvas;
 import PlanPart.OrderConstrain;
 import PlanPart.Oval;
 import PlanPart.PlanContent;
+import View.DomainView;
 import dialog.InitializationVariableDialog;
 import dialogAction.EditLayoutAction;
 import dialogAction.SetSizeActionDialog;
@@ -216,20 +217,37 @@ public class MenuContentAction implements MenuDetectListener {
 	
 	private boolean actionHasVariable(Action a) {
 
-		String nameAction = a.getName();
+		
 
-		if (nameAction.contains("(") || nameAction.contains(")")) {
-			String name[] = a.getName().split("\\(");
-			String variable[] = name[1].split("\\)");
-			variable = variable[0].split(",");
-			for (int i = 0; i < variable.length; i++) {
-				if (variable[i].contains("?")) {
-					return true;
+		if(canvas.getParent().getParent() instanceof PlanContent) {
+			PlanContent planContent=(PlanContent)canvas.getParent().getParent();
+			DomainView domain=planContent.getPlanview().getDomainView();
+			String n[] = a.getName().split("\\(");
+			String name2=n[0];
+			for(Action action:domain.getTreeAction().getActionList()) {
+				String name3[] = action.getName().split("\\(");
+				if(name2.equals(name3[0])) {
+					String nameAction = action.getName();
+					if (nameAction.contains("(") || nameAction.contains(")")) {
+						String name[] = action.getName().split("\\(");
+						String variable[] = name[1].split("\\)");
+						variable = variable[0].split(",");
+						for (int i = 0; i < variable.length; i++) {
+							if (variable[i].contains("?")) {
+								return true;
 
+							}
+						}
+					}
 				}
 			}
+			return false;
+
 		}
+		
 		return false;
+
+	
 
 	}
 	

@@ -178,8 +178,8 @@ public class SavePlanCommand implements ICommand {
 	private void saveLink(ArrayList<Object> info,LinkCanvas linkCanvas) {
 		ArrayList<Object> list=new ArrayList<Object>();
 		if(linkCanvas != null) {
-			list.add(linkCanvas.getOval1().getP());
-			list.add(linkCanvas.getOval2().getP());
+			list.add(linkCanvas.getEff());
+			list.add(linkCanvas.getPrec());
 		}
 		info.add(list);	
 	}

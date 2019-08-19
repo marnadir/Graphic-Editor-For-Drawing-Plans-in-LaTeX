@@ -178,7 +178,7 @@ public class LoadPlanCommand  implements ICommand{
 		comp.setLayoutData(new GridData(GridData.FILL, GridData.FILL, false, false));
 		comp.setLayout(new FillLayout());
 		comp.setLocation(position.x, position.y);
-		GoalStateCanvas stateCanvas = new GoalStateCanvas(comp, SWT.BORDER, inState);
+		GoalStateCanvas stateCanvas = new GoalStateCanvas(comp, SWT.NONE, inState);
 		stateCanvas.draw();
 		planContent.setGoalStateCanvas((GoalStateCanvas) stateCanvas);
 		planContent.addMoveListener(comp);

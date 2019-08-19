@@ -38,6 +38,10 @@ public class LinkCanvas {
 
 	Composite c1;
 	Composite c2;
+	
+	ArrayList<String> prec=new ArrayList<>();
+	ArrayList<String> eff=new ArrayList<>();
+	
 
 	PlanContent canvasContainer;
 
@@ -84,7 +88,14 @@ public class LinkCanvas {
 									&& (p.y - 11 < event.y && event.y < p.y + 11)) {
 
 								oval1 = canvasContainer.getOvalCounter().getListOval().get(i);
-//								c1 = comp;
+								if(oval1.getNode()!=null) {
+									eff.add(oval1.getNode().getAction().getName());
+									eff.add(oval1.getCond());
+								}else {
+									eff.add(oval1.getStateCanvas().getState().getName());
+									eff.add(oval1.getCond());
+								}
+								
 								l1.setText("Producer effect :" + oval1.getCond());
 								l1.pack();
 
@@ -98,7 +109,16 @@ public class LinkCanvas {
 								if (canvasContainer.getOvalCounter().getListOval().get(i).getNode() != oval1
 										.getNode()) {
 									oval2 = canvasContainer.getOvalCounter().getListOval().get(i);
-//									c2 = comp;
+									
+									if(oval2.getNode()!=null) {
+										prec.add(oval2.getNode().getAction().getName());
+										prec.add(oval2.getCond());
+									}else {
+										prec.add(oval2.getStateCanvas().getState().getName());
+										prec.add(oval2.getCond());
+									}
+									
+									
 									l2.setText("Consumer precondition :" + oval2.getCond());
 									l2.pack();
 								}
@@ -296,6 +316,22 @@ public class LinkCanvas {
 
 	public void setOval2(Oval oval2) {
 		this.oval2 = oval2;
+	}
+
+	public ArrayList<String> getPrec() {
+		return prec;
+	}
+
+	public void setPrec(ArrayList<String> prec) {
+		this.prec = prec;
+	}
+
+	public ArrayList<String> getEff() {
+		return eff;
+	}
+
+	public void setEff(ArrayList<String> eff) {
+		this.eff = eff;
 	}
 	
 	
