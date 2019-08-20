@@ -9,6 +9,7 @@ import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 
 import Menu.MenuPrincipalView;
@@ -98,6 +99,8 @@ public class PrincipalView {
 		CTabItem pdfItem = new CTabItem(folder, SWT.NONE);
 		pdfItem.setText("PDF View");
 		pdfView=new PdfView(folder, SWT.ALL);
+//		Label l=new Label(pdfView, SWT.BORDER);
+//		l.setText("ciaooo");
 		pdfItem.setControl(pdfView);
 		
 		//TODO allign the position of action
