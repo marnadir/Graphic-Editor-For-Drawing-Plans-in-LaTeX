@@ -101,7 +101,7 @@ public class LaTexGeneratorStatePlan {
 			sb.append("(0,");
 
 		}else {
-			sb.append("("+convertInCm( (iState.getParent().getLocation().x)-(iState.getParent().getBounds().width)/2)+",");
+			sb.append("("+convertInCm( (iState.getParent().getLocation().x)+(iState.getParent().getBounds().width)/3)+",");
 
 		}
 		sb.append("0)");	

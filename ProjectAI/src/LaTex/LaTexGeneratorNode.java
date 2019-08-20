@@ -286,15 +286,24 @@ public class LaTexGeneratorNode {
 	
 	
 	private String getPosition(ICanvas node) {
-		StringBuilder sb=new StringBuilder();		
-		sb.append("("+convertInCm((int) (node.getParent().getLocation().x-node.getAction().getLengthPrec()))+",");
+		StringBuilder sb=new StringBuilder();	
+
 		int value =0;
 		if(planContent.getInitialStateCanvas()!=null) {
+			sb.append("("+convertInCm(node.getParent().getLocation().x-planContent.getLocation().x+planContent.getInitialStateCanvas().getClientArea().width)+",");
 			double test1=(planContent.getInitialStateCanvas().getClientArea().height);
-			int test3=(int) (test1+planContent.getInitialStateCanvas().getParent().getLocation().y);
-			test3=test3/2;
+			int test3=(int) (planContent.getInitialStateCanvas().getParent().getLocation().y);
+		    test3=(int) (test1+test3);
+
+			test3=2*test3/5;
 			value=(int) (test3-node.getParent().getLocation().y);
+			
+			
+			
+			
 		}else {
+			sb.append("("+convertInCm((int) (node.getParent().getLocation().x-node.getAction().getLengthPrec()))+",");
+
 			int test=planContent.getClientArea().height;
 			value=(int) (test-node.getParent().getLocation().y );
 
