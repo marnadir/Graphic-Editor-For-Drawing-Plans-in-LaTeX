@@ -14,7 +14,6 @@ import org.eclipse.swt.widgets.Listener;
 import LaTex.LaTexGeneratorNode;
 import Menu.MenuContentAction;
 import PlanPart.OrderConstrain;
-import PlanPart.OrderConstrainCanvas;
 import PlanPart.PlanContent;
 /**
  * Represents the graphic part of an action, which is created during the plan definition phase.

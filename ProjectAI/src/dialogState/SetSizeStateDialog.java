@@ -38,6 +38,7 @@ public class SetSizeStateDialog extends IDialog {
 		textWidth = new Text(mainComposite, SWT.BORDER);
 		textWidth.setText(state.getHeiInCm());
 		Label empty = new Label(mainComposite, SWT.ALL);
+		empty.update();
 
 		Label height = new Label(mainComposite, SWT.ALL);
 		height.setText("Box-width in cm: ");

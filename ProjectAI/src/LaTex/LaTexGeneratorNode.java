@@ -291,7 +291,6 @@ public class LaTexGeneratorNode {
 		int value =0;
 		if(planContent.getInitialStateCanvas()!=null) {
 			double test1=(planContent.getInitialStateCanvas().getClientArea().height);
-			String prova=convertInCm((int) test1);
 			int test3=(int) (test1+planContent.getInitialStateCanvas().getParent().getLocation().y);
 			test3=test3/2;
 			value=(int) (test3-node.getParent().getLocation().y);

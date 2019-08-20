@@ -15,9 +15,6 @@ import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.Listener;
-
 import DNDAaction.MyDragActionListener;
 import Menu.MenuContentAction;
 import dataTrasfer.MyTransfer;

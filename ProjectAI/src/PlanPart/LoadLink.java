@@ -2,7 +2,6 @@ package PlanPart;
 
 import java.util.ArrayList;
 
-import org.eclipse.swt.graphics.Point;
 /**
  * load  the saved link.
  * @author nadir
