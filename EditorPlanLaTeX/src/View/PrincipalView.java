@@ -129,6 +129,8 @@ public class PrincipalView {
 		directory = new File(filepath + "/TDP");
 		File dirDomain = new File(filepath + "/TDP" + "/dirDomain");
 		File dirLatex = new File(filepath + "/TDP" + "/dirLatex");
+		File dirLog = new File(filepath + "/TDP" + "/dirLog");
+
 
 		// if the directory does not exist, create it
 		if (!directory.exists()) {
@@ -170,6 +172,20 @@ public class PrincipalView {
 			}
 		}
 
+		if (!dirLog.exists()) {
+			boolean result = false;
+
+			try {
+				dirLog.mkdir();
+				result = true;
+			} catch (SecurityException se) {
+				// handle it
+			}
+			if (result) {
+			}
+		}
+
+		
 	}
 
 	public PlanView getPlanView() {
