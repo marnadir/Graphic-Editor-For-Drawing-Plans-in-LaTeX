@@ -1,4 +1,4 @@
-package dialogState;
+package dialog.state;
 
 import java.util.ArrayList;
 

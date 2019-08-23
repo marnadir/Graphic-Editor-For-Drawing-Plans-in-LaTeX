@@ -56,8 +56,6 @@ public class LoadLastDialog {
 	private void loadDomain(PlanContent planContent) {
 		if(path != null) {
 			File directory=new File(path);
-//			planContent.setSavedPllan(filePlan);
-//			planContent.setDirectory(filePlan.getParentFile());
 			LoadDomainCommand command=new LoadDomainCommand();
 			String path2=directory+"/Domain.txt";
 			PlanView planView = null;

@@ -4,7 +4,8 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
-import container.ContainerGoalState;
+
+import containerState.ContainerGoalState;
 /**
  * View which contains the goal state.
  * @author nadir

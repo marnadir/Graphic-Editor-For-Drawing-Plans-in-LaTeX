@@ -17,9 +17,9 @@ import PlanPart.Oval;
 import PlanPart.PlanContent;
 import View.IStateView;
 import command.ChangeCondCommand;
-import container.IContainerState;
-import dialogState.LineVsTextDialog;
-import dialogState.SetSizeStateDialog;
+import containerState.IContainerState;
+import dialog.state.LineVsTextDialog;
+import dialog.state.SetSizeStateDialog;
 import so_goalState.GoalStateCanvas;
 import so_goalState.IState;
 import so_goalState.IStateCanvas;
@@ -52,7 +52,6 @@ public class MenuContentState implements MenuDetectListener {
 	@Override
 	public void menuDetected(MenuDetectEvent e) {
 		
-		
 		Menu m=null;
 		
 		if(iStateView !=null) {
@@ -70,6 +69,31 @@ public class MenuContentState implements MenuDetectListener {
 		}
 	
 
+		addRemoveOption(m);
+		addShowCondOption(m);
+		addShowNameOption(m);
+		addLineVsTextOption(m);
+		addSetSizeOption(m);
+	}
+
+	
+	
+	private void updateViewPlaN() {
+		if(canvas.getParent().getParent() instanceof PlanContent) {
+			PlanContent planContent=(PlanContent)canvas.getParent().getParent();
+			planContent.getPlanview().getConsoleView().getConsoleViewPlan().updateView();
+		}
+	}
+	
+	private void updateViewDomain() {
+		if(canvas.getParent().getParent() instanceof PlanContent) {
+			PlanContent planContent=(PlanContent)canvas.getParent().getParent();
+			planContent.getPlanview().getConsoleView().getConsoleViewDomain().updateView();
+		}
+	}
+	
+	
+	private void addRemoveOption(Menu m) {
 		MenuItem c = new MenuItem(m, SWT.ALL);
 		c.setText("Remove");
 		c.addListener(SWT.Selection, new Listener() {
@@ -126,6 +150,11 @@ public class MenuContentState implements MenuDetectListener {
 			}
 		});
 
+	}
+	
+	
+	
+	private void addLineVsTextOption(Menu m) {
 		if (!(canvas.getParent().getParent() instanceof PlanContent)) {
 			MenuItem vs = new MenuItem(m, SWT.ALL);
 			vs.setText("Line vs Text");
@@ -143,7 +172,9 @@ public class MenuContentState implements MenuDetectListener {
 				}
 			});
 		}
-
+	}
+	
+	private void addShowCondOption(Menu m) {
 		if (!(canvas.getParent().getParent() instanceof PlanContent)) {
 
 			MenuItem showC = new MenuItem(m, SWT.ALL);
@@ -157,6 +188,12 @@ public class MenuContentState implements MenuDetectListener {
 
 				}
 			});
+		}
+	}
+	
+	
+	private void addShowNameOption(Menu m) {
+		if (!(canvas.getParent().getParent() instanceof PlanContent)) {
 
 			MenuItem changeCond = new MenuItem(m, SWT.ALL);
 			changeCond.setText("Add/Remove Cond.");
@@ -169,7 +206,11 @@ public class MenuContentState implements MenuDetectListener {
 					updateViewDomain();
 				}
 			});
-
+		}
+	}
+	
+	private void addSetSizeOption(Menu m) {
+		if (!(canvas.getParent().getParent() instanceof PlanContent)) {
 			MenuItem setSize = new MenuItem(m, SWT.CASCADE);
 			setSize.setText("Set Size");
 			setSize.addListener(SWT.Selection, new Listener() {
@@ -183,26 +224,11 @@ public class MenuContentState implements MenuDetectListener {
 					updateViewDomain();
 				}
 			});
-
-
 		
 		}
-
 	}
 	
-	private void updateViewPlaN() {
-		if(canvas.getParent().getParent() instanceof PlanContent) {
-			PlanContent planContent=(PlanContent)canvas.getParent().getParent();
-			planContent.getPlanview().getConsoleView().getConsoleViewPlan().updateView();
-		}
-	}
 	
-	private void updateViewDomain() {
-		if(canvas.getParent().getParent() instanceof PlanContent) {
-			PlanContent planContent=(PlanContent)canvas.getParent().getParent();
-			planContent.getPlanview().getConsoleView().getConsoleViewDomain().updateView();
-		}
-	}
 	
-
+	
 }

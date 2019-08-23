@@ -45,10 +45,8 @@ public class ConsoleViewDomain extends Group{
 	public void createContent(DomainView domainView) {
 		
 		this.domainView=domainView;
-		
 		ToolBar toolBarDomain = new ToolBar(this, SWT.FLAT | SWT.WRAP | SWT.RIGHT);
 		textDomain = new Text(this, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL | SWT.READ_ONLY);
-
 		textDomain.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		textDomain.pack();
 		toolBarDomain.pack();

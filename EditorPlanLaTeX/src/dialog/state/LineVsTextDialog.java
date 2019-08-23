@@ -1,4 +1,4 @@
-package dialogState;
+package dialog.state;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;

@@ -62,9 +62,7 @@ public class LinkCanvas {
 			if (!(canvasContainer.getChildren()[i] instanceof Button)) {
 				Composite comp = (Composite) canvasContainer.getChildren()[i];
 				comp.setEnabled(true);
-
 			}
-
 		}
 		canvasContainer.addListener(SWT.MouseDoubleClick, addLink(l1, l2, isConstrain, btn));
 
@@ -122,7 +120,6 @@ public class LinkCanvas {
 									l2.setText("Consumer precondition :" + oval2.getCond());
 									l2.pack();
 								}
-//								drawLine();
 
 							}
 						}
@@ -263,7 +260,6 @@ public class LinkCanvas {
 							isRight = true;
 
 						} else {
-//							path.quadTo(temp2.x, temp1.y, temp2.x, temp2.y);
 							Point temp = null;
 							temp = temp1;
 							temp1 = temp2;

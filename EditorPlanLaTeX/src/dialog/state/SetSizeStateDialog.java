@@ -1,4 +1,4 @@
-package dialogState;
+package dialog.state;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
@@ -33,21 +33,25 @@ public class SetSizeStateDialog extends IDialog {
 		this.label.setText("Set the size of the line");
 		this.label.pack();
 		mainComposite.setLayout(new GridLayout(3, false));
-		Label width = new Label(mainComposite, SWT.ALL);
-		width.setText("Box-height in cm: ");
-		textWidth = new Text(mainComposite, SWT.BORDER);
-		textWidth.setText(state.getHeiInCm());
-		Label empty = new Label(mainComposite, SWT.ALL);
-		empty.update();
+		if(!state.isText()) {
+			Label width = new Label(mainComposite, SWT.ALL);
+			width.setText("Line-height in cm: ");
+			textWidth = new Text(mainComposite, SWT.BORDER);
+			textWidth.setText(state.getHeiInCm());
+			Label empty = new Label(mainComposite, SWT.ALL);
+			empty.update();
 
-		Label height = new Label(mainComposite, SWT.ALL);
-		height.setText("Box-width in cm: ");
-		textHeight = new Text(mainComposite, SWT.BORDER);
-		textHeight.setText(state.getWidInCm());
+			Label height = new Label(mainComposite, SWT.ALL);
+			height.setText("Line-width in cm: ");
+			textHeight = new Text(mainComposite, SWT.BORDER);
+			textHeight.setText(state.getWidInCm());
 
-		textWidth.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-		textHeight.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-		empty = new Label(mainComposite, SWT.ALL);
+			textWidth.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+			textHeight.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+			empty = new Label(mainComposite, SWT.ALL);	
+		}
+		
+
 
 		if (state.isShownCond()) {
 			Label lPrec = new Label(mainComposite, SWT.ALL);

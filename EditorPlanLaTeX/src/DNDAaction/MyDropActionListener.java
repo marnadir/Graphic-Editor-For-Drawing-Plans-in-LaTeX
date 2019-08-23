@@ -10,7 +10,6 @@ import org.eclipse.swt.dnd.DropTargetEvent;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
-
 import Action.Action;
 import Action.Node;
 import PlanPart.PlanContent;
@@ -18,7 +17,7 @@ import View.PlanView;
 import View.PrincipalView;
 import View.TreeActioDomainView;
 import dataTrasfer.MyType;
-import dialog.InitializationVariableDialog;
+import dialog.option.InitializationVariableDialog;
 /**
  * extended class of DropTargetAdapter,which is used to drop an action into plan view.
  * @see MyDragActionListener
@@ -66,67 +65,71 @@ public class MyDropActionListener extends DropTargetAdapter {
 			if (event.data != null) {
 				MyType[] myTypes = (MyType[]) event.data;
 				if (myTypes != null) {
-
-					actionList = treeAction.getActionList();
-					int j = 0;
-					while (j < actionList.size()) {
-						Action action = null;
-						if (myTypes[0].getName().equals(actionList.get(j).getName())) {
-							if (myTypes[0].getPrec().equals(actionList.get(j).getPrec())
-									&& myTypes[0].getEff().equals(actionList.get(j).getEffect())) {
-								action = actionList.get(j);
-
-								action = new Action(actionList.get(j).getName(), actionList.get(j).getPrec(),
-										actionList.get(j).getEffect());
-								action.copyAttribute(actionList.get(j));
-
-							}
-							
-						}
-
-						if (action != null) {
-							if (actionHasVariable(action)) {
-								InitializationVariableDialog dialog = new InitializationVariableDialog(
-										graphContent.getShell(),
-										SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL | SWT.CENTER | SWT.RESIZE);
-								dialog.setAction(action);
-								dialog.setPlan(graphContent);
-								dialog.createContent();
-								dialog.pack();
-							}
-							if (graphContent.getParent() instanceof PlanView) {
-								PlanView planView = (PlanView) graphContent.getParent();
-								if (planView.isShowConditionSelecte()) {
-
-									action.setIsShownCond(true);
-								}
-							}
-
-							Composite comp = new Composite(graphContent, SWT.ALL);
-							comp.setLayoutData(new GridData(GridData.FILL, GridData.FILL, false, false));
-							comp.setLayout(new FillLayout());
-							comp.setLocation(comp.toControl(event.x, event.y));
-							node = new Node(comp, SWT.NONE, action);
-							node.draw();
-							node.pack();
-							comp.pack();
-							graphContent.getActionInPlan().add(node);
-							setNodeID();
-							graphContent.addMoveListener(comp);
-						}
-
-						j++;
-					}
-
+					actionByteToObject(event);
 				}
-
 			}
-			PrincipalView view=treeAction.getActionView().getDomainView().getPrincipalView();
+			PrincipalView view = treeAction.getActionView().getDomainView().getPrincipalView();
 			view.getConsoleView().getConsoleViewPlan().updateView();
 		}
 
 	}
 
+	private void actionByteToObject(DropTargetEvent event) {
+		
+		MyType[] myTypes = (MyType[]) event.data;
+		actionList = treeAction.getActionList();
+		int j = 0;
+		while (j < actionList.size()) {
+			Action action = null;
+			if (myTypes[0].getName().equals(actionList.get(j).getName())) {
+				if (myTypes[0].getPrec().equals(actionList.get(j).getPrec())
+						&& myTypes[0].getEff().equals(actionList.get(j).getEffect())) {
+					action = actionList.get(j);
+
+					action = new Action(actionList.get(j).getName(), actionList.get(j).getPrec(),
+							actionList.get(j).getEffect());
+					action.copyAttribute(actionList.get(j));
+
+				}
+				
+			}
+
+			if (action != null) {
+				if (actionHasVariable(action)) {
+					InitializationVariableDialog dialog = new InitializationVariableDialog(
+							graphContent.getShell(),
+							SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL | SWT.CENTER | SWT.RESIZE);
+					dialog.setAction(action);
+					dialog.setPlan(graphContent);
+					dialog.createContent();
+					dialog.pack();
+				}
+				if (graphContent.getParent() instanceof PlanView) {
+					PlanView planView = (PlanView) graphContent.getParent();
+					if (planView.isShowConditionSelecte()) {
+
+						action.setIsShownCond(true);
+					}
+				}
+
+				Composite comp = new Composite(graphContent, SWT.ALL);
+				comp.setLayoutData(new GridData(GridData.FILL, GridData.FILL, false, false));
+				comp.setLayout(new FillLayout());
+				comp.setLocation(comp.toControl(event.x, event.y));
+				node = new Node(comp, SWT.NONE, action);
+				node.draw();
+				node.pack();
+				comp.pack();
+				graphContent.getActionInPlan().add(node);
+				setNodeID();
+				graphContent.addMoveListener(comp);
+			}
+
+			j++;
+		}
+	}
+	
+	
 	private void setNodeID() {
 		int t = 1;
 		String ID = getNameAction(node.getAction().getName()) + "-" + t;

@@ -1,4 +1,4 @@
-package dialogSave;
+package dialog.save;
 
 import java.io.File;
 

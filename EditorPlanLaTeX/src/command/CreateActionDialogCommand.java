@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 import Action.Action;
 import View.TreeActioDomainView;
-import dialogAction.CreateActionDialog;
+import dialog.action.CreateActionDialog;
 /**
  * Command which allows to open the dialog for creating a new action.
  * @author nadir

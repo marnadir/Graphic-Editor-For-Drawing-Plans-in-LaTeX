@@ -1,4 +1,4 @@
-package dialogAction;
+package dialog.action;
 
 import java.util.ArrayList;
 

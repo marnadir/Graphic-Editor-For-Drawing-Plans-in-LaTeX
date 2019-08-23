@@ -14,8 +14,8 @@ import org.eclipse.swt.widgets.Listener;
 import command.CreateActionDialogCommand;
 import command.CreateGoalDialogCommand;
 import command.CreateSoDialogCommand;
-import container.ContainerGoalState;
-import container.ContainerInitialState;
+import containerState.ContainerGoalState;
+import containerState.ContainerInitialState;
 import resourceLoader.ResourceLoader;
 /**
  * Container where are created initial/goal state view.
@@ -34,7 +34,6 @@ public class CreateStateContainer extends Composite{
 	public CreateStateContainer(Composite parent, int style,String name) {
 		super(parent, style);
 		this.setLayout();
-		// TODO Auto-generated constructor stub
 	}
 
 	public void setLayout() {

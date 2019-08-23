@@ -5,7 +5,7 @@ import org.eclipse.swt.widgets.TreeItem;
 
 import Action.Action;
 import View.TreeActioDomainView;
-import dialogAction.ChangeActionDialog;
+import dialog.action.ChangeActionDialog;
 /**
  * Command which allows to open the dialog for editing an domain-action(name,preconditions and effects).
  * @author nadir
@@ -18,7 +18,6 @@ public class ChangeActionDialogCommand implements ICommand{
 	
 	@Override
 	public boolean canExecute(Object var1, Object var2) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
@@ -46,7 +45,6 @@ public class ChangeActionDialogCommand implements ICommand{
 	
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

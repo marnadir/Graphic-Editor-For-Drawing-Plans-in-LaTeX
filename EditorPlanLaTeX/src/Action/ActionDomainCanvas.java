@@ -1,6 +1,5 @@
 package Action;
 
-import java.util.ArrayList;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.dnd.DND;
@@ -37,7 +36,6 @@ public class ActionDomainCanvas  extends ICanvas{
 		super(parent, style, a);
 		this.action = a;
 		this.style=style;
-		// TODO Auto-generated constructor stub
 	}
 	
 	public void draw() {
@@ -49,6 +47,47 @@ public class ActionDomainCanvas  extends ICanvas{
 		
 	}
 	
+	
+	public void addDNDListener() {
+		DragSource source =new DragSource(this, DND.DROP_NONE);
+	    source.setTransfer(new Transfer[] { MyTransfer.getInstance() });
+	    source.addDragListener(new MyDragActionListener(source));
+	}
+	
+    private  int getTextPosition(int avergWidth) {
+  	  int i = 5;
+  	  int stringLenght=action.getName().length()*avergWidth+6;
+  	  if(stringLenght>action.getWidthRect()) {
+     		  action.setWidthRect(stringLenght);
+  		  return i;
+  	  }else {
+  		  i=(int) ((action.getWidthRect()-stringLenght)/2);
+  		  return i;
+  	  }
+  	  
+    }
+     @Override
+	public void resizeParent() {
+		if (action.isShownCond()) {
+			double x1 = action.getLengthPrec()*scale + action.getLengthEff()*scale + (action.getWidthRect()*scale)+2;
+			if(action.getPrec().size()==0 && action.getEffect().size()==0) {
+				x1=x1+5;
+			}
+			double y1 = action.getHeightRect()*scale + 40;
+			parent.setSize((int)x1,(int) y1);
+
+		} else {
+			double x1 ;
+			x1=action.getStandardLengthPrec()*scale + action.getStandardLengthEff()*scale + action.getWidthRect()*scale+2;
+			if(action.getPrec().size()==0 && action.getEffect().size()==0) {
+				x1=x1+5;
+			}
+			double y1 = action.getHeightRect()*scale + 40;
+			parent.setSize((int)x1, (int)y1);
+		}
+	}
+     
+     
 	private MouseWheelListener getMouseListener() {
 		
 		MouseWheelListener listener=new MouseWheelListener() {
@@ -225,65 +264,7 @@ public class ActionDomainCanvas  extends ICanvas{
 		
 		return p;
 	}
-	
-	
-	
-	public int getLenght(ArrayList<String> conds) {
-
-		int lenght = 0;
-		if (conds.size() > 0) {
-			String stringa = conds.get(0);
-			lenght=stringa.length();
-			for (String cond : conds) {
-				if (cond.length() > stringa.length()) {
-					stringa = cond;
-					lenght = cond.length();
-				}
-			}
-		}
-		return lenght;
-	}
-	
-
-	
-	public void addDNDListener() {
-		DragSource source =new DragSource(this, DND.DROP_NONE);
-	    source.setTransfer(new Transfer[] { MyTransfer.getInstance() });
-	    source.addDragListener(new MyDragActionListener(source));
-	}
-	
-    private  int getTextPosition(int avergWidth) {
-  	  int i = 5;
-  	  int stringLenght=action.getName().length()*avergWidth+6;
-  	  if(stringLenght>action.getWidthRect()) {
-     		  action.setWidthRect(stringLenght);
-  		  return i;
-  	  }else {
-  		  i=(int) ((action.getWidthRect()-stringLenght)/2);
-  		  return i;
-  	  }
-  	  
-    }
-     @Override
-	public void resizeParent() {
-		if (action.isShownCond()) {
-			double x1 = action.getLengthPrec()*scale + action.getLengthEff()*scale + (action.getWidthRect()*scale)+2;
-			if(action.getPrec().size()==0 && action.getEffect().size()==0) {
-				x1=x1+5;
-			}
-			double y1 = action.getHeightRect()*scale + 40;
-			parent.setSize((int)x1,(int) y1);
-
-		} else {
-			double x1 ;
-			x1=action.getStandardLengthPrec()*scale + action.getStandardLengthEff()*scale + action.getWidthRect()*scale+2;
-			if(action.getPrec().size()==0 && action.getEffect().size()==0) {
-				x1=x1+5;
-			}
-			double y1 = action.getHeightRect()*scale + 40;
-			parent.setSize((int)x1, (int)y1);
-		}
-	}
+     
 	
 }
 

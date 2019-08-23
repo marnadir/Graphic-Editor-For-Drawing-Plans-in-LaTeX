@@ -33,7 +33,6 @@ public class ConsoleViewPlan extends Group {
 	public ConsoleViewPlan(Composite parent, int style) {
 		super(parent, style);
 		setText("Plan");
-		// TODO Auto-generated constructor stub
 	}
 
 	public void setLayout() {
@@ -45,20 +44,11 @@ public class ConsoleViewPlan extends Group {
 	public void createContent(PlanView planView) {
 		
 		this.planView=planView;
-
 		ToolBar toolBarPlan = new ToolBar(this, SWT.FLAT | SWT.WRAP | SWT.RIGHT);
-
-
-		
-	
 		textPlan = new Text(this, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL | SWT.READ_ONLY);
-//		textPlan.insert("");
 		textPlan.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		textPlan.pack();
-
 		toolBarPlan.pack();
-
-	
 					
 	}
 	public void updateView() {
@@ -69,10 +59,8 @@ public class ConsoleViewPlan extends Group {
 		
 		PlanContent contentAction = (PlanContent)planView.getSelection().getControl();
 		
-		
 		LaTexGeneratorStatePlan generatorStatePlan=new LaTexGeneratorStatePlan();
 		textPlan.insert(generatorStatePlan.getLatexPlanCode(contentAction));
-		
 		ArrayList<Node> updateNodeList = contentAction.getActionInPlan();
 		for (int i = 0; i < updateNodeList.size(); i++) {
 			updateNodeList.get(i).generateLatexCode(contentAction);

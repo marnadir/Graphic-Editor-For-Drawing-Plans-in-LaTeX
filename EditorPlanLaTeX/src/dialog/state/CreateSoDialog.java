@@ -1,4 +1,4 @@
-package dialogState;
+package dialog.state;
 
 import java.util.ArrayList;
 
@@ -8,7 +8,7 @@ import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 
 import View.PrincipalView;
-import container.IContainerState;
+import containerState.IContainerState;
 import so_goalState.IState;
 import so_goalState.InitialState;
 import so_goalState.InitialStateCanvas;

@@ -6,7 +6,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.RowData;
 import org.eclipse.swt.widgets.Composite;
 
-import container.ContainerInitialState;
+import containerState.ContainerInitialState;
 /**
  * View which contains the initial state.
  * @author nadir

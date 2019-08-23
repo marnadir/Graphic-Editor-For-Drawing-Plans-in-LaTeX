@@ -22,10 +22,10 @@ public class MyDragActionListener extends DragSourceAdapter {
         this.source = source;
     }
    
-    @Override
-    public void dragStart(DragSourceEvent event) {
-    
-    	if (event.detail == DND.DROP_NONE) {
+	@Override
+	public void dragStart(DragSourceEvent event) {
+
+		if (event.detail == DND.DROP_NONE) {
 			if ((event.detail & DND.DROP_COPY) != 0) {
 				event.detail = DND.DROP_COPY;
 			} else {
@@ -33,8 +33,8 @@ public class MyDragActionListener extends DragSourceAdapter {
 
 			}
 		}
-    	
-    }
+
+	}
 
     
 	@Override

@@ -34,16 +34,12 @@ public class TreeActioDomainView extends Tree {
 	ArrayList<Action> actionList;
 	ActionView actionView;
 	
-	
-
-	
 	public TreeActioDomainView(Composite parent, int style) {
 		super(parent, style);
 		this.parent=parent;
 		actionList=new ArrayList<>();
 		createMenu();
-		addListener(SWT.MouseDoubleClick, getListenerList());
-		
+		addListener(SWT.MouseDoubleClick, getListenerList());	
 	}
 
 	public void createMenu() {
@@ -200,18 +196,7 @@ public class TreeActioDomainView extends Tree {
 		
 		return l;
 	}
-	/*
-	private boolean alreadyShow(Action action,Composite containerAction) {
-		boolean result = false;
-		if(containerAction.getChildren().length>0) {
-			ActionDomainCanvas canvasAction=(ActionDomainCanvas) containerAction.getChildren()[0];
-			if(action.getName().equals(canvasAction.getAction().getName())) {
-				result=true;
-			}
-		}
-		return result;
-	}
-	*/
+
 	public Listener getListenerModifAction() {
 		Listener l = new Listener() {
 

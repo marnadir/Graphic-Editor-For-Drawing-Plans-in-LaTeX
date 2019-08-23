@@ -2,7 +2,7 @@ package command;
 
 import org.eclipse.swt.SWT;
 
-import dialogState.ChangeCondDialog;
+import dialog.state.ChangeCondDialog;
 import so_goalState.IStateCanvas;
 /**
  * Command which allows to open the dialog for add/remove preconditions and/or effects of 
@@ -36,7 +36,6 @@ public class ChangeCondCommand implements ICommand {
 	
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

@@ -24,7 +24,6 @@ public class CreateActionComposite extends Composite{
 	public CreateActionComposite(Composite parent, int style,String name) {
 		super(parent, style);
 		this.setLayout();
-		// TODO Auto-generated constructor stub
 	}
 
 	public void setLayout() {

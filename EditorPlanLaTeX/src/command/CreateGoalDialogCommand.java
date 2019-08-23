@@ -2,7 +2,7 @@ package command;
 
 import org.eclipse.swt.widgets.Composite;
 
-import dialogState.CreateGoalDialog;
+import dialog.state.CreateGoalDialog;
 /**
  * Command which allows to open the dialog for creating a the goal state.
  * @author nadir
@@ -12,7 +12,6 @@ public class CreateGoalDialogCommand implements ICommand {
 	
 	CreateGoalDialog dialog;
 	
-	// check if create as option
 	@Override
 	public boolean canExecute(Object var1, Object var2) {
 		return true;

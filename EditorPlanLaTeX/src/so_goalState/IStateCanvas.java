@@ -18,7 +18,7 @@ import org.eclipse.swt.widgets.Composite;
 import DNDstate.MyDragStateListener;
 import Menu.MenuContentState;
 import PlanPart.PlanContent;
-import container.IContainerState;
+import containerState.IContainerState;
 import dataTrasfer.MyTransfer;
 import PlanPart.Oval;
 

@@ -34,11 +34,8 @@ public class ConsoleLaTeXView extends Composite{
 		consoleViewPlan=new ConsoleViewPlan(this, SWT.ALL);
 		consoleViewPlan.setLayout();
 		consoleViewPlan.createContent(planView);
-		
-		
+			
 	}
-	
-	
 	
 	
 	public ConsoleViewDomain getConsoleViewDomain() {

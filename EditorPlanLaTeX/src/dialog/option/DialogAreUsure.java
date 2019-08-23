@@ -1,4 +1,4 @@
-package dialog;
+package dialog.option;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Event;

@@ -43,9 +43,77 @@ public class InitialStateCanvas extends IStateCanvas  {
 	public void draw() {
 		super.draw();
 		this.addMouseWheelListener(getMouseListener());
+		this.addPaintListener(getPaintListener());
+	}
+    
+    public  int getTextPosition(int avergWidth) {
+    	  int i = 5;
+    	  int stringLenght=state.getText().length()*avergWidth+6;
+    	  if(stringLenght>state.getLenIn()) {
+       		  state.setLenIn(stringLenght);
+    		  return i;
+    	  }else {
+    		  i=(int) ((state.getLenIn()-stringLenght)/2);
+    		  return i;
+    	  }
+    	  
+    }
+    
+	private MouseWheelListener getMouseListener() {
 
-		this.addPaintListener(new PaintListener() {
+		MouseWheelListener listener = new MouseWheelListener() {
 
+			@Override
+			public void mouseScrolled(MouseEvent e) {
+				if(planContent !=null) {
+					scale=planContent.getScale();
+
+				}
+				if (e.count > 0)
+					scale += .2f;
+				else
+					scale -= .2f;
+
+				if (scale > 1.2) {
+					scale = 1.2f;
+				}
+				if (scale < 0.6) {
+					scale = 0.6f;
+				}
+				scale = Math.max(scale, 0);
+				if(planContent!=null) {
+					 planContent.setScale(scale);
+			            if( planContent.getInitialStateCanvas() != null) {
+				            planContent.getInitialStateCanvas().redraw();
+
+			            }
+			            for(Node node:planContent.getActionInPlan()) {
+			            	node.redraw(); 	
+			            }
+			            for(OrderConstrain ordering:planContent.getOrds()) {
+			            	ordering.getConstrainCanvas().redraw();
+			            	ordering.setLocationParent();
+			            }
+			            
+				}
+				
+		        
+		            
+
+				redraw();
+
+			}
+		};
+
+		return listener;
+	}
+	
+	
+	
+	private PaintListener getPaintListener() {
+		
+		PaintListener paintListener=new PaintListener() {
+			
 			@Override
 			public void paintControl(PaintEvent e) {
 
@@ -149,70 +217,13 @@ public class InitialStateCanvas extends IStateCanvas  {
 				resizeParent();
 				computeSize(getParent().getSize().x,getParent().getSize().y);
 			}
-		});
-	}
-    
-    public  int getTextPosition(int avergWidth) {
-    	  int i = 5;
-    	  int stringLenght=state.getText().length()*avergWidth+6;
-    	  if(stringLenght>state.getLenIn()) {
-       		  state.setLenIn(stringLenght);
-    		  return i;
-    	  }else {
-    		  i=(int) ((state.getLenIn()-stringLenght)/2);
-    		  return i;
-    	  }
-    	  
-    }
-    
-	private MouseWheelListener getMouseListener() {
-
-		MouseWheelListener listener = new MouseWheelListener() {
-
-			@Override
-			public void mouseScrolled(MouseEvent e) {
-				if(planContent !=null) {
-					scale=planContent.getScale();
-
-				}
-				if (e.count > 0)
-					scale += .2f;
-				else
-					scale -= .2f;
-
-				if (scale > 1.2) {
-					scale = 1.2f;
-				}
-				if (scale < 0.6) {
-					scale = 0.6f;
-				}
-				scale = Math.max(scale, 0);
-				if(planContent!=null) {
-					 planContent.setScale(scale);
-			            if( planContent.getInitialStateCanvas() != null) {
-				            planContent.getInitialStateCanvas().redraw();
-
-			            }
-			            for(Node node:planContent.getActionInPlan()) {
-			            	node.redraw(); 	
-			            }
-			            for(OrderConstrain ordering:planContent.getOrds()) {
-			            	ordering.getConstrainCanvas().redraw();
-			            	ordering.setLocationParent();
-			            }
-			            
-				}
-				
-		        
-		            
-
-				redraw();
-
-			}
 		};
-
-		return listener;
+		
+		return paintListener;
 	}
+	
+	
+	
 
 	public int getLenght(ArrayList<String> conds) {
 

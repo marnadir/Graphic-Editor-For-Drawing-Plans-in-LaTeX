@@ -12,7 +12,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 
 import PlanPart.PlanContent;
-import dialog.PostionActionDialog;
+import dialog.option.PostionActionDialog;
 /**
  * View which allows to set the position of the plan's components.
  * @author nadir

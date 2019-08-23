@@ -28,9 +28,9 @@ import PlanPart.LoadLink;
 import PlanPart.PlanContent;
 import command.SaveDomainCommand;
 import command.SavePlanCommand;
-import dialog.NewConnectionDialog;
-import dialogSave.SaveLAtexCode;
-import dialogSave.SavePlanDialog;
+import dialog.option.NewConnectionDialog;
+import dialog.save.SaveLAtexCode;
+import dialog.save.SavePlanDialog;
 import resourceLoader.ResourceLoader;
 /**
  * View which contains the plan content.
@@ -52,7 +52,6 @@ public class PlanView  extends CTabFolder{
 	
 	public PlanView(Composite parent, int style) {
 		super(parent, style);
-		// TODO Auto-generated constructor stub
 	}
 	
 	public void setLayout() {
@@ -60,10 +59,7 @@ public class PlanView  extends CTabFolder{
 		setSimple(false);
 		setUnselectedImageVisible(false);
 		setUnselectedCloseVisible(false);
-		
 		dialog=new SaveLAtexCode(getShell(), SWT.SAVE);
-
-		
 	}
 	
 	
@@ -71,8 +67,6 @@ public class PlanView  extends CTabFolder{
 		this.domainView=domainView;
 		CTabItem item = new CTabItem(this, SWT.CLOSE);
 		contentPlan = new PlanContent(this, SWT.BORDER);
-	
-		//TODO Quanto mi consuma sta pezzo di codice
 		
 		Display.getDefault().timerExec(10, new Runnable() {
 			@Override
@@ -97,7 +91,7 @@ public class PlanView  extends CTabFolder{
 			@Override
 			public void handleEvent(Event event) {
 				b1.setVisible(false);
-				LoadLink loadLink=new LoadLink(getPlan());
+				LoadLink loadLink=new LoadLink(getCurrentPlan());
 				loadLink.draw();
 				consoleView.getConsoleViewPlan().updateView();
 				
@@ -139,7 +133,7 @@ public class PlanView  extends CTabFolder{
 			@Override
 			public void handleEvent(Event event) {
 				
-				ArrayList<Node> updateNodeList = getPlan().getActionInPlan();
+				ArrayList<Node> updateNodeList = getCurrentPlan().getActionInPlan();
 				for(Node node:updateNodeList) {
 					if(showCondition.getSelection()) {
 						node.getAction().setIsShownCond(true);
@@ -153,26 +147,26 @@ public class PlanView  extends CTabFolder{
 		
 				
 				if (showCondition.getSelection()) {
-					if (getPlan().getInitialStateCanvas() != null) {
+					if (getCurrentPlan().getInitialStateCanvas() != null) {
 
-						getPlan().getInitialStateCanvas().getState().setShownCond(true);
-						getPlan().getInitialStateCanvas().redraw();
+						getCurrentPlan().getInitialStateCanvas().getState().setShownCond(true);
+						getCurrentPlan().getInitialStateCanvas().redraw();
 
 					}
-					if (getPlan().getGoalStateCanvas() != null) {
-						getPlan().getGoalStateCanvas().getState().setShownCond(true);
-						getPlan().getGoalStateCanvas().redraw();
+					if (getCurrentPlan().getGoalStateCanvas() != null) {
+						getCurrentPlan().getGoalStateCanvas().getState().setShownCond(true);
+						getCurrentPlan().getGoalStateCanvas().redraw();
 					}
 
 				} else {
-					if (getPlan().getInitialStateCanvas() != null) {
-						getPlan().getInitialStateCanvas().getState().setShownCond(false);
-						getPlan().getInitialStateCanvas().redraw();
+					if (getCurrentPlan().getInitialStateCanvas() != null) {
+						getCurrentPlan().getInitialStateCanvas().getState().setShownCond(false);
+						getCurrentPlan().getInitialStateCanvas().redraw();
 
 					}
-					if (getPlan().getGoalStateCanvas() != null) {
-						getPlan().getGoalStateCanvas().getState().setShownCond(false);
-						getPlan().getGoalStateCanvas().redraw();
+					if (getCurrentPlan().getGoalStateCanvas() != null) {
+						getCurrentPlan().getGoalStateCanvas().getState().setShownCond(false);
+						getCurrentPlan().getGoalStateCanvas().redraw();
 					}
 				}
 				
@@ -191,20 +185,20 @@ public class PlanView  extends CTabFolder{
 			@Override
 			public void handleEvent(Event event) {
 				//save first time the plan
-				if(getPlan().getSavedPlanFile()==null) {
+				if(getCurrentPlan().getSavedPlanFile()==null) {
 					dialogPlan=new SavePlanDialog(getShell(), SWT.SAVE);
-					dialogPlan.setPlanContent(getPlan());
+					dialogPlan.setPlanContent(getCurrentPlan());
 					dialogPlan.createContent();
-					getPlan().setSavedPllan(dialogPlan.getCommand().getPlanFile());
+					getCurrentPlan().setSavedPllan(dialogPlan.getCommand().getPlanFile());
 				}else {
 					//load the plan and then save it
 					SavePlanCommand command=new SavePlanCommand();
-					command.setPlanContent(getPlan());
-					command.execute( getPlan().getSavedPlanFile().getParentFile()
+					command.setPlanContent(getCurrentPlan());
+					command.execute( getCurrentPlan().getSavedPlanFile().getParentFile()
 							.getAbsolutePath(),"PlanStore.txt");
 				}
 				SaveDomainCommand command=new SaveDomainCommand();
-				command.copyFileDomain(getPlan().getSavedPlanFile().getParentFile()
+				command.copyFileDomain(getCurrentPlan().getSavedPlanFile().getParentFile()
 							.getAbsolutePath(), domainView);
 			
 			}
@@ -227,47 +221,47 @@ public class PlanView  extends CTabFolder{
 				dialog.setConsoleViewPlan(consoleViewPlan);
 				dialog.setConsoleViewDomain(consoleViewDomain);
 				
-				if(getPlan().getDirectory()==null) {
+				if(getCurrentPlan().getDirectory()==null) {
 					
 					dialog.createContent();
 					if(dialog.getFileLatex()!=null) {
-						getPlan().setLatexFile(dialog.getFileLatex());
-						getPlan().setDirectory(dialog.getFileLatex().getParentFile());
+						getCurrentPlan().setLatexFile(dialog.getFileLatex());
+						getCurrentPlan().setDirectory(dialog.getFileLatex().getParentFile());
 						dir=dialog.getFilterPath();
 
 					}
 			
 				}else {
-					dir=getPlan().getDirectory().getAbsolutePath();
+					dir=getCurrentPlan().getDirectory().getAbsolutePath();
 					if(dir.contains("dirLog")) {
 						dialog.createContent();
 						dir=dialog.getFilterPath();
-						getPlan().setLatexFile(dialog.getFileLatex());
+						getCurrentPlan().setLatexFile(dialog.getFileLatex());
 						planContent.setDirectory(dialog.getFileLatex().getParentFile());
 
-					}else if(getPlan().getLatexFile()==null) {
+					}else if(getCurrentPlan().getLatexFile()==null) {
 						dialog.createFilePlan(dir,"PlanLatex.tex");
-						getPlan().setLatexFile(dialog.getFileLatex());
+						getCurrentPlan().setLatexFile(dialog.getFileLatex());
 
 						
 					}else {
 						dialog.createFilePlan(dir,"PlanLatex.tex");
 
-						getPlan().setLatexFile(dialog.getFileLatex());
+						getCurrentPlan().setLatexFile(dialog.getFileLatex());
 
 					}
 				}
 				
 				//Save Plan&Domain
 				SavePlanCommand command=new SavePlanCommand();
-				command.setPlanContent(getPlan());
+				command.setPlanContent(getCurrentPlan());
 				command.execute(dir,"PlanStore.txt");
 				
 				SaveDomainCommand command2=new SaveDomainCommand();
 				command2.copyFileDomain(dir, domainView);
 				
 				
-				getPlan().setSavedPllan(command.getPlanFile());
+				getCurrentPlan().setSavedPllan(command.getPlanFile());
 				
 				
 			
@@ -305,13 +299,13 @@ public class PlanView  extends CTabFolder{
 					
 					
 					//generate PDF file and put it into PDF View	
-					String pdfFile=getPlan().getLatexFile().getName();
+					String pdfFile=getCurrentPlan().getLatexFile().getName();
 					pdfFile=pdfFile.substring(0, pdfFile.length()-3);
 					pdfFile=pdfFile+"pdf";
 					PdfConverter pdfConverter=new PdfConverter(dir+"/"+pdfFile);
 					pdfConverter.execute();
 					
-					pdfFile=getPlan().getLatexFile().getName();
+					pdfFile=getCurrentPlan().getLatexFile().getName();
 					pdfFile=pdfFile.substring(0, pdfFile.length()-3);
 					pdfFile=pdfFile+"png";
 					pdfView.draw(dir+"/"+pdfFile);
@@ -405,7 +399,7 @@ public class PlanView  extends CTabFolder{
 		return child;
 	}
 	
-	public PlanContent getPlan() {
+	public PlanContent getCurrentPlan() {
 		planContent=(PlanContent) getSelection().getControl();
 		return planContent;
 		
@@ -413,7 +407,7 @@ public class PlanView  extends CTabFolder{
 
 	private boolean planHasFigure() {
 		boolean result=false;
-		PlanContent plan=getPlan();
+		PlanContent plan=getCurrentPlan();
 		if(plan.getActionInPlan().size()>0) {
 			result=true;
 		}

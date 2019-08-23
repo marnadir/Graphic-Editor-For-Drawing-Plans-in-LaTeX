@@ -1,4 +1,4 @@
-package dialog;
+package dialog.option;
 
 
 import org.eclipse.swt.SWT;
@@ -17,6 +17,7 @@ import PlanPart.LinkCanvas;
 import PlanPart.OrderConstrain;
 import PlanPart.OrderConstrainCanvas;
 import View.PlanView;
+import dialog.IDialog;
 /** 
  *dialog used to create a new constrain(causal link/ordering constrain).
  *
@@ -102,7 +103,7 @@ public class NewConnectionDialog extends IDialog {
 				info.pack();
 				mainComposite.pack();
 				pack();
-				link = new LinkCanvas(planView.getPlan());
+				link = new LinkCanvas(planView.getCurrentPlan());
 				link.addlistener(l1, l2, isConstrain,btnLink);
 
 			}
@@ -132,7 +133,7 @@ public class NewConnectionDialog extends IDialog {
 				mainComposite.pack();
 				pack();
 
-				Composite comp = new Composite(planView.getPlan(), SWT.NONE);
+				Composite comp = new Composite(planView.getCurrentPlan(), SWT.NONE);
 				// sulla definizione di cio, ce qualcosa che mi turba!!
 				comp.setSize(50, 50);
 				comp.setLocation(20, 30);
@@ -158,7 +159,7 @@ public class NewConnectionDialog extends IDialog {
 					if (!l1.getText().contains("Select the point")
 							&& !l2.getText().contains("Select the point")) {
 						link.drawLine();
-						planView.getPlan().getLink().add(link);
+						planView.getCurrentPlan().getLink().add(link);
 						updateViewPlan();
 						l1.setText("Producer effect : " + "Select the point");
 						l2.setText("Consumer precondition : " + "Select the point");
@@ -174,7 +175,7 @@ public class NewConnectionDialog extends IDialog {
 						constrain.draw();
 						constrain.pack();
 						constrain.setSize(parent.getSize().x,parent.getSize().y);
-						planView.getPlan().getOrds().add(orderCond);
+						planView.getCurrentPlan().getOrds().add(orderCond);
 						updateViewPlan(); 
 						c1 = "null";
 						c2 = "null";

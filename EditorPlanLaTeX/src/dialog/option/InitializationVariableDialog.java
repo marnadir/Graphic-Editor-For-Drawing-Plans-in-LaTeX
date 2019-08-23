@@ -1,4 +1,4 @@
-package dialog;
+package dialog.option;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -19,6 +19,7 @@ import PlanPart.Oval;
 import PlanPart.OvalCounter;
 import PlanPart.PlanContent;
 import View.DomainView;
+import dialog.IDialog;
 /** 
  *dialog used to set the variable into constant. 
  *

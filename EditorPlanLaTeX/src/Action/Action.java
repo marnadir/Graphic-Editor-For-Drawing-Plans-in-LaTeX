@@ -32,7 +32,6 @@ public class Action implements Serializable {
 	double heightRect = 30;
 	double standardLengthEff=(CM_MEASUREMNT*Double.parseDouble(GlobalValue.lengthsOfEmptyTasks)); //Standard length of effect line 
 	double standardLengthPrec= (CM_MEASUREMNT*Double.parseDouble(GlobalValue.lengthsOfEmptyTasks));
-	//??is not real neccessary
 	boolean defaultValuePrecLenght=true;
 	boolean defaultValueEffLenght=true;
 	boolean defaultValueWid=true;
@@ -44,16 +43,12 @@ public class Action implements Serializable {
 	boolean globalEff;
 	boolean globalEmptyPrec;
 	boolean globalEmptyEff;
-
-	
 	boolean isPrimitive;
 	boolean isAbstract;
 	boolean borderIsSquare;
 	boolean isFat;//true fett, false normal
 	boolean Isborder;//true is black, false is white
 	boolean defaultAction=true;
-
-
 
 	int numPrec;
 	int numEff;

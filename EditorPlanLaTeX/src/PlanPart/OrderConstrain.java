@@ -85,7 +85,6 @@ public class OrderConstrain{
 							if ((planContent.getActionInPlan().get(i).getParent().getLocation().equals(point))) {
 
 								nod1 = planContent.getActionInPlan().get(i);
-								//c1=nod1.getParent();
 								l2.setText(nod1.getAction().getName() + "<" + "null");
 								l2.setText(nod1.getID() + "<" + "null");
 
@@ -102,7 +101,6 @@ public class OrderConstrain{
 								if(planContent.getActionInPlan().get(i)!=nod1) {
 								
 									nod2 = planContent.getActionInPlan().get(i);
-									//c2=nod2.getParent();
 									l2.setText(nod1.getAction().getName() + "<" + nod2.getAction().getName());
 									l2.setText(nod1.getID() + "<" + nod2.getID());
 

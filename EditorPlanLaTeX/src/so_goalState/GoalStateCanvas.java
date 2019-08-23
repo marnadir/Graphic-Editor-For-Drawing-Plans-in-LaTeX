@@ -43,11 +43,63 @@ public class GoalStateCanvas extends IStateCanvas {
 	@Override
 	public void draw() {
 		super.draw();
-		
 		this.addMouseWheelListener(getMouseListener());
+		this.addPaintListener(getPaintListener());
+	}
 
-		this.addPaintListener(new PaintListener() {
+	
+	private MouseWheelListener getMouseListener() {
 
+		MouseWheelListener listener = new MouseWheelListener() {
+
+			@Override
+			public void mouseScrolled(MouseEvent e) {
+				if(planContent !=null) {
+					scale=planContent.getScale();
+
+				}
+				if (e.count > 0)
+					scale += .2f;
+				else
+					scale -= .2f;
+
+				if (scale > 1.2) {
+					scale = 1.2f;
+				}
+				if (scale < 0.6) {
+					scale = 0.6f;
+				}
+				scale = Math.max(scale, 0);
+				if(planContent!=null) {
+					 planContent.setScale(scale);
+			            if( planContent.getInitialStateCanvas() != null) {
+				            planContent.getInitialStateCanvas().redraw();
+
+			            }
+			            for(Node node:planContent.getActionInPlan()) {
+			            	node.redraw();
+			            	
+			            }
+			            
+			            for(OrderConstrain ordering:planContent.getOrds()) {
+			            	ordering.getConstrainCanvas().redraw();
+			            	ordering.setLocationParent();
+			            }
+			            
+				}
+				      
+				redraw();
+
+			}
+		};
+
+		return listener;
+	}
+	
+	
+	private PaintListener getPaintListener() {
+		PaintListener paintListener=new PaintListener() {
+			
 			@Override
 			public void paintControl(PaintEvent e) {
 			
@@ -164,59 +216,11 @@ public class GoalStateCanvas extends IStateCanvas {
 				resizeParent();
 				computeSize(getParent().getSize().x,getParent().getSize().y);	
 			}
-		});
-
-		
-	}
-
-	
-	private MouseWheelListener getMouseListener() {
-
-		MouseWheelListener listener = new MouseWheelListener() {
-
-			@Override
-			public void mouseScrolled(MouseEvent e) {
-				if(planContent !=null) {
-					scale=planContent.getScale();
-
-				}
-				if (e.count > 0)
-					scale += .2f;
-				else
-					scale -= .2f;
-
-				if (scale > 1.2) {
-					scale = 1.2f;
-				}
-				if (scale < 0.6) {
-					scale = 0.6f;
-				}
-				scale = Math.max(scale, 0);
-				if(planContent!=null) {
-					 planContent.setScale(scale);
-			            if( planContent.getInitialStateCanvas() != null) {
-				            planContent.getInitialStateCanvas().redraw();
-
-			            }
-			            for(Node node:planContent.getActionInPlan()) {
-			            	node.redraw();
-			            	
-			            }
-			            
-			            for(OrderConstrain ordering:planContent.getOrds()) {
-			            	ordering.getConstrainCanvas().redraw();
-			            	ordering.setLocationParent();
-			            }
-			            
-				}
-				      
-				redraw();
-
-			}
 		};
-
-		return listener;
+		
+		return paintListener;
 	}
+	
 	
 	public void resizeParent() {
 		if(state.isShownCond()) {

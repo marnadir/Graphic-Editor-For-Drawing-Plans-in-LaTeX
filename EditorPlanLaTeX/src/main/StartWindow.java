@@ -10,7 +10,7 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 
 import View.PrincipalView;
-import dialog.DialogAreUsure;
+import dialog.option.DialogAreUsure;
 /**
  * Principal view of the tool
  * @author nadir

@@ -16,8 +16,8 @@ import org.eclipse.swt.widgets.TreeItem;
 
 import Action.Action;
 import Action.CreateActionComposite;
-import container.ContainerGoalState;
-import container.ContainerInitialState;
+import containerState.ContainerGoalState;
+import containerState.ContainerInitialState;
 import so_goalState.CreateStateContainer;
 import so_goalState.IStateCanvas;
 /**
@@ -30,7 +30,6 @@ import so_goalState.IStateCanvas;
 public class DomainView {
 
 	Group domainGroup;
-//	Group stateGroup;
 	SashForm sashForm;
 	Composite outer;
 	Composite inside;
@@ -45,10 +44,6 @@ public class DomainView {
 	GlobalOptionView globalOptionView;
 	PrincipalView principalView;
 
-	
-
-
-
 	public DomainView(SashForm sashForm) {
 		this.sashForm = sashForm;
 		setLayout();
@@ -56,18 +51,14 @@ public class DomainView {
 	}
 
 	public void setLayout() {
-
-		
+	
 		outer = new Composite(sashForm, SWT.ALL);
 		outer.setLayout(new FillLayout());
-
 		this.domainGroup = new Group(outer, SWT.BOLD);
 		Font boldFont = new Font(this.domainGroup.getDisplay(), new FontData("Arial", 12, SWT.BOLD));
 		this.domainGroup.setText("Domain Definition");
 		this.domainGroup.setFont(boldFont);
-
 		domainGroup.setLayout(new GridLayout(1, false));
-
 		inside = new Composite(domainGroup, SWT.ALL);
 		inside.setLayout(new GridLayout(1, true));
 		inside.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
@@ -80,24 +71,15 @@ public class DomainView {
 		FillLayout fillLayout = new FillLayout();
 		fillLayout.type = SWT.VERTICAL;
 		contentCanvas.setLayout(fillLayout);
-		
 		contentCanvas.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-
-		
-		
 		part1 = new Group(contentCanvas, SWT.NONE);
 		part1.setLayout(new GridLayout(1, false));
 		part1.setText("Initial/Goal state");
-
-
-
 		CreateStateContainer newStateComp=new CreateStateContainer(part1, SWT.ALL,"Initial/Goal");
 		newStateComp.createContent();
-		
 		Composite compViewState=new Composite(part1, SWT.ALL);	
 		compViewState.setLayout(new GridLayout(2, false));
 		compViewState.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-
 		
 		initStateView=new InitialStateView(compViewState, SWT.NONE);
 		initStateView.createContent();
@@ -106,9 +88,6 @@ public class DomainView {
 		initStateView.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		initStateView.setDomainView(this);
 		
-
-
-
 		goalStateView=new GoalStateView(compViewState, SWT.NONE);
 		goalStateView.createContent();
 		goalStateView.setText("Goal State");
@@ -129,9 +108,7 @@ public class DomainView {
 		Composite compViewAction=new Composite(part2, SWT.ALL);	
 		compViewAction.setLayout(new GridLayout(3, true));
 		compViewAction.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-		
-		
-		
+			
 		
 		treeAction=new TreeActioDomainView(compViewAction, SWT.BORDER);
 		treeAction.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
@@ -146,8 +123,6 @@ public class DomainView {
 		treeAction.setActionView(actionView);
 
 		newActComp.setTreeAction(treeAction);
-
-	
 			
 	}
 
@@ -229,11 +204,6 @@ public class DomainView {
 
 	public PrincipalView getPrincipalView() {
 		return principalView;
-	}
-
-
-
-	
-	
+	}	
 	
 }

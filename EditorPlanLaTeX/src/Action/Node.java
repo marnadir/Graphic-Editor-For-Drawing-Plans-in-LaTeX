@@ -1,6 +1,8 @@
 package Action;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.MouseWheelListener;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.Color;
@@ -8,15 +10,12 @@ import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.Listener;
-
 import LaTex.LaTexGeneratorNode;
 import Menu.MenuContentAction;
 import PlanPart.OrderConstrain;
 import PlanPart.PlanContent;
 /**
- * Represents the graphic part of an action, which is created during the plan definition phase.
+ * Represents the graphic part of an action, which is represented in the plan view.
  * @author nadir
  *
  */
@@ -41,11 +40,86 @@ public class Node extends ICanvas {
 		}
 	}
 
+	
 	@Override
-	public void draw() {
-			
-		this.addPaintListener(new PaintListener() {
+	public void draw() {	
+		this.addPaintListener(getPaintListener());
+		this.addMouseWheelListener(getMouseListener());
+		this.addMenuDetectListener(new MenuContentAction(this));
+		resizeParent();
 
+	}
+
+	public String getID() {
+		return ID;
+	}
+
+	public void setID(String iD) {
+		ID = iD;
+	}
+
+	public void generateLatexCode(PlanContent planContent) {
+		LaTexGeneratorNode generator = new LaTexGeneratorNode(planContent);
+		latexCode = generator.getLatexActionCodePlan(action, this);
+
+	}
+
+	public String getLatexCode() {
+		return latexCode;
+	}
+
+	public PlanContent getPlan() {
+		PlanContent plan = null;
+		if (getParent().getParent() instanceof PlanContent) {
+			plan = (PlanContent) getParent().getParent();
+		}
+
+		return plan;
+
+	}
+	
+
+	
+	private int getTextPosition(int avergWidth) {
+		int i = 5;
+		int stringLenght = action.getName().length() * avergWidth + 6;
+		if (stringLenght > action.getWidthRect()) {
+			action.setWidthRect(stringLenght);
+			return i;
+		} else {
+			i = (int) ((action.getWidthRect() - stringLenght) / 2);
+			return i;
+		}
+
+	}
+
+	public void resizeParent() {
+		if (action.isShownCond()) {
+			double x1 = action.getLengthPrec()*scale + action.getLengthEff()*scale + (action.getWidthRect()*scale)+2;
+			if(action.getPrec().size()==0 && action.getEffect().size()==0) {
+				x1=x1+5;
+			}
+			double y1 = action.getHeightRect()*scale + 40;
+			parent.setSize((int)x1,(int) y1);
+
+		} else {
+			double x1 ;
+			x1=action.getStandardLengthPrec()*scale + action.getStandardLengthEff()*scale + action.getWidthRect()*scale+2;
+			if(action.getPrec().size()==0 && action.getEffect().size()==0) {
+				x1=x1+5;
+			}
+			double y1 = action.getHeightRect()*scale + 40;
+			parent.setSize((int)x1, (int)y1);
+		}
+	}
+	
+	
+	
+	private PaintListener getPaintListener() {
+		PaintListener listener;
+		
+		listener=new PaintListener() {
+			
 			@Override
 			public void paintControl(PaintEvent e) {
 
@@ -192,110 +266,66 @@ public class Node extends ICanvas {
 				resizeParent();
 				redraw();
 			}
-		});
-		 this.addListener(SWT.MouseWheel, new Listener()
-		    {
-		        @Override
-		        public void handleEvent(Event event)
-		        {
-		        	scale=planContent.getScale();
-		            if (event.count > 0)
-		                scale += .1f;
-		            else
-		                scale -= .1f;
-
-		            if(scale>1.2) {
-		            	scale=1.2f;
-		            }
-		            if(scale<0.6) {
-		            	scale=0.6f;
-		            }
-		           
-		            scale = Math.max(scale, 0);
-		            planContent.setScale(scale);
-		            if( planContent.getInitialStateCanvas() != null) {
-			            planContent.getInitialStateCanvas().redraw();
-
-		            }
-		            if( planContent.getGoalStateCanvas() != null) {
-			            planContent.getGoalStateCanvas().redraw();
-
-		            }
-		            for(OrderConstrain ordering:planContent.getOrds()) {
-		            	ordering.getConstrainCanvas().redraw();
-		            	ordering.setLocationParent();
-		            }
-		            
-		            
-		            redraw();
-		        }
-		    });
+		};
 		
-		this.addMenuDetectListener(new MenuContentAction(this));
-		resizeParent();
-
+		return listener;
+		
+		
 	}
+	
+	private MouseWheelListener getMouseListener() {
 
-	public String getID() {
-		return ID;
-	}
+		MouseWheelListener listener = new MouseWheelListener() {
 
-	public void setID(String iD) {
-		ID = iD;
-	}
+			@Override
+			public void mouseScrolled(MouseEvent event) {
+				scale=planContent.getScale();
+	            if (event.count > 0)
+	                scale += .1f;
+	            else
+	                scale -= .1f;
 
-	public void generateLatexCode(PlanContent planContent) {
-		LaTexGeneratorNode generator = new LaTexGeneratorNode(planContent);
-		latexCode = generator.getLatexActionCodePlan(action, this);
+	            if(scale>1.2) {
+	            	scale=1.2f;
+	            }
+	            if(scale<0.6) {
+	            	scale=0.6f;
+	            }
+	           
+	            scale = Math.max(scale, 0);
+	            planContent.setScale(scale);
+	            if( planContent.getInitialStateCanvas() != null) {
+		            planContent.getInitialStateCanvas().redraw();
 
-	}
+	            }
+	            if( planContent.getGoalStateCanvas() != null) {
+		            planContent.getGoalStateCanvas().redraw();
 
-	public String getLatexCode() {
-		return latexCode;
-	}
+	            }
+	            for(OrderConstrain ordering:planContent.getOrds()) {
+	            	ordering.getConstrainCanvas().redraw();
+	            	ordering.setLocationParent();
+	            }
+	            
+	            
+	            redraw();
+			}
+		};
 
-	public PlanContent getPlan() {
-		PlanContent plan = null;
-		if (getParent().getParent() instanceof PlanContent) {
-			plan = (PlanContent) getParent().getParent();
-		}
-
-		return plan;
-
+		return listener;
 	}
 	
 	
-	private int getTextPosition(int avergWidth) {
-		int i = 5;
-		int stringLenght = action.getName().length() * avergWidth + 6;
-		if (stringLenght > action.getWidthRect()) {
-			action.setWidthRect(stringLenght);
-			return i;
-		} else {
-			i = (int) ((action.getWidthRect() - stringLenght) / 2);
-			return i;
-		}
-
-	}
-
-	public void resizeParent() {
-		if (action.isShownCond()) {
-			double x1 = action.getLengthPrec()*scale + action.getLengthEff()*scale + (action.getWidthRect()*scale)+2;
-			if(action.getPrec().size()==0 && action.getEffect().size()==0) {
-				x1=x1+5;
-			}
-			double y1 = action.getHeightRect()*scale + 40;
-			parent.setSize((int)x1,(int) y1);
-
-		} else {
-			double x1 ;
-			x1=action.getStandardLengthPrec()*scale + action.getStandardLengthEff()*scale + action.getWidthRect()*scale+2;
-			if(action.getPrec().size()==0 && action.getEffect().size()==0) {
-				x1=x1+5;
-			}
-			double y1 = action.getHeightRect()*scale + 40;
-			parent.setSize((int)x1, (int)y1);
-		}
-	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 }

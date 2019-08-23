@@ -44,7 +44,6 @@ public class Oval extends Canvas{
 
 	public void drawOval() {
 		container.addPaintListener(getListener());
-		//canvasContainer.removePaintListener(getListener());
 	}
 
 

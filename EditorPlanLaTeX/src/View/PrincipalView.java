@@ -19,7 +19,6 @@ import Menu.MenuPrincipalView;
 public class PrincipalView {
 
 	private Shell shell;
-	// private Composite child;
 	private SashForm sashForm;
 	private SashForm sashForm2;
 	private DomainView domainView;
@@ -83,7 +82,6 @@ public class PrincipalView {
 		
 		
 		CTabItem itemGlobal = new CTabItem(folder, SWT.NONE);
-//		GlobalOptionView globalOptionView=new GlobalOptionView(folder, SWT.H_SCROLL | SWT.V_SCROLL);
 		GlobalOptionView globalOptionView=new GlobalOptionView(folder, SWT.NONE);
 		globalOptionView.setLayout();
 		globalOptionView.createContent();
@@ -98,8 +96,6 @@ public class PrincipalView {
 		CTabItem pdfItem = new CTabItem(folder, SWT.NONE);
 		pdfItem.setText("PDF View");
 		pdfView=new PdfView(folder, SWT.ALL);
-//		Label l=new Label(pdfView, SWT.BORDER);
-//		l.setText("ciaooo");
 		pdfItem.setControl(pdfView);
 		
 		//TODO allign the position of action
@@ -113,8 +109,7 @@ public class PrincipalView {
 //		positionItem.setControl(positionInPlanView);
 		
 		
-		
-		
+			
 		folder.setSelection(itemConsole);
 		planView.setPdfPreView(consoleView);
 		planView.setPdfView(pdfView);
@@ -139,8 +134,7 @@ public class PrincipalView {
 				directory.mkdir();
 				result = true;
 			} catch (SecurityException se) {
-				// handle it
-			}
+				se.printStackTrace();			}
 			if (result) {
 			}
 		}
@@ -152,7 +146,7 @@ public class PrincipalView {
 				dirDomain.mkdir();
 				result = true;
 			} catch (SecurityException se) {
-				// handle it
+				se.printStackTrace();
 			}
 			if (result) {
 			}
@@ -165,8 +159,7 @@ public class PrincipalView {
 				dirLatex.mkdir();
 				result = true;
 			} catch (SecurityException se) {
-				// handle it
-			}
+				se.printStackTrace();			}
 			if (result) {
 			}
 		}
@@ -178,8 +171,7 @@ public class PrincipalView {
 				dirLog.mkdir();
 				result = true;
 			} catch (SecurityException se) {
-				// handle it
-			}
+				se.printStackTrace();			}
 			if (result) {
 			}
 		}

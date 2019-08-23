@@ -5,7 +5,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 
 import Menu.MenuContentState;
-import container.IContainerState;
+import containerState.IContainerState;
 import so_goalState.IStateCanvas;
 /**
  * Super class  which defines the views for the initial and goal state.

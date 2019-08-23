@@ -141,11 +141,8 @@ public class PlanContent extends Canvas {
 			            if( getInitialStateCanvas() != null) {
 				            getInitialStateCanvas().redraw();
 
-			            }
-			            
+			            }			            
 				}
-				      
-			
 			
 		};
 
@@ -165,7 +162,6 @@ public class PlanContent extends Canvas {
 					Rectangle rect = comp.getBounds();
 					int x = event.x;
 					int y = event.y;
-					// controlla se e al interno e non esce fuori
 					if (rect.contains(x, y)) {
 						
 						Point pt1 = comp.toDisplay(0, 0);
@@ -239,11 +235,7 @@ public class PlanContent extends Canvas {
 	}
 
 
-	public File getDirectory() {
-//		if(LatexFile != null) {
-//			return LatexFile.getParentFile();
-//		}
-			
+	public File getDirectory() {			
 		return directory;
 	}
 

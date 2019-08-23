@@ -321,7 +321,7 @@ public class GlobalOptionView extends Composite{
 				
 				domainView.getContentCanvas().redraw();
 				
-				for(Node node:planView.getPlan().getActionInPlan()) {
+				for(Node node:planView.getCurrentPlan().getActionInPlan()) {
 					node.getAction().setDefaultAction(true);
 				}
 				
@@ -390,8 +390,8 @@ public class GlobalOptionView extends Composite{
 					tWidth.setText("NONE");
 					GlobalValue.isWidthOfAction=false;
 					confermW.setText("Global value not present, check the box.");
-					for(int i=0;i<planView.getPlan().getActionInPlan().size();i++) {
-						planView.getPlan().getActionInPlan().get(i).getAction().setGlobalWidth(false);
+					for(int i=0;i<planView.getCurrentPlan().getActionInPlan().size();i++) {
+						planView.getCurrentPlan().getActionInPlan().get(i).getAction().setGlobalWidth(false);
 					}
 					
 					for(int i=0;i<domainView.getTreeAction().getActionList().size();i++) {
@@ -422,8 +422,8 @@ public class GlobalOptionView extends Composite{
 					GlobalValue.isWidthOfAction=true;
 					GlobalValue.widthOfAction=tWidth.getText();
 					confermW.setText("Update successfully");
-					for(int i=0;i<planView.getPlan().getActionInPlan().size();i++) {
-						planView.getPlan().getActionInPlan().get(i).getAction().setGlobalWidth(true);
+					for(int i=0;i<planView.getCurrentPlan().getActionInPlan().size();i++) {
+						planView.getCurrentPlan().getActionInPlan().get(i).getAction().setGlobalWidth(true);
 					}
 					
 					for(int i=0;i<domainView.getTreeAction().getActionList().size();i++) {
@@ -459,8 +459,8 @@ public class GlobalOptionView extends Composite{
 					tHeight.setText("NONE");
 					GlobalValue.isHeightOfAction=false;
 					confermH.setText("Global value not present, check the box.");
-					for(int i=0;i<planView.getPlan().getActionInPlan().size();i++) {
-						planView.getPlan().getActionInPlan().get(i).getAction().setGlobalHeight(false);
+					for(int i=0;i<planView.getCurrentPlan().getActionInPlan().size();i++) {
+						planView.getCurrentPlan().getActionInPlan().get(i).getAction().setGlobalHeight(false);
 					}
 					for(int i=0;i<domainView.getTreeAction().getActionList().size();i++) {
 						domainView.getTreeAction().getActionList().get(i).setGlobalHeight(false);
@@ -490,8 +490,8 @@ public class GlobalOptionView extends Composite{
 					GlobalValue.isHeightOfAction=true;
 					GlobalValue.heightOfAction=tHeight.getText();
 					confermH.setText("Update successfully");
-					for(int i=0;i<planView.getPlan().getActionInPlan().size();i++) {
-						planView.getPlan().getActionInPlan().get(i).getAction().setGlobalHeight(true);
+					for(int i=0;i<planView.getCurrentPlan().getActionInPlan().size();i++) {
+						planView.getCurrentPlan().getActionInPlan().get(i).getAction().setGlobalHeight(true);
 					}
 					for(int i=0;i<domainView.getTreeAction().getActionList().size();i++) {
 						domainView.getTreeAction().getActionList().get(i).setGlobalHeight(true);
@@ -527,8 +527,8 @@ public class GlobalOptionView extends Composite{
 					tLenPre.setText("NONE");
 					GlobalValue.isLengthsOfPrecs=false;
 					confermP.setText("Global value not present, check the box.");
-					for(int i=0;i<planView.getPlan().getActionInPlan().size();i++) {
-						planView.getPlan().getActionInPlan().get(i).getAction().setGlobalPrec(false);
+					for(int i=0;i<planView.getCurrentPlan().getActionInPlan().size();i++) {
+						planView.getCurrentPlan().getActionInPlan().get(i).getAction().setGlobalPrec(false);
 					}
 					for(int i=0;i<domainView.getTreeAction().getActionList().size();i++) {
 						domainView.getTreeAction().getActionList().get(i).setGlobalPrec(false);
@@ -559,8 +559,8 @@ public class GlobalOptionView extends Composite{
 					GlobalValue.isLengthsOfPrecs=true;
 					GlobalValue.lengthsOfPrecs=tLenPre.getText();
 					confermP.setText("Update successfully");
-					for(int i=0;i<planView.getPlan().getActionInPlan().size();i++) {
-						planView.getPlan().getActionInPlan().get(i).getAction().setGlobalPrec(true);
+					for(int i=0;i<planView.getCurrentPlan().getActionInPlan().size();i++) {
+						planView.getCurrentPlan().getActionInPlan().get(i).getAction().setGlobalPrec(true);
 					}
 					for(int i=0;i<domainView.getTreeAction().getActionList().size();i++) {
 						domainView.getTreeAction().getActionList().get(i).setGlobalPrec(true);
@@ -596,8 +596,8 @@ public class GlobalOptionView extends Composite{
 					tLenEff.setText("NONE");
 					GlobalValue.isLengthsOfEffs=false;
 					confermE.setText("Global value not present, check the box.");
-					for(int i=0;i<planView.getPlan().getActionInPlan().size();i++) {
-						planView.getPlan().getActionInPlan().get(i).getAction().setGlobalEff(false);
+					for(int i=0;i<planView.getCurrentPlan().getActionInPlan().size();i++) {
+						planView.getCurrentPlan().getActionInPlan().get(i).getAction().setGlobalEff(false);
 					}
 					for(int i=0;i<domainView.getTreeAction().getActionList().size();i++) {
 						domainView.getTreeAction().getActionList().get(i).setGlobalEff(false);
@@ -626,8 +626,8 @@ public class GlobalOptionView extends Composite{
 					GlobalValue.isLengthsOfEffs=true;
 					GlobalValue.lengthsOfEffs=tLenEff.getText();
 					confermE.setText("Update successfully");
-					for(int i=0;i<planView.getPlan().getActionInPlan().size();i++) {
-						planView.getPlan().getActionInPlan().get(i).getAction().setGlobalEff(true);
+					for(int i=0;i<planView.getCurrentPlan().getActionInPlan().size();i++) {
+						planView.getCurrentPlan().getActionInPlan().get(i).getAction().setGlobalEff(true);
 					}
 					for(int i=0;i<domainView.getTreeAction().getActionList().size();i++) {
 						domainView.getTreeAction().getActionList().get(i).setGlobalEff(true);
@@ -662,11 +662,11 @@ public class GlobalOptionView extends Composite{
 					tLenCond.setText("NONE");
 					GlobalValue.isLengthsOfConds=false;
 					confermC.setText("Global value not present, check the box.");
-					if(planView.getPlan().getInitialStateCanvas() != null) {
-						planView.getPlan().getInitialStateCanvas().getState().setGlobalCond(false);
+					if(planView.getCurrentPlan().getInitialStateCanvas() != null) {
+						planView.getCurrentPlan().getInitialStateCanvas().getState().setGlobalCond(false);
 					}
-					if(planView.getPlan().getGoalStateCanvas()!= null) {
-						planView.getPlan().getGoalStateCanvas().getState().setGlobalCond(false);
+					if(planView.getCurrentPlan().getGoalStateCanvas()!= null) {
+						planView.getCurrentPlan().getGoalStateCanvas().getState().setGlobalCond(false);
 					}
 					
 					if(domainView.getInitStateView().getContainerState()!=null) {
@@ -704,11 +704,11 @@ public class GlobalOptionView extends Composite{
 					GlobalValue.isLengthsOfConds = true;
 					GlobalValue.lengthsOfConds = tLenCond.getText();
 					confermC.setText("Update successfully");
-					if(planView.getPlan().getInitialStateCanvas() != null) {
-						planView.getPlan().getInitialStateCanvas().getState().setGlobalCond(true);
+					if(planView.getCurrentPlan().getInitialStateCanvas() != null) {
+						planView.getCurrentPlan().getInitialStateCanvas().getState().setGlobalCond(true);
 					}
-					if(planView.getPlan().getGoalStateCanvas()!= null) {
-						planView.getPlan().getGoalStateCanvas().getState().setGlobalCond(true);
+					if(planView.getCurrentPlan().getGoalStateCanvas()!= null) {
+						planView.getCurrentPlan().getGoalStateCanvas().getState().setGlobalCond(true);
 					}
 					
 					if(domainView.getInitStateView().getContainerState()!=null) {
@@ -748,16 +748,16 @@ public class GlobalOptionView extends Composite{
 				/*
 				 * Plan View
 				 */
-				if (planView.getPlan().getInitialStateCanvas() != null) {
-					planView.getPlan().getInitialStateCanvas().getState().setGlobalEmpty(false);
+				if (planView.getCurrentPlan().getInitialStateCanvas() != null) {
+					planView.getCurrentPlan().getInitialStateCanvas().getState().setGlobalEmpty(false);
 				}
-				if (planView.getPlan().getGoalStateCanvas() != null) {
-					planView.getPlan().getGoalStateCanvas().getState().setGlobalEmpty(false);
+				if (planView.getCurrentPlan().getGoalStateCanvas() != null) {
+					planView.getCurrentPlan().getGoalStateCanvas().getState().setGlobalEmpty(false);
 				}
 				
-				for(int i=0;i<planView.getPlan().getActionInPlan().size();i++) {
-					planView.getPlan().getActionInPlan().get(i).getAction().setGlobalEmptyPrec(false);
-					planView.getPlan().getActionInPlan().get(i).getAction().setGlobalEmptyEff(false);
+				for(int i=0;i<planView.getCurrentPlan().getActionInPlan().size();i++) {
+					planView.getCurrentPlan().getActionInPlan().get(i).getAction().setGlobalEmptyPrec(false);
+					planView.getCurrentPlan().getActionInPlan().get(i).getAction().setGlobalEmptyEff(false);
 
 				}
 				

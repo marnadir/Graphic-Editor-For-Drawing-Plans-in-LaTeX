@@ -1,7 +1,7 @@
 package command;
 
-import container.IContainerState;
-import dialogState.CreateSoDialog;
+import containerState.IContainerState;
+import dialog.state.CreateSoDialog;
 
 /**
  * Command which allows to open the dialog for creating the initial state.
@@ -13,7 +13,6 @@ public class CreateSoDialogCommand implements ICommand {
 	
 	CreateSoDialog dialog;
 	
-	// check if create as option
 	@Override
 	public boolean canExecute(Object var1, Object var2) {
 		if (var1 instanceof IContainerState) {

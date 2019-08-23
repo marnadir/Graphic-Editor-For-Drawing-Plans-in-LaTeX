@@ -1,4 +1,4 @@
-package dialog;
+package dialog.option;
 
 import java.util.ArrayList;
 
@@ -14,6 +14,7 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 import Action.Node;
 import PlanPart.PlanContent;
+import dialog.IDialog;
 import so_goalState.IStateCanvas;
 /**
  * dialog allows to set the position of the different components of the plan

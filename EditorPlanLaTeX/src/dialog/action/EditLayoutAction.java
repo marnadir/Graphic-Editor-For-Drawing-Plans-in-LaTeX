@@ -1,4 +1,4 @@
-package dialogAction;
+package dialog.action;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
