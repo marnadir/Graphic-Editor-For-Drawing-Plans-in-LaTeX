@@ -67,10 +67,6 @@ public class PdfView  extends Composite{
 
 		            Rectangle bounds = image.getBounds();
 		            event.gc.drawImage(image, 0, 0, bounds.width, bounds.height, 0, 0, (int) (bounds.width * scale), (int) (bounds.height * scale));
-		            event.gc.setLineStyle(5);
-		            event.gc.drawText("used Apache PDFBox2.0 library",850,image.getBounds().height-100,true);
-		           
-
 		            canvas.setSize(image.getBounds().width,image.getBounds(). height);
 		        }
 		    });
