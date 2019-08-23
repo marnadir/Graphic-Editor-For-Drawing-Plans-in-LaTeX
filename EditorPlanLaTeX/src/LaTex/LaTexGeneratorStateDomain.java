@@ -37,14 +37,14 @@ public class LaTexGeneratorStateDomain {
 	public String getSoCode(IState state) {
 		StringBuilder sb = new StringBuilder();
 		String space = "  ";
-		sb.append("% PRIMITIVE");
+		sb.append("% INIT");
 		sb.append("\n");
 		sb.append("\\scheme");
 		sb.append("{INIT}{3}");
 		sb.append("{");
 		sb.append("\n");
 		if (state.isText()) {
-			sb.append(space + "text=" + "{{\\rotatebox{90}{\\textbf{\\footnotesize $" + state.getText() + "$}}} }," + "\n");
+			sb.append(space + "text=" + "{{\\rotatebox{90}{\\textbf{\\footnotesize {$" + state.getText() + "$}}}} }," + "\n");
 
 		} else {
 			sb.append(space + "text=" + "{\\hspace*" + "{-2mm}" + "}," + "\n");
@@ -66,7 +66,7 @@ public class LaTexGeneratorStateDomain {
 	public String getSoCodeNoop(IState state) {
 		StringBuilder sb = new StringBuilder();
 		String space="  ";
-		sb.append("% PRIMITIVE");
+		sb.append("% INIT-NOOP");
 		sb.append("\n");
 		sb.append("\\scheme");
 		sb.append("{INIT-noop}{3}");
@@ -74,7 +74,7 @@ public class LaTexGeneratorStateDomain {
 		sb.append("\n");
 		
 		if (state.isText()) {
-			sb.append(space + "text=" + "{{\\rotatebox{90}{\\textbf{\\footnotesize $" + state.getText() + "$}}} }," + "\n");
+			sb.append(space + "text=" + "{{\\rotatebox{90}{\\textbf{\\footnotesize {$" + state.getText() + "$}}}} }," + "\n");
 
 		} else {
 			sb.append(space + "text=" + "{\\hspace*" + "{-2mm}" + "}," + "\n");
@@ -94,7 +94,7 @@ public class LaTexGeneratorStateDomain {
 	public String getGoalCode(IState state) {
 		StringBuilder sb = new StringBuilder();
 		String space="  ";
-		sb.append("% PRIMITIVE");
+		sb.append("% GOAL");
 		sb.append("\n");
 		sb.append("\\scheme");
 		sb.append("{GOAL}{3}");
@@ -122,7 +122,7 @@ public class LaTexGeneratorStateDomain {
 	public String getGoalCodeNoop(IState state) {
 		StringBuilder sb = new StringBuilder();
 		String space="  ";
-		sb.append("% PRIMITIVE");
+		sb.append("% GOAL-NOOP");
 		sb.append("\n");
 		sb.append("\\scheme");
 		sb.append("{GOAL-noop}{3}");

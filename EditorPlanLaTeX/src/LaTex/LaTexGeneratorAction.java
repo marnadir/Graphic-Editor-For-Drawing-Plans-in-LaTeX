@@ -57,6 +57,7 @@ public class LaTexGeneratorAction {
 	private String generateActionWoVariable(Action a) {
 		StringBuilder sb = new StringBuilder();
 		String space="  ";
+		sb.append(getComment(a, false));
 		sb.append("\\scheme");
 		sb.append("{"+a.getName()+"}{0}{");
 		sb.append("\n");
@@ -84,6 +85,7 @@ public class LaTexGeneratorAction {
 
 		StringBuilder sb = new StringBuilder();
 		String space = "  ";
+		sb.append(getComment(a, true));
 		sb.append("\\scheme");
 		sb.append("{" + a.getName() + "-noop}{0}{");
 		sb.append("\n");
@@ -108,7 +110,7 @@ public class LaTexGeneratorAction {
 	public String generatAction(Action a) {
 		StringBuilder sb = new StringBuilder();
 		String space="  ";
-		sb.append("\n");
+		sb.append(getComment(a, false));
 		sb.append("\\scheme");
 		sb.append(getScheme(a.getName(),false));
 		sb.append("{");
@@ -131,8 +133,7 @@ public class LaTexGeneratorAction {
 	public String generatActionNoop(Action a) {
 		StringBuilder sb = new StringBuilder();
 		String space="  ";
-		sb.append("% PRIMITIVE");
-		sb.append("\n");
+		sb.append(getComment(a, true));
 		sb.append("\\scheme");
 		sb.append(getScheme(a.getName(),true));
 		sb.append("{");
@@ -411,6 +412,29 @@ public class LaTexGeneratorAction {
 		}
 
 		return sb.toString();
+	}
+	
+	private String getComment(Action a,boolean noop) {
+		
+		StringBuilder sb = new StringBuilder();
+
+		if (noop) {
+			if (a.isPrimitive()) {
+				sb.append("% PRIMITIVE-NOOP");
+			} else {
+				sb.append("% ABSTRACT-NOOP");
+			}
+		} else {
+			if (a.isPrimitive()) {
+				sb.append("% PRIMITIVE");
+			} else {
+				sb.append("% ABSTRACT");
+			}
+		}
+		sb.append("\n");
+
+		return sb.toString();
+
 	}
 
 }
